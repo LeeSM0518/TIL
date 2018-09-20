@@ -25,3 +25,10 @@ b = []
 print('a = {}, b = {}'.format(a,b))
 b = a[:]
 print('값 복사 후 a = {} , b = {}'.format(a,b))
+
+# copy 모듈 이용
+import copy
+a = [1,2,3]
+b = []
+
+print('\na = {}\nb = {}\n'.format(a,b))

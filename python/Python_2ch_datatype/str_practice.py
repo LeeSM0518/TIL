@@ -43,3 +43,7 @@ b = "{0:=^10}".format(a)
 c = "{0:!<10}".format(a)
 print('공백 채우기 a = {} 에서 변환 a = {}\n'.format(a,b))
 print('공백 채우기 a = {} 에서 변환 a = {}\n'.format(a,c))
+
+# f 포메팅
+abc = 3
+print(f'a = {abc}')

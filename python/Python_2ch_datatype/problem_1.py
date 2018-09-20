@@ -51,3 +51,5 @@ print('변수 1번 문제')
 a = b = [1,2,3]
 a[1] = 4
 print(b,'\n') # a가 b를 가르키게 되고 b가 [1,2,3]을 가리키게 되는데 여기서 a가 변경되면 b도 같이 변경되게 된다.
+
+# a.keys() 를 하여 dict_keys(['name', 'phone', 'birth']) 를 얻을 수 있는데 이것은 리스트 고유의 함수인 append, insert, pop등의 함수를 수행할 수 는 없다.
