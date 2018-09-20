@@ -1,0 +1,56 @@
+# 값 수정
+a = [1 ,2 ,3]
+print('a = {}'.format(a))
+
+a[1:3] = [4,5] # [처음값 : 미만값]
+print('값 수정한 a = {}\n'.format(a))
+
+# 리스트 삭제
+a = ['a','b','c']
+print('a= ',a)
+del a[1:3]
+print('리스트 삭제한 a = {}\n'.format(a))
+
+# 리스트 추가
+a = [1,2,3]
+print('a = {}'.format(a))
+a.append([4,5])
+print('리스트를 추가한 a = {}\n'.format(a))
+
+# 리스트 정렬
+a = [3,1,2]
+print('a = {}'.format(a))
+a.sort()
+print('정렬한 a = {}'.format(a))
+a.reverse()
+print('뒤집은 a = {}\n'.format(a))
+
+# 리스트 삽입
+a = [1,2,3]
+print('a = {}'.format(a))
+a.insert(0,4)
+print('삽입한 a = {}\n'.format(a))
+
+# 리스트 요소 제거
+a = [1,2,3,1,2,3]
+print('a = {}'.format(a))
+a.remove(3)
+print('3을 삭제한 a = {}'.format(a))
+a.remove(3)
+print('3을 한번더 삭제 a = {}\n'.format(a))
+
+# 리스트 요소 개수 세기
+a = [1,1,1]
+print('a = {} 1의 개수는 {} 이다.\n'.format(a,a.count(1)))
+
+# 리스트 확장
+a = [1,2,3]
+print('a = {}'.format(a))
+a.extend([4,5])
+print('확장한 a = {}\n'.format(a))
+
+# 리스트의 마지막 요소 꺼냄
+a = [1,2,3]
+print('a가 참인 동안 a의 마지막 요소를 꺼냄')
+while a:    # a가 참인 동안
+    print(a.pop())

@@ -1,0 +1,1 @@
+sum = 790 and average = 79.0
