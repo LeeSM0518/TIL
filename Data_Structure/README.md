@@ -10,7 +10,7 @@ Data_Structure
 
 <br/>
 
-# Schedule and table of contents
+# Seminar Schedule and table of contents
 
 |**주차**|**주제**|
 |:---:|:---:|
