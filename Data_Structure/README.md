@@ -4,9 +4,9 @@ Data_Structure
 
 <br/>
 
-# What is the Project? 
+# Please Feedback
 
-### 이 프로젝트는 `2018년 9월 13일에 진행한 자료구조 세미나 준비 및 연습 저장소` 입니다.
+### 고쳐야할 코드나 불편해 보이는 코딩법들에 대해 피드백을 해주시면 감사하겠습니다.
 
 <br/>
 
@@ -23,10 +23,3 @@ Data_Structure
 |7주차 | 11장 그래프
 |8주차 | 12장 검색, 해시
 |9주차 | 정렬
-
-<br/>
-
-# Contributors
-
-- 이상민[(nalsm98@naver.com)](nalsm98@naver.com)
-
