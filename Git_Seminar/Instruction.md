@@ -1,7 +1,9 @@
 ..Git Instruction
 =================
 
-## Git 사용법
+<br/>
+
+### Git 사용법
 
 - **Initialization ( 초기화 )**
 ```
