@@ -1,4 +1,4 @@
-C++ Class and Object
+ Chapter 03 Class and Object (C++)
 ===
 
 <br/>
