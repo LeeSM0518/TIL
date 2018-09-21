@@ -1,4 +1,4 @@
-Git Instruction
+..Git Instruction
 =================
 
 ## Git 사용법
