@@ -33,6 +33,7 @@ print('a = {} 에서 Life를 바꾸면'.format(a))
 print('{} 이다\n'.format(a.replace('Life','Your leg')))
 
 #문자열 나누기
+print('문자열 나누기')
 a = 'Life is too short'
 b = a.split()
 print('a = {}이고 a를 공백으로 나눈 문자열은 {} 이다.\n'.format(a,b))
