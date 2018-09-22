@@ -4,9 +4,11 @@ data = """
     """
 
 
+
 result = []
 for line in data.split("\n"):
     word_result = []
+    print(line)
     for word in line.split(" "):
         print(word)
         if len(word) == 14 and word[:6].isdigit() and word[7:].isdigit():

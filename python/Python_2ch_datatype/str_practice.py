@@ -48,3 +48,9 @@ print('공백 채우기 a = {} 에서 변환 a = {}\n'.format(a,c))
 # f 포메팅
 abc = 3
 print(f'a = {abc}')
+
+# isdigit
+a = '123-123'
+print('\na = ',a)
+print('a[0].isdig = ',a[0].isdigit())
+print('a[3].isdig = ',a[3].isdigit())
