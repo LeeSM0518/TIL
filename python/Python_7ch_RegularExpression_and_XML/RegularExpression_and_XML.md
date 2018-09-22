@@ -238,3 +238,77 @@ Python Regular expression and XML
 <br>
 
 ## 정규식을 이용한 문자열 검색
+|**메서드**|**목적**|
+|:---:|:---:|
+|*match()*|문자열의 처음부터 정규식과 매치되는지 조사한다.
+|*search()*|문자열 전체를 검색하여 정규식과 매치되는지 조사한다.
+|*findall()*|정규식과 매치되는 모든 문자열을 리스트로 리턴한다.
+|*finditer()*|정규식과 매치되는 모든 문자열을 반복 가능한 객체로 리턴한다.
+
+<br>
+
+우선 다음과 같은 패턴을 만들어 보자.
+```python
+>>> import re
+>>> p = re.compile('[a-z]+')
+```
+
+<br>
+
+- **match**
+  ```python
+  >>> m = p.match("python")
+  >>> print(m)
+  <_sre.SRE_Match object at 0x01F3F9F8>  #  match 객체가 리턴됨.
+  ```
+  > "python" 이라는 문자열은 [a-z]+ 정규식에 부합되므로 match 객체가 리턴된다.
+
+  <br>
+
+  ```python
+  >>> m = p.match("3 python")
+  >>> print(m)
+  None
+  ```
+  > " 3 python " 이라는 문자열은 처음에 나오는 3이라는 문자가 정규식에 부합되지 않으므로 None이 리턴된다.
+
+  <br>
+
+  - 파이썬 정규식 프로그램
+    ```python
+    import re
+    p = re.compile(정규 표현식)
+    m = p.match("조사할 문자열")
+    if m:
+      print('Match fount : ', m.group())
+    else:
+      print('No match')
+    ```
+    > 즉 , match의 결과값이 있을 때만 그 다음 작업을 수행하겠다는 것이다.
+
+    <br>
+
+    - ex)
+      ```python
+      print('\nmatch 프로그램')
+      def match_str(st1, st2):
+        p = re.compile(st1)
+        m = p.match(st2)
+        if m:
+          print('Match fount : ', m.group())
+        else:
+          print('No match')
+
+      print('정규 표현식 : \'a.c\' 조사할 문자열 : \"abc\"  ')
+      match_str('a.c','abc')
+      print('정규 표현식 : \'a.c\' 조사할 문자열 : \"abc\"  ')
+      match_str('a.c','ddd')
+      ```
+      - 실행결과
+      ```
+      match 프로그램
+      정규 표현식 : 'a.c' 조사할 문자열 : "abc"  
+      Match fount :  abc
+      정규 표현식 : 'a.c' 조사할 문자열 : "ddd"
+      No match
+      ```
