@@ -23,3 +23,10 @@ print('정규 표현식 : \'a.c\' 조사할 문자열 : \"abc\"  ')
 match_str('a.c','abc')
 print('정규 표현식 : \'a.c\' 조사할 문자열 : \"ddd\"  ')
 match_str('a.c','ddd')
+
+# search 함수
+print('\nsearch 함수')
+m = p.search("python")
+print(m)
+m = p.search("3 python")
+print(m)

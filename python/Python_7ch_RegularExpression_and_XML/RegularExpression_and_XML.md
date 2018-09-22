@@ -255,7 +255,7 @@ Python Regular expression and XML
 
 <br>
 
-- **match**
+- **match** : 문자열의 처음부터 정규식을 비교한다.
   ```python
   >>> m = p.match("python")
   >>> print(m)
@@ -312,3 +312,26 @@ Python Regular expression and XML
       정규 표현식 : 'a.c' 조사할 문자열 : "ddd"
       No match
       ```
+
+<br>
+
+---
+
+<br>
+
+- **search** : 모든 문자열과 정규식과 비교한다.
+  ```python
+  >>> m = p.search("python")
+  >>> print(m)
+  <re.Match object; span=(0, 6), match='python'>
+  ```
+  > match 메서드와 동일하게 수행
+
+  <br>
+
+  ```python
+  >>> m = p.search("3 python")
+  >>> print(m)
+  <re.Match object; span=(2, 8), match='python'>
+  ```
+  > 문자열 전체를 검색하기 때문에 정규식과 매치된다.
