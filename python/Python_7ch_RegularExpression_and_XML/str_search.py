@@ -39,7 +39,8 @@ print(result)
 
 # finditer 함수
 print('\nfinditer 함수')
-
 result = p.finditer("life is too short")
 print(result)
 for r in result : print(r)
+
+    

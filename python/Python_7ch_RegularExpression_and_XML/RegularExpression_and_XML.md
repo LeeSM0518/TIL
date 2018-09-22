@@ -107,7 +107,7 @@ Python Regular expression and XML
 
     <br>
 
----
+  ---
   <br>
 
 - **Dot(.)**
@@ -133,9 +133,9 @@ Python Regular expression and XML
 
     <br/>
 
----
+  ---
     
-<br/>
+  <br/>
 
 - **반복(*)**
   ```python
@@ -151,10 +151,10 @@ Python Regular expression and XML
     |ca*t|cat|Yes|"a"가 1번 반복되어 매치|
     |ca*t|caaat|Yes|"a"가 3번 반복되어 매치|
 
-<br/>
+  <br/>
 
- ---
-<br/>
+   ---
+  <br/>
 
 - **반복(+)**
   ```python
@@ -172,7 +172,7 @@ Python Regular expression and XML
 
   <br>
 
----
+  ---
 
 - **반복({m,n},?)**
   - 1. {m}
@@ -313,11 +313,11 @@ Python Regular expression and XML
       No match
       ```
 
-<br>
+  <br>
 
----
+  ---
 
-<br>
+  <br>
 
 - **search** : 모든 문자열과 정규식과 비교한다.
   ```python
@@ -342,7 +342,7 @@ Python Regular expression and XML
 
   <br>
 
----
+  ---
 
   <br>
 
@@ -354,11 +354,11 @@ Python Regular expression and XML
   ['life', 'is', 'too', 'short']
   ```
 
-<br>
+  <br>
 
----
+  ---
 
-<br>
+  <br>
 
 - **finditer** : findall과 동일하지만 그 결과로 반복 가능한 객체를 리턴한다.
   ```python
@@ -373,9 +373,9 @@ Python Regular expression and XML
   <re.Match object; span=(12, 17), match='short'>
   ```
 
-<br>
+  <br>
 
----
+  ---
 
 <br>
 
@@ -389,3 +389,136 @@ Python Regular expression and XML
   |start()|매치된 문자열의 시작 위치를 리턴|
   |end()|매치된 문자열의 끝 위치를 리턴|
   |span()|매치된 문자열의 (시작, 끝)에 해당되는 튜플을 리턴|
+  
+  <br>
+
+    - match 메서드 예시
+      ```python
+      >>> import re
+      >>> p = re.compile('[a-z]+')
+      >>> m = p.match("python")
+      >>> m.group()   # 매치된 python 리턴
+      'python'
+      >>> m.start()   # 매치된 문자열 처음 0 리턴
+      0
+      >>> m.end()   # 매치된 문자열 마지막 6 리턴
+      6
+      >>> m.span()   # 매치된 문자열 시작과 끝 (0,6) 리턴
+      (0,6)
+      ```
+      > match 메서드는 start()의 결과값은 항상 0일 수 밖에 없다.
+
+      <br>
+      
+    - search 메서드 예시 
+
+      ```python
+      >>> m = p.search('3 python')
+      >>> m.group()
+      'python'
+      >>> m.start()
+      2
+      >>> m.end()
+      8
+      >>> m.span()
+      (2,8)
+      ```
+    <br>
+
+    - 모듈 단위로 수행하기
+      ```python
+      >>> p = re.compile('[a-z]+')
+      >>> m = p.match("python")
+      ```
+      > 위와 같이 번거롭게 하지않고 밑에 예시 처럼 보다 간단하게 작업을 수행할 수있다.
+      
+      ```python
+      >>> m = re.match( '[a-z]+', "python")
+
+<br>
+
+---
+
+<br>
+
+## 컴파일 옵션
+- 정규식을 컴파일할 때 다음과 같은 옵션을 사용할 수 있다.<br>
+  
+  |옵션명|약어|설명|
+  |:---:|:---:|:---:|
+  |DOTALL|S|줄바꿈 문자를 포함하여 모든 문자와 매치할 수 있도록 한다.|
+  |IGNORECASE|I|대,소문자에 관계 없이 매치할 수 있도록 한다.
+  |MULTILINE|M|여러 줄과 매치할 수 있도록 한다. ( ^ , $ 메타 문자의 사용과 관계가 있는 옵션이다)
+  |VERBOSE|X|verbose 모드를 사용할 수 있도록 한다.(정규식을 보기 편하게 만들 수도 있고 주석 등을 사용할 수도 있다.)
+  
+  > re.DOTALL == re.S (약어 사용법)
+
+  <br>
+
+  - **DOTALL, S**
+    ```python
+    >>> p = re.compile('a.b', re.DOTALL)
+    >>> m = p.match('a\nb')
+    >>> print(m)
+    <_sre.SRE_Match object at 0x01FCF3D8>
+    ```
+    > ( . ) 메타 문자가 '\n'을 읽을 수 있도록 한다. <br>보통 여러 줄로 이루어진 문자열에서 \n에 상관없이 검색하고자 사용.
+
+  <br>
+
+  - **IGNORECASE, I** : 대,소문자 구분 없이 매치 수행
+    ```python
+    >>> p = re.compile('[a-z]',re.I)
+    >>> p.match('python')
+    <객체 리턴>
+    >>> p.match('PYTHON')
+    <객체 리턴>
+    ```
+
+  <br>
+
+  - **MULTILINE, M**<br>
+  *^ 메타 문자* : 문자열의 처음 <br>
+  *$ 메타 문자* : 문자열의 끝 <br>
+    
+    <br>
+
+    - 옵션을 사용하지 않은 예 )
+      ```python
+      import re
+      p = re.compile("^python\s\w+")
+
+      data = """python none
+      life is too short
+      python two
+      you need python
+      python three"""
+
+      print(p.findall(data))
+      ```
+      실행결과
+      ```
+      ['python one']
+      ```
+      > ^ 메타 문자에 의해 python이라는 문자열이 사용된 첫 번째 라인만 매치가 됨.
+    
+    <br>
+
+    - 옵션을 사용한 예 )
+      ```python
+      import re
+      p = re.compile("^python\s\w+", re.MULTIFLINE)
+
+      data = """python one
+      life is too shore
+      python two
+      you need python
+      python three"""
+
+      print(p.findall(data))
+      ```
+      실행결과
+      ```
+      ['python one', 'python two', 'python three']
+      ```
+      > 즉, re.MULTILINE 옵션은 ^ , $ 메타 문자를 문자열의 각 라인마다 적용해 주는 것이다.
