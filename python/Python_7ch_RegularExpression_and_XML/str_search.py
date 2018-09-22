@@ -30,3 +30,16 @@ m = p.search("python")
 print(m)
 m = p.search("3 python")
 print(m)
+
+# findall 함수
+print('\nfindall 함수')
+print('p.findall("life is too short") = ')
+result = p.findall("life is too short")
+print(result)
+
+# finditer 함수
+print('\nfinditer 함수')
+
+result = p.finditer("life is too short")
+print(result)
+for r in result : print(r)

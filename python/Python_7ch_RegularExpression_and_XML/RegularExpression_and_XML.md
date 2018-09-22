@@ -321,6 +321,7 @@ Python Regular expression and XML
 
 - **search** : 모든 문자열과 정규식과 비교한다.
   ```python
+  >>> p = re.compile('[a-z]+')
   >>> m = p.search("python")
   >>> print(m)
   <re.Match object; span=(0, 6), match='python'>
@@ -330,8 +331,61 @@ Python Regular expression and XML
   <br>
 
   ```python
+  >>> p = re.compile('[a-z]+')
   >>> m = p.search("3 python")
   >>> print(m)
   <re.Match object; span=(2, 8), match='python'>
   ```
   > 문자열 전체를 검색하기 때문에 정규식과 매치된다.
+  
+  `match 메서드와 search 메서드는 문자열의 처음부터 검색할지의 여부에 따라 다르게 사용해야한다`
+
+  <br>
+
+---
+
+  <br>
+
+- **findall** : 문자열의 각 단어들이 각각 정규식과 매치되어 리스트로 리턴된다.
+  ```python
+  >>> p = re.compile('[a-z]+')
+  >>> result = p.findall('life is too short')
+  >>> print(result)
+  ['life', 'is', 'too', 'short']
+  ```
+
+<br>
+
+---
+
+<br>
+
+- **finditer** : findall과 동일하지만 그 결과로 반복 가능한 객체를 리턴한다.
+  ```python
+  >>> p = re.compile('[a-z]+')
+  >>> result = p.finditer("life is too short")
+  >>> print(result)
+  <callable_iterator object at 0x03885B70>
+  >>> for r in result : print(r)
+  <re.Match object; span=(0, 4), match='life'>
+  <re.Match object; span=(5, 7), match='is'>
+  <re.Match object; span=(8, 11), match='too'>
+  <re.Match object; span=(12, 17), match='short'>
+  ```
+
+<br>
+
+---
+
+<br>
+
+- **match 객체의 메서드** : 어떤 문자열이 매치되었는지 그리고 매치된 문자열의 인덱스는 어디부터 어디까지 인지를 해결
+  
+  <br>
+
+  |**메서드**|목적|
+  |:---:|:---:|
+  |group()|매치된 문자열을 리턴한다.|
+  |start()|매치된 문자열의 시작 위치를 리턴|
+  |end()|매치된 문자열의 끝 위치를 리턴|
+  |span()|매치된 문자열의 (시작, 끝)에 해당되는 튜플을 리턴|
