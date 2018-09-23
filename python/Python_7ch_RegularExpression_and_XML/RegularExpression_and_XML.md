@@ -562,8 +562,8 @@ Python Regular expression and XML
 
 ## 백슬래시 문제
 - ex )
-  ```python
-  \\section   # 이 정규식은 [\t\n\r\f\v]ection 과 같이 해석된다. ( \s 문자가 이스케이프 코드로 해석되기 때문.)
+  ```
+  \section   # 이 정규식은 [\t\n\r\f\v]ection 과 같이 해석된다. ( \s 문자가 이스케이프 코드로 해석되기 때문.)
   ```
   > 의도한 대로 매치하고 싶다면 `\\section`과 같이 변경해야 한다.
   
