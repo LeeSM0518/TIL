@@ -721,6 +721,7 @@ Python Regular expression and XML
   <br>
 
   * **group 메서드 표**<br>
+  
     |*group(인덱스)*|*설명*|
     |:---:|:---:|
     |group(0)|매치된 전체 문자열|
