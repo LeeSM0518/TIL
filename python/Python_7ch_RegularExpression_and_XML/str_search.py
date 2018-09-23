@@ -3,12 +3,14 @@ import re
 
 print('[a-z]+ 검색')
 p = re.compile('[a-z]+')
-
 m = p.match("python")
-print('python = ', m)
+print('p.match("python") = ', m)
+
+m = p.match("pYthon")
+print('p.match("pYthon") = ', m)
 
 m = p.match("3 python")
-print('3 python = ' , m)
+print('p.match("3 python") = ' , m)
 
 print('\nmatch 프로그램')
 def match_str(st1, st2):
@@ -43,4 +45,27 @@ result = p.finditer("life is too short")
 print(result)
 for r in result : print(r)
 
-    
+# match 객체 메서드
+p = re.compile('[a-z]+')
+m = p.match("python")
+print('\nmatch 객체 메서드')
+print('m = ',m)
+print('m.group() = ', m.group())
+print('m.start() = ', m.start())
+print('m.end() = ', m.end())
+print('m.span() = ', m.span())
+
+# search 객체 메서드
+p = re.compile('[a-z]+')
+m = p.search("3 python")
+print('\nsearch 객체 메서드')
+print('m = ', m)
+print('m.group() = ', m.group())
+print('m.start() = ', m.start())
+print('m.end() = ', m.end())
+print('m.span() = ',m.span())
+
+# 모듈 단위로 수행하기
+print('\n모듈 단위로 수행')
+m = re.match('[a-z]+', "python")
+print('m = re.match(\'[a-z]+\', "python") \nm.group = ', m.group())

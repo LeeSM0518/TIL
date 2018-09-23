@@ -1,6 +1,6 @@
 Python Regular expression and XML
 ===
-### 파이썬 정규 표현식과 XML
+## *파이썬 정규 표현식과 XML*
 
 <br/>
 
@@ -90,7 +90,7 @@ Python Regular expression and XML
     |[abc]|a|Yes|"a"는 정규식과 일치하는 문자인 "a"가 있으므로 매치|
     |[abc]|before|Yes|"before"는 정규식과 일치하는 문자인 "b"가 있으므로 매치|
     |[abc]|dude|No|"dude"는 정규식과 일치하는 문자인 a,b,c 중 어느 하나도 포함하고 있지 않으므로 매치되지 않음|
-  > [] 안의 두 문자 사이에 **하이픈(-)** 을 사용하게 되면 두 문자 사이의 범위를 의미한다. 예를들어 [a-c] 는 [abc]와 동일하고 [0-5]는 [012345]와 동일하다. 그리고 **^ 메타 문자** 는 **반대**라는 의미를 갖는다.
+  > [] 안의 두 문자 사이에 **하이픈(-)** 을 사용하게 되면 두 문자 사이의 범위를 의미한다. 예를들어 [a-c] 는 [abc]와 동일하고 [0-5]는 [012345]와 동일하다. 그리고 **^(캐럿,caret) 메타 문자** 는 **반대**라는 의미를 갖는다.
   
   <br/>
   
@@ -100,7 +100,7 @@ Python Regular expression and XML
     |:---:|:---:|
     |\d|숫자와 매치, [0-9]와 동일한 표현식이다.|
     |\D|위와 반대 역할|
-    |\s|whitespace 문자와 매치, [\t\n\r\f\v]와 동일한 표현식이다. 맨앞의 빈칸은 공백 문자를 의미한다.
+    |\s|whitespace(이스케이프 문자) 문자와 매치, [\t\n\r\f\v]와 동일한 표현식이다. 맨앞의 빈칸은 공백 문자를 의미한다.
     |\S|위와 반대 역할
     |\w|문자+숫자 와 매치, [a-zA-Z0-9]와 동일한 표현식
     |\W|위와 반대 역할
@@ -175,7 +175,7 @@ Python Regular expression and XML
   ---
 
 - **반복({m,n},?)**
-  - 1. {m}
+  - 1. **{m}**  : 앞에 있는 문자가 m번 반복되면 매치
     ```python
     ca{2}t    # a가 2번 반복되면 매치 
     ```
@@ -191,7 +191,7 @@ Python Regular expression and XML
   <br>
   <br>
 
-  - 2. {m, n}
+  - 2. **{m, n}** : 앞에 있는 문자가 m ~ n 번 반복되면 매치
     ```python
     ca{2,5}t    # a가 2~5번 반복되면 매치
     ```
@@ -208,7 +208,7 @@ Python Regular expression and XML
   <br>
   <br>
   
-  - 3. ?
+  - 3.  **?**  : 앞에 있는 문자가 있거나 없거나 매치
     ```python
     ab?c    # b가 0~1번 사용되면 매치
     ```
@@ -231,7 +231,7 @@ Python Regular expression and XML
 ```python
 사용방법
 >>> import re
->>> p = re.compile('ab*')   # re.compile을 이용하여 ab* 을 컴파일한다.
+>>> p = re.compile('ab*')   # re.compile을 이용하여 ab*(b가 0번 이상 반복되면 매치) 을 컴파일한다.
 ```
 
 <br>
@@ -240,28 +240,34 @@ Python Regular expression and XML
 ## 정규식을 이용한 문자열 검색
 |**메서드**|**목적**|
 |:---:|:---:|
-|*match()*|문자열의 처음부터 정규식과 매치되는지 조사한다.
-|*search()*|문자열 전체를 검색하여 정규식과 매치되는지 조사한다.
-|*findall()*|정규식과 매치되는 모든 문자열을 리스트로 리턴한다.
-|*finditer()*|정규식과 매치되는 모든 문자열을 반복 가능한 객체로 리턴한다.
+|*match()*|문자열의 **처음부터** 정규식과 매치되는지 조사한다.
+|*search()*|문자열 **전체**를 검색하여 정규식과 매치되는지 조사한다.
+|*findall()*|정규식과 매치되는 모든 문자열을 **리스트**로 리턴한다.
+|*finditer()*|정규식과 매치되는 모든 문자열을 반복 가능한 **객체**로 리턴한다.
 
 <br>
 
 우선 다음과 같은 패턴을 만들어 보자.
 ```python
->>> import re
->>> p = re.compile('[a-z]+')
+>>> import re  # 모듈 선언
+>>> p = re.compile('[a-z]+')  # 소문자 알파벳이 아무거나 1번 이상 나오면 매치
 ```
 
 <br>
 
-- **match** : 문자열의 처음부터 정규식을 비교한다.
+- **match 메서드** : 문자열의 처음부터 정규식을 비교한다.
   ```python
   >>> m = p.match("python")
-  >>> print(m)
-  <_sre.SRE_Match object at 0x01F3F9F8>  #  match 객체가 리턴됨.
+  >>> print('p.match("python") = ', m)
+  p.match("python") =  <re.Match object; span=(0, 6), match='python'>  #  모두 소문자 알파벳으로 이루어져 있으므로 매치되며 match 객체가 리턴됨.
   ```
   > "python" 이라는 문자열은 [a-z]+ 정규식에 부합되므로 match 객체가 리턴된다.
+
+  ```python
+  >>> m = p.match("pYthon")
+  >>> print('p.match("pYthon") = ', m)
+  p.match("pYthon") =  <re.Match object; span=(0, 1), match='p'>  # p라는 소문자 알파벳이 잇으므로 매치되며 match 객체가 리턴.
+  ```
 
   <br>
 
@@ -373,26 +379,29 @@ Python Regular expression and XML
   <re.Match object; span=(12, 17), match='short'>
   ```
 
-  <br>
+<br>
 
-  ---
+---
 
 <br>
 
-- **match 객체의 메서드** : 어떤 문자열이 매치되었는지 그리고 매치된 문자열의 인덱스는 어디부터 어디까지 인지를 해결
+## **match 객체의 메서드** 
+: 어떤 문자열이 매치되었는지 그리고 매치된 문자열의 인덱스는 어디부터 어디까지 인지를 해결
   
   <br>
 
+- 표 )
   |**메서드**|목적|
   |:---:|:---:|
   |group()|매치된 문자열을 리턴한다.|
   |start()|매치된 문자열의 시작 위치를 리턴|
   |end()|매치된 문자열의 끝 위치를 리턴|
   |span()|매치된 문자열의 (시작, 끝)에 해당되는 튜플을 리턴|
+
   
   <br>
 
-    - match 메서드 예시
+    - **match** 객체의 메서드 예시
       ```python
       >>> import re
       >>> p = re.compile('[a-z]+')
@@ -410,15 +419,15 @@ Python Regular expression and XML
 
       <br>
       
-    - search 메서드 예시 
+    - **search** 객체의 메서드 예시 
 
       ```python
       >>> m = p.search('3 python')
       >>> m.group()
       'python'
-      >>> m.start()
+      >>> m.start()  # '3 '은 매치가 되지 않으므로 2부터 시작
       2
-      >>> m.end()
+      >>> m.end()  
       8
       >>> m.span()
       (2,8)
@@ -434,6 +443,7 @@ Python Regular expression and XML
       
       ```python
       >>> m = re.match( '[a-z]+', "python")
+      ```
 
 <br>
 
@@ -446,10 +456,10 @@ Python Regular expression and XML
   
   |옵션명|약어|설명|
   |:---:|:---:|:---:|
-  |DOTALL|S|줄바꿈 문자를 포함하여 모든 문자와 매치할 수 있도록 한다.|
-  |IGNORECASE|I|대,소문자에 관계 없이 매치할 수 있도록 한다.
-  |MULTILINE|M|여러 줄과 매치할 수 있도록 한다. ( ^ , $ 메타 문자의 사용과 관계가 있는 옵션이다)
-  |VERBOSE|X|verbose 모드를 사용할 수 있도록 한다.(정규식을 보기 편하게 만들 수도 있고 주석 등을 사용할 수도 있다.)
+  |DOTALL|S|**줄바꿈 문자를 포함**하여 모든 문자와 매치할 수 있도록 한다.|
+  |IGNORECASE|I|**대,소문자에 관계 없이** 매치할 수 있도록 한다.
+  |MULTILINE|M|**여러 줄과 매치**할 수 있도록 한다. ( ^ , $ 메타 문자의 사용과 관계가 있는 옵션이다)
+  |VERBOSE|X|verbose 모드를 사용할 수 있도록 한다.(정규식을 보기 편하게 만들 수도 있고 **주석** 등을 사용할 수도 있다.)
   
   > re.DOTALL == re.S (약어 사용법)
 
@@ -465,6 +475,7 @@ Python Regular expression and XML
     > ( . ) 메타 문자가 '\n'을 읽을 수 있도록 한다. <br>보통 여러 줄로 이루어진 문자열에서 \n에 상관없이 검색하고자 사용.
 
   <br>
+  <br>
 
   - **IGNORECASE, I** : 대,소문자 구분 없이 매치 수행
     ```python
@@ -475,6 +486,9 @@ Python Regular expression and XML
     <객체 리턴>
     ```
 
+
+
+  <br>
   <br>
 
   - **MULTILINE, M**<br>
@@ -522,3 +536,217 @@ Python Regular expression and XML
       ['python one', 'python two', 'python three']
       ```
       > 즉, re.MULTILINE 옵션은 ^ , $ 메타 문자를 문자열의 각 라인마다 적용해 주는 것이다.
+
+  <br>
+  <br>
+
+  - **VERBOSE, X** : 어려운 정규식을 주석 또는 라인 단위로 구분하게 해준다.
+    - 예시)
+      ```python
+      charref = re.compile(r"""
+      &[#]    # 숫자의 엔티티 참조 시작
+      (
+        0[0-7]+   # 8진법
+        | [0-9]+   # 10진법
+        | x[0-9a-fA-F]+   # 16진법
+      )
+      ;
+      """, re.VERBOSE)  # VERBOSE 옵션으로 인해 #기호를 주석으로 처리해준다.
+      ```
+
+<br>
+
+---
+
+<br>
+
+## 백슬래시 문제
+- ex )
+  ```python
+  \section    # 이 정규식은 [\t\n\r\f\v]ection 과 같이 해석된다. ( \s 문자가 이스케이프 코드로 해석되기 때문.)
+  ```
+  > 의도한 대로 매치하고 싶다면 `\\section`과 같이 변경해야 한다.
+  
+  <br>
+
+  - 만약 백슬래시 표현이 계속 반복된다면 )
+    ```python
+    >>> p = re.compile(r'\\section')  # 이처럼 정규식 앞에 r을 붙이면 Raw String임을 알려주어 백슬래시를 2개 대신 1개만 써도 된다.
+    ```
+
+<br>
+
+---
+
+<br>
+
+# 07-3 ) 강력한 정규 표현식의 세계로
+*이제 몇몇 메타 문자들과 그룹을 만드는법, 전방 탐색등에 살펴보자.*
+
+<br>
+
+## 메타 문자
+*문자열 소모가 없는 메타 문자들*
+* **| (Pipe)** : A|B, A또는 B라는 의미
+  ```python
+  >>> p = re.compile('Crow|Servo')
+  >>> m = p.match('CrowHello')
+  >>> print(m)
+  <re.Match object; span=(0, 4), match='Crow'>
+  ```
+
+<br>
+
+* **^ (Caret)** : 문자열의 맨 처음
+  ```python
+  >>> print(re.search('^Life','Life is too short'))
+  <re.Match object; span=(0, 4), match='Life'>
+  >>> print(re.search('^Life','short Life'))
+  None
+  ```
+
+<br>
+
+* **$ (Dollar)** : 문자열의 끝
+  ```python
+  >>> print(re.search('short$','Life is too short'))
+  <re.Match object; span=(12, 17), match='short'>
+  >>> re.search('short$','Life is too short, you')
+  None
+  ```
+
+<br>
+
+* **\A** : 전체 문자열의 처음과 매치.
+  ```python
+  >>> p = re.compile('\ALife',re.MULTILINE)
+  >>> data ="""life
+  Life is
+  """
+  >>> m = p.search(data)
+  >>> print(m)
+  None  # Life 가 전체 문자열의 처음이 아니다.
+  ```
+
+<br>
+
+* **\Z** : 전체 문자열의 마지막.
+  ```python
+  >>> p = re.compile('\Zshort',re.MULTILINE)
+  >>> data = """Life
+  is too short,
+  you need python"""
+  >>> m = p.search(data)
+  >>> print(m)
+  None  # short가 전체 문자열의 끝이 아니다.
+  ```
+
+<br>
+
+* **\b** : whitespace에 구분이 된다.
+  ```python
+  >>> p = re.compile('\bclass\b')
+  >>> print(re.search('no class at all'))
+  <re.Match object; span=(3, 8), match='class'>
+  >>> print(re.search('the delclassified'))  # class 앞뒤가 빈칸이 아니다.
+  None
+  ```
+  > \b 메타 문자가 단어 구분자임을 알려주기 위해 r'\bclass\b' 처럼 **기호 r**을 반드시 붙여 주어야 한다.
+
+<br>
+
+* **\B** : \b 메타 문자와 반대 경우.
+  ```python
+  >>> p = re.compile(r'\Bclass\B')
+  >>> print(p.search('no class at all'))
+  None
+  >>> print(p.search('the declassfied algorithm'))
+  <re.Match object; span=(6, 11), match='class'>  # class의 앞뒤가 빈칸이 아니다.
+  ```
+
+<br>
+
+---
+
+<br>
+
+## 그룹핑 
+*계속해서 반복되는 정규식 작성을 위함*
+
+
+* 예시
+  ```python
+  (ABC)+
+  ```
+  > ( ) 을 이용하여 그룹핑을 할 수 있다.
+
+  <br>
+
+  * ex 1 )
+
+    ```python
+    >>> p = re.compile('(ABC)+')
+    >>> m = p.search('ABCABCABC OK?')
+    >>> print(m)
+    <re.Match object; span=(0, 9), match='ABCABCABC'>
+    >>> print(m.group())
+    ABCABCABC  # ABC가 3번 반복되는것을 다 받아드린다.
+    ```
+
+  <br>
+
+  * ex 2 )
+    ```python
+    >>> p = re.compile(r'\w+\s+\d+[-]\d+[-]\d+')
+    >>> m = re.search('park 010-1234-1234')
+    >>> print(m)
+    <re.Match object; span=(0, 18), match='park 010-1234-1234'>
+    ```
+    > \w : 문자와 숫자<br>\s : 이스케이프 <br>\d : 숫자<br>[ ] : 대괄호 안에 문자 유무
+
+  <br>
+
+  * ex 3 ) '이름'부분만 쓴다.
+    ```python
+    >>> p = re.compile(r'(\w+)\s+\d+[-]\d+[-]\d+')
+    >>> m = p.search('park 010-1234-1234')
+    >>> print(m.group())
+    park 010-1234-1234
+    >>> print(m.group(0))
+    park 010-1234-1234
+    >>> print(m.group(1))
+    park
+    ```
+
+  <br>
+
+  * **group 메서드 표**<br>
+    |*group(인덱스)*|*설명*|
+    |:---:|:---:|
+    |group(0)|매치된 전체 문자열|
+    |group(1)|첫 번째 그룹에 해당되는 문자열|
+    |group(2)|두 번째 그룹에 해당되는 문자열|
+    |group(n)|n 번째 그룹에 해당되는 문자열|
+
+  <br>
+
+  * ex 4 )
+    ```python
+    >>> p = re.compile(r'(\w+)\d+\s+((\d+)[-]\d+[-]\d+)')
+    >>> m = p.search('park 010-1234-1234')
+    >>> print(m.group(1))
+    park
+    >>> print(m.group(2))
+    010-1234-1234
+    >>> print(m.group(3))
+    010
+
+  <br>
+
+  * ex 5 ) **그룹핑된 문자열 재참조하기**
+    ```python
+    >>> p = re.compile(r'(\b\w+)\s+\1')
+    >>> print(p.search('Paris in the the spring').group())
+    the the
+    ```
+    > **\1** 이 재참조 메타 문자이다. \1은 정규식의 그룹 중 첫 번째 그룹을 지칭한다.
