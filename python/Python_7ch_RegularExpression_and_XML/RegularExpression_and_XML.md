@@ -75,7 +75,7 @@ Python Regular expression and XML
 ## 정규 표현식의 기초, 메타 문자
 - 정규 표현식에서 사용하는 **메타 문자(meta characters)** 에는 다음과 같은 것들이 있다.
   ```
-  . ^ $ * + ? { } [ ] \ | ( )
+  .(Dot) ^(Caret) $ * + ? { } [ ] \ |(Pipe) ( )
   ```
  <br/>
  
