@@ -751,3 +751,696 @@ Python Regular expression and XML
     the the
     ```
     > **\1** 이 재참조 메타 문자이다. \1은 정규식의 그룹 중 첫 번째 그룹을 지칭한다.
+  
+<br>
+
+---
+
+<br>
+
+## 그룹핑된 문자열에 이름 붙이기
+*그룹을 인덱스가 아닌 이름으로 참조할 수 있도록 한다.*
+
+* 그룹명 ex )
+  ```
+  (?P<name>\w+)\s+((\d+)[-]\d+[-]\d+)
+  ```
+  > 기존과 달라진 부분 : (\w+) >> (?P<name>\w+)<br>
+  확장 구문법 : **(?P<그룹명>...)**
+
+  <br>
+
+* 그룹명으로 참조 예시 )
+  ```python
+  >>> p = re.compile(r'(?P<name>\w+)\s+((\d+)[-]\d+[-]\d+)')
+  >>> m = p.search('park 010-1234-1234')
+  >>> print(m.group('name'))
+  park
+  ```
+
+  <br>
+
+* 그룹명을 이용하여 정규식 내에서 재참조 예시 )
+  ```python
+  >>> p = re.compile(r'(?P<word>\b\w+)\s+(?P=word)')
+  >>> m = p.search('Paris in the the spring').group()
+  the the
+  ```
+
+<br>
+
+---
+
+<br>
+
+## 전방 탐색
+* 예시 )
+  ```python
+  >>> p = re.compile('.+:')
+  >>> m = p.search('http://google.com')
+  >>> print(m.group())
+  http:
+  ```
+  > http: 에서 :을 제외하고 출력하려면?
+
+  <br>
+
+  * 이럴때 필요한 것이 전방 탐색이다. <br>
+  
+    |**정규식**|**종류**|**설명**|
+    |:---:|:---:|:---:|
+    |*(?=...)*|**긍정형** 전방 탐색| ...에 해당되는 정규식과 **매치되어야 하며** 조건이 통과되어도 문자열이 소모되지 않는다.|
+    |*(?!...)*|**부정형** 전방 탐색| ...에 해당되는 정규식과 **매치되지 않아야 하며** 조건이 통과 되어도 문자열이 소모되지 않는다.
+
+    <br>
+
+  * 긍정형 전방 탐색 예시 )
+    ```python
+    >>> p = re.compile('.+(?=:)')
+    >>> m = p.search('http://google.com')
+    >>> print(m.group())
+    http
+    ```
+     > 매치조건은 http : 이지만 : 은 제거되서 리턴이 된다.
+
+    <br>
+
+      * **' 파일명 + . + 확장자 '** 정규식
+        ```python
+        .*[.].*$   # foo.bar, autoexec.bat, sendmail.cf 와 같은 형식의 파일과 매치된다.
+        ```
+        > 이 정규식에서 'bat인 파일은 제외해야 한다'는 조건을 추가해보자.
+      
+        <br>
+      
+      * **조건 추가 )**
+        ```python 
+        .*[.][^b].*$   # [^b] 가 b를 매치시키지 않는다.
+        ```
+        > 하지만 이 정규식은 **foo.bar** 이라는 파일마저 걸러낸다. 그러므로 정규식을 다음과 같이 수정해 보자.
+
+      <br>
+      
+      * **조건 추가 )**
+        ```python
+        .*[.]([^b]..|.[^a].|..[^t])$   # b.. 이거나 .a. 이거나 ..t 인 파일을 매치시키지 않는다.
+        ```
+        > 하지만 이 정규식은 **sendmail.cf** 처럼 확장자의 문자 개수가 2개인 케이스를 포함하지 못 하게 된다.
+      
+      <br>
+      
+      * **조건 추가 )**
+        ```python
+        .*[.]([^b].?.?|.[^a]?.?|..?[^t]?)$
+        ```
+        > 확장자의 문자 개수가 2개여도 통과가 된다.
+    
+    <br>
+
+    ---
+    
+    <br>
+
+  * **부정형 전방 탐색** <br>
+  *위 케이스는 부정형 전방 탐색을 사용하면 간단하게 처리된다.*
+    * 정규식 )
+      ```python
+      .*[.](?!bat$).*$   # 확장자가 bat이 아닌 경우에만 통과된다.
+
+      .*[.](?!bat$ | exe$).*$   # exe 역시 제외하라는 조건 추가.
+      ```
+
+<br>
+
+---
+
+<br>
+
+## 문자열 바꾸기
+*sub 메서드를 이용하면 정규식과 매치되는 부분을 다른 문자로 쉽게 바꿀 수 있다.*
+* 예시 )
+  ```python
+  >>> p = re.compile('(blue|white|red)')
+  >>> print(p.sub('colour', 'blue socks and red shoes'))
+  colour socks and colour shoes
+  print(p.sub('colour','blue socks and red shoes',count=1))
+  colour socks and red shoes
+  ```
+  > **sub( ' 바꿀 문자열 ', ' 대상 문자열 ', ' count = 횟수 ' )**
+
+  <br>
+
+* **sub 메서드와 유사한 subn 메서드**
+  ```python
+  >>> print(p.subn('colour', 'blue socks and red shoes'))
+  ('colour socks and colour shoes', 2)
+  ```
+  > sub와 동일한 기능을 하고 리턴되는 결과와 횟수를 튜플로 리턴한다.
+
+  <br>
+
+  ---
+
+  <br>
+
+* **sub 메서드 사용 시 참조 구문 사용하기** <br><br> **예시 )**
+  
+  ```python
+  >>> p = re.compile(r"(?P<name>\w+)\s+(?P<phone>(\d+)[-]\d+[-]\d+)")
+  >>> print(p.sub("\g<phone> \g<name>", "park 010-1234-1234"))
+  010-1234-1234 park
+  # '이름 + 전화번호' >> '전화번호 + 이름'   
+  ```
+  > sub의 바꿀 문자열 부분에 `'\g<그룹명>'` 을 이용
+
+  <br>
+  
+  **참조번호를 이용한 예시 )**
+
+  ```python
+  >>> p = re.compile(r"(?P<name>\w+)\s+(?P<phone>(\d+)[-]\d+[-]\d+)")
+  >>> print(p.sub("\g<2> \g<1>", "park 010-1234-1234"))
+  010-1234-1234 park
+  # \g<phone> \g<name>   >>   \g<2> \g<1>  
+  ```
+
+  <br>
+  <br>
+
+* **sub 메서드의 입력 인수로 함수 넣기** <br>
+  *sub 메서드의 첫 번째 입력 인수로 함수를 넣을 수도 있다.*
+
+  * **예시 )**
+    ```python
+    def hexrepl(match):
+      "Return the hex string for a decimal number"
+      value = int(match.group())
+      return hex(value)  
+    # match 객체를 입력으로 받아 16진수로 변환하는 함수
+
+    p = re.compile(r'\d+')
+    print(p.sub(hexrepl, 'Call 65490 for printing, 49152 for user code.'))
+    ```
+    실행결과
+    ```
+    Call 0xffd2 for printing, 0xc000 for user code.
+    ```
+    > sub의 첫 번째 입력 인수로 함수를 사용할 경우 해당 함수의 인수에는 **정규식과 매치된 match 객체**가 입력된다. 그리고 매치되는 문자열은 함수의 리턴 값으로 바뀌게 된다.
+
+<br>
+
+---
+
+<br>
+
+## Greedy vs Non-Greedy
+* 예시 )
+  ```python
+  >>> s = '<html><head><title>Title</title>'
+  >>> print(len(s))
+  32
+  >>> print(re.match('<.*>',s).span())
+  (0, 32)
+  >>> print(re.match('<.*>',s).group())
+  <html><head><title>Title</title>
+  >>> print(re.match('<.*?>',s).group())
+  <html>
+  ```
+  > (*) 메타 문자 때문에 s의 모든 문자열을 리턴 시킨다. 그러므로 **non-greed 문자인 ?** 을 같이 사용하여 Greedy를 제한시킬수 있다.
+
+<br>
+
+---
+
+<br>
+
+# 07-4 ) 파이썬으로 XML 처리하기
+*XML 처리를 위한 파이썬 라이브러리는 [http://wiki.python.org/moin/PythonXml](http://wiki.python.org/moin/PythonXml) 에서 확인할 수 있다.*
+
+<br>
+
+## XML 문서 생성하기
+*ElementTree를 이용하여 다음과 같은 구조의 XML 문서를 생성*
+
+* 예시 )
+  ```python
+  from xml.etree.ElementTree import Element, dump   # XML 라이브러리 추가
+
+  note = Element('note')  # 태그 추가
+  to = Element('to')  # 태그 추가
+  to.text = 'tove'  # to 태그의 텍스트 추가
+
+  note.append(to)   # note 태그에 to 태그 삽입
+  dump(note)    # note 출력
+  ```
+  실행결과
+  ```
+  <note><to>Tove</to></note>
+  ```
+  > **엘리먼트(Element)** 를 이용하면 태그를 만들 수 있고, 만들어진 태그에 텍스트 값을 추가할 수 있음.
+
+<br>
+
+* **SubElement**<br>
+**서브엘리먼트(SubElement)** 를 이용하면 조금 더 편리하게 태그를 추가할 수 있다.
+  
+  <br>
+
+  * 예시 )
+    ```python
+    from xml.etree.ElementTree import Element, SubElement, dump
+
+    note = Element('note')
+    to = Element('to')
+    to.text = 'Tove'
+
+    note.append(to)
+    SubElement(note, 'from').text = 'Jani'    # note 태그에 from 이라는 태그를 'Jani'라는 내용으로 추가
+
+    dump(note)
+    ```
+    실행결과
+    ```
+    <note><to>Tove</to><from>Jani</from></note>
+    ```
+    > 서브엘리먼트는 **태그명과 태그의 텍스트 값**을 한 번에 설정할 수 있다.
+
+    <br>
+
+  * 태그를 추가하거나 삭제 )
+    ```python
+    dummy = Element('dummy')
+    note.insert(1, dummy)   # note에 1번째 위치에 dummy라는 태그 삽입
+    dump(note)
+    note.remove(dummy)    # dummy 태그 삭제
+    ```
+    실행결과
+    ```
+    <note><to>Tove</to><dummy /><from>Jani</from></note>
+    ```
+    > dummy 라는 태그를 삽입하고 삭제하는 경우.
+
+  <br>
+
+  ---
+
+  <br>
+
+* **애트리뷰트 추가하기** <br>
+*note 태그에 **애트리뷰트(attribute)** 를 추가*
+  * 추가 )
+    ```python
+    from xml.etree.ElementTree import Element, SubElement, dump
+
+    note = Element('note')
+    to = Element('to')
+    to.text = 'Tove'
+
+    note.append(to)
+    SubElement(note, 'from').text = 'Jani'
+    note.attrib['date'] = '20120104'    # 애트리뷰트 값 추가
+
+    dump(note)
+    ```
+    실행결과
+    ```
+    <note date="20120104"><to>Tove</to><from>Jani</from></note>
+    ```
+
+  <br>
+
+  ---
+
+  <br>
+
+* **XML 태그와 애트리뷰트를 추가하여 완성된 소스**
+  ```python
+  from xml.etree.ElementTree import Element, SubElement, dump
+
+  note = Element('note')
+  note.attrib['note'] = '20140104'
+  
+  to = Element('to')
+  to.text = 'Tove'
+  note.append(to)
+
+  SubElement(note, 'from').text = 'Jani'
+  SubElement(note, 'heading').text = 'Reminder'
+  SubElement(note, 'body').text = "Don't forget me this weekend!"
+  dump(note)
+  ```
+  실행결과
+  ```
+  <note note="20140104"><to>Jani</to><from>Jani</from><heading>Reminder</heading><body>Don't forget me this weekend!</body></note>
+  ```
+
+  <br>
+  
+  ---
+
+  <br>
+
+* **indent 함수** <br>
+*정렬된 형태의 XML 값을 보기 위함*
+  ```python
+  from xml.etree.ElementTree import Elment, SubElement, dump
+
+  note = Element('note')
+  note.attrib['date'] = '20180924'
+  to = Element('to')
+  to.text = 'Jani'
+  note.append(to)
+  SubElement(note, 'from').text = 'Jani'
+  SubElement(note, 'heading').text = 'Reminder'
+  SubElement(note, 'body').text = "Don't forget me this weekend!"
+
+  def indent(elem, level=0):
+    i = '\n' + level*" "
+    if len(elem):
+      if not elem.text or not elem.text.strip():
+        elem.text = i + " "
+      if not elem.tail or not elem.tail.strip():
+        elem.tail = i
+      for elem in elem:
+        indent(elem, level + 1)
+      if not elem.tail or not elem.tail.strip():
+        elem.tail = i
+    else:
+      if level and (not elem.tail or not elem.tail.strip()):
+        elem.tail = i
+
+  indent(note)
+  dump(note)
+  ```
+  실행결과
+  ```
+  <note date="20180924">
+   <to>Tove</to>
+   <from>Jani</from>
+   <heading>Reminder</heading>
+   <body>Don't forget me this weekend!</body>
+  </note>
+  ```
+
+  <br>
+
+  ---
+
+  <br>
+
+* **파일에 쓰기(write) 수행하기** <br>
+*엘리먼트의 write 메서드를 이용하여 파일에 쓰기*
+  ```py
+  from xml.etree.ElementTree import ElementTree
+  ElementTree(note).write('note.xml')
+  ```
+  > **note.xml** 이 생성되는 것을 확인할 수 있다.
+
+<br>
+
+---
+
+<br>
+
+## XML 문서 파싱하기
+*XML 문서를 파싱(parsing)하고 검색하는 방법*
+```py
+from xml.etree.ElementTree import parse
+tree = parse('note.xml')
+note = tree.getroot()
+```
+
+<br>
+
+* **애트리뷰트 값 읽기**
+  ```py
+  >>> print(note.get('date'))
+  20180924
+  
+  >>> print(note.get('foo','default'))    # 두 번째 인수로 디폴트 값을 주면 첫 번째 인자에 해당되는 애트리뷰트 값이 없을 경우 두 번째 값을 리턴.
+  default
+  
+  >>> print(note.keys())    # 애트리뷰트의 키 값
+  ['date']
+
+  >>> print(note.items())   # 애트리뷰트의 key와 value 값 리턴
+  [('date','20180924')]
+  ```
+
+  <br>
+
+* **XML 태그 접근하기**
+  ```py
+  >>> from_tag = note.find('from')
+  >>> from_tags = note.findall('from')
+  >>> from_text = note.findtext('from')
+  
+  >>> print(from_tag)
+  <Element 'from' at 0x0353A540>  # from 객체 리턴
+
+  >>> print(from_tags)
+  [<Element 'from' at 0x0353A540>]  # from 객체를 리스트로 리턴
+
+  >>> print(from_text)  # from 의 text를 리턴
+  Jani
+  ```
+
+<br>
+
+---
+
+<br>
+<br>
+<br>
+
+# 연 습 문 제
+
+## 정규 표현식
+* **Q1** 다음 중 정규식 " a [ . ] { 3 , } b  " 과 매치되는 문자열은 무엇일까? <br>
+
+  |번호|문자열|
+  |:---:|:---:|
+  |A|acccb|
+  |B|a....b|
+  |C|aaab|
+  |D|a.cccb|
+
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+
+   **답 : B , 왜냐하면 우선 문자열의 앞에는 a가 들어가야 한다. 그리고 [.] 은 . 과 달리 Dot(.) 자체를 의미한다. { 3, } 의 의미는 앞에 있는 문자가 3번 이상 반복되면 매치가 된다는 의미이다. 마지막으로 문자열의 마지막은 b가 있어야된다. 그러므로 a....b 가 답이 된다**
+
+   <br>
+
+   ---
+
+   <br>
+
+* **Q2** : 다음 코드의 결과값은 무엇일까?
+  ```py
+  >>> import re
+  >>> p = re.compile('[a-z]+')
+  >>> m = p.search('5 python')
+  >>> m.start() + m.end()
+  ```
+
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+   <br>
+
+   **답 : 10, ' [ a - z ] + ' 의 의미는 소문자 알파벳이 1번 이상 반복되는지 매치시키는 것이다. 그러므로 5 python의 매치되는 부분의 시작은 2이고 마지막은 8미만 까지이다.**
+
+   <br>
+
+   ---
+
+   <br>
+
+* **Q3** : 다음과 같은 문자열에서 핸드폰 번호 뒷자리인 숫자 4개를 ####로 바꾸는 프로그램을 정규식을 이용하여 작성해 보자.
+  ```py
+  """
+  park 010-9999-9988
+  kim 010-9909-7789
+  lee 010-8789-7769
+  """
+  ```
+
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+
+  답 :
+    ```py
+    import re
+
+    data ="""
+    park 010-9999-9988
+    kim 010-9909-7789
+    lee 010-8789-7769
+    """
+
+    def change_phoneNum(data):
+      p = re.compile('(\w+\s+\d+[-]\d+[-])(\d+)',re.MULTILINE)
+      print(p.sub('\g<1>####',data))
+
+    change_phoneNum(data)
+    ```
+    실행결과
+    ```
+    park 010-9999-####
+    kim 010-9909-####
+    lee 010-8789-####
+    ```
+
+  <br>
+  
+  ---
+
+  <br>
+
+* **Q4** : 다음은 이메일 주소를 나타내는 정규식이다. 이 정규식은 park@naver.com, kim@daum.net, lee@myhome.co.kr 등과 매치된다. 긍정형 전방 탐색 기법을 이용하여 .com, .net 이 아닌 이메일 주소는 제외시키는 정규식을 작성해 보자.
+  ```
+  .*[@].*[.].*$
+  ```
+
+  
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+
+  답 : 
+    ```py
+    def imail_check(data):
+    p = re.compile('.*[@].*(?=[.]com$|[.]net$)',re.MULTILINE)
+    print(p.findall(data))
+
+    data ="""
+    park@naver.com
+    kim@daum.net
+    lee@myhome.co.kr
+    """
+
+    imail_check(data)
+    ```
+
+    실행결과
+    ```
+    ['park@naver', 'kim@daum']
+    ```
+
+  <br>
+
+  ---
+
+  <br>
+
+## XML 처리
+* **Q1** : ElementTree를 이용하여 다음 XML 문서를 작성하고 파일에 저장해 보자.
+  ```py
+  <blog date="20151231">
+   <subject>Why python?</subject>
+   <author>Eric</author>
+   <content>Life is too short, You need Python!</content>
+  </blog>
+  ```
+  
+    
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+
+  답 :
+  ```py
+  from xml.etree.ElementTree import ElementTree, Element, SubElement, dump, parse
+
+  blog = Element('blog')
+  blog.attrib['date'] = '20151231'
+
+  SubElement(blog, 'subject').text = 'Why python?'
+  SubElement(blog, 'author').text = 'Eric'
+  SubElement(blog, 'content').text = 'You need Python!'
+
+  def indent(elem, level=0):
+      i = '\n' + level*" "
+      if len(elem):
+          if not elem.text or not elem.text.strip():
+            elem.text = i + " "
+          if not elem.tail or not elem.tail.strip():
+            elem.tail = i
+          for elem in elem:
+            indent(elem, level + 1)
+          if not elem.tail or not elem.tail.strip():
+            elem.tail = i
+      else:
+          if level and (not elem.tail or not elem.tail.strip()):
+            elem.tail = i
+
+  indent(blog)
+  dump(blog)
+
+  ElementTree(blog).write('blog.xml')
+  ```
+  실행결과
+  ```
+  <blog date="20151231">
+   <subject>Why python?</subject>
+   <author>Eric</author>
+   <content>You need Python!</content>
+  </blog>
+  ```
+
+<br>
+
+---
+
+<br>
+
+# 감 사 합 니 다.
+## Peedback
+* 
