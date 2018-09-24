@@ -1,4 +1,4 @@
-..Git Instruction
+Git Instruction
 =================
 
 <br/>
