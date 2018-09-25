@@ -9,6 +9,7 @@ for key, value in a.items():
 print('name이 a에 들어잇는가?',('name' in a))
 
 # dictionry , id ( Data_Structure 연습 )
+print('\nid 확인')
 pLink = { 'CurrentId': 0 , 'NextId' : 0}
 print(pLink['CurrentId'])
 pLink['CurrentId'] = id(pLink)
@@ -18,3 +19,9 @@ pLink['CurrentId'] = pLink
 print(pLink['CurrentId'])
 print(id(pLink['CurrentId']))
 print(type(pLink['CurrentId']))
+
+# clear
+print('\nclear 함수')
+print(pLink)
+pLink.clear()
+print(pLink)
