@@ -1,8 +1,20 @@
 # 정규 표현식에 더 자세하게
 import re
 
+# {m} 메타 문자
+print('\n{m} 메타문자')
+p = re.compile('ca{2}t')
+m = p.match('caaat')
+print('m = p.match(\'caaat\') = ', m)
+
+# ? 메타 문자
+print('\n? 메타문자')
+p = re.compile('ab?c')
+m = p.match('abbc')
+print('m = p.match(\'abbc\') = ', m)
+
 # | 메타 문자 : or 역할
-print('| 메타문자')
+print('\n| 메타문자')
 p = re.compile('Crow|Servo')
 m = p.match('CrowHello')
 print('p.match(\'CrowHello\')= ', m)

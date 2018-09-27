@@ -80,7 +80,7 @@ Python Regular expression and XML
  <br/>
  
 - **문자 클래스 [  ]**<br/>
-  만약 [abc]라면 이 표현식의 의미는 'a,b,c 중 한 개의 문자와 매치'를 뜻한다. 
+  *만약 [abc]라면 이 표현식의 의미는 ' a,b,c 중 한 개의 문자와 매치 '를 뜻한다.* 
   
   
   - **ex )** <br/>
@@ -113,7 +113,7 @@ Python Regular expression and XML
 - **Dot(.)**
   <br/> Dot(.) 메타 문자는 줄바꿈 문자인 \n를 제외한 모든 문자와 매치됨을 의미.
 
-  - ```python
+  - ```
     a.b  # a와 b 사이에 줄바꿈 문자를 제외한 어떤 문자가 들어가도 모두 매치
     ```
     > " a + 모든문자 + b "
@@ -138,7 +138,7 @@ Python Regular expression and XML
   <br/>
 
 - **반복(*)**
-  ```python
+  ```
   ca*t    # * 문자 바로 앞에 있는 a가 0번 이상 반복되면 매치
   ```
   <br/>
@@ -187,6 +187,7 @@ Python Regular expression and XML
       |:---:|:---:|:---:|:---:|
       |ca{2}t|cat|No|"a"가 1번 반복되어 매치 안됨|
       |ca{2}t|caat|Yes|"a"가 2번 반복되어 매치|
+      |ca{2}t|caaat|No|"a"가 3번 반복되어 매치 안됨|
   
   <br>
   <br>
@@ -209,7 +210,7 @@ Python Regular expression and XML
   <br>
   
   - 3.  **?**  : 앞에 있는 문자가 있거나 없거나 매치
-    ```python
+    ```
     ab?c    # b가 0~1번 사용되면 매치
     ```
     > " a + b ( 있어도 되고 없어도 된다 ) + c "
@@ -220,6 +221,7 @@ Python Regular expression and XML
       |:---:|:---:|:---:|:---:|
       |ab?c|abc|Yes|"b"가 1번 사용되어 매치|
       |ab?c|ac|Yes|"b"가 0번 반복되어 매치|
+      |ab?c|abbc|No|"b"가 2번 반복되어 매치 안됨|
 
 <br>
 
@@ -296,10 +298,10 @@ Python Regular expression and XML
 
     - ex)
       ```python
-      print('\nmatch 프로그램')
-      def match_str(st1, st2):
-        p = re.compile(st1)
-        m = p.match(st2)
+      print('match 프로그램')
+      def match_str(str1, str2):
+        p = re.compile(str1)
+        m = p.match(str2)
         if m:
           print('Match fount : ', m.group())
         else:
@@ -1078,7 +1080,7 @@ Python Regular expression and XML
   from xml.etree.ElementTree import Element, SubElement, dump
 
   note = Element('note')
-  note.attrib['note'] = '20140104'
+  note.attrib['date'] = '20140104'
   
   to = Element('to')
   to.text = 'Tove'
@@ -1091,7 +1093,7 @@ Python Regular expression and XML
   ```
   실행결과
   ```
-  <note note="20140104"><to>Jani</to><from>Jani</from><heading>Reminder</heading><body>Don't forget me this weekend!</body></note>
+  <note date="20140104"><to>Jani</to><from>Jani</from><heading>Reminder</heading><body>Don't forget me this weekend!</body></note>
   ```
 
   <br>
@@ -1117,7 +1119,7 @@ Python Regular expression and XML
   def indent(elem, level=0):
     i = '\n' + level*" "
     if len(elem):
-      if not elem.text or not elem.text.strip():
+      if not elem.text or not elem.text.strip():    # strip() : 문자 주변의 공백지우기
         elem.text = i + " "
       if not elem.tail or not elem.tail.strip():
         elem.tail = i
@@ -1154,7 +1156,7 @@ Python Regular expression and XML
   from xml.etree.ElementTree import ElementTree
   ElementTree(note).write('note.xml')
   ```
-  > **note.xml** 이 생성되는 것을 확인할 수 있다.
+  > **note.xml** 파일이 생성되는 것을 확인할 수 있다.
 
 <br>
 
