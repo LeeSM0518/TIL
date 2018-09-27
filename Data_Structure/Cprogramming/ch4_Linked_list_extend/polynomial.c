@@ -89,7 +89,7 @@ int getLinkedListLength(LinkedList* pList){
     return 0;
 }   // 리스트의 길이 호출
 
-int addPolyNodeLast(PolyList* pList, double coef, int degree)   //  다항식에 새로운 노드를 추가하는 함수 : 다항식에 새로운 항을 추가
+int addPolyNodeList(PolyList* pList, double coef, int degree)   //  다항식에 새로운 노드를 추가하는 함수 : 다항식에 새로운 항을 추가
 {
     int ret = 0, position = 0;
 
@@ -144,31 +144,31 @@ PolyList* polyAdd(PolyList* pListA, PolyList* pListB)
             int degreeB = pNodeB->data.degree;
             if(degreeA > degreeB){              //  (다항식 pListA의 차수) > (다항식 pListB의 차수) 인 경우
                 coefSum = pNodeA->data.coef;    //  pNodeA의 계수를 넣어준다.
-                addPolyNodeLast(pReturn, coefSum, degreeA); //  계수를 더해주는 과정
+                addPolyNodeList(pReturn, coefSum, degreeA); //  계수를 더해주는 과정
                 pNodeA = pNodeA->pLink; // pNodeA를 다음 노드로 이동
             }
             else if(degreeA == degreeB){              //  (다항식 pListA의 차수) == (다항식 pListB의 차수) 인 경우
                 coefSum = pNodeA -> data.coef + pNodeB->data.coef;  // A와 B의 계수를 더하고
-                addPolyNodeLast(pReturn, coefSum, degreeA); //  더한 계수의 값을 넣는다.
+                addPolyNodeList(pReturn, coefSum, degreeA); //  더한 계수의 값을 넣는다.
                 pNodeA = pNodeA->pLink; //  A의 다음 노드로 이동
                 pNodeB = pNodeB->pLink; //  B의 다음 노드로 이동
             }
             else{                         //  (다항식 pListA의 차수) < (다항식 pListB의 차수) 인 경우
                 coefSum = pNodeB->data.coef;    //  B의 계수를 넣고
-                addPolyNodeLast(pReturn, coefSum, degreeB);     // 계수를 더해준다.
+                addPolyNodeList(pReturn, coefSum, degreeB);     // 계수를 더해준다.
                 pNodeB = pNodeB->pLink;     //  B의 다음 노드로 이동
             }
         }
 
         while(pNodeA != NULL){  //  남은 노드가 있는지 마지막 후처리
             coefSum = pNodeA->data.coef;
-            addPolyNodeLast(pReturn, coefSum, pNodeA->data.degree);
+            addPolyNodeList(pReturn, coefSum, pNodeA->data.degree);
             pNodeA = pNodeA->pLink;
         }
 
         while(pNodeB != NULL){  //  남은 노드가 있는지 마지막 후처리
             coefSum = pNodeB->data.coef;
-            addPolyNodeLast(pReturn, coefSum, pNodeB->data.degree);
+            addPolyNodeList(pReturn, coefSum, pNodeB->data.degree);
             pNodeB = pNodeB ->pLink;
         }
     }
@@ -194,17 +194,17 @@ int main(int argc, char *argv[])
         //  다항식 초기화
         //  pListA : 7x^6 + 3x^5 + 5x^2
         //  pListB : 1x^5 + 2x^4 + 3x^2 + 4x^0
-        addPolyNodeLast(pListA, 7, 6);
-        addPolyNodeLast(pListA, 3, 5);
-        addPolyNodeLast(pListA, 5, 2);
+        addPolyNodeList(pListA, 7, 6);
+        addPolyNodeList(pListA, 3, 5);
+        addPolyNodeList(pListA, 5, 2);
         printf("A 다항식 = ");
         displayPolyList(pListA);
         printf("\n");
 
-        addPolyNodeLast(pListB, 1, 5);
-        addPolyNodeLast(pListB, 2, 4);
-        addPolyNodeLast(pListB, 3, 2);
-        addPolyNodeLast(pListB, 4, 0);
+        addPolyNodeList(pListB, 1, 5);
+        addPolyNodeList(pListB, 2, 4);
+        addPolyNodeList(pListB, 3, 2);
+        addPolyNodeList(pListB, 4, 0);
         printf("B 다항식 = ");
         displayPolyList(pListB);
         printf("\n");

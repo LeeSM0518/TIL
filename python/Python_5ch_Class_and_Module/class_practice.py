@@ -148,3 +148,25 @@ pey.love(juliet)
 pey + juliet
 pey.fight(juliet)
 pey - juliet
+
+# 클래스 복사
+class cp_test:
+    def cp(self):
+        a = 0
+        b = 0
+
+class cp_test2:
+    def cp2(self):
+        self = cp_test()
+        self.cp()
+
+print('\n클래스 복사')
+test = cp_test2()
+test.cp2()
+test.a = 1
+test.b = 1
+
+test_1 = cp_test2()
+test.cp2()
+test_1.a = 2
+test_1.a = 2

@@ -27,6 +27,24 @@ def createLinkedList(Node):
     LinkedList(Node)
     return Node
 
+
+def getLinkedListData(pList, position):
+    i = 0
+
+    if position > pList.currentCount:
+        print('\n오류, 불러올 위치 값이 현재 노드 개수 보다 많습니다.\n')
+        return
+
+    pCurrentNode = LinkedListNode()
+    pCurrentNode.LinkedListNode()
+    pCurrentNode = pList.pLink['HeaderClass']
+
+    for i in range(position):
+        pCurrentNode = pCurrentNode.pLink['NextClass']
+
+    return pCurrentNode.data
+
+
 def addLinkedListData(pList, position, term):
     i = 0
 
@@ -52,6 +70,29 @@ def addLinkedListData(pList, position, term):
 
     return pList
 
+
+def removeLinkedListData(pList, position):
+    if position == 0:
+        print('\n오류, 헤더노드는 지울 수 없습니다.\n')
+        return
+
+    i = int(0)
+    pDelNode = LinkedListNode()
+    pDelNode.LinkedListNode()
+    pPreNode = LinkedListNode()
+    pPreNode.LinkedListNode()
+
+    pPreNode = pList.pLink['HeaderClass']
+
+    for i in range(position - 1):
+        pPreNode = pPreNode.pLink['NextClass']
+
+    pDelNode = pPreNode.pLink['NextClass']
+    pPreNode.pLink['NextClass'] = pDelNode.pLink['NextClass']
+
+    pList.currentCount -= 1
+
+
 def deleteLinkedList(pList):
     if pList.pLink == {}:
         print('\n오류, 리스트가 비어있습니다.\n')
@@ -71,6 +112,65 @@ def deleteLinkedList(pList):
         pDelNode.data = 0
         pDelNode.pLink.clear()
 
+
+def getLinkedListLength(pList):
+    return pList.pLink['HeaderClass'].currentCount
+
+
+def displayList(pList):
+    i = 0
+    print('\n일반 순회')
+    for i in range(pList.currentCount):
+        print("Node[{}] = {}".format(i + 1, getLinkedListData(pList, i + 1)))
+
+
+def iterateLinkedList(pList):
+    count = int(0)
+
+    if pList.pLink == {}:
+        print('\n오류, 리스트가 비어있습니다.\n')
+        return
+
+    pNode = LinkedListNode()
+    pNode.LinkedListNode()
+
+    pNode = pList.pLink['HeaderClass']
+
+    print('\n로직 처리 순회')
+
+    while pNode != 0:
+        print('{} = {}'.format(count, pNode.data))
+        count += 1
+        pNode = pNode.pLink['NextClass']
+
+    print('노드 개수 : {}'.format(getLinkedListLength(pList.pLink['HeaderClass'])))
+
+
+def concatLinkedList(pListA, pListB):
+    pNodeA = LinkedListNode()
+    pNodeA.LinkedListNode()
+    pNodeB = LinkedListNode()
+    pNodeB.LinkedListNode()
+
+    if pListA.pLink['HeaderClass'] != 0 and pListB.pLink['HeaderClass'] != 0:
+        pNodeA = pListA.pLink['HeaderClass']
+        pNodeA = pNodeA.pLink['NextClass']
+
+        pNodeB = pListB.pLink['HeaderClass']
+        pNodeB = pNodeB.pLink['NextClass']
+
+        while pNodeA.pLink['NextClass'] != 0:
+            pNodeA = pNodeA.pLink['NextClass']
+
+        pListA.pLink['HeaderClass'].currentCount = getLinkedListLength(
+            pListA.pLink['HeaderClass']) + getLinkedListLength(pListB.pLink['HeaderClass'])
+        pNodeA.pLink['NextClass'] = pNodeB.pLink['CurrentClass']
+        pListB.pLink.clear()
+
+    elif pListA.pLink['HeaderClass'] == 0:
+        print('오류, A 리스트가 비어있습니다.')
+    elif pListB.pLink['HeaderClass'] == 0:
+        print('오류, B 리스트가 비어있습니다.')
 
 def addPolyNodeList(pList, coef, degree):
     '''다항식에 새로운 노드를 추가하는 함수 : 다항식에 새로운 항을 추가'''
