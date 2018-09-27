@@ -2,20 +2,17 @@ class TermType:
     def TermType(self):
         self.coef = float(0)     # 계수
         self.degree = int(0)     # 차수
-        self.data = 0
 
 class LinkedListNode:
     def LinkedListNode(self):
         self.Term = TermType()
         self.Term.TermType()
-        self.data = 0
         self.pLink = {'HeaderClass': 0, 'CurrentClass': 0, 'NextClass': 0}
         self.pLink['CurrentClass'] = self
         self.currentCount = 0
 
 
 def LinkedList(Node):
-    LinkedListNode()
     Node.pLink['HeaderClass'] = Node
     return Node
 
@@ -23,7 +20,6 @@ def LinkedList(Node):
 def createLinkedList(Node):
     Node = LinkedListNode()
     Node.LinkedListNode()
-    Node.data = 'HeaderNode'
     LinkedList(Node)
     return Node
 
@@ -68,7 +64,7 @@ def deleteLinkedList(pList):
         pDelNode = pPreNode
         pPreNode = pPreNode.pLink['NextClass']
 
-        pDelNode.data = 0
+        pDelNode.Term = None
         pDelNode.pLink.clear()
 
 
@@ -144,12 +140,9 @@ def polyAdd(pListA, pListB) :
 
     return pReturn
 
-pListA = LinkedListNode()
-pListA.LinkedListNode()
-pListB = LinkedListNode()
-pListB.LinkedListNode()
-pListC = LinkedListNode()
-pListC.LinkedListNode()
+pListA = 0
+pListB = 0
+pListC = 0
 
 pListA = createLinkedList(pListA)
 pListB = createLinkedList(pListB)
