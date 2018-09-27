@@ -12,6 +12,9 @@ print(Node)
 print(Node.data)
 print(Node.pLink)
 
+NodeB = LinkedListNode()
+NodeB.LinkedListNode()
+
 
 
 def LinkedList(Node):
@@ -20,7 +23,7 @@ def LinkedList(Node):
     return Node
 
 LinkedList(Node)
-
+LinkedList(NodeB)
 
 print('\nLinkedList test')
 print(Node)
@@ -42,13 +45,17 @@ print(Node)
 print(Node.data)
 print(Node.pLink)
 
-
+NodeB = createLinkedList(NodeB)
 
 def getLinkedListData(pList, position):
     i = 0
     pCurrentNode = LinkedListNode()
     pCurrentNode.LinkedListNode()
     pCurrentNode = pList.pLink['HeaderClass']
+
+    if position > pList.currentCount :
+        print('\n불러올 위치 값이 현재 노드 개수 보다 많습니다.\n')
+        return
 
     for i in range(position):
         pCurrentNode = pCurrentNode.pLink['NextClass']
@@ -58,11 +65,16 @@ def getLinkedListData(pList, position):
 
 print('\ngetLinkedListData test')
 print(getLinkedListData(Node, 0))
+print(getLinkedListData(Node, 1))
 
 
 
 def addLinkedListData(pList, position, data):
     i = 0
+
+    if position == 0 :
+        print('\n값을 넣을 위치는 헤더노드의 위치 입니다.\n')
+
     pNewNode = LinkedListNode()
     pNewNode.LinkedListNode()
     pPreNode = LinkedListNode()
@@ -88,6 +100,9 @@ print('\naddLinkedListData test')
 Node = addLinkedListData(Node, 1,10)
 Node = addLinkedListData(Node, 2,20)
 Node = addLinkedListData(Node, 3,30)
+
+NodeB = addLinkedListData(NodeB,1,40)
+NodeB = addLinkedListData(NodeB,2,50)
 
 print(getLinkedListData(Node, 0))
 print(getLinkedListData(Node, 1))
@@ -135,8 +150,8 @@ def deleteLinkedList(pList):
 
         pDelNode.data = 0
         pDelNode.pLink.clear()
-
 '''
+
 print('\ndeleteLinkedList test')
 deleteLinkedList(Node)
 print(Node.pLink)
@@ -153,8 +168,8 @@ print(getLinkedListLength(Node))
 def displayList(pList):
     i = 0
     print('\n일반 순회')
-    for i in range(pList.currentCount + 1):
-        print("{} = {}".format(i,getLinkedListData(pList,i)))
+    for i in range(pList.currentCount):
+        print("Node[{}] = {}".format(i+1,getLinkedListData(pList,i+1)))
 
 displayList(Node)
 
@@ -167,19 +182,23 @@ def iterateLinkedList(pList):
     pNode = pList.pLink['HeaderClass']
 
     print('\n로직 처리 순회')
-    while(pNode.pLink['NextClass'] != 0):
+
+    while  pNode != 0:
         print('{} = {}'.format(count, pNode.data))
         count += 1
+        pNode = pNode.pLink['NextClass']
 
-    print('노드 개수 : {}'.format(count))
+    print('노드 개수 : {}'.format(getLinkedListLength(pList.pLink['HeaderClass'])))
 
-iterateLinkedList(Node)
+iterateLinkedList(NodeB)
 
-'''
+
 
 def concatLinkedList(pListA, pListB):
     pNodeA = LinkedListNode()
+    pNodeA.LinkedListNode()
     pNodeB = LinkedListNode()
+    pNodeB.LinkedListNode()
 
     if pListA.pLink['HeaderClass'] != 0 and pListB.pLink['HeaderClass'] != 0:
         pNodeA = pListA.pLink['HeaderClass']
@@ -188,12 +207,22 @@ def concatLinkedList(pListA, pListB):
         pNodeB = pListB.pLink['HeaderClass']
         pNodeB = pNodeB.pLink['NextClass']
 
-        while pNodeA.pLink['HeaderClass'] and pNodeA.pLink['NextClass'] :
+        while pNodeA.pLink['NextClass'] != 0 :
             pNodeA = pNodeA.pLink['NextClass']
 
+        pListA.pLink['HeaderClass'].currentCount = getLinkedListLength(pListA.pLink['HeaderClass']) + getLinkedListLength(pListB.pLink['HeaderClass'])
         pNodeA.pLink['NextClass'] = pNodeB.pLink['CurrentClass']
         pListB.pLink.clear()
 
+print('\nconcatLinkedList Test')
+iterateLinkedList(Node)
+iterateLinkedList(NodeB)
+concatLinkedList(Node,NodeB)
+
+iterateLinkedList(Node)
+
+
+'''
 pList = createLinkedList()
 addLinkedListData(pList, 0, 10)
 addLinkedListData(pList, 1, 20)
