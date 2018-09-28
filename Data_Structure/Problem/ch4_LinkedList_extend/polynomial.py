@@ -60,7 +60,7 @@ def deleteLinkedList(pList):
 
     pPreNode = pList.pLink['HeaderClass']
 
-    while (pPreNode.pLink['NextClass'] != 0):
+    while (pPreNode != 0):
         pDelNode = pPreNode
         pPreNode = pPreNode.pLink['NextClass']
 
@@ -70,8 +70,6 @@ def deleteLinkedList(pList):
 
 def addPolyNodeList(pList, coef, degree):
     '''다항식에 새로운 노드를 추가하는 함수 : 다항식에 새로운 항을 추가'''
-    ret = 0
-    position = 0
 
     term = TermType()
     term.TermType()
@@ -80,7 +78,7 @@ def addPolyNodeList(pList, coef, degree):
 
     if pList.pLink['HeaderClass'] != 0 :
         position = pList.currentCount + 1
-        ret = addLinkedListData(pList, position, term)
+        addLinkedListData(pList, position, term)
 
 def displayPolyList(pList):
     pNode = LinkedListNode()
@@ -168,3 +166,9 @@ displayPolyList(pListC)
 deleteLinkedList(pListC)
 deleteLinkedList(pListB)
 deleteLinkedList(pListA)
+
+print()
+
+print(pListC.pLink)
+print(pListB.pLink)
+print(pListA.pLink)
