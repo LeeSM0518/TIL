@@ -3,7 +3,7 @@ class TermType:
         self.coef = float(0)     # 계수
         self.degree = int(0)     # 차수
 
-class LinkedListNode:
+class LinkedListNode(TermType):
     def LinkedListNode(self):
         self.Term = TermType()
         self.Term.TermType()
