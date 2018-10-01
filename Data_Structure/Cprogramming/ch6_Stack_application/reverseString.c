@@ -1,7 +1,7 @@
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "linkedstack.h"
+#include <stdio.h>    
 #include "linkedstack.c"
 
 char* reverseString(char *pSource)
