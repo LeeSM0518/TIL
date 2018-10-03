@@ -15,7 +15,7 @@ int main(void)
 
   srand((unsigned)time(NULL));
   
-  printf("\t숫자\t숫자\t숫자\t숫자\t숫자\t합계\t최대값\t최소값\n");
+  printf("\t숫자\t숫자\t숫자\t숫자\t숫자\t|\t합계\t최대값\t최소값\n");
 
   for( i = 0 ; i < 3 ; i++){
     for( j = 0 ; j < 5 ; j++){
@@ -29,12 +29,15 @@ int main(void)
       sum1[i] += box[i][j];
 
     }
+    printf("\t|");
     printf("\t%d", sum1[i]);
     printf("\t%d", max);
     printf("\t%d",min);
 
     printf("\n");
   }
+
+  printf("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ\n");
 
   printf("합계\t");
   for( i = 0 ; i < 5 ; i++ ){

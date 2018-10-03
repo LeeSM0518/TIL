@@ -1,0 +1,388 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title></title>
+  <style type="text/css">code{white-space: pre;}</style>
+  <style type="text/css">
+div.sourceCode { overflow-x: auto; }
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code > span.dt { color: #902000; } /* DataType */
+code > span.dv { color: #40a070; } /* DecVal */
+code > span.bn { color: #40a070; } /* BaseN */
+code > span.fl { color: #40a070; } /* Float */
+code > span.ch { color: #4070a0; } /* Char */
+code > span.st { color: #4070a0; } /* String */
+code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code > span.ot { color: #007020; } /* Other */
+code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code > span.fu { color: #06287e; } /* Function */
+code > span.er { color: #ff0000; font-weight: bold; } /* Error */
+code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+code > span.cn { color: #880000; } /* Constant */
+code > span.sc { color: #4070a0; } /* SpecialChar */
+code > span.vs { color: #4070a0; } /* VerbatimString */
+code > span.ss { color: #bb6688; } /* SpecialString */
+code > span.im { } /* Import */
+code > span.va { color: #19177c; } /* Variable */
+code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code > span.op { color: #666666; } /* Operator */
+code > span.bu { } /* BuiltIn */
+code > span.ex { } /* Extension */
+code > span.pp { color: #bc7a00; } /* Preprocessor */
+code > span.at { color: #7d9029; } /* Attribute */
+code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+  </style>
+</head>
+<body>
+<h1 id="c-programming-mentoring">C Programming Mentoring</h1>
+<h2 id="코드-저장소-멘토-수업-및-공부-자료">코드 저장소 : 멘토 수업 및 공부 자료</h2>
+<p><em>https://github.com/LeeSM0518/TIL/tree/master/C/mentoring</em></p>
+<p><br></p>
+<h1 id="배열">배열</h1>
+<h2 id="주사위-던지기">주사위 던지기</h2>
+<blockquote>
+<p><strong>중요!!</strong> <br> ) 배열은 0부터 시작한다. <br> ) 배열의 범위와 위치를 가리키는 [ ] 안에 식이 들어갈 수 있다.</p>
+</blockquote>
+<div class="sourceCode"><pre class="sourceCode c"><code class="sourceCode c"><span class="ot">#include &lt;stdio.h&gt;</span>
+<span class="ot">#include &lt;stdlib.h&gt;   </span><span class="co">// 랜덤함수를 써주기 위해</span>
+<span class="ot">#include &lt;time.h&gt;   </span><span class="co">// 지속적으로 랜덤 값을 변경시켜 주기 위해</span>
+<span class="ot">#define SIZE 6    </span><span class="co">// 전역 변수 선언</span>
+
+<span class="dt">int</span> main(<span class="dt">void</span>)
+{
+  <span class="dt">int</span> freq[SIZE] = { <span class="dv">0</span> };   <span class="co">// 배열을 다 0으로 초기화</span>
+  <span class="dt">int</span> i; 
+
+  srand((<span class="dt">unsigned</span>)time(NULL));    <span class="co">// 랜덤 함수를 지속적으로 값을 변경 시켜주기 위해</span>
+
+  <span class="kw">for</span>( i = <span class="dv">0</span> ; i &lt; <span class="dv">10000</span> ; i ++){
+    <span class="co">// 10000 번 주사위를 돌려준다</span>
+
+    ++freq[rand() % <span class="dv">6</span>];
+    <span class="co">// rand() % 6 한 값은 0부터 5까지의 값이 나온다.</span>
+    <span class="co">// 랜덤함수에서 나온 값의 freq 배열 위치에 1을 증가시킨다.</span>
+  }
+
+  printf(<span class="st">&quot;면</span><span class="ch">\t</span><span class="st">빈도</span><span class="ch">\n</span><span class="st">&quot;</span>);
+
+  <span class="kw">for</span>( i = <span class="dv">0</span> ; i &lt; SIZE ; i++){
+    printf(<span class="st">&quot;%3d </span><span class="ch">\t</span><span class="st"> %3d </span><span class="ch">\n</span><span class="st">&quot;</span>, i, freq[i]);
+    <span class="co">// %3d 는 스페이스바 2번 한 뒤에 값이 나온다.</span>
+    <span class="co">// \t 는 Tab키 한번을 뜻한다.</span>
+  }
+  
+
+  <span class="kw">return</span> <span class="dv">0</span>;
+}</code></pre></div>
+<p>실행결과</p>
+<pre><code>면      빈도
+0      1671
+1      1664
+2      1694
+3      1628
+4      1675
+5      1668</code></pre>
+<p><br></p>
+<hr />
+<p><br></p>
+<h2 id="최소값-최대값-구하기">최소값, 최대값 구하기</h2>
+<blockquote>
+<p><strong>중요!!</strong> <br> ) minimum 값과 maximum 값을 미리 prices[0] 값으로 넣지 않으면 오류가 발생한다. <br> ) prices[i] 값이 min 보다 작을 때 값을 바꿔주고 prices[i] 값이 max 보다 클 때 값을 바꿔주는 조건문이 중요하다.</p>
+</blockquote>
+<div class="sourceCode"><pre class="sourceCode c"><code class="sourceCode c"><span class="ot">#include &lt;stdio.h&gt;</span>
+<span class="ot">#include &lt;stdlib.h&gt;</span>
+<span class="ot">#include &lt;time.h&gt;</span>
+<span class="ot">#define SIZE 10 </span><span class="co">// SIZE 라는 전역변수 선언</span>
+
+<span class="dt">int</span> main(<span class="dt">void</span>)
+{
+  <span class="dt">int</span> prices[SIZE] = { <span class="dv">0</span> };
+  <span class="dt">int</span> i, minimum, maximum;
+
+  printf(<span class="st">&quot;------------------------------------</span><span class="ch">\n</span><span class="st">&quot;</span>);
+  printf(<span class="st">&quot;1  2  3  4  5  6  7  8  9  10</span><span class="ch">\n</span><span class="st">&quot;</span>);
+  printf(<span class="st">&quot;------------------------------------</span><span class="ch">\n</span><span class="st">&quot;</span>);
+
+  srand((<span class="dt">unsigned</span>)time(NULL));
+
+  <span class="kw">for</span>( i = <span class="dv">0</span> ; i &lt; SIZE ; i++){
+    prices[i] = (rand() % <span class="dv">100</span>) + <span class="dv">1</span>;
+    <span class="co">// prices 배열에 순서대로 0 부터 SIZE 번 까지에</span>
+    <span class="co">// 랜덤 함수를 이용해 1 ~ 100 까지의 값을 넣어준다.</span>
+
+    printf(<span class="st">&quot;%d &quot;</span>,prices[i]);
+    <span class="co">// 값 출력</span>
+  }
+
+  printf(<span class="st">&quot;</span><span class="ch">\n\n</span><span class="st">&quot;</span>);
+
+  minimum = prices[<span class="dv">0</span>];
+  maximum = prices[<span class="dv">0</span>];
+  <span class="co">// prices 배열의 첫 번째 값을 미리 최소값과 최대값에 넣어준다.</span>
+  <span class="co">// ( 밑에 for문에서 값 비교를 위해서 )</span>
+
+  <span class="kw">for</span>(i = <span class="dv">1</span> ; i &lt; SIZE ; i++)
+  {
+    <span class="kw">if</span>(prices[i] &lt; minimum){
+      minimum = prices[i];
+    }
+    <span class="co">// 저장해둔 최소값이 prices[i] 보다 크면 prices[i] 값이</span>
+    <span class="co">// 최소값 보다 더 작다는 것을 의미하므로 최소값을 바꿔준다.</span>
+
+
+    <span class="kw">if</span>(prices[i] &gt; maximum){
+      maximum = prices[i];
+    }
+    <span class="co">// 저장해둔 최대값이 prices[i] 보다 작으면 prices[i] 값이</span>
+    <span class="co">// 최대값 보다 더 크다는 것을 의미하므로 최대값을 바꿔준다.</span>
+
+  }
+
+  printf(<span class="st">&quot;최소값은 %d 입니다.</span><span class="ch">\n</span><span class="st">&quot;</span>, minimum);
+  printf(<span class="st">&quot;최대값은 %d 입니다.</span><span class="ch">\n</span><span class="st">&quot;</span>, maximum);
+}</code></pre></div>
+<p>실행결과</p>
+<pre><code>------------------------------------
+1  2  3  4  5  6  7  8  9  10
+------------------------------------
+61 3 18 3 21 24 25 94 92 98
+
+최소값은 3 입니다.
+최대값은 98 입니다.</code></pre>
+<p><br></p>
+<hr />
+<p><br></p>
+<h2 id="영화관-좌석-예매">영화관 좌석 예매</h2>
+<blockquote>
+<p><strong>중요!!</strong> <br> ) 원래는 main 함수 말고 다른 함수들은 실행이 끝나는 동시에 <strong>값이 사라지지만</strong> 배열을 <strong>전역변수</strong>로 선언했기 때문에 함수를 <strong>void 형식</strong>으로 하고 void 함수 내에서 값을 처리하고 함수가 끝나고 <strong>값이 사라지지 않는다.</strong></p>
+</blockquote>
+<div class="sourceCode"><pre class="sourceCode c"><code class="sourceCode c"><span class="ot">#include &lt;stdio.h&gt;</span>
+<span class="ot">#define SIZE 10</span>
+
+<span class="dt">int</span> seats[SIZE] = { <span class="dv">0</span> };
+<span class="co">// void 함수가 seats 배열의 값을 처리해도 값이 그대로 seats에 남는다.</span>
+
+<span class="dt">void</span> reserve1();
+<span class="dt">void</span> reserve2(<span class="dt">int</span> count);
+<span class="dt">void</span> print_seat();
+<span class="dt">int</span> check_full();
+
+<span class="dt">int</span> main(<span class="dt">void</span>)
+{
+  <span class="dt">char</span> ans1;    <span class="co">// 좌석을 예약할지 말지를 결정하기 위한 변수</span>
+
+  <span class="dt">int</span> count;  <span class="co">// 몇 개의 좌석을 예약할지를 결정하기 위한 변수</span>
+
+  <span class="dt">int</span> i;  <span class="co">// for 문을 위한 변수</span>
+
+  <span class="dt">int</span> check = <span class="dv">0</span>;  <span class="co">// 모든 자리가 예약됫는지 확인하기 위한 변수</span>
+
+  <span class="dt">int</span> reserved; <span class="co">// 몇자리가 예약됫는지 확인하기 위한 변수</span>
+
+  <span class="kw">while</span>(<span class="dv">1</span>)
+  <span class="co">// 1은 반드시 참이기 때문에 while이 무한 루프가 돌기 시작한다.</span>
+  {
+    reserved = SIZE - check;
+    <span class="co">// SIZE 전역변수에 check를 빼면 자리가 몇 자리 남앗는지 알 수 있다.</span>
+
+    printf(<span class="st">&quot;좌석을 예약하시겠습니까?(y 또는 n)&quot;</span>);
+    scanf(<span class="st">&quot; %c&quot;</span>, &amp;ans1);
+
+    <span class="kw">if</span>(ans1 == &#39;y&#39;)
+    {
+      print_seat();
+
+      printf(<span class="st">&quot;몇 명을 예약하실것 입니까? &quot;</span>);
+      scanf(<span class="st">&quot;%d&quot;</span>, &amp;count);
+
+    
+    <span class="co">// 1명 예약이고 count가 남은 자리보다 작거나 같을 때</span>
+      <span class="kw">if</span>(count == <span class="dv">1</span> &amp;&amp; count &lt;= reserved){   
+        reserve1();
+      }
+
+
+    <span class="co">// 2명 이상 예약이고 count가 남은 자리보다 작거나 같을 때</span>
+      <span class="kw">else</span> <span class="kw">if</span>(count &lt;= SIZE &amp;&amp; count &lt;= reserved)
+        reserve2(count);
+    
+
+    <span class="co">// 남은 자리가 count 보다 작을 때</span>
+      <span class="kw">else</span>{
+        printf(<span class="st">&quot;자리가 부족합니다.</span><span class="ch">\n</span><span class="st">&quot;</span>);
+      }
+    }
+    
+
+    <span class="kw">else</span> <span class="kw">if</span>(ans1 == &#39;n&#39;){
+        <span class="kw">return</span> <span class="dv">0</span>;
+        <span class="co">// while 반복문을 나가게 된다.</span>
+    }
+    
+    check = check_full();
+    <span class="co">// check 변수에 몇 자리가 예약되었는지의 값을 넣어준다.</span>
+
+    <span class="kw">if</span>(check == SIZE){
+      <span class="co">// check의 값이 10 이 될때 while문을 나가게된다.</span>
+      printf(<span class="st">&quot;모든 자리가 예약되었습니다.</span><span class="ch">\n</span><span class="st">&quot;</span>);
+      <span class="kw">break</span>;
+    }
+
+
+
+    <span class="co">// check 값이 아직 10이 되지 않았을 때 아무일도 일어나지 않고 계속 while문을 실행한다.</span>
+    <span class="kw">else</span>
+      <span class="kw">continue</span>;
+      
+  }
+
+  <span class="kw">return</span> <span class="dv">0</span>;
+}
+
+
+
+<span class="dt">void</span> reserve1()
+{
+  <span class="dt">int</span> ans2, i;
+  printf(<span class="st">&quot;몇 번째 좌석을 예약하시겠습니까? &quot;</span>);
+  scanf(<span class="st">&quot;%d&quot;</span>, &amp;ans2);
+  <span class="co">// ans2 에 예약할 좌석 값을 받는다</span>
+      
+
+  <span class="kw">if</span>(ans2 &lt;= <span class="dv">0</span> || ans2 &gt; SIZE ){
+    printf(<span class="st">&quot;1부터 10사이의 숫자를 입력하세요</span><span class="ch">\n</span><span class="st">&quot;</span>);
+  }
+  <span class="co">// 좌석 위치 보다 작거나 큰 값을 입력했을 경우</span>
+
+
+
+  <span class="kw">if</span>(seats[ans2<span class="dv">-1</span>] == <span class="dv">0</span>){
+    seats[ans2<span class="dv">-1</span>] = <span class="dv">1</span>;
+    printf(<span class="st">&quot;예약되었습니다.</span><span class="ch">\n</span><span class="st">&quot;</span>);
+  }
+  <span class="co">// ans2 - 1 을 하는 이유는 배열의 시작은 0 부터 이기 때문이다.</span>
+
+
+  print_seat();
+  <span class="co">// 좌석들 출력.</span>
+}
+
+
+
+<span class="dt">void</span> reserve2(<span class="dt">int</span> count)
+{
+  <span class="dt">int</span> ans2, i;
+  <span class="kw">for</span>( i = <span class="dv">0</span> ; i &lt; count ; i++)
+  <span class="co">// 여러명을 예약하기 위해 for문을 실행</span>
+  {
+    printf(<span class="st">&quot;몇 번째 좌석을 예약하시겠습니까? &quot;</span>);
+    scanf(<span class="st">&quot;%d&quot;</span>, &amp;ans2);
+      
+
+    <span class="kw">if</span>(ans2 &lt;= <span class="dv">0</span> || ans2 &gt; SIZE ){
+      printf(<span class="st">&quot;1부터 10사이의 숫자를 입력하세요</span><span class="ch">\n</span><span class="st">&quot;</span>);
+    }
+
+    <span class="kw">if</span>(seats[ans2<span class="dv">-1</span>] == <span class="dv">0</span>){
+      seats[ans2<span class="dv">-1</span>] = <span class="dv">1</span>;
+      printf(<span class="st">&quot;예약되었습니다.</span><span class="ch">\n</span><span class="st">&quot;</span>);
+    }
+
+    <span class="kw">else</span>{
+      printf(<span class="st">&quot;이미 예약된 자리입니다.</span><span class="ch">\n</span><span class="st">&quot;</span>);
+    }
+  }
+
+  print_seat();
+}
+
+
+
+<span class="dt">void</span> print_seat()
+<span class="co">// 좌석이 얼만큼 남았는지 출력해주는 함수.</span>
+<span class="co">// seats 를 전역변수로 선언되어있기 때문에 매개변수로 받지 않아도 된다.</span>
+{
+  <span class="dt">int</span> i;
+
+  printf(<span class="st">&quot;-----------------------------</span><span class="ch">\n</span><span class="st">&quot;</span>);
+  printf(<span class="st">&quot;1 2 3 4 5 6 7 8 9 10</span><span class="ch">\n</span><span class="st">&quot;</span>);
+  printf(<span class="st">&quot;-----------------------------</span><span class="ch">\n</span><span class="st">&quot;</span>);
+
+  <span class="kw">for</span>(i = <span class="dv">0</span>; i &lt; SIZE ; i++){
+    printf(<span class="st">&quot;%d &quot;</span>,seats[i]);
+  }
+  printf(<span class="st">&quot;</span><span class="ch">\n</span><span class="st">&quot;</span>);
+}
+
+
+
+<span class="dt">int</span> check_full()
+{
+  <span class="dt">int</span> i;
+  <span class="dt">int</span> count = <span class="dv">0</span>;
+
+  <span class="kw">for</span>(i = <span class="dv">0</span> ; i &lt; SIZE ; i++){
+    <span class="kw">if</span>( seats[i] == <span class="dv">1</span> ){
+      count++;
+    } 
+  }
+  <span class="co">// 좌석이 예약되었는지 조건문으로 확인하여 count를 1씩 증가시킨뒤 반환시킨다.</span>
+  
+  <span class="kw">return</span> count;
+}</code></pre></div>
+<p>실행결과</p>
+<pre><code>좌석을 예약하시겠습니까?(y 또는 n)y
+-----------------------------
+1 2 3 4 5 6 7 8 9 10
+-----------------------------
+0 0 0 0 0 0 0 0 0 0
+몇 명을 예약하실것 입니까? 15
+자리가 부족합니다.
+좌석을 예약하시겠습니까?(y 또는 n)y
+-----------------------------
+1 2 3 4 5 6 7 8 9 10
+-----------------------------
+0 0 0 0 0 0 0 0 0 0
+몇 명을 예약하실것 입니까? 10
+몇 번째 좌석을 예약하시겠습니까? 1
+예약되었습니다.
+몇 번째 좌석을 예약하시겠습니까? 2
+예약되었습니다.
+몇 번째 좌석을 예약하시겠습니까? 3
+예약되었습니다.
+몇 번째 좌석을 예약하시겠습니까? 4
+예약되었습니다.
+몇 번째 좌석을 예약하시겠습니까? 5
+예약되었습니다.
+몇 번째 좌석을 예약하시겠습니까? 6
+예약되었습니다.
+몇 번째 좌석을 예약하시겠습니까? 7
+예약되었습니다.
+몇 번째 좌석을 예약하시겠습니까? 8
+예약되었습니다.
+몇 번째 좌석을 예약하시겠습니까? 9
+예약되었습니다.
+몇 번째 좌석을 예약하시겠습니까? 10
+예약되었습니다.
+-----------------------------
+1 2 3 4 5 6 7 8 9 10
+-----------------------------
+1 1 1 1 1 1 1 1 1 1
+모든 자리가 예약되었습니다.</code></pre>
+<p><br></p>
+<hr />
+<p><br></p>
+<h2 id="차원-배열의-합계-최대값-최소값">2차원 배열의 합계, 최대값, 최소값</h2>
+</body>
+</html>
