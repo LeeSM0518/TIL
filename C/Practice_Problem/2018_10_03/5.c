@@ -7,16 +7,17 @@ typedef struct complex{
   int imagin;
 } complex;
 
-complex complex_add(complex c1, complex c2);
-complex complex_sub(complex c1, complex c2);
-complex random_input(complex c1);
-void print_complex(complex c1);
+complex complex_add(complex c1, complex c2);  // 복소수 덧셈
+complex complex_sub(complex c1, complex c2);  // 복소수 뺄셈
+complex random_input(complex c1); // 복소수 구조체 값 랜덤 초기화
+void print_complex(complex c1);   // 복소수 출력
 
 int main(void)
 {
   complex a, b, c;
 
   srand((unsigned)time(NULL));
+  // 지속적인 랜덤 함수 사용의 값 변환을 위함
 
   a = random_input(a);
   b = random_input(b);
