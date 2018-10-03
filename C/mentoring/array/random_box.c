@@ -10,14 +10,15 @@ int main(void)
   int box[3][5] = { 0 };
 
   int max = -1 , min = SIZE + 1 ;
-  int sum1[5] = {0};
-  int sum2[5] = {0};
+  int sum_row[3] = {0};
+  int sum_col[5] = {0};
 
   srand((unsigned)time(NULL));
   
   printf("\t숫자\t숫자\t숫자\t숫자\t숫자\t|\t합계\t최대값\t최소값\n");
 
   for( i = 0 ; i < 3 ; i++){
+    printf("숫자");
     for( j = 0 ; j < 5 ; j++){
       box[i][j] = rand() % SIZE + 1;
       printf("\t%d", box[i][j]);
@@ -26,13 +27,16 @@ int main(void)
         max = box[i][j];
       if(box[i][j] < min)
         min = box[i][j];
-      sum1[i] += box[i][j];
+      sum_row[i] += box[i][j];
 
     }
     printf("\t|");
-    printf("\t%d", sum1[i]);
+    printf("\t%d", sum_row[i]);
     printf("\t%d", max);
     printf("\t%d",min);
+
+    max = - 1;
+    min = SIZE + 1;
 
     printf("\n");
   }
@@ -42,9 +46,9 @@ int main(void)
   printf("합계\t");
   for( i = 0 ; i < 5 ; i++ ){
     for( j = 0 ; j < 3 ; j ++){
-      sum2[i] += box[j][i];
+      sum_col[i] += box[j][i];
     }
-    printf("%d\t", sum2[i]);
+    printf("%d\t", sum_col[i]);
   }
   printf("\n");
 
