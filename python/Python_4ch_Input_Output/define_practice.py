@@ -53,6 +53,14 @@ print('a = {}'.format(a))
 # 즉, 함수 안에서 사용되는 변수는 함수 밖의 변수 이름들과는 전혀 상관이 없다는 말이다.
 print()
 
+# return 이용하기
+a = 1
+def add(a):
+    a = a + 1
+    return a
+a = add(a)
+print('\n','a = ', a)
+
 # global 명령어 이용하기
 a = 1
 def vartest():
@@ -62,3 +70,17 @@ def vartest():
 vartest()
 
 print('global a = {}'.format(a))
+
+print()
+# kwargs
+def func(*args, **kwargs):
+    print(args)
+    print(kwargs)
+
+print( func(1,2,3,name = 'foo', age = 3))
+
+# lambda
+print()
+print('lambda')
+sum = lambda a, b : a + b
+print('sum = ', sum(3,4) )
