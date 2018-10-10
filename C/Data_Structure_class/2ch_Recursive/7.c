@@ -1,15 +1,12 @@
-#define _CRT_SECURE_NO_WARNINGS
+// 결론은 재귀함수는 자기 자신 함수를 계속 불러오고 반환시키며 시간이 오래걸리지만
+// 반복함수는 상수 시간이 걸리므로 재귀 함수 보다 훨씬 빠르다.
 #include <stdio.h>
-#include <stdlib.h>
 #include <time.h>
 
 int fib(int n)
 {
 	int ret = 0;
-	//clock_t start, end;
-	//float time;
 
-	//start = clock();
 	if (n == 0) {
 		ret = 0;
 	}
@@ -20,11 +17,6 @@ int fib(int n)
 	else {
 		ret = fib(n - 1) + fib(n - 2);
 	}
-	//end = clock();
-
-	//time = (float)(end - start) / CLOCKS_PER_SEC;
-
-	//printf("순환 피보나치 수행 시간 : %d\n", time);
 
 	return ret;
 }
@@ -73,8 +65,4 @@ int main(void)
 	printf("반복 피보나치 수행 시간 : %f\n", time2);
 
 	printf("fib Reculsive result = %d\nfib iteration result = %d\n", result[0], result[1]);
-	system("pause");
 }
-
-// 결론은 재귀함수는 자기 자신 함수를 계속 불러오고 반환시키며 시간이 오래걸리지만
-// 반복함수는 상수 시간이 걸리므로 재귀 함수 보다 훨씬 빠르다.

@@ -9,17 +9,17 @@ int main(void)
 {
 	int n, r;
 
-	printf("nÀ» ÀÔ·Â: ");
+	printf("nì„ ì…ë ¥: ");
 	scanf("%d", &n);
 
-	printf("rÀ» ÀÔ·Â: ");
+	printf("rì„ ì…ë ¥: ");
 	scanf("%d", &r);
 
 	permutation(n, r);
 	sum2 = permutation2(n,r);
 
 	
-	printf("¼øÈ¯±¸Á¶·Î ±¸ÇÑ ´ä : %d\n", sum2);
+	printf("ìˆœí™˜êµ¬ì¡°ë¡œ êµ¬í•œ ë‹µ : %d\n", sum2);
 
 }
 
@@ -33,7 +33,7 @@ int permutation(int n, int r)
 		sum *= i;
 	}
 	
-	printf("¹İº¹±¸Á¶·Î ±¸ÇÑ ´ä : %d\n", sum);
+	printf("ë°˜ë³µêµ¬ì¡°ë¡œ êµ¬í•œ ë‹µ : %d\n", sum);
 
 }
 

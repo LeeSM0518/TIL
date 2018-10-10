@@ -1,4 +1,3 @@
-#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 
 double add(double n);
@@ -9,7 +8,7 @@ int main(void)
 	double n;
 	double result;
 
-	printf("nÀ» ÀÔ·Â; ");
+	printf("nì„ ì…ë ¥: ");
 	scanf("%lf", &n);
 
 	result = add(n);
