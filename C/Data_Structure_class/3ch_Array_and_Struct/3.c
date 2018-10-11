@@ -15,11 +15,12 @@ void displayPolyList(polynomial pList)
   {
     if( pList.coef[j] != 0){
       printf("%.1f x^%d ", pList.coef[j], i);
-      if( i != 0)
+      
+    }
+    if( i != 0 && pList.coef[j+1] != 0 )
       {
         printf("+ ");
       }
-    }
     
   }
   printf("\n");
@@ -54,13 +55,20 @@ polynomial poly_add1(polynomial A, polynomial B)
 
 int main()
 {
-  polynomial a = { 3, {6, 0, 0, 9}};
+  printf("A 식 : ");
+  polynomial a = { 3, {5, 0, 0, 9}};
   displayPolyList(a);
+  printf("\n");
 
-  polynomial b = { 3, {0, 8, 0, 0}};
+  printf("B 식 : ");
+  polynomial b = { 3, {1, 8, 0, 0}};
   displayPolyList(b);
-  
+  printf("\n");
+
   polynomial c;
+  printf("A + B = ");
   c = poly_add1(a,b);
   displayPolyList(c);
+  printf("\n");
+
 }
