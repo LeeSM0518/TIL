@@ -79,8 +79,6 @@ def popLS(pStack):
 
 
 def deleteLinkedStack(pStack):
-    pDelNode = LinkedStackNode()
-    pDelNode.LinkedStackNode()
     pNode = LinkedStackNode()
     pNode.LinkedStackNode()
 
