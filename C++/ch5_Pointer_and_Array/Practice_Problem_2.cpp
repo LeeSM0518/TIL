@@ -1,52 +1,50 @@
-#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <cstring>
 using namespace std;
 
 class Book {
-	char *title;	// Á¦¸ñ ¹®ÀÚ¿­
-	int price;		// °¡°İ
+	char* title;
+	int price;
 public:
-	Book(char *title, int price);	// ÃÊ±âÈ­ »ı¼ºÀÚ
+	Book(char* title, int price);
 	~Book();
-	Book(Book &b);	// ±íÀº º¹»ç »ı¼ºÀÚ
-	void set(char *title, int price);	// Á¦¸ñÀÌ³ª °¡°İÀ» ¹Ù²ãÁÖ±â À§ÇÑ ÇÔ¼ö
-	void show() {	// Ãâ·Â½ÃÅ°´Â ÇÔ¼ö
-		cout << title << '.' << price << " ¿ø" << endl;
+	Book(Book &c);
+	void set(char *title, int price);
+	void show() {
+		cout << title << '.' << price << " ì›" << endl;
 	}
 };
 
-Book::Book(char *title, int price) {
-	int len = strlen(title);			// Á¦¸ñ ±æÀÌ
-	this->title = new char[len + 1];	// Á¦¸ñ ±æÀÌ¸¸Å­ ¹è¿­ ¼±¾ğ
-	strcpy(this->title, title);			// Á¦¸ñ ÀúÀå
-	this->price = price;				// °¡°İ ÀúÀå
+Book::Book(char* title, int price)
+{
+	this->price = price;
+	int len = strlen(title);
+	this->title = new char[len + 1];
+	strcpy(this->title, title);
 }
+
 Book::~Book() {
-	if (title)			// titleÀÌ Á¸ÀçÇÒ¶§
+	if (title)
 		delete[] title;
 }
 
-void Book::set(char *title, int price) {	// Á¦¸ñÀÌ³ª °¡°İ º¯°æÇÏ±â À§ÇÑ ÇÔ¼ö
-	if (this->title)			// Á¦¸ñÀÌ Á¸ÀçÇÏ¸é 
-		delete[] this->title;	// ¸Ş¸ğ¸® ÇØÁ¦
-	int len = strlen(title);	// Á¦¸ñ ±æÀÌ ÀúÀå
-	this->title = new char[len + 1];	// Á¦¸ñ ¹è¿­ ÀúÀå
-	strcpy(this->title, title);	// Á¦¸ñ º¯°æ
-	this->price = price;		// °¡°İ º¯°æ
+Book::Book(Book &b) {
+	int len = strlen(b.title);
+	title = new char[len + 1];
+	strcpy(title, b.title);
+	price = b.price;
 }
 
-Book::Book(Book& b) {
-	int len = strlen(b.title);	// b °´Ã¼ÀÇ Á¦¸ñ ±æÀÌ º¹»ç
-	title = new char[len + 1];	// »õ·Î¿î °´Ã¼ÀÇ Á¦¸ñ ¹è¿­ ÀúÀå
-	strcpy(title, b.title);		// b °´Ã¼ÀÇ Á¦¸ñ º¹»ç
-	price = b.price;			// b °´Ã¼ÀÇ °¡°İ º¹»ç
+void Book::set(char *title, int price) {
+	if (this->title)
+		delete[] this->title;
+	int len = strlen(title);
+	this->title = new char[len + 1];
+	strcpy(this->title, title);
+	this->price = price;
 }
+
 
 int main() {
-	Book cpp("¸íÇ°C++", 10000);
-	Book java = cpp;			// cpp¸¦ ±íÀº º¹»çÇÏ¿© java¿¡ ÀúÀå
-	java.set("¸íÇ°ÀÚ¹Ù", 12000);	// java °´Ã¼ Á¦¸ñ, °ª ¼öÁ¤ÇÏ¿© ÀúÀå
-	cpp.show();
-	java.show();
+	Book cpp("C++", 10000);
 }
