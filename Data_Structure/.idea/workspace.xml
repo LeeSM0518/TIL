@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="14acd4eb-374c-44c7-b9e1-d6790927df3a" name="Default Changelist" comment="" />
+    <list default="true" id="14acd4eb-374c-44c7-b9e1-d6790927df3a" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../C/Data_Structure_class/5ch_Queue/CircleQueue.h" beforeDir="false" afterPath="$PROJECT_DIR$/../C/Data_Structure_class/5ch_Queue/CircleQueue.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../C/Data_Structure_class/5ch_Queue/Deque.h" beforeDir="false" afterPath="$PROJECT_DIR$/../C/Data_Structure_class/5ch_Queue/Deque.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../C/Data_Structure_class/5ch_Queue/Deque_main.c" beforeDir="false" afterPath="$PROJECT_DIR$/../C/Data_Structure_class/5ch_Queue/Deque_main.c" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,9 +66,10 @@
     <session id="-1159294998">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="1" />
+          <entry key="project.closed" value="2" />
+          <entry key="project.open.time.6" value="1" />
           <entry key="project.open.time.8" value="1" />
-          <entry key="project.opened" value="1" />
+          <entry key="project.opened" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -96,7 +101,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Problem/ch8_Reculsive_calling/subset_sum.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="176">
+            <state relative-caret-position="216">
               <caret line="8" column="30" selection-start-line="8" selection-start-column="30" selection-end-line="8" selection-end-column="30" />
             </state>
           </provider>
@@ -106,7 +111,7 @@
         <entry file="file://$PROJECT_DIR$/Problem/ch6_Stack_application/convertInfitToPostfix.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="216">
-              <caret line="152" column="46" lean-forward="true" selection-start-line="152" selection-start-column="46" selection-end-line="152" selection-end-column="46" />
+              <caret line="152" column="46" selection-start-line="152" selection-start-column="46" selection-end-line="152" selection-end-column="46" />
             </state>
           </provider>
         </entry>
@@ -190,8 +195,8 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
+    <option name="x" value="1912" />
+    <option name="y" value="-9" />
     <option name="width" value="1936" />
     <option name="height" value="1056" />
   </component>
@@ -201,6 +206,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -211,64 +217,17 @@
             <path>
               <item name="Data_Structure" type="b2602c69:ProjectViewProjectNode" />
               <item name="Data_Structure" type="462c0819:PsiDirectoryNode" />
-              <item name="Cprogramming" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Data_Structure" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Data_Structure" type="462c0819:PsiDirectoryNode" />
-              <item name="Cprogramming" type="462c0819:PsiDirectoryNode" />
-              <item name="C_basic" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Data_Structure" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Data_Structure" type="462c0819:PsiDirectoryNode" />
-              <item name="Cprogramming" type="462c0819:PsiDirectoryNode" />
-              <item name="ch2_Arraylist" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Data_Structure" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Data_Structure" type="462c0819:PsiDirectoryNode" />
-              <item name="Cprogramming" type="462c0819:PsiDirectoryNode" />
-              <item name="ch3_Linked_list" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Data_Structure" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Data_Structure" type="462c0819:PsiDirectoryNode" />
-              <item name="Cprogramming" type="462c0819:PsiDirectoryNode" />
-              <item name="ch4_Linked_list_extend" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Data_Structure" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Data_Structure" type="462c0819:PsiDirectoryNode" />
-              <item name="Cprogramming" type="462c0819:PsiDirectoryNode" />
-              <item name="ch8_Reculsive_calling" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Data_Structure" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Data_Structure" type="462c0819:PsiDirectoryNode" />
-              <item name="Problem" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Data_Structure" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Data_Structure" type="462c0819:PsiDirectoryNode" />
-              <item name="Problem" type="462c0819:PsiDirectoryNode" />
-              <item name="ch8_Reculsive_calling" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Data_Structure" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Data_Structure" type="462c0819:PsiDirectoryNode" />
               <item name="python" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../python/Python_2ch_datatype" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
@@ -427,9 +386,9 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="1912" y="-8" width="1936" height="1176" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15405117" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15565032" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -531,7 +490,7 @@
     <entry file="file://$USER_HOME$/Documents/2018-2-datastructure-seminar/subset_sum.py" />
     <entry file="file://$PROJECT_DIR$/Problem/ch8_Reculsive_calling/subset_sum.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
+        <state relative-caret-position="216">
           <caret line="8" column="30" selection-start-line="8" selection-start-column="30" selection-end-line="8" selection-end-column="30" />
         </state>
       </provider>
@@ -563,7 +522,7 @@
     <entry file="file://$PROJECT_DIR$/Problem/ch6_Stack_application/convertInfitToPostfix.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="216">
-          <caret line="152" column="46" lean-forward="true" selection-start-line="152" selection-start-column="46" selection-end-line="152" selection-end-column="46" />
+          <caret line="152" column="46" selection-start-line="152" selection-start-column="46" selection-end-line="152" selection-end-column="46" />
         </state>
       </provider>
     </entry>
