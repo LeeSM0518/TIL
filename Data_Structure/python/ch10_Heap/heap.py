@@ -22,10 +22,16 @@ class HeapType:
                 return None
             self.currentCount += 1
             i = self.currentCount
-            while i != 1 and value > self.pData[int(i/2)] :
-                self.pData[i] = self.pData[int(i/2)]
-                i = int(i / 2)
-            self.pData[i] = value
+            while i != 1 and value < self.pData[int(i/2)] :
+                if len(self.pData) > i :
+                    self.pData[i] = self.pData[int(i/2)]
+                    i = int(i / 2)
+                elif len(self.pData) <= i :
+                    self.pData.append(self.pData[int(i/2)])
+            if len(self.pData) > i:
+                self.pData[i] = value
+            elif len(self.pData) <= i:
+                self.pData.append(self.pData[int(i/2)])
         return i
 
     def removeMaxHeapAH(self):
@@ -42,14 +48,15 @@ class HeapType:
             self.currentCount -= 1
 
             while child <= self.currentCount :
-                if child < self.currentCount and self.pData[child] < self.pData[child + 1]:
+                if child < self.currentCount and self.pData[child] > self.pData[child + 1]:
                     child += 1
-                if pTemp >= self.pData[child] :
+                if pTemp < self.pData[child] :
                     break
                 self.pData[parent] = self.pData[child]
                 parent = child
                 child *= 2
             self.pData[parent] = pTemp
+            self.pData.remove(self.pData[parent])
         return pReturn
 
     def deleteArrayMaxHeap(self) :
