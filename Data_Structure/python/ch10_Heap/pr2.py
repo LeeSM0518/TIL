@@ -20,17 +20,23 @@ def solution(operations):
                 i += 1
                 continue
             elif op_list[i][1] == '1' :
-                heap_max.remove_heap()
-                count -= 1
+                if len(heap_max.heap_data) != 1 :
+                    heap_max.remove_heap()
+                    count -= 1
+                else :
+                    continue
             else :
-                heap_min.remove_heap()
-                count -= 1
+                if len(heap_min.heap_data) != 1:
+                    heap_min.remove_heap()
+                    count -= 1
+                else :
+                    continue
         i += 1
     if count == 0 :
         answer = [0, 0]
     else :
-        answer = [heap_2_max.remove_heap(), heap_2.remove_heap()]
+        answer = [heap_max.remove_heap(), heap_min.remove_heap()]
     return answer
 
-ans = solution(['I 16', 'D 1'])
+ans = solution(['I 7','I 5','I -5','D -1'])
 print(ans)

@@ -30,6 +30,8 @@ class Heap :
                 self.heap_data[parent] = self.heap_data[child]
                 parent = child
                 child *= 2
-            del self.heap_data[parent]
+            print(parent)
+            if len(self.heap_data) != 1 :
+                del self.heap_data[parent]
             self.heap_data.insert(parent, pTemp)
         return  pReturn
