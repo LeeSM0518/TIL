@@ -12,16 +12,17 @@ graph = {'A': ['B', 'C', 'D'],
          'L': ['I']}
 
 def DFS(graph, root) :
-    stack = []
-    visited = []
+    stack = []         # 스택
+    visited = []       # 방문한 스택
 
-    stack.extend(root)
+    stack.extend(root)  # 스택에 루트노드 삽입
 
     while(stack):
-        print('stack : ', stack)
-        print('visited : ', visited)
-        print('graph : ', graph,'\n')
+        # print('stack : ', stack)
+        # print('visited : ', visited)
+        # print('graph : ', graph,'\n')
         outputFromStack = stack.pop()
+        print(outputFromStack)
         visited.extend(outputFromStack)
         inputToStack = list(set(graph[outputFromStack]) - set(visited))
         inputToStack.sort()
