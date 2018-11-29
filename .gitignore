@@ -1,5 +1,6 @@
 
 # Created by https://www.gitignore.io/api/java,python,visualstudio
+# Edit at https://www.gitignore.io/?templates=java,python,visualstudio
 
 ### Java ###
 # Compiled class file
@@ -67,6 +68,7 @@ pip-delete-this-directory.txt
 # Unit test / coverage reports
 htmlcov/
 .tox/
+.nox/
 .coverage
 .coverage.*
 .cache
@@ -137,6 +139,9 @@ venv.bak/
 .dmypy.json
 dmypy.json
 
+# Pyre type checker
+.pyre/
+
 ### Python Patch ###
 .venv/
 
@@ -159,6 +164,7 @@ pip-selfcheck.json
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
 # User-specific files
+*.rsuser
 *.suo
 *.user
 *.userosscache
@@ -231,6 +237,7 @@ StyleCopReport.xml
 *.tlh
 *.tmp
 *.tmp_proj
+*_wpftmp.csproj
 *.vspscc
 *.vssscc
 .builds
@@ -444,8 +451,8 @@ paket-files/
 .idea/
 *.sln.iml
 
-# CodeRush
-.cr/
+# CodeRush personal settings
+.cr/personal
 
 # Python Tools for Visual Studio (PTVS)
 *.pyc
@@ -483,6 +490,5 @@ ASALocalRun/
 
 # Local History for Visual Studio
 .localhistory/
-
 
 # End of https://www.gitignore.io/api/java,python,visualstudio

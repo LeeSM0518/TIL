@@ -2,41 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="466baeef-c230-4a59-af92-fe1167625909" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/../ch1_Java_Start/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ch1_Java_Start/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ch1_Java_Start/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ch1_Java_Start/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ch1_Java_Start/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ch1_Java_Start/Chapter1_Java_Start.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ch1_Java_Start/ch1_Java_Start.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ch1_Java_Start/out/production/ch1_Java_Start/Hello.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ch1_Java_Start/out/production/ch1_Java_Start/RunStatementExample.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ch1_Java_Start/src/Hello.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../ch1_Java_Start/src/RunStatementExample.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Chapter2_Variable_and_Type.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ch2_Variable_and_Type.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/ch2_Variable_and_Type/ByteExample.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/ch2_Variable_and_Type/CharExample.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/ch2_Variable_and_Type/GarbageValueExample.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/ch2_Variable_and_Type/IntExample.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/ch2_Variable_and_Type/LongExample.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/ch2_Variable_and_Type/VariableExample.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/out/production/ch2_Variable_and_Type/VariableScopeExample.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/ByteExample.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/CharExample.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/FloatDoubleExample.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/GarbageValueExample.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/IntExample.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/LongExample.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/VariableExample.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/VariableScopeExample.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../../.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Java_Seminar.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../../.gitignore" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -122,8 +88,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/FloatDoubleExample.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="494">
-              <caret line="26" column="5" lean-forward="true" selection-start-line="26" selection-start-column="5" selection-end-line="26" selection-end-column="5" />
+            <state relative-caret-position="190">
+              <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
             </state>
           </provider>
         </entry>
@@ -188,7 +154,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1543483018822" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1543483216116" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
   </component>
@@ -260,12 +226,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1543470197093</updated>
-      <workItem from="1543470199803" duration="11235000" />
+      <workItem from="1543470199803" duration="11646000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="11235000" />
+    <option name="totallyTimeSpent" value="11646000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="953" y="0" width="974" height="1047" extended-state="0" />
@@ -276,7 +242,7 @@
       <window_info id="UI Designer" />
       <window_info id="Capture Tool" />
       <window_info id="Favorites" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24945295" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24945295" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Messages" weight="0.32968238" />
       <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
@@ -286,7 +252,7 @@
       <window_info anchor="bottom" id="Event Log" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32968238" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32968238" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -364,8 +330,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/FloatDoubleExample.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="494">
-          <caret line="26" column="5" lean-forward="true" selection-start-line="26" selection-start-column="5" selection-end-line="26" selection-end-column="5" />
+        <state relative-caret-position="190">
+          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
         </state>
       </provider>
     </entry>
