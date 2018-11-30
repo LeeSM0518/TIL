@@ -235,7 +235,6 @@ public class VariableExample {
           int v3 = v1 + v2 + 5;
       }
   }
-  
   ```
 
 
@@ -600,3 +599,470 @@ String name = "홍길동";
   ```
 
 
+
+
+### 2.2.4  논리 타입(boolean)
+
+: 1 byte 로 표현되는 **논리값(true/false)**을 저장할 수 있는 데이터 타입이다.  **두 가지 상태값**을 지정할 필요성이 있을 경우에 사용된다.
+
+* **boolean 타입 예제 코드**
+
+  ```java
+  public class BooleanExample {
+      public static void main(String[] args){
+          boolean stop = true;
+          // 조건문에 stop이 true이면 "중지합니다." 를
+          // false면 "시작합니다." 를 출력시킨다.
+          if(stop){
+              System.out.println("중지합니다.");
+          }
+          else{
+              System.out.println("시작합니다.");
+          }
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  중지합니다.
+  ```
+
+
+
+
+
+## 2.3  타입 변환
+
+: 데이터 타입을 다른 데이터 타입을 변환하는 것.  	**ex ) byte 타입 <--> int 타입**
+
+* **타입 변환 종류**
+  * **자동(묵시적) 타입 변환**
+  * **강제(명시적) 타입 변환**
+
+
+
+### 2.3.1 )  자동 타입 변환
+
+: 프로그램 실행 도중에 자동적으로 타입 변환이 일어나는 것.
+
+> **큰 크기 타입** = **작은 크기 타입**  	// 작은 크기 타입에서 큰 크기 타입으로 **자동 타입 변환**이 일어난다.
+
+
+
+* **타입 크기별 정리**
+
+  ```java
+  byte(1) < short(2) < int(4) < long(8) < float(4) < double(8)
+  ```
+
+
+
+* **자동 타입 변환 예시**
+
+  ```java
+  byte byteValue = 10;
+  int intValue = byteValue;	// 자동 타입 변환 발생
+  ```
+
+* **자동 타입 변환 컴파일 에러 예시**
+
+  ```java
+  byte byteValue = 65;
+  char charValue = byteValue;		// 컴파일 에러!!
+  char charData = (char) byteData	// 강제 타입 변환(뒤쪽에서 학습)
+  ```
+
+  > 음수가 저장될 수 있는 byte타입은 char타입으로 자동 변환시킬 수 없다.
+
+
+
+* **자동 타입 변환 예제 코드**
+
+  ```java
+  public class PromotionExample {
+      public static void main(String[] args){
+          byte byteValue = 10;
+          int intValue = byteValue;       // int <-- byte
+          System.out.println(intValue);
+  
+          char charValue = '가';
+          intValue = charValue;   // int <-- char
+          System.out.println("가의 유니코드 = " + intValue);
+  
+          intValue = 500;
+          long longValue = intValue;  // long <-- int
+          System.out.println(longValue);
+  
+          intValue = 200;
+          double doubleValue = intValue;  // double <-- int
+          System.out.println(doubleValue);
+      }
+  }
+  
+  ```
+
+
+
+
+
+### 2.3.2  )  강제 타입 변환
+
+: 큰 크기의 타입은 작은 크기의 타입으로 자동 타입 변환을 할 수 없다.
+
+> 이와 같이 큰 크기의 타입을 작은 크기의 타입으로 변환시킬 때는 **강제 타입 변환**이 필요하다.
+
+* **강제 타입 변환(캐스팅 : Casting)** : 캐스팅 연산자**' ( ) '**를 사용 
+
+  ```
+  // 강제 타입 변환 방법
+  작은 크기 타입 = (작은 크기 타입)큰 크기 타입
+  ```
+
+
+
+* **강제 타입 변환 예시**
+
+  1. 값이 변하는 예시
+
+     ```java
+     int intValue = 103029770;
+     byte byteValue = (byte) intValue;		// 강제 타입 변환(캐스팅)
+     ```
+
+     **byteValue 출력 결과**
+
+     ```
+     10
+     ```
+
+     > 위의 예시에서 강제 타입 변환을 하게 되면 4 byte인 int 타입에서 1 byte인 byte타입으로 변환하는 것이기 때문에 int 타입의 **3byte는 버려지고** 1byte만 저장시키기 때문에**값이 보존되지 않는다.**
+
+
+
+  2. 값이 변하지 않는 예시
+
+     ```java
+     long longValue = 300;
+     int intValue = (int) longValue;
+     ```
+
+     **intValue 출력 결과**
+
+     ```
+     300
+     ```
+
+     > long(8 byte) 에서 int(4 byte) 로 강제 변환 시킬때 long의 4 byte가 버려지게 된다. 그런데 **300은 8 byte 중 끝의 4 byte로 충분**하기 때문에 300이 그대로 유지된다.
+
+  3. 유니코드에서 문자열로 변환 예시
+
+     ```java
+     int intValue = 'A';		// intValue = 65
+     char charValue = (char) intValue;
+     ```
+
+     **charValue 출력 결과**
+
+     ```
+     A
+     ```
+
+  4. 실수 타입에서 정수 타입으로 변환 예시
+
+     ```java
+     double doubleValue = 3.14;
+     int intValue = (int) doubleValue;
+     ```
+
+     **intValue 출력 결과**
+
+     ```
+     3
+     ```
+
+
+
+* **강제 타입 변환 예제 코드**
+
+  ```java
+  public class CastingExample {
+      public static void main(String[] args){
+          int intValue = 44032;
+          char charValue = (char) intValue;	// int <-- char
+          System.out.println(charValue);
+  
+          long longValue = 500;
+          intValue = (int) longValue;
+          System.out.println(intValue);		// int <-- long
+  
+          double doubleValue = 3.14;
+          intValue = (int) doubleValue;
+          System.out.println(intValue);		// int <-- double
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  가
+  500
+  3
+  ```
+
+
+
+* **강제 타입 변환 데이터 손실 점검 예제 코드**
+
+  ```java
+  public class CheckValueBeforeCasting {
+      public static void main(String[] args){
+          int i = 128;
+  
+          // if( i < -128 || i > 127 ) 과 동일
+          if( (i < Byte.MIN_VALUE) || (i > Byte.MAX_VALUE)){
+              System.out.println("byte 타입으로 변환할 수 없습니다.");
+              System.out.println("값을 다시 확인해 주세요");
+          }else{
+              byte b = (byte) i;
+              System.out.println(b);
+          }
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  byte 타입으로 변환할 수 없습니다.
+  값을 다시 확인해 주세요
+  ```
+
+  > i가 Byte의 최대 범위를 넘는 것을 확인하고 강제 타입 변환을 중지 시킨다.
+
+
+
+* **MAX_VALUE, MIN_VALUE**
+  * **타입.MAX_VALUE** : 해당 타입의 최대값 상수,	ex) Byte.MAX_VALUE	=  -127
+  * **타입.MIN_VALUE** : 해당 타입의 최소값 상수,    ex) Byte.MIN_VALUE    =   128
+
+
+
+* **강제 타입 변환 정밀도 손실 예제 코드1**
+
+  ```java
+  public class FromIntToFloat {
+      public static void main(String[] args){
+          int num1 = 123456780;
+          int num2 = 123456780;
+  
+          float num3 = num2;  // float <-- int
+          num2 = (int) num3;  // int   <-- float
+  
+          int result = num1 - num2;
+          System.out.println(result);
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  -4
+  ```
+
+  > 0이 아닌 -4가 나오는 것을 볼 수 있다. 이유는 int에서 float으로 바꾸고 float에서 int로 바꿀 때 정밀도 손실이 발생하기 때문이다.
+
+
+
+- **강제 타입 변환 정밀도 손실 예제 코드2**
+
+  ```java
+  public class FromIntToDouble {
+      public static void main(String[] args){
+          int num1 = 123456780;
+          int num2 = 123456780;
+  
+          double num3 = num2;  // double <-- int
+          num2 = (int) num3;  //  int    <-- float
+  
+          int result = num1 - num2;
+          System.out.println(result);
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  0
+  ```
+
+  > 이전의 예제 코드와 다르게 0이 출력되는 것을 볼 수 있다. 이유는 double의 가수 52비트 보다 int의 32비트가 작기 때문에 정밀도 손실 없이 double 타입으로 변환될 수 있다.
+
+
+
+
+
+### 2.3.3 )  연산식에서의 자동 타입 변환
+
+:  서로 다른 타입의 피연산자를 연산할 때 두 피연산자 중 크기가 큰 타입으로 자동 변환된 후 연산을 수행한다.
+
+* **연산식 자동 타입 변환 예시**
+
+  ```java
+  int intValue = 10;
+  double doubleValue = 5.5;
+  double result = intValue + doubleValue;		// result에 15.5 저장
+  ```
+
+
+
+* **연산식 자동 타입 변환 예제 코드**
+
+  ```java
+  public class OperationsPromotionExample {
+      public static void main(String[] args) {
+          byte byteValue1 = 10;
+          byte byteValue2 = 20;
+          // byte byteValue3 = byteValue1 + byteValue2; 컴파일 에러
+          int byteValue3 = byteValue1 + byteValue2;
+          System.out.println(byteValue3);
+  
+          char charValue1 = 'A';
+          char charValue2 = 1;
+          // char charValue3 = charValue1 + charValue2; 컴파일 에러
+          int charValue3 = charValue1 + charValue2;
+          System.out.println("유니코드 = " + charValue3);
+          System.out.println("출력문자 = " + (char)charValue3);
+  
+          int intValue3 = 10;
+          int intValue4 = intValue3 / 4;
+          System.out.println(intValue4);
+  
+          int intValue5 = 10;
+          // int intValue6 = 10 / 4.0;  컴파일 에러
+          double doubleValue = intValue5 / 4.0;
+          System.out.println(doubleValue);
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  30
+  유니코드 = 66
+  출력문자 = B
+  2
+  2.5
+  ```
+
+  > 1. **byte byteValue3 = byteValue1 + byteValue2; 가 에러가 나는 이유**
+  >
+  >    Java는 정수 연산일 경우 int 타입(4 byte)을 기본으로 하기 때문이다. 
+  >
+  > 2. **char charValue3 = charValue1 + charValue2; 가 에러가 나는 이유**
+  >
+  >    위와 같은 이유이다.
+  >
+  > 3. **int intValue6 = 10 / 4.0 가 에러가 나는 이유**
+  >
+  >    10 / 4.0 을 하면 4.0이 double 타입이기 때문에 double로 자동 타입 변환이 일어나게 된다. 그 후 int 타입에 double 타입을 저장하기 때문에 컴파일 에러가 발생한다.
+
+
+
+
+
+## 확인문제
+
+1. 자바에서 변수에 대한 설명 중 틀린 것은 무엇입니까?
+
+   1. 변수는 하나의 값만 저장할 수 있다.
+   2. 변수는 선언 시에 사용한 타입의 값만 저장할 수 있다.
+   3. 변수는 변수가 선언된 중괄호( { } ) 안에서만 사용 가능하다.
+   4. **변수는 초기값이 저장되지 않은 상태에서 읽을 수 있다. ( X , 초기값이 저장되어 있지 않으면 읽을 수 없다. )**
+
+2. 변수 이름으로 사용 가능한 것을 모두 선택하세요.
+
+   1. **modelName**
+   2. **class**
+   3. 6hour( X , 변수는 숫자로 시작할 수 없다.)
+   4. **$value**
+   5. **_age**
+   6. **int**
+
+3. 다음 표의 빈칸에 자바의 기본 타입(Primitive Type) 8개를 적어보세요.
+
+   | 크기/타입 | 1 byte  | 2 byte          | 4 byte | 8 byte |
+   | --------- | ------- | --------------- | ------ | ------ |
+   | 정수타입  | byte    | short<br />char | int    | long   |
+   | 실수타입  |         |                 | float  | double |
+   | 논리타입  | boolean |                 |        |        |
+
+4. 다음 코드에서 타입, 변수 이름, 리터럴에 해당하는 것을 적어 보세요.
+
+   ```java
+   int age;
+   age = 10;
+   double price = 3.14;
+   ```
+
+   타입 : **int, double**
+
+   변수 이름 : **age, price**
+
+   리터럴 : **10, 3.14**
+
+
+
+5. 자동 타입 변환에 대한 내용입니다. 컴파일 에러가 발생하는 것은 무엇입니까?
+
+   ```java
+   byte byteValue = 10;
+   char charValue = 'A';
+   ```
+
+   1. int intValue = byteValue;
+   2. int intValue = charValue;
+   3. **short shortValue = charValue; ( charValue = 'A' 로써 유니코드로 65인데 short의 저장 범위는 -32 ~ 32 까지이기 때문에 컴파일 에러가 발생한다.** 
+   4. double doubleValue = byteValue;
+
+
+
+6. 강제 타입 변환(Casting)에 대한 내용입니다. 컴파일 에러가 발생하는 것은 무엇입니까?
+
+   ```java
+   int intValue = 10;
+   char charValue = 'A';
+   double doubleValue = 5.7;
+   String strValue = "A";
+   ```
+
+   1. double var = (double) intValue;
+   2. byte var = (byte) intValue;
+   3. int var = (int) doubleValue;
+   4. **char var = (char) strValue; ( X , String 은 타입이 아니기 때문에 강제 타입 변환이 되지 않는다. )**
+
+7. 변수를 잘못 초기화한 것은 무엇입니까?
+
+   1. int var1 = 10;
+   2. long var2 = 10000000000L;
+   3. **char var3 = '';  // 작은 따옴표 두 개가 붙어 있음 ( X , 작은 따옴표는 같이 붙여서 초기화 할 수 없고 (' ') 이처럼 한 칸 띄워서 초기화 해야한다.**
+   4. double var4 = 10;
+   5. float var5 = 10;
+
+8. 연산식에서의 타입 변환 내용입니다. 컴파일 에러가 생기는 것은 무엇입니까?
+
+   ```java
+   byte byteValue = 10;
+   float floatValue = 2.5F;
+   double doubleValue = 2.5;
+   ```
+
+   1. **byte result = byteValue + byteValue; ( X , 정수끼리의 연산은 int 타입이 기본이기 때문에 byte result에 저장할 수 없다.)**
+   2. int result = 5 + byteValue;
+   3. float result = 5 + floatValue;
+   4. double result = 5 + doubleValue;
