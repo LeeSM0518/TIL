@@ -8,26 +8,37 @@ int game_situation = 1;	// 게임 진행 상황
 int SCORE = 0;		// 점수
 int life = 5;		// 생명
 int SPEED = 50;		// 게임속도
-int LEVEL = 500;	// 레벨
+int LEVEL = 500;	// 레벨 점수
+int _LEVEL_ = 1;	// 레벨
+
 string LIFE_5 = "♥ ♥ ♥ ♥ ♥";	//  생명
 string LIFE_4 = "♥ ♥ ♥ ♥";
 string LIFE_3 = "♥ ♥ ♥";
 string LIFE_2 = "♥ ♥";
 string LIFE_1 = "♥";
 
-void game_menu() {	// 게임 메뉴 선택 함수
-	int menu = 0;
-	int ch = 0;
-	int k = 0;
+void GAME::game_menu() {	// 게임 메뉴 선택 함수
+	GAME num;
 
-	game_play();
+	while (1) {
+		num.menu = print_game_menu();
+		if (num.menu == 1) {
+			num.game_play_intro();
+			game_play();
+		}
+		else {
+			// 이전 메뉴 화면으로
+			return;
+		}
+	}
+	
 }
 
 void set_letter_color(int color) {	// 글씨 
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
 }
 
-int print_game_menu() {
+int GAME::print_game_menu() {
 	char ch;		// 입력된 키 저장
 	int num;		// 메뉴 번호 저장
 	int out = 0;	// 메뉴에서 나가기 위함
@@ -37,8 +48,10 @@ int print_game_menu() {
 	gotoxy(POSITION_GAME_MENU_X, POSITION_GAME_MENU_Y + 2);
 	cout <<("2. 나가기");
 	num = 1;
-	gotoxy(POSITION_GAME_MENU_X - 1, POSITION_GAME_MENU_Y);
+	set_letter_color(RED);
+	gotoxy(POSITION_GAME_MENU_X - 2, POSITION_GAME_MENU_Y);
 	cout <<("▶");
+	set_letter_color(WHITE);
 	while (1)
 	{
 		ch = _getch();
@@ -47,17 +60,21 @@ int print_game_menu() {
 		if (_kbhit()) {		// 키입력 확인
 			ch = _getch();
 			if (ch == 72) {	// 방향키 위에 입력
-				gotoxy(POSITION_GAME_MENU_X - 1, POSITION_GAME_MENU_Y);
+				set_letter_color(RED);
+				gotoxy(POSITION_GAME_MENU_X - 2, POSITION_GAME_MENU_Y);
 				cout <<("▶");
-				gotoxy(POSITION_GAME_MENU_X - 1, POSITION_GAME_MENU_Y + 2);
+				set_letter_color(WHITE);
+				gotoxy(POSITION_GAME_MENU_X - 2, POSITION_GAME_MENU_Y + 2);
 				cout <<(" ");
 				num = 1;
 			}
 			else if (ch == 80) {	// 방향키 아래 입력
-				gotoxy(POSITION_GAME_MENU_X - 1, POSITION_GAME_MENU_Y);
+				gotoxy(POSITION_GAME_MENU_X - 2, POSITION_GAME_MENU_Y);
 				cout <<(" ");
-				gotoxy(POSITION_GAME_MENU_X - 1, POSITION_GAME_MENU_Y + 2);
+				set_letter_color(RED);
+				gotoxy(POSITION_GAME_MENU_X - 2, POSITION_GAME_MENU_Y + 2);
 				cout <<("▶");
+				set_letter_color(WHITE);
 				num = 2;
 			}
 
@@ -67,8 +84,9 @@ int print_game_menu() {
 	return num;
 }
 
-void game_play()
+void game_play()	// 게임 플레이
 {
+	GAME game;
 	int random_word = 0;
 	int random_position = 0;
 	int word_len = 0;
@@ -78,8 +96,8 @@ void game_play()
 	string input_word = "";
 	string get;
 	setcursortype(NOCURSOR);
-	game_play_table();
-	game_score_table();
+	game.game_play_table();
+	game.game_score_table();
 	
 	while (1)
 	{
@@ -153,12 +171,18 @@ void game_play()
 						input_word.clear();
 					}
 				}
+				else if (ch == 27) {
+					game_situation = 0;
+					game_over();
+					break;
+				}
 			}
 
 
 			if (SCORE == LEVEL) {
 				SPEED -= 1;
 				LEVEL += 100;
+				_LEVEL_ += 1;
 			}
 
 			if (life == 0) {
@@ -179,10 +203,15 @@ void game_play()
 			break;
 		}
 	}
-
+	life = 5;
+	SCORE = 0;
+	_LEVEL_ = 1;
+	SPEED = 50;
+	LEVEL = 500;
+	game_situation = 1;
 }
 
-void game_play_table() {
+void GAME::game_play_table() {
 	int i;
 	for (i = 1; i < X_MAX - 1; i++) {
 		gotoxy(i, 0);
@@ -218,7 +247,7 @@ void game_play_table() {
 	set_letter_color(WHITE);
 }
 
-void game_play_intro() {
+void GAME::game_play_intro() {
 	int i;
 	for (i = 1; i < X_MAX - 1; i++) {
 		gotoxy(i, 0);
@@ -300,7 +329,7 @@ void CREATER_intro()
 
 }
 
-void game_score_table() {
+void GAME::game_score_table() {
 	int i;
 	for (i = X_MAX + 1; i < SCORE_TABLE_X - 1; i++) {
 		gotoxy(i, 0);
@@ -327,7 +356,9 @@ void game_score_table() {
 	gotoxy(X_MAX + 1, 0);
 	cout << "─";
 	gotoxy(SCORE_PRINT_X, SCORE_PRINT_Y);
-	cout << "닉네임  ";
+	cout << "게임 종료 버튼  ";
+	gotoxy(SCORE_PRINT_X, SCORE_PRINT_Y+1);
+	cout << ": ESC";
 	gotoxy(SCORE_PRINT_X, SCORE_PRINT_Y + 5);
 	cout << "생명  ";
 	set_letter_color(RED);
@@ -336,10 +367,15 @@ void game_score_table() {
 	set_letter_color(WHITE);
 	gotoxy(SCORE_PRINT_X, SCORE_PRINT_Y + 10);
 	cout << "점수  ";
-	set_letter_color(BLUE);
+	set_letter_color(SKY);
 	gotoxy(SCORE_PRINT_X, SCORE_PRINT_Y + 11);
 	cout << SCORE;
 	set_letter_color(WHITE);
+	gotoxy(SCORE_PRINT_X, SCORE_PRINT_Y + 13);
+	cout << "단계 ";
+	gotoxy(SCORE_PRINT_X, SCORE_PRINT_Y + 14);
+	cout << _LEVEL_;
+
 }
 
 void game_score(int state) {
@@ -350,7 +386,7 @@ void game_score(int state) {
 			gotoxy(SCORE_PRINT_X + i, SCORE_PRINT_Y + 11);
 			cout << ' ';
 		}
-		set_letter_color(BLUE);
+		set_letter_color(SKY);
 		gotoxy(SCORE_PRINT_X, SCORE_PRINT_Y + 11);
 		cout << SCORE;
 		set_letter_color(WHITE);
@@ -361,10 +397,16 @@ void game_score(int state) {
 			gotoxy(SCORE_PRINT_X + i, SCORE_PRINT_Y + 11);
 			cout << ' ';
 		}
-		set_letter_color(BLUE);
+		set_letter_color(SKY);
 		gotoxy(SCORE_PRINT_X, SCORE_PRINT_Y + 11);
 		cout << SCORE;
 		set_letter_color(WHITE);
+		for (i = 0; i <= 15; i++) {
+			gotoxy(SCORE_PRINT_X + i, SCORE_PRINT_Y + 14);
+			cout << ' ';
+		}
+		gotoxy(SCORE_PRINT_X, SCORE_PRINT_Y + 14);
+		cout << _LEVEL_;
 	}
 	else if (state == DROP) {
 		if (life == 5) {
@@ -425,14 +467,23 @@ void game_over()
 	string over = "G  A  M  E    O  V  E  R";
 	string over2 = "아 무 키 나  입 력 해 주 세 요";
 
+	set_letter_color(RED);
 	for (i = 0; i < over.size(); i++) {
-		gotoxy(GAME_OVER_X - 10 + i, GAME_OVER_Y);
+		gotoxy(GAME_OVER_X - 5 + i, GAME_OVER_Y+1);
 		cout << over[i];
 		Sleep(50);
 	}
-	gotoxy(GAME_OVER_X - 13, GAME_OVER_Y + 3);
+	set_letter_color(WHITE);
+
+	set_letter_color(SKY);
+	gotoxy(GAME_OVER_X + 2 , GAME_OVER_Y + 4);
+	cout << "점수 : " << SCORE;
+	set_letter_color(WHITE);
+
+	gotoxy(GAME_OVER_X - 8, GAME_OVER_Y + 7);
 	cout << over2;
 	_getch();
+	system("cls");
 }
 
 void game_clear()
@@ -474,5 +525,167 @@ void setcursortype(CURSOR_TYPE c)
 	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &CurInfo);
 }
 
-// TODO: 필요한 추가 헤더는
-// 이 파일이 아닌 STDAFX.H에서 참조합니다.
+
+void typing_practice::tp_table_out() {
+	cout << "┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n";
+	for (int i = 1; i < TP_TABLE_Y; i++)
+	{
+		gotoxy(0, i);
+		cout << "┃";
+		gotoxy(TP_TABLE_X, i);
+		cout << "┃";
+	}
+	gotoxy(0, TP_TABLE_Y);
+	cout << "┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n";
+}
+
+void typing_practice::tp_table_in() {
+	gotoxy(1, 1);
+	cout << "┌───────────────────────────────*[연습할텍스트]*─────────────────────────────┐";
+	for (int i = 2; i < TP_TABLE_Y -1; i++)
+	{
+		gotoxy(1, i);
+		cout << "│";
+		gotoxy(TP_TABLE_X - 40, i);
+		cout << "│";
+	}
+	gotoxy(1, TP_TABLE_Y - 1);
+	cout << "└────────────────────────────────────────────────────────────────────────────┘";
+
+	gotoxy(TP_TABLE_X - 39, 1);
+	cout << "┌─────────────*[타자결과]*────────────┐";
+	for (int i = 2; i < TP_TABLE_Y - 1; i++)
+	{
+		gotoxy(TP_TABLE_X - 39, i);
+		cout << "│";
+		gotoxy(TP_TABLE_X - 1, i);
+		cout << "│";
+	}
+	gotoxy(TP_TABLE_X - 39, TP_TABLE_Y - 1);
+	cout << "└─────────────────────────────────────┘";
+
+	gotoxy(TP_TABLE_X-33, 5);
+	cout << "▶정확도 : ";
+	gotoxy(TP_TABLE_X-33, 12);
+	cout << "▶소요시간 : ";
+	gotoxy(TP_TABLE_X-33, 19);
+	cout << "▶타수  : ";
+}
+
+void typing_practice::tp_progress()
+{
+	int i = 0, j = 0;
+	this->file = "abc.txt";
+	this->tp_file_upload(this);
+	
+	while (1)
+	{
+		if (j >= this->line_max) break;
+		for (i = 0; i <= 7; i++) {
+			gotoxy(TP_PRACTICE_START_X, TP_PRACTICE_START_Y + i * 3);
+			cout << load_txt[j] << endl;
+			j++;
+		}
+		_getch();
+		
+		 
+	}
+	
+}
+
+void typing_practice::tp_file_upload(typing_practice *TYP)
+{
+	ifstream fin(TYP->file);
+	string line;
+	int i = 0;
+	
+	if (!fin) {
+		cout << TYP->file << "파일을 열 수 없습니다." << endl;
+		return;
+	}
+
+	while (true) {
+		getline(fin, line);
+		if (line[0] != '\n' && line != "") {
+			load_txt[i] = line;
+			i++;
+		}
+		if (fin.eof()) break;
+		
+	}
+	TYP->line_max = i;
+	fin.close();
+}
+
+/*
+double Test_acc(string T1, string T2)	//정확도 계산, 단위는 %
+{
+	int SIZE = T2.length();	// string객체 T2의 길이를 반환. ★
+	float size = T1.length();
+	float cnt = 0.0;				// 맞으면 1추가
+	for (int i = 0; i < SIZE; i++)
+		if (T1[i] == T2[i])
+			cnt++;
+	return cnt / size * 100.0;
+}
+
+void Text_exam() {
+string T1("using namespace std;");
+string T2;
+gotoxy(3, 2);
+setFontColor(10);	//green:2, lightgreen:10 색으로 폰트 지정
+cout << T1 ;
+gotoxy(3, 3);
+setFontColor(15);
+
+if (_kbhit()) {
+clock_t start = clock();
+getline(cin, T2);	//문자열 입력. string타입의 C++문자열을 입력 받기 위해 제공되는 전역함수, 빈칸을 포함하는 문자열 입력 가능
+float time = (float)(clock() - start) / CLOCKS_PER_SEC;
+double n = time/60.0; //시작시간을 이용 1분 단위로 계산
+int WPM = ((double)T1.length()/n)*(Test_acc(T1,T2)/100.0); //Word Per Minute*Accuracy!!
+}
+
+gotoxy(3, 3);
+Test_String(T1, T2);
+gotoxy(81, 2);
+cout << "▶정확도\t : " << Test_acc(T1, T2) << "%" << endl;
+gotoxy(81, 3);
+cout << "▶소요시간\t : " << time << "sec" << endl;
+gotoxy(81, 4);
+cout << "▶타수 \t : " << WPM << "타수" << endl;
+}
+
+float Text_implement_TIME() {	//타자 검사 실행. 소요 시간 반환.
+	string T1("using namespace std;");
+	string T2;
+	gotoxy(3, 2);
+	setFontColor(10);			//green:2, lightgreen:10 색으로 폰트 지정
+	cout << T1;
+	gotoxy(3, 3);
+	setFontColor(15);
+
+	if (_kbhit()) {
+		clock_t start = clock();
+		getline(cin, T2);	//문자열 입력. string타입의 C++문자열을 입력 받기 위해 제공되는 전역함수, 빈칸을 포함하는 문자열 입력 가능
+		float time = (float)(clock() - start) / CLOCKS_PER_SEC;
+		return time;
+	}
+}
+int Text_implement_WPM(string T1, string T2) {
+	double n = Text_implement_TIME() / 60.0; //시작시간을 이용 1분 단위로 계산
+	int WPM = ((double)T1.length() / n)*(Test_acc(T1, T2) / 100.0); //Word Per Minute*Accuracy!!
+	return WPM;
+}
+void Text_output(string T1, string T2) {
+
+	gotoxy(3, 3);
+	Test_String(T1, T2);
+	gotoxy(81, 2);
+	cout << "▶정확도\t : " << Test_acc(T1, T2) << "%" << endl;
+	gotoxy(81, 3);
+	cout << "▶소요시간\t : " << Text_implement_TIME() << "sec" << endl;
+	gotoxy(81, 4);
+	cout << "▶타수 \t : " << Text_implement_WPM(T1, T2) << "타수" << endl;
+}
+*/
