@@ -6,7 +6,6 @@ public class Car3 {
     int maxSpeed;
 
     Car3(){
-
     }
 
     Car3(String model){
