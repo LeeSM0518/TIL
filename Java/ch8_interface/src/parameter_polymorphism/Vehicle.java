@@ -1,4 +1,5 @@
 package parameter_polymorphism;
 
-public class Vehicle {
+public interface Vehicle {
+    public void run();
 }

@@ -1,4 +1,5 @@
 package casting;
 
-public class Vehicle {
+public interface Vehicle {
+    public void run();
 }
