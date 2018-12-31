@@ -1,7 +1,6 @@
 public class Car9Example {
     public static void main(String[] args) {
         Car9 myCar = new Car9();
-
         // myCar.speed = 50;
         // speed가 private 접근 제한이여서 컴파일 오류
 
