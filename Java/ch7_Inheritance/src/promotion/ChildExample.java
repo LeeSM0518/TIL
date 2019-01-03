@@ -17,6 +17,11 @@ public class ChildExample {
 
         parent2.method1();
         parent2.method2(); // 오버라이딩된 함수 호출
-        // parent.method3(); 컴파일 에러(호출 불가능)
+        ((Child)parent2).method3();
+
+        parent2 = ((Child)parent2);
+        //parent2.method3();
+        System.out.println(parent2.hashCode());
+        System.out.println(((Child)parent2).hashCode());
     }
 }
