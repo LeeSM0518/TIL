@@ -9,7 +9,7 @@ def dfs(graph, start, startLow, startColumn, answer) :
         answer -= 1
         graph[startLow][startColumn] = 0
         graph[startColumn][startLow] = 0
-        answer = dfs(graph, start, startColumn, 0, answer)
+        answer = dfs(graph, start, startColumn , 0, answer)
     elif graph[startLow][startColumn] == 1 and \
             startColumn == start :
         graph[startLow][startColumn] = 0
@@ -33,9 +33,9 @@ def solution(n, computers) :
     return ans
 
 
-computers = [ [1, 1, 0, 1, 0],
+computers = [ [1, 1, 1, 1, 0],
               [1, 1, 1, 0, 0],
-              [0, 1, 1, 1, 0],
+              [1, 1, 1, 1, 0],
               [1, 0, 1, 1, 0],
               [0, 0, 0, 0, 1] ]
 
