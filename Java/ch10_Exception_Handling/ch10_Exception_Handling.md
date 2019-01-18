@@ -127,7 +127,7 @@ public class ClassCastExceptionExample {
         Dog dog = new Dog();
         // Animal animal = dog 로 타입 변환 후
         // change 메소드 내에서 Dog dog = (Dog) animal 로 다시 타입 변환
-        changeDog(dog);		
+        changeDog(dog);
 
         Cat cat = new Cat();
         // Animal animal = cat 으로 타입 변환 후
@@ -670,7 +670,11 @@ java CatchByExceptionKindExample  num1  num2
   	at exception_getting_information.AccountExample.main(AccountExample.java:16)
   ```
 
+<br>
 
+### printStackTrace() 메소드
+
+: 예외에 대한 정보를 가져올 수 있다.예외 발생 코드를 추적해서 모두 콘솔에 출력시킨다.
 
 
 
