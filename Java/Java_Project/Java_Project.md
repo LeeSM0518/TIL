@@ -365,11 +365,375 @@ public class BorderLayoutClass {
 }
 ```
 
+<br>
 
+### JTextField
+
+: 사용자가 임의로 텍스트를 입력할 수 있는 텍스트 박스 추가
+
+#### 텍스트 상자 추가 및 버튼 이벤트 처리
+
+```java
+package project_resources.jtextfield;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class AddTextField {
+    public static void main(String[] args) {
+        // 윈도우 창 크기 값 저장
+        Dimension dimension = new Dimension(400, 100);
+
+        // 창의 타이틀 저장 및 프레임 생성
+        JFrame frame = new JFrame("Hello!");
+        frame.setLocation(200, 400);    // 윈도우 생성 위치
+        frame.setPreferredSize(dimension);    // 윈도우 창 크기 설정
+
+        // 텍스트 상자 생성
+        JTextField textField = new JTextField();
+
+        // 라벨 텍스트 저장 및 생성
+        JLabel label = new JLabel("입력");
+        // 라벨 내부 텍스트 위치 설정
+        label.setHorizontalAlignment(SwingConstants.CENTER);
+        label.setVerticalAlignment(SwingConstants.CENTER);
+
+        // 버튼 텍스트 저장 및 생성
+        JButton button = new JButton("OK");
+        // 버튼의 이벤트 처리
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // 텍스트 상자의 텍스트를 가져와서 라벨에 출력시킨다.
+                label.setText(textField.getText());
+            }
+        });
+
+        // 텍스트 상자 가운데 위치
+        // 라벨 북쪽 위치
+        // 버튼 남쪽 위치
+        frame.add(textField, BorderLayout.CENTER);
+        frame.add(label, BorderLayout.NORTH);
+        frame.add(button, BorderLayout.SOUTH);
+        
+        frame.pack();
+        frame.setVisible(true);
+    }
+}
+```
+
+<br>
+
+#### setEnabled() 메소드
+
+```java
+package project_resources.jtextfield;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class SetEnabledMethod {
+    public static void main(String[] args) {
+        Dimension dimension = new Dimension(400, 100);
+
+        JFrame frame = new JFrame("Hello");
+        frame.setLocation(200, 400);
+        frame.setPreferredSize(dimension);
+
+        JTextField textField = new JTextField();
+        textField.setText("미리 설정");
+        textField.setEnabled(false);    // 텍스트 상자를 비활성화 시킨다.
+
+        JLabel jLabel = new JLabel("입력");
+        jLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        jLabel.setVerticalAlignment(SwingConstants.CENTER);
+
+        JButton button = new JButton("OK");
+        button.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                jLabel.setText(textField.getText());
+            }
+        });
+
+        frame.add(textField, BorderLayout.CENTER);
+        frame.add(button, BorderLayout.SOUTH);
+        frame.add(jLabel, BorderLayout.NORTH);
+
+        frame.pack();
+        frame.setVisible(true);
+    }
+}
+```
+
+<br>
+
+#### KeyListener() 메소드
+
+```java
+package project_resources.jtextfield;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+public class KeyListenerMethod {
+    public static void main(String[] args) {
+        Dimension dimension = new Dimension(400, 100);
+
+        JFrame frame = new JFrame("Hello");
+        frame.setLocation(400, 200);
+        frame.setPreferredSize(dimension);
+
+        JTextField textField = new JTextField();
+        textField.setToolTipText("도움말");
+        
+        // 텍스트 박스 이벤트 처리
+        KeyListener listener = new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                // 키를 눌렀을 시 호출됨(단 문자킹만 반응)
+                System.out.println("KeyTyped: " + e.getKeyChar());
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                // 키를 떼었을 시 호출됨
+                System.out.println("KeyPressed: " + e.getKeyChar());
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                // 키를 눌었을 시 호출됨
+                System.out.println("KeyReleased: " + e.getKeyChar());
+            }
+        };
+
+        // 텍스트에 이벤트 처리 추가
+        textField.addKeyListener(listener);
+
+        frame.add(textField, BorderLayout.CENTER);
+        frame.pack();
+        frame.setVisible(true);
+    }
+}
+```
+
+<br>
 
 ### JPanel
 
 : 보조 프레임. UI의 배치를 할 수 있다.
 
-## 참고 인터페이스
+```java
+package project_resources.jpanel;
+
+import javax.swing.*;
+import java.awt.*;
+
+public class AddJPanel {
+    public static void main(String[] args) {
+        Dimension dimension = new Dimension(800, 150);
+
+        JFrame frame = new JFrame("Hello");
+        frame.setLocation(200, 400);
+
+        // 1 패널에 레이아웃과 라벨, 텍스트 상자 추가
+        JPanel panel1 = new JPanel();
+        panel1.setLayout(new BoxLayout(panel1, BoxLayout.X_AXIS));
+        panel1.add(new JLabel("이름: "));
+        panel1.add(new JTextField());
+
+        // 2 패널에 레이아웃과 라벨, 텍스트 상자 추가
+        JPanel panel2 = new JPanel();
+        panel2.setLayout(new BoxLayout(panel2, BoxLayout.X_AXIS));
+        panel2.add(new JLabel("나이: "));
+        panel2.add(new JTextField());
+
+        // 3 패널에 레이아웃과 라벨, 텍스트 상자 추가
+        JPanel panel3 = new JPanel();
+        panel3.setLayout(new BoxLayout(panel3, BoxLayout.X_AXIS));
+        panel3.add(new JLabel("주소: "));
+        panel3.add(new JTextField());
+
+        // 4 패널에 레이아웃과 패널들을 추가
+        JPanel panel4 = new JPanel();
+        panel4.setLayout(new BoxLayout(panel4, BoxLayout.Y_AXIS));
+        panel4.add(panel1);
+        panel4.add(panel2);
+        panel4.add(panel3);
+
+        // 프레임에 패널을 추가하고 버튼 남쪽에 추가
+        frame.add(panel4, BorderLayout.CENTER);
+        frame.add(new JButton("입력하기"), BorderLayout.SOUTH);
+        frame.pack();
+        frame.setVisible(true);
+    }
+}
+```
+
+<br>
+
+### JTable
+
+```java
+package project_resources.jtable;
+
+import javax.swing.*;
+import java.awt.*;
+
+public class Add {
+    public static void main(String[] args) {
+        Dimension dimension = new Dimension(400, 150);
+
+        JFrame frame = new JFrame("Hello");
+        frame.setLocation(200, 400);
+        frame.setPreferredSize(dimension);
+
+        // 테이블의 헤더와 내용 정보 정의
+         String header[] = {"학생이름", "국어", "영어", "수학"};
+         String contents[][] = {
+                 {"박영수", "90", "87", "98"},
+                 {"김영희", "100", "99", "100"},
+                 {"김철수", "30", "25", "9"}
+         };
+
+         // 테이블 클래스의 객체 생성
+         JTable table = new JTable(contents, header);
+         // UI 들이 칸이 부족하면 위 아래로 스크롤을 제공하여 보여준다.
+         JScrollPane scrollPane = new JScrollPane(table);
+
+         // 테이블의 1, 1 위치의 값 변경
+         table.setValueAt("200", 1, 1);
+         // 테이블의 1, 1 위치의 값 가져오기
+        System.out.println(table.getValueAt(1, 1));
+
+        // 테이블의 행을 가져온다.
+        System.out.println(table.getRowCount());
+        
+        // 테이블의 컬럼 개수를 가져온다.
+        System.out.println(table.getColumnCount());
+        
+        // 컬럼의 0번 째를 호출한다.
+        System.out.println(table.getColumnName(0));
+
+         frame.add(scrollPane);
+         frame.pack();
+         frame.setVisible(true);
+    }
+}
+```
+
+<br>
+
+#### 행 단위로 데이터를 삽입/ 삭제
+
+```java
+package project_resources.jtable;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class InsertAndRemove {
+    public static void main(String[] args) {
+        Dimension dimension = new Dimension(400, 300);
+
+        JFrame frame = new JFrame("Hello");
+        frame.setLocation(200, 400);
+        frame.setPreferredSize(dimension);
+
+        String header[] = {"학생이름", "국어", "영어", "수학"};
+        String contents[][] = {
+                {"박영수", "90", "87", "98"},
+                {"김영희", "100", "99", "100"},
+                {"김철수", "30", "25", "9"}
+        };
+
+        // 객체를 생성하여 초기값을 넣고, model 객체를 통해
+        // 데이터를 테이블에 입력, 삭제한다.
+        DefaultTableModel model = new DefaultTableModel(contents, header);
+        JTable table = new JTable(model);
+        JScrollPane scrollPane = new JScrollPane(table);
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+
+        // 컴럼 수로 크기 설정
+        JTextField nameField = new JTextField(5);
+        JTextField subject1 = new JTextField(3);
+        JTextField subject2 = new JTextField(3);
+        JTextField subject3 = new JTextField(3);
+
+        panel.add(nameField);
+        panel.add(subject1);
+        panel.add(subject2);
+        panel.add(subject3);
+
+        // 버튼 객체 생성
+        JButton addbtn = new JButton("추가");
+
+        // 추가 버튼 이벤트 처리
+        addbtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String inputStr[] = new String[4];
+
+                inputStr[0] = nameField.getText();
+                inputStr[1] = subject1.getText();
+                inputStr[2] = subject2.getText();
+                inputStr[3] = subject3.getText();
+                model.addRow(inputStr);
+
+                nameField.setText("");
+                subject1.setText("");
+                subject2.setText("");
+                subject3.setText("");
+            }
+        });
+
+        // 삭제 버튼 객체 생성
+        JButton cancleBtn = new JButton("삭제");
+
+        // 삭제 버튼 이벤트 처리
+        cancleBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(table.getSelectedRow() == -1) {
+                    return;
+                } else {
+                    model.removeRow(table.getSelectedRow());
+                }
+            }
+        });
+
+        panel.add(addbtn);
+        panel.add(cancleBtn);
+
+        frame.add(scrollPane, BorderLayout.CENTER);
+        frame.add(panel, BorderLayout.SOUTH);
+        frame.pack();
+        frame.setVisible(true);
+    }
+}
+```
+
+
+
+## Scheduler 프로젝트
+
+## UI
+
+![1547881142283](C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\1547881142283.png)
+
+<br>
+
+## Class & Interface
 
