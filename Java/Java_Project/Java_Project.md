@@ -737,3 +737,32 @@ public class InsertAndRemove {
 
 ## Class & Interface
 
+```mermaid
+graph TB
+
+AbstractClass[UI & Event 추상클래스]
+UIMainClass[UI 메인 구현 클래스]
+UIAddClass[UI 추가 구현 클래스]
+UISearchClass[UI 검색 구현 클래스]
+UIAdjustClass[UI 수정 구현 클래스]
+UIRemoveClass[UI 삭제 구현 클래스]
+AddEventClass[추가 Event 구현 클래스]
+SearchEventClass[검색 Event 구현 클래스]
+AdjustEventClass[수정 Event 구현 클래스]
+RemoveEventClass[삭제 Event 구현 클래스]
+
+AbstractClass-->UIMainClass
+UIMainClass-->UIAddClass
+UIMainClass-->UISearchClass
+UIMainClass-->UIAdjustClass
+UIMainClass-->UIRemoveClass
+
+UIAddClass-->AddEventClass
+UISearchClass-->SearchEventClass
+UIAdjustClass-->AdjustEventClass
+UIRemoveClass-->RemoveEventClass
+
+```
+
+
+
