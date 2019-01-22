@@ -4,12 +4,19 @@ public abstract class Scheduler {
     private static final int HOUR_ROWS = 24;
     private static final int DAYS_COLUMNS = 8;
     private static final String TIMES[] = {
-            "0시 ~ 1시", "1시 ~ 2시", "2시 ~ 3시", "3시 ~ 4시", "4시 ~ 5시",
-            "5시 ~ 6시", "6시 ~ 7시", "7시 ~ 8시", "8시 ~ 9시", "9시 ~ 10시",
-            "10시 ~ 11시", "11시 ~ 12시", "12시 ~ 13시", "13시 ~ 14시", "14시 ~ 15시",
-            "15시 ~ 16시", "16시 ~ 17시", "17시 ~ 18시", "18시 ~ 19시", "19시 ~ 20시",
-            "20시 ~ 21시", "21시 ~ 22시", "22시 ~ 23시", "23시 ~ 24시"
+            "0시~1시", "1시~2시", "2시~3시", "3시~4시", "4시~5시",
+            "5시~6시", "6시~7시", "7시~8시", "8시~9시", "9시~10시",
+            "10시~11시", "11시~12시", "12시~13시", "13시~14시", "14시~15시",
+            "15시~16시", "16시~17시", "17시~18시", "18시~19시", "19시~20시",
+            "20시~21시", "21시~22시", "22시~23시", "23시~24시"
     };
+    private static final String TIMES_TOKENS[] = {
+            "0시", "1시", "2시", "3시", "4시", "5시",
+            "6시", "7시", "8시", "9시", "10시", "11시",
+            "12시", "13시", "14시", "15시", "16시", "17시",
+            "18시", "19시", "20시", "21시", "22시", "23시", "24시"
+    };
+
     private static final String DAYS[] = {
             "", "월", "화", "수", "목", "금", "토", "일"
     };
@@ -30,6 +37,9 @@ public abstract class Scheduler {
     public abstract void exitScheduler();
     public abstract void currentTimeUpdate();
 
+    public static String[] getTimesTokens() {
+        return TIMES_TOKENS;
+    }
     public static String getNowTime() {
         return NOW_TIME;
     }

@@ -7,62 +7,78 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class SchedulerMainUI extends Scheduler {
-    Dimension dimension = new Dimension(600, 600);
-
+    private Dimension dimension = new Dimension(600, 600);
+    private JFrame frame = new JFrame("Scheduler");
     private String header[] = getDays();
-    private String contents[][] = new String[24][8];
+    private String contents[][] = new String[24][7];
     private String times[] = getTimes();
+    private JLabel currentTime = new JLabel("현재 시간 : ");
+    private JButton addBtn = new JButton(getAddSchedule());
+    private JButton searchBtn = new JButton(getSearchSchedule());
+    private JButton adjustBtn = new JButton(getDeleteSchedule());
+    private JButton deleteBtn = new JButton(getAdjustSchedule());
+    private JPanel panel = new JPanel();
+    private JPanel panel1 = new JPanel();
+
+    DefaultTableModel model;
+    JScrollPane scrollPane;
 
     public SchedulerMainUI() {
+    }
 
-        JFrame frame = new JFrame("Scheduler");
-        frame.setLocation(600, 200);
-        frame.setPreferredSize(dimension);
-
+    public void modelUpdate() {
         for (int i=0; i < times.length; i++) {
             contents[i][0] = times[i];
         }
 
-        DefaultTableModel model = new DefaultTableModel(contents, header);
+        model = new DefaultTableModel(contents, header);
         JTable table = new JTable(model);
         table.setRowHeight(50);
+        scrollPane = new JScrollPane(table);
+    }
 
-        JScrollPane scrollPane = new JScrollPane(table);
+    public void viewOn() {
 
-        JLabel currentTime = new JLabel("현재 시간 : ");
+        frame.setLocation(600, 200);
+        frame.setPreferredSize(dimension);
+
+        modelUpdate();
+
         currentTime.setHorizontalAlignment(SwingConstants.LEFT);
 
-        JButton addBtn = new JButton(getAddSchedule());
+
         ActionListener addListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 addSchedule();
             }
         };
+        addBtn.addActionListener(addListener);
 
-        JButton searchBtn = new JButton(getSearchSchedule());
+
         ActionListener searchListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 searchSchedule();
             }
         };
+        searchBtn.addActionListener(searchListener);
 
-        JButton adjustBtn = new JButton(getDeleteSchedule());
         ActionListener adjustListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 adjustSchedule();
             }
         };
+        adjustBtn.addActionListener(adjustListener);
 
-        JButton deleteBtn = new JButton(getAdjustSchedule());
         ActionListener deleteListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 deleteSchedule();
             }
         };
+        deleteBtn.addActionListener(deleteListener);
 
         JButton exitBtn = new JButton(getExit());
         ActionListener exitListener = new ActionListener() {
@@ -71,13 +87,12 @@ public class SchedulerMainUI extends Scheduler {
                 exitScheduler();
             }
         };
+        exitBtn.addActionListener(exitListener);
 
-        JPanel panel = new JPanel();
+
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(currentTime, BorderLayout.NORTH);
         panel.add(scrollPane, BorderLayout.CENTER);
-
-        JPanel panel1 = new JPanel();
         panel1.setLayout(new GridLayout(1, 4));
         panel1.add(addBtn);
         panel1.add(searchBtn);
@@ -106,7 +121,9 @@ public class SchedulerMainUI extends Scheduler {
 
     @Override
     public void addSchedule() {
-
+        SchedulerAdd schedulerAdd = new SchedulerAdd();
+        schedulerAdd.schdulerAddView();
+        frame.setVisible(false);
     }
 
     @Override
@@ -139,7 +156,4 @@ public class SchedulerMainUI extends Scheduler {
         super.setSchedule(schedul);
     }
 
-    public static void main(String[] args) {
-        SchedulerMainUI schedulerMainUI = new SchedulerMainUI();
-    }
 }
