@@ -750,12 +750,16 @@ AddEventClass[추가 Event 구현 클래스]
 SearchEventClass[검색 Event 구현 클래스]
 AdjustEventClass[수정 Event 구현 클래스]
 RemoveEventClass[삭제 Event 구현 클래스]
+FileIO[파일 입출력 클래스]
+TimeUpdate[시간 업데이트 클래스]
 
 AbstractClass-->UIMainClass
 UIMainClass-->UIAddClass
 UIMainClass-->UISearchClass
 UIMainClass-->UIAdjustClass
 UIMainClass-->UIRemoveClass
+UIMainClass-->FileIO
+UIMainClass-->TimeUpdate
 
 UIAddClass-->AddEventClass
 UISearchClass-->SearchEventClass

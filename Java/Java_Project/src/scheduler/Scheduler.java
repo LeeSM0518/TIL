@@ -18,6 +18,7 @@ public abstract class Scheduler {
     private static final String ADJUST_SCHEDULE = "일정 수정";
     private static final String DELETE_SCHEDULE = "일정 삭제";
     private static final String NOW_TIME = "현재 시간 : ";
+    private static final String EXIT = "종료";
     private String schedule[][] = new String[24][5];
 
     public Scheduler(){}
@@ -26,6 +27,7 @@ public abstract class Scheduler {
     public abstract void searchSchedule();
     public abstract void adjustSchedule();
     public abstract void deleteSchedule();
+    public abstract void exitScheduler();
     public abstract void currentTimeUpdate();
 
     public static String getNowTime() {
@@ -43,22 +45,23 @@ public abstract class Scheduler {
     public static int getHourRows() {
         return HOUR_ROWS;
     }
-    public static String getAddSchedul() {
+    public static String getAddSchedule() {
         return ADD_SCHEDULE;
     }
-    public static String getSearchSchedul() {
+    public static String getSearchSchedule() {
         return SEARCH_SCHEDULE;
     }
-    public static String getDeleteSchedul() {
+    public static String getDeleteSchedule() {
         return DELETE_SCHEDULE;
     }
-    public static String getAdjustSchedul() {
+    public static String getAdjustSchedule() {
         return ADJUST_SCHEDULE;
     }
+    public static String getExit() { return EXIT; }
     public String[][] getSchedule() {
         return schedule;
     }
-    public void setSchedule(String[][] schedul) {
-        this.schedule = schedul;
+    public void setSchedule(String[][] schedule) {
+        this.schedule = schedule;
     }
 }

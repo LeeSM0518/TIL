@@ -3,15 +3,17 @@ package scheduler;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class SchedulerUI extends Scheduler {
+public class SchedulerMainUI extends Scheduler {
     Dimension dimension = new Dimension(600, 600);
 
     private String header[] = getDays();
     private String contents[][] = new String[24][8];
     private String times[] = getTimes();
 
-    public SchedulerUI() {
+    public SchedulerMainUI() {
 
         JFrame frame = new JFrame("Scheduler");
         frame.setLocation(600, 200);
@@ -30,10 +32,45 @@ public class SchedulerUI extends Scheduler {
         JLabel currentTime = new JLabel("현재 시간 : ");
         currentTime.setHorizontalAlignment(SwingConstants.LEFT);
 
-        JButton addBtn = new JButton("일정 추가");
-        JButton searchBtn = new JButton("일정 검색");
-        JButton adjustBtn = new JButton("일정 수정");
-        JButton deleteBtn = new JButton("일정 삭제");
+        JButton addBtn = new JButton(getAddSchedule());
+        ActionListener addListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                addSchedule();
+            }
+        };
+
+        JButton searchBtn = new JButton(getSearchSchedule());
+        ActionListener searchListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                searchSchedule();
+            }
+        };
+
+        JButton adjustBtn = new JButton(getDeleteSchedule());
+        ActionListener adjustListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                adjustSchedule();
+            }
+        };
+
+        JButton deleteBtn = new JButton(getAdjustSchedule());
+        ActionListener deleteListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                deleteSchedule();
+            }
+        };
+
+        JButton exitBtn = new JButton(getExit());
+        ActionListener exitListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                exitScheduler();
+            }
+        };
 
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -46,7 +83,7 @@ public class SchedulerUI extends Scheduler {
         panel1.add(searchBtn);
         panel1.add(adjustBtn);
         panel1.add(deleteBtn);
-
+        panel1.add(exitBtn);
         panel.add(panel1, BorderLayout.SOUTH);
 
         frame.add(panel, BorderLayout.CENTER);
@@ -88,6 +125,11 @@ public class SchedulerUI extends Scheduler {
     }
 
     @Override
+    public void exitScheduler() {
+
+    }
+
+    @Override
     public String[][] getSchedule() {
         return super.getSchedule();
     }
@@ -98,6 +140,6 @@ public class SchedulerUI extends Scheduler {
     }
 
     public static void main(String[] args) {
-        Scheduler scheduler = new SchedulerUI();
+        SchedulerMainUI schedulerMainUI = new SchedulerMainUI();
     }
 }
