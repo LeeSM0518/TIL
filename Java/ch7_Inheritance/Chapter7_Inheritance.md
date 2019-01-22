@@ -1285,3 +1285,4 @@ public abstract class 클래스 {
    2. **(B) new A()    // 강제 타입 변환 (X)**
    3. new D()        // 자동 타입 변환
    4. new E()        // 자동 타입 변환
+
