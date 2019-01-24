@@ -143,9 +143,15 @@ public class WorkerThread extends Thread {
         // 스레드가 실행할 코드
     }
 }
+Thread thread = new WorkerThread();	// 스레드 생성
 
-Thread thread = new WorkerThread();
 // 익명 객체로 작업 스레드 객체를 생성할 수도 있다.
+Thread thread = new Thread(new Runnable()){
+    @Override
+    public void run() {
+        // 스레드가 실행할 코드
+    }
+}
 ```
 
 * **예제**
@@ -438,16 +444,16 @@ public synchronized void method() {
 
 <br>
 
-: 이러한 스레드의 상태를 코드에서 확인하기 위해 getState() 메소드로 호출하면 된다. 스레드 상태에 따라서 Thread.State 열거 상수를 리턴한다.
+: 이러한 스레드의 상태를 코드에서 확인하기 위해 **getState() 메소드**로 호출하면 된다. 스레드 상태에 따라서 Thread.State 열거 상수를 리턴한다.
 
 * **Thread.State 열거 상수**
 
-  | 상태      | 열거 상수                               | 설명                                                         |
-  | --------- | --------------------------------------- | ------------------------------------------------------------ |
-  | 객체 생성 | NEW                                     | 아직 start() 메소드가 호출되지 않은 상태                     |
-  | 실행 대기 | RUNNABLE                                | 실행 상태로 언제든지 갈 수 있는 상태                         |
-  | 일시 정지 | WAITING<br />TIMED_WAITING<br />BLOCKED | 다른 스레드가 통지할 때까지 기다리는 상태<br />주어진 시간 동안 기다리는 상태<br />사용하고자 하는 객체의 락이 풀릴 때까지 기다리는 상태 |
-  | 종료      | TERMINATED                              | 실행을 마친 상태                                             |
+  | 상태           | 열거 상수                               | 설명                                                         |
+  | -------------- | --------------------------------------- | ------------------------------------------------------------ |
+  | 객체 생성      | NEW                                     | 아직 start() 메소드가 호출되지 않은 상태                     |
+  | 실행 대기      | RUNNABLE                                | 실행 상태로 언제든지 갈 수 있는 상태                         |
+  | 일시<br />정지 | WAITING<br />TIMED_WAITING<br />BLOCKED | 다른 스레드가 통지할 때까지 기다리는 상태<br />주어진 시간 동안 기다리는 상태<br />사용하고자 하는 객체의 락이 풀릴 때까지 기다리는 상태 |
+  | 종료           | TERMINATED                              | 실행을 마친 상태                                             |
 
   <br>
 
@@ -461,6 +467,7 @@ public synchronized void method() {
   public class StatePrintThread extends Thread{
       private Thread targetThread;
   
+      // 타겟 스레드를 파라미터로 받아서 저장
       // targetThread: 상태를 조사할 스레드
       public StatePrintThread(Thread targetThread) {
           this.targetThread = targetThread;
@@ -522,6 +529,8 @@ public synchronized void method() {
       }
   }
   ```
+
+
 
 <br>
 
@@ -635,3 +644,843 @@ public void run() {
 ### 12.6.4 스레드 간 협업(wait(), notify(), notifyAll())
 
 : 공유 객체는 두 스레드가 작업할 내용을 각각 동기화 메소드로 구분해 놓는다. 한 스레드가 작업을 완료하면 **notify() 메소드**를 호출해서 일시 정지 상태에 있는 다른 스레드를 실행 대기 상태로 만들고, 자신은 두 번 작업을 하지 않도록 **wait() 메소드**를 호출하여 일시 정지 상태로 만든다.
+
+* **예제**
+
+  ThreadA.java(**WorkObject의 methodA()를 실행하는 스레드**)
+
+  ```java
+  package thread_cooperation;
+  
+  public class ThreadA extends Thread {
+      private WorkObject workObject;
+  
+      public ThreadA(WorkObject workObject) {
+          // 공유 객체를 매개값으로 받아 필드에 저장
+          this.workObject = workObject;
+      }
+  
+      @Override
+      public void run() {
+          // 공유 객체의 methodA()를 10번 반복 호출
+          for(int i=0; i<10; i++) {
+              workObject.methodA();
+          }
+      }
+  }
+  ```
+
+  ThreadB.java(**WorkObject의 methodB()를 실행하는 스레드**)
+
+  ```java
+  package thread_cooperation;
+  
+  public class ThreadB extends Thread{
+      private WorkObject workObjecct;
+  
+      public ThreadB(WorkObject workObjecct) {
+          // 공유 객체를 매개값으로 받아 필드에 저장
+          this.workObjecct = workObjecct;
+      }
+  
+      @Override
+      public void run() {
+          // 공유 객체의 methodB()를 10번 반복 호출
+          for(int i=0; i<10; i++) {
+              workObjecct.methodB();
+          }
+      }
+  }
+  ```
+
+  WorkObject.java(**두 스레드의 작업 내용을 동기화 메소드로 작성한 공유 객체**)
+
+  ```java
+  package thread_cooperation;
+  
+  public class WorkObject {
+      public synchronized void methodA() {
+          System.out.println("ThreadA의 methodA() 작업 실행");
+          notify();   // 일시 정지 상태에 있는 ThreadB를 실행 대기 상태로 만듬
+          try {
+              wait(); // ThreadA를 일시 정지 상태로 만듬
+          } catch (InterruptedException e) { }
+      }
+  
+      public synchronized void methodB() {
+          System.out.println("ThreadB의 methodB() 작업 실행");
+          notify();   // 일시 정지 상태에 있는 ThreadA를 실행 대기 상태로 만듬
+          try {
+              wait(); // ThreadB를 일시 정지 상태로 만듬
+          } catch (InterruptedException e) { }
+      }
+  }
+  ```
+
+  WaitNotifyExample.java(**두 스레드를 생성하고 실행하는 메인 스레드**)
+
+  ```java
+  package thread_cooperation;
+  
+  public class WaitNotifyExample {
+      public static void main(String[] args) {
+          WorkObject sharedObject = new WorkObject();     // 공유 객체
+  
+          ThreadA threadA = new ThreadA(sharedObject);    // ThreadA 생성
+          ThreadB threadB = new ThreadB(sharedObject);    // ThreadB 생성
+  
+          threadA.start();    // ThreadA 실행
+          threadB.start();    // ThreadB 실행
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  ThreadA의 methodA() 작업 실행
+  ThreadB의 methodB() 작업 실행
+  ThreadA의 methodA() 작업 실행
+  ThreadB의 methodB() 작업 실행
+  ThreadA의 methodA() 작업 실행
+  ThreadB의 methodB() 작업 실행
+  ThreadA의 methodA() 작업 실행
+  ThreadB의 methodB() 작업 실행
+  ThreadA의 methodA() 작업 실행
+  ThreadB의 methodB() 작업 실행
+  ThreadA의 methodA() 작업 실행
+  ThreadB의 methodB() 작업 실행
+  ThreadA의 methodA() 작업 실행
+  ThreadB의 methodB() 작업 실행
+  ThreadA의 methodA() 작업 실행
+  ThreadB의 methodB() 작업 실행
+  ThreadA의 methodA() 작업 실행
+  ThreadB의 methodB() 작업 실행
+  ThreadA의 methodA() 작업 실행
+  ThreadB의 methodB() 작업 실행
+  ```
+
+  <br>
+
+* **데이터를 저장하는 스레드(생산자 스레드)가 데이터를 저장하면, 데이터를 소비하는 스레드(소비자 스레드)가 데이터를 읽고 처리하는 교대 작업을 구현하는 예제**
+
+  ![1548256061868](C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\1548256061868.png)
+
+  **DataBox.java(두 스레드의 작업 내용을 동기화 메소드로 작성한 공유 객체)**
+
+  ```java
+  package thread_cooperation;
+  
+  public class DataBox {
+      private String data;
+  
+      public synchronized String getData() {
+          // data 필드가 null 이면 소비자 스레드를
+          // 일시 정지 상태로 만든다
+          if(this.data == null) {
+              try {
+                  wait();
+              } catch (InterruptedException e) {
+  
+              }
+          }
+          String returnValue = data;
+          System.out.println("ConsummerThread가 읽은 데이터: " + returnValue);
+  
+          // data 필드를 null 로 만들고 생산자 스레드를 실행 대기 상태로 만든다.
+          data = null;
+          notify();
+  
+          return returnValue;
+      }
+  
+      public synchronized void setData(String data) {
+          // data 필드가 null 이 아니면 생상자 스레드를
+          // 일시 정지 상태로 만든다.
+          if(this.data != null) {
+              try {
+                  wait();
+              } catch (InterruptedException e) {}
+          }
+  
+          // data 필드에 값을 저장한다.
+          this.data = data;
+          System.out.println("ProducerThread가 생성한 데이터: " + data);
+          // 소비자 스레드를 실행 대기 상태로 만든다.
+          notify();
+      }
+  }
+  ```
+
+  **ProducerThread.java(데이터를 생산(저장)하는 스레드)**
+
+  ```java
+  package thread_cooperation;
+  
+  public class ProducerThread extends Thread {
+      private DataBox dataBox;
+  
+      // 공유 객체를 필드에 저장
+      public ProducerThread(DataBox dataBox) {
+          this.dataBox = dataBox;
+      }
+  
+      @Override
+      public void run() {
+          for(int i=1; i<=3; i++) {
+              String data = "Data-" + i;
+              // 새로운 데이터를 저장
+              dataBox.setData(data);
+          }
+      }
+  }
+  ```
+
+  **ConsummerThread.java(데이터를 소비하는(읽는) 스레드)**
+
+  ```java
+  package thread_cooperation;
+  
+  public class ConsumerThread extends Thread {
+      private DataBox dataBox;
+  
+      // 공유 객체를 필드에 저장
+      public ConsumerThread(DataBox dataBox) {
+          this.dataBox = dataBox;
+      }
+  
+      @Override
+      public void run() {
+          for(int i=1; i<=3; i++) {
+              // 새로운 데이터를 읽음
+              String data = dataBox.getData();
+          }
+      }
+  }
+  ```
+
+  **WaitNotifyExampe2.java(두 스레드를 생성하고 실행하는 메인 스레드)**
+
+  ```java
+  package thread_cooperation;
+  
+  public class WaitNotifyExample2 {
+      public static void main(String[] args) {
+          DataBox dataBox = new DataBox();
+  
+          ProducerThread producerThread = new ProducerThread(dataBox);
+          ConsumerThread consumerThread = new ConsumerThread(dataBox);
+  
+          producerThread.start();
+          consumerThread.start();
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  ProducerThread가 생성한 데이터: Data-1
+  ConsummerThread가 읽은 데이터: Data-1
+  ProducerThread가 생성한 데이터: Data-2
+  ConsummerThread가 읽은 데이터: Data-2
+  ProducerThread가 생성한 데이터: Data-3
+  ConsummerThread가 읽은 데이터: Data-3
+  ```
+
+
+
+<br>
+
+### 12.6.5 스레드의 안전한 종료(stop 플래그, interrupt())
+
+: 경우에 따라서 실행 중인 스레드를 즉시 종료하고 싶을 때, **stop() 메소드**를 사용한다. 하지만 이 메소드는 deprecated 되었다. 왜냐하면 stop() 메소드로 스레드를 갑자기 종료하게 되면 스레드가 사용 중이던 자원들이 불안정한 상태로 남겨지기 때문이다.
+
+#### stop 플래그를 이용하는 방법
+
+* **예제**
+
+  **PrintThread1.java(무한 반복해서 출력하는 스레드)**
+
+  ```java
+  package thread_safe_stop;
+  
+  public class PrintThread1 extends Thread{
+      private boolean stop;
+  
+      public void setStop(boolean stop) {
+          this.stop = stop;
+      }
+  
+      public void run() {
+          // stop 이 true 가 되면 자원을 정리한 후 실행을 종료시킨다.
+          while(!stop) {
+              System.out.println("실행 중");
+          }
+          System.out.println("자원 정리");
+          System.out.println("실행 종료");
+      }
+  }
+  ```
+
+  **StopFlagExample.java(1초 후 출력 스레드를 중지시킴)**
+
+  ```java
+  package thread_safe_stop;
+  
+  public class StopFlagExample {
+      public static void main(String[] args) {
+          PrintThread1 printThread1 = new PrintThread1();
+          printThread1.start();
+  
+          try {
+              Thread.sleep(1000);
+          } catch (InterruptedException e) {}
+  
+          // 스레드를 종료시키기 위해 stop 필드를 true 로 변경
+          printThread1.setStop(true);
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  실행 중
+  실행 중
+  실행 중
+  실행 중
+  실행 중
+  실행 중
+  실행 중
+  실행 중
+  실행 중
+  자원 정리
+  실행 종료
+  ```
+
+
+
+<br>
+
+#### interrupt() 메소드를 이용하는 방법
+
+: 이 메소드는 스레드가 일시 정지 상태에 있을 때 InterruptedException 예외를 발생시키는 역할을 한다. 이것을 이용하면 run() 메소드를 정상 종료시킬 수 있다.
+
+* **예제**
+
+  **PrintThread2.java(무한 반복해서 출력하는 스레드)**
+
+  ```java
+  package thread_safe_stop.interrupt_method;
+  
+  public class PrintThread2 extends Thread{
+      @Override
+      public void run() {
+          try {
+              while(true) {
+                  System.out.println("실행 중");
+                  Thread.sleep(1);
+                  // interrupt() 메소드를 실행시키면 catch 문으로 이동한다.
+              }
+          } catch (InterruptedException e) {}
+  
+          System.out.println("자원 정리");
+          System.out.println("실행 종료");
+      }
+  
+  }
+  ```
+
+  **InterruptExample.java(1초 후 출력 스레드를 중지시킴)**
+
+  ```java
+  package thread_safe_stop.interrupt_method;
+  
+  public class InterruptExample {
+      public static void main(String[] args) {
+          Thread thread = new PrintThread2();
+          thread.start();
+  
+          try {
+              Thread.sleep(1000);
+          } catch (InterruptedException e) {}
+  
+          // 스레드를 종료시키기 위해
+          // InterruptedException 을 발생시킨다
+          thread.interrupt();
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  실행 중
+  실행 중
+  실행 중
+  실행 중
+  ...
+  실행 중
+  자원 정리
+  실행 종료
+  ```
+
+  > **주의할 점**
+  >
+  > : 스레드가 미래에 일시 정지 상태가 되면 InterruptedException 예외가 발생한다는 것이다. 그래서 짧은 시간이나마 일시 정지시키기 위해 **Thread.sleep(1)**을 사용한 것이다. Thread.sleep(1) 말고도 **Thread.interrupted()**를 사용해서 스레드를  멈추도록 할 수 있다.
+
+
+
+<br>
+
+## 12.7 데몬 스레드
+
+* **데몬(daemon) 스레드**
+
+  * 주 스레드의 작업을 돕는 보조적인 역할을 수행하는 스레드이다. 
+  * 주 스레드가 종료되면 데몬 스레드는 강제적으로 자동 종료된다.
+  * 주 스레드는 데몬이 될 스레드의 setDaemon(true)를 호출해주면 된다.
+
+  ```java
+  public static void main(String[] args) {
+      AutoSaveThread thread = new AutoSaveThread();
+      thread.setDaemon(true);	
+      thread.start()
+      ...
+  }
+  ```
+
+  > 위의 코드에서 메인 스레드가 주 스레드가 되고 AutoSaveThread가 데몬 스레드가 된다.
+  >
+  > **주의할 점**
+  >
+  > : start() 메소드가 호출되고 나서 setDaemon(true)를 호출하면 IllegalThreadStateException이 발생한다는 것.
+
+
+
+<br>
+
+## 12.8 스레드 그룹
+
+* **스레드 그룹(ThreadGroup)** : 관련된 스레드를 묶어서 관리할 목적으로 이용된다. 스레드는 반드시 하나의 스레드 그룹에 포함되는데, 명시적으로 스레드 그룹에 포함시키지 않으면 기본적으로 자신을 생성한 스레드와 같은 스레드 그룹에 속하게 된다.
+
+<br/>
+
+### 12.8.1 스레드 그룹 이름 얻기
+
+* 현재 스레드가 속한 스레드 그룹의 이름을 얻고 싶다면 다음과 같은 코드를 사용할 수 있다.
+
+  ```java
+  ThreadGroup group = Thread.currentThread().getThreadGroup();
+  String groupName = group.getName();
+  ```
+
+
+
+* **getAllStackTraces()**를 이용하면 프로세스 내에서 실행하는 모든 스레드에 대한 정보를 얻을 수 있다.
+
+  ```java
+  Map<Thread, StackTraceElement[]> map = Thread.getAllStackTraces();
+  ```
+
+
+
+<br>
+
+### 12.8.2 스레드 그룹 생성
+
+* 명시적으로 스레드 그룹을 만들고 싶다면 생성자를 이용해서 ThreadGroup 객체를 만들면 된다.
+
+  ```java
+  // 스레드 그룹 이름만 매개값으로
+  ThreadGroup tg = new ThreadGroup(String name);
+  // 부모 스레드 그룹과 이름을 매개값으로
+  ThreadGroup tg = new ThreadGroup(ThreadGroup parent, String name);
+  ```
+
+  > 스레드 그룹 생성 시 부모(parent) 스레드 그룹을 지정하지 않으면 현재 스레드가 속한 그룹의 하위 그룹으로 생성된다.
+
+* 스레드 그룹을 매개값으로 갖는 Thread 생성자
+
+  ```java
+  Thread t = new Thread(ThreadGroup group, Runnable target);
+  Thread t = new Thread(ThreadGroup group, Runnable target, String name);
+  Thread t = new Thread(ThreadGroup group, Runnable target, String name, long stackSize);
+  Thread t = new Thread(ThreadGroup group, String name);
+  ```
+
+  
+
+<br>
+
+### 12.8.3 스레드 그룹의 일괄 interrupt()
+
+: 스레드 그룹에서 제공하는 interrupt() 메소드를 이용하면 그룹 내에 포함된 모든 스레드들을 일괄 interrupt 할 수 있다.
+
+* **ThreadGroup이 가지고 있는 주요 메소드들**
+
+  | 반환형      | 메소드                    | 설명                                                         |
+  | ----------- | ------------------------- | ------------------------------------------------------------ |
+  | int         | activeCount()             | 현재 그룹 및 하위 그룹에서 활동 중인 모든 스레드의 수를 리턴한다. |
+  | int         | activeGroupCount()        | 현재 그룹에서 활동 중인 모든 하위 그룹의 수를 리턴한다.      |
+  | void        | checkAccess()             | 현재 스레드가 스레드 그룹을 변경할 권한이 있는지 체크한다. 만약 권한이 없으면 SecurityException을 발생시킨다. |
+  | void        | destroy()                 | 현재 그룹 및 하위 그룹을 모두 삭제한다. 단, 그룹 내에 포함된 모든 스레드들이 종료 상태가 되어야 한다. |
+  | boolean     | isDestroyed()             | 현재 그룹이 삭제되었는지 여부를 리턴한다.                    |
+  | int         | getMaxPriority()          | 현재 그룹에 포함된 스레드가 가질 수 있는 최대 우선순위를 리턴한다. |
+  | void        | setMaxPriority(int pri)   | 현재 그룹에 포함된 스레드가 가질 수 있는 최대 우선순위를 설정한다. |
+  | String      | getName()                 | 현재 그룹의 이름을 리턴한다.                                 |
+  | ThreadGroup | getParent()               | 현재 그룹의 부모 그룹을 리턴한다.                            |
+  | boolean     | parentOf(ThreadGroup g)   | 현재 그룹이 매개값으로 지정한 스레드 그룹의 부모인지 여부를 리턴한다. |
+  | boolean     | isDaemon()                | 현재 그룹이 데몬 그룹인지 여부를 리턴한다.                   |
+  | void        | setDaemon(boolean daemon) | 현재 그룹을 데몬 그룹으로 설정한다.                          |
+  | void        | list()                    | 현재 그룹에 포함된 스레드와 하위 그룹에 대한 정보를 출력한다. |
+  | void        | interrupt()               | 현재 그룹에 포함된 모든 스레드들을 interrupt 한다.           |
+
+
+
+* **예제**
+
+  WorkThread.java(**InterruptedException이 발생할 때 스레드가 종료되도록 함**)
+
+  ```java
+  package thread_group_interrupt;
+  
+  public class WorkThread extends Thread{
+      public WorkThread(ThreadGroup threadGroup, String threadName) {
+          // 스레드 그룹과 스레드 이름을 설정
+          super(threadGroup, threadName);
+      }
+  
+      @Override
+      public void run() {
+          while(true) {
+              try {
+                  Thread.sleep(1000);
+              } catch (InterruptedException e) {
+                  // 예외 발생시 스레드 종료
+                  System.out.println(getName() + " interrupted");
+                  break;
+              }
+          }
+          System.out.println(getName() + " 종료됨");
+      }
+  }
+  ```
+
+  ThreadGroupExample.java(**스레드 그룹을 이요한 일괄 종료 예제**)
+
+  ```java
+  package thread_group_interrupt;
+  
+  public class ThreadGroupExample {
+      public static void main(String[] args) {
+          // 스레드 그룹 생성
+          ThreadGroup myGroup = new ThreadGroup("myGroup");
+  
+          // myGroup 스레드 그룹에 두 스레드를 포함
+          WorkThread workThreadA = new WorkThread(myGroup, "workThreadA");
+          WorkThread workThreadB = new WorkThread(myGroup, "workThreadB");
+  
+          workThreadA.start();
+          workThreadB.start();
+  
+          System.out.println("[ main 스레드 그룹의 list() 메소드 출력 내용 ]");
+          // mainGroup 에 현재 스레드의 그룹을 가져온다.
+          ThreadGroup mainGroup = Thread.currentThread().getThreadGroup();
+          // mainGroup 의 포함된 스레드와 하위 그룹에 대한 정보를 출력 시킨다.
+          mainGroup.list();
+          System.out.println();
+  
+          try {
+              Thread.sleep(3000);
+          } catch (InterruptedException e) {}
+  
+          System.out.println("[ myGroup 스레드 그룹의 interrupt() 메소드 호출 ]");
+          myGroup.interrupt();
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  [ main 스레드 그룹의 list() 메소드 출력 내용 ]
+  java.lang.ThreadGroup[name=main,maxpri=10]			// 메인 스레드
+      Thread[main,5,main]
+      Thread[Monitor Ctrl-Break,5,main]
+      java.lang.ThreadGroup[name=myGroup,maxpri=10]
+          Thread[workThreadA,5,myGroup]
+          Thread[workThreadB,5,myGroup]
+  
+  [ myGroup 스레드 그룹의 interrupt() 메소드 호출 ]
+  workThreadA interrupted
+  workThreadB interrupted
+  workThreadA 종료됨
+  workThreadB 종료됨
+  ```
+
+  > [스레드이름, 우선순위, 소속 그룹명]으로 출력
+
+
+
+<br>
+
+## 12.9 스레드 풀
+
+: 갑작스런 병렬 작업의 폭증으로 인한 스레드의 폭증을 막으려면 스레드풀(ThreadPool)을 사용해야 한다.
+
+* **스레드 풀** : 작업 처리에 사용되는 스레드를 제한된 개수만큼 정해 놓고 작업 큐(Queue)에 들어오는 작업들을 하나씩 스레드가 맡아 처리한다.
+
+  ![1548308420933](C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\1548308420933.png)
+
+
+
+<br>
+
+### 12.9.1 스레드풀 생성 및 종료
+
+#### 스레드풀 생성
+
+: ExecutorService 구현 객체는 Executors 클래스의 다음 두 가지 메소드 중 하나를 이용해서 간편하게 생성할 수 있다.
+
+| 메소드명(매개변수)               | 초기 스레드 수 | 코어 스레드 수 | 최대 스레드 수    |
+| -------------------------------- | -------------- | -------------- | ----------------- |
+| newCachedThreadPool()            | 0              | 0              | Integer.MAX_VALUE |
+| newFixedThreadPool(int nThreads) | 0              | nThreads       | nThreads          |
+
+* **초기 스레드 수** : ExecutorService 객체가 생성될 때 기본적으로 생성되는 스레드 수
+
+* **코어 스레드 수** : 스레드 수가 증가된 후 사용되지 않는 스레드를 스레드풀에서 제거할 때 최소한 유지해야 할 스레드 수
+
+* **최대 스레드 수** : 스레드풀에서 관리하는 최대 스레드 수
+
+* **ExecutorService 구현 객체를 얻는 코드**
+
+  ```java
+  ExecutorService executorService = Executors.newCachedThreadPool();
+  ```
+
+* **CPU 코어의 수만큼 최대 스레드를 사용하는 스레드풀 생성 코드**
+
+  ```java
+  ExecutorService executorService = Executors.newFixedThreadPool(
+  	Runtime.getRuntime().availableProcessors()
+  );
+  ```
+
+* **위의 메소드들과 다르게 코어 스레드 개수와 최대 스레드 개수를 설정하는 코드**
+
+  ```java
+  ExecutorService threadPool = new ThreadPoolExecutor(
+  	3,		// 코어 스레드 개수
+      100,	// 최대 스레드 개수
+      120L,	// 놀고 있는 시간
+      TimeUnit.SECONDS,	// 놀고 있는 시간 단위
+      new SynchronousQueue<Runnable>()	// 작업 큐
+  )
+  ```
+
+
+
+<br>
+
+#### 스레드풀 종료
+
+: 애플리케이션을 종료하려면 스레드풀을 종료시켜 스레드들이 종료 상태가 되도록 처리해주어야 한다.
+
+* **ExecutorService 종료에 관련한 메소드**
+
+  | 리턴 타입       | 메소드명(매개변수)                             | 설명                                                         |
+  | --------------- | ---------------------------------------------- | ------------------------------------------------------------ |
+  | void            | shutdown()                                     | 현재 처리 중인 작업뿐만 아니라 작업 큐에 대기하고 있는 모든 작업을 처리한 뒤에 스레드풀을 종료시킨다. |
+  | List\<Runnable> | shutdownNow()                                  | 현재 작업 처리 중인 스레드를 interrupt해서 작업 중지를 시도하고 스레드풀을 종료시킨다. 리턴값은 작업 큐에 있는 미처리된 작업(Runnable)의 목록이다. |
+  | boolean         | awaitTermination(long timeout, TimeUinit unit) | shutdown() 메소드 호출 이후, 모든 작업 처리를 timeout 시간 내에 완료하면 ture를 리턴하고, 완료하지 못하면 작업 처리 중인 스레드를 interrupt하고 false를 리턴한다. |
+
+
+
+<br>
+
+### 12.9.2 작업 생성과 처리 요청
+
+#### 작업 생성
+
+ 하나의 작업은 **Runnable** 또는 **Callable** 구현 클래스로 표현한다. Runnable과 Callable의 차이점은 작업 처리 완료 후 리턴값이 있느냐 없느냐이다.
+
+* **Runnable과 Callable 구현 클래스 작성**
+
+  | Runnable 구현 클래스                                         | Callable 구현 클래스                                         |
+  | ------------------------------------------------------------ | ------------------------------------------------------------ |
+  | Runnable tast = new Runnable() {<br />    @Override<br />    public void run() {<br />    // 스레드가 처리할 작업 내용<br />    }<br />} | Callable\<T> task = new Callable\<T>() {<br />    @Override<br />    public T call() throws Exception {<br />    // 스레드가 처리할 작업 내용<br />    return T;<br />    }<br />} |
+
+
+
+<br>
+
+#### 작업 처리 요청
+
+: ExecutorService의 작업 큐에 Runnable 또는 Callable 객체를 넣는 행위를 말한다.
+
+* **작업 처리 요청 메소드**
+
+  | 리턴 타입                                  | 메소드명(매개변수)                                           | 설명                                                         |
+  | ------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+  | void                                       | execute(Runnable command)                                    | -Runnable을 작업 큐에 저장<br />-작업 처리 결과를 받지 못함  |
+  | Future\<?><br />Future\<V><br />Future\<V> | submit(Runnable task)<br />submit(Runnable task, V result)<br />submit(Callable\<V> task) | -Runnable 또는 Callable을 작업 큐에 저장<br />-리턴된 Future를 통해 작업 처리 결과를 얻을 수 있음 |
+
+* **execute()와 submit() 메소드의 차이점**
+
+  * execute()는 작업 처리 도중 예외가 발생하면 스레드가 종료되고 해당 스레드는 스레드풀에서 제거된다.
+  * submit()은 작업 처리 도중 예외가 발생하더라도 스레드는 종료되지 않고 다음 작업을 위해 재사용된다.
+  * 결론, 가급적이면 스레드의 생성 오버헤더를 줄이기 위해 submit()을 사용하는 것이 좋다.
+
+
+
+<br>
+
+### 12.9.3 블로킹 방식의 작업 완료 통보
+
+: Future 객체는 작업 결과가 아니라 작업이 완료될 때까지 기다렸다가(지연했다가=블로킹되었다가) 최종 결과를 얻는데 사용된다. 그래서 Future를 지연 완료(pending completion) 객체라고 한다.
+
+* **Future가 가지고 있는 get() 메소드**
+
+  | 리턴 타입 | 메소드명(매개변수)               | 설명                                                         |
+  | --------- | -------------------------------- | ------------------------------------------------------------ |
+  | V         | get()                            | 작업이 완료될 때까지 블로킹되었다가 처리 결과 V를 리턴       |
+  | V         | get(long timeout, TimeUnit unit) | timeout 시간 전에 작업이 완료되면 결과 V를 리턴하지만, 작업이 완료되지 않으면 TimeoutException을 발생시킨다. |
+
+  <br/>
+
+* **submit() 메소드별로 Future의 get() 메소드가 리턴하는 값**
+
+  | 메소드                                | 작업 처리 완료 후 리턴 타입   | 작업 처리 도중 예외 발생 |
+  | ------------------------------------- | ----------------------------- | ------------------------ |
+  | submit(Runnable task)                 | future.get()-> null           | future.get()-> 예외 발생 |
+  | submit(Runnable task, Integer result) | future.get()-> int 타입 값    | future.get()-> 예외 발생 |
+  | submit(Callable\<String> task)        | future.get()-> String 타입 값 | future.get()-> 예외 발생 |
+
+  <br/>
+
+* **Future를 이용한 블로킹 방식의 작업 완료 통보의 주의할 점**
+
+  : 작업을 처리하는 스레드가 작업을 완료하기 전까지는 get() 메소드가 블로킹되므로 다른 코드를 실행할 수 없다. 그러므로 get() 메소드를 호출하는 스데르는 새로운 스레드이거나 스레드풀의 또 다른 스레드가 되어야 한다.
+
+  ```java
+  // 새로운 스레드를 생성해서 호출
+  new Thread(new Runnable() {
+      @Override
+      public void run() {
+          try {
+              future.get();
+          } catch (Exception e) {
+              e.printStackTrace();
+          }
+      }
+  };).start();
+  
+  // 스레드풀의 스레드가 호출
+  executorService.submit(new Runnable() {
+      @Override
+      public void run() {
+          try {
+              future.get();
+          } catch (Exception e) {
+              e.printStackTrace();
+          }
+      }
+  });
+  ```
+
+  <br/>
+
+* **Future 객체의 작업 결과를 얻기 위한 메소드**
+
+  | 리턴 타입 | 메소드명(매개변수)                    | 설명                                |
+  | --------- | ------------------------------------- | ----------------------------------- |
+  | boolean   | cancel(boolean mayInterruptIfRunning) | 작업 처리가 진행 중일 경우 취소시킴 |
+  | boolean   | isCancelled()                         | 작업이 취소되었는지 여부            |
+  | boolean   | isDone()                              | 작업 처리가 완료되었는지 여부       |
+
+
+
+<br>
+
+#### 리턴값이 없는 작업 완료 통보
+
+: 리턴값이 없는 작업일 경우 Runnable 객체로 생성하면 된다.
+
+* **Runnable 객체 생성하는 방법**
+
+  ```java
+  Runnable task = new Runnable() {
+      @Override
+      public void run() {
+          // 스레드가 처리할 작업 내용
+      }
+  };
+  ```
+
+* 결과값이 없는 작업 처리 요청은 submit(Runnable task) 메소드를 이용한다.
+
+* 결과값이 없음에도 불구하고 Future 객체를 리턴하는데, 이것은 스레드가 작업 처리를 정상적으로 완료했는지, 아니면 작업 처리 도중에 예외가 발생했는지 확인하기 위해서 이다.
+
+  ```java
+  Future future = executorService.submit(task);
+  ```
+
+  > Future의 get() 메소드 리턴값
+  >
+  > * **null** : 작업 처리가 정상적으로 완료
+  > * **ExecutionException 예외 발생** : 작업 처리 도중 예외 발생
+
+  ```java
+  try {
+      future.get();
+  } catch (InterruptedException e) {
+      // 작업 처리 도중 스레드가 interrupt 될 경우 실행할 코드
+  } catch (ExecutionException e) {
+      // 작업 처리 도중 예외가 발생된 경우 실행할 코드
+  }
+  ```
+
+
+
+<br>
+
+#### 리턴값이 있는 작업 완료 통보
+
+: 스레드풀의 스레드가 작업을 완료한 후에 애플리케이션이 처리 결과를 얻어야 된다면 작업 처리 객체를 Callable로 생성하면 된다.
+
+* **Callable 객체를 생성하는 코드**
+
+  ```java
+  Callable<T> task = new Callable<T>() {
+      @Override
+      public T call() throws Exception {
+          // 스레드가 처리할 작업 내용
+          return T;
+      }
+  };
+  ```
+
+  > **주의할 점** : 제네릭 타입 파라미터 T는 call() 메소드가 리턴하는 타입이 되도록 한다.
+
+* **Callable 작업 처리 요청**
+
+  ```java
+  Future<T> future = executorService.submit(task)
+  ```
+
+* **작업 처리의 예외 처리**
+
+  ```java
+  try {
+      T result = future.get();
+  } catch (InterruptedException e) {
+      // 작업 처리 도중 스레드가 interrupt 될 경우 실행할 코드
+  } catch (ExecutionException e) {
+      // 작업 처리 도중 예외가 발생된 경우 실행할 코드
+  }
+  ```
+
+  
