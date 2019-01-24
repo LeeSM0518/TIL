@@ -28,49 +28,69 @@ public abstract class Scheduler {
     private static final String EXIT = "종료";
     private String schedule[][] = new String[24][5];
 
-    public Scheduler(){}
+    public Scheduler() {
+    }
 
     public abstract void addSchedule();
+
     public abstract void searchSchedule();
+
     public abstract void adjustSchedule();
+
     public abstract void deleteSchedule();
+
     public abstract void exitScheduler();
+
     public abstract void currentTimeUpdate();
 
     public static String[] getTimesTokens() {
         return TIMES_TOKENS;
     }
+
     public static String getNowTime() {
         return NOW_TIME;
     }
+
     public static String[] getTimes() {
         return TIMES;
     }
+
     public static String[] getDays() {
         return DAYS;
     }
+
     public static int getDaysColumns() {
         return DAYS_COLUMNS;
     }
+
     public static int getHourRows() {
         return HOUR_ROWS;
     }
+
     public static String getAddSchedule() {
         return ADD_SCHEDULE;
     }
+
     public static String getSearchSchedule() {
         return SEARCH_SCHEDULE;
     }
+
     public static String getDeleteSchedule() {
         return DELETE_SCHEDULE;
     }
+
     public static String getAdjustSchedule() {
         return ADJUST_SCHEDULE;
     }
-    public static String getExit() { return EXIT; }
+
+    public static String getExit() {
+        return EXIT;
+    }
+
     public String[][] getSchedule() {
         return schedule;
     }
+
     public void setSchedule(String[][] schedule) {
         this.schedule = schedule;
     }

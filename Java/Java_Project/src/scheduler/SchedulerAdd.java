@@ -53,7 +53,7 @@ public class SchedulerAdd extends SchedulerMainUI {
             @Override
             public void keyReleased(KeyEvent e) {
                 int check = daySearch(textDayField.getText());
-                if(check == -1) {
+                if (check == -1) {
                     dayLabel.setText("잘못된 요일입니다.");
                 } else {
                     dayLabel.setText(textDayField.getText());
@@ -76,7 +76,7 @@ public class SchedulerAdd extends SchedulerMainUI {
             @Override
             public void keyReleased(KeyEvent e) {
                 int[] check = timeSearch(textTimeField.getText());
-                if(check[0] == -1 || check[1] == -1) {
+                if (check[0] == -1 || check[1] == -1) {
                     timeLabel.setText("잘못된 시간입니다.");
                 } else {
                     timeLabel.setText(textTimeField.getText());
@@ -99,7 +99,7 @@ public class SchedulerAdd extends SchedulerMainUI {
 
             @Override
             public void keyReleased(KeyEvent e) {
-                if(textScheduleField.getText().equals("")) {
+                if (textScheduleField.getText().equals("")) {
                     scheduleLabel.setText("할일을 입력해주세요.");
                 } else {
                     scheduleLabel.setText("저장하세요");
@@ -123,7 +123,7 @@ public class SchedulerAdd extends SchedulerMainUI {
         ActionListener okListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(dayLabel.getText().equals("잘못된 요일입니다.") ||
+                if (dayLabel.getText().equals("잘못된 요일입니다.") ||
                         timeLabel.getText().equals("잘못된 시간입니다.") ||
                         scheduleLabel.getText().equals("할일을 입력해주세요.")) {
 
@@ -132,7 +132,7 @@ public class SchedulerAdd extends SchedulerMainUI {
                     int updataDay = daySearch(textDayField.getText());
                     int[] updataTime = timeSearch(textTimeField.getText());
 
-                    for(int i=updataTime[0]; i<updataTime[1]; i++) {
+                    for (int i = updataTime[0]; i < updataTime[1]; i++) {
                         schedule[i][updataDay] = textScheduleField.getText();
                     }
 
@@ -172,8 +172,8 @@ public class SchedulerAdd extends SchedulerMainUI {
         String[] days = getDays();
         int check = -1;
 
-        for(int i=1; i<days.length; i++) {
-            if(days[i].equals(day)) {
+        for (int i = 1; i < days.length; i++) {
+            if (days[i].equals(day)) {
                 check = i;
                 break;
             }
@@ -183,11 +183,11 @@ public class SchedulerAdd extends SchedulerMainUI {
     }
 
     public int[] timeSearch(String time) {
-        int check[] = new int[] {-1, -1};
-        String [] stringTimes = time.split("~");
-        String [] timeTokens = getTimesTokens();
+        int check[] = new int[]{-1, -1};
+        String[] stringTimes = time.split("~");
+        String[] timeTokens = getTimesTokens();
 
-        if(stringTimes.length == 2) {
+        if (stringTimes.length == 2) {
             for (int i = 0; i < timeTokens.length; i++) {
                 if (stringTimes[0].equals(timeTokens[i])) {
                     check[0] = i;
@@ -202,7 +202,7 @@ public class SchedulerAdd extends SchedulerMainUI {
             }
         }
 
-        if(check[0] != -1 && check[1] != -1 && (check[0] < check[1])) return check;
+        if (check[0] != -1 && check[1] != -1 && (check[0] < check[1])) return check;
         else return check;
 
 

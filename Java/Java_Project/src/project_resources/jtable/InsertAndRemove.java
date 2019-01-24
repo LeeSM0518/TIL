@@ -70,10 +70,10 @@ public class InsertAndRemove {
         cancleBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(table.getSelectedRow() == -1) {
+                if (table.getSelectedRow() == -1) {
                     return;
                 } else {
-                    if(table.getRowCount() == 1) {
+                    if (table.getRowCount() == 1) {
                         frame.setVisible(false);
                         System.exit(1);
                     } else {
