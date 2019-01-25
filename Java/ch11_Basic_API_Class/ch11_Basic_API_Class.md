@@ -1836,3 +1836,151 @@
 
 #### 문자열 반환(valueOf())
 
+: 기본 타입의 값을 문자열로 변환하는 기능
+
+* **예제**
+
+  ```java
+  package string_class.string_method.value_of_method;
+  
+  public class StringValueOfExample {
+      public static void main(String[] args) {
+          // 정수, 소수, 부울을 모두 String 타입으로 변환한다.
+          String str1 = String.valueOf(10);
+          String str2 = String.valueOf(10.5);
+          String str3 = String.valueOf(true);
+  
+          System.out.println(str1);
+          System.out.println(str2);
+          System.out.println(str3);
+  
+          // 모두 같은 String 객체를 참조하고 있음을 알 수 있다.
+          System.out.println(str1.getClass());
+          System.out.println(str2.getClass());
+          System.out.println(str3.getClass());
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  10
+  10.5
+  true
+  class java.lang.String
+  class java.lang.String
+  class java.lang.String
+  ```
+
+  <br>
+
+## 11.8 String Tokenizer 클래스
+
+: 문자열이 특정 구분자(delimiter)로 연결되어 있을 경우, 구분자를 기준으로 부분 문자열을 분리한다.
+
+### 11.8.1 split() 메소드
+
+: 정규 표현식을 구분자로 해서 문자열을 분리한 후, 배열에 저장하고 리턴한다.
+
+```java
+String[] result = "문자열".split("정규표현식");
+```
+
+<br>
+
+* **예제(문자열 분리)**
+
+  ```java
+  package string_tokenizer_class;
+  
+  public class split_method {
+      public static void main(String[] args) {
+          String text = "홍길동&이수홍,박연수,김자바-최명호";
+  
+          // 파이프를 제외한 기호들을 구분자로 해서 문자열을 추출한다.
+          String[] names = text.split("&|,|-");
+  
+          for(String name : names) {
+              System.out.println(name);
+          }
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  홍길동
+  이수홍
+  박연수
+  김자바
+  최명호
+  ```
+
+  <br>
+
+### 11.8.2 String Tokenizer 클래스
+
+: 문자열이 한 종류의 구분자로 연결되어 있을 경우, 이 메소드를 사용하면 손쉽게 문자열을 분리해 낼 수 있다.
+
+```java
+StringTokenizer st = new StringTokenizer("문자열", "구분자");
+```
+
+* **StringTokenizer의 메소드**
+
+  | 반환형  | 메소드          | 설명                            |
+  | ------- | --------------- | ------------------------------- |
+  | int     | countTokens()   | 꺼내지 않고 남아 있는 토큰의 수 |
+  | boolean | hasMoreTokens() | 남아 있는 토큰이 있는지 여부    |
+  | String  | nextToken()     | 토큰을 하나씩 꺼내옴            |
+
+* **예제**
+
+  ```java
+  package string_tokenizer_class;
+  
+  import java.util.StringTokenizer;
+  
+  public class StringTokenizerExample {
+      public static void main(String[] args) {
+          String text = "홍길동/이수홍/박연수";
+  
+          // 전체 토큰 수를 얻어 for 문으로 루핑해서 문자열 분리
+          StringTokenizer st = new StringTokenizer(text, "/");
+          int countTokens = st.countTokens();
+          for(int i=0; i<countTokens; i++) {
+              String token = st.nextToken();
+              System.out.println(token);
+          }
+  
+          System.out.println();
+  
+          // 남아 있는 토큰을 확인하고 while 문으로 루핑해서 문자열 분리
+          st = new StringTokenizer(text, "/");
+          while( st.hasMoreElements()) {
+              String token = st.nextToken();
+              System.out.println(token);
+          }
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  홍길동
+  이수홍
+  박연수
+  
+  홍길동
+  이수홍
+  박연수
+  ```
+
+  <br>
+
+## 11.9 StringBuffer, StringBuilder 클래스
+
+: 
