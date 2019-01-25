@@ -1483,4 +1483,189 @@ public void run() {
   }
   ```
 
+
+
+
+<br>
+
+#### 작업 처리 결과를 외부 객체에 저장
+
+: 상황에 따라서 스레드가 작업한 결과를 외부 객체에 저장해야 할 경우도 있다. 스레드가 작업 처리를 완료하고 외부 Result 객체에 작업 결과를 저장하면, 애플리케이션이 Result 객체를 사용해서 어떤 작업을 진행할 수 있을 것이다.
+
+![1548381946934](C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\1548381946934.png)
+
+* **스레드 처리 결과 저장 예시**
+
+  ```java
+  Result result = ...;
+  Runnable task = new Task(result);
+  // 처리 결과 저장
+  Future<Result> future = executorService.submit(task, result);
+  result = future.get();
+  ```
+
+* **Runnable 구현 클래스 작성**
+
+  ```java
+  class Task implements Runnable {
+      Result result;
+      Task(Result result) {
+          this.result = result;
+      }
+      @Override
+      public void run() {
+  		// 작업 코드
+          // 처리 결과를 result 저장
+      }
+  }
+  ```
+
+
+
+<br>
+
+#### 작업 완료 순으로 통보
+
+: 여러 개의 작업들이 순차적으로 처리될 필요성이 없고, 처리 결과도 순차적으로 이용할 필요가 없다면 작업 처리가 완료된 것부터 결과를 얻어 이용하면 된다.
+
+* **CompletionService 클래스** : 스레드풀에서 작업 처리가 완료된 것만 통보받는 방법
+
+  **메소드들**
+
+  | 리턴 타입  | 메소드명(매개변수)                | 설명                                                         |
+  | ---------- | --------------------------------- | ------------------------------------------------------------ |
+  | Future\<V> | poll()                            | 완료된 작업의 Future를 가져옴.<br />완료된 작업이 없다면 즉시 null을 리턴함 |
+  | Future\<V> | poll(long timeout, TimeUnit unit) | 완료된 작업의 Future를 가져옴.<br />완료된 작업이 없다면 있을 때까지 블로킹됨. |
+  | Future\<V> | take()                            | 완료된 작업의 Future를 가져옴.<br />완료된 작업이 없다면 timeout까지 블로킹됨. |
+  | Future\<V> | submit(Callable\<V> task)         | 스레드풀에 Callable 작업 처리 요청                           |
+  | Future\<V> | submit(Runnable task, V result)   | 스레드풀에 Runnable 작업 처리 요청                           |
+
+* **예제(작업 완료 순으로 통보받기)**
+
+  ```java
+  package thread_pool;
   
+  import java.util.concurrent.*;
+  
+  public class CompletionServiceExample extends Thread {
+      public static void main(String[] args) {
+          // CPU 코어 수만큼 최대 스래드를 사용하는 스레드풀 생성
+          ExecutorService executorService = Executors.newFixedThreadPool(
+                  Runtime.getRuntime().availableProcessors()
+          );
+  
+          // 스레드풀에서 작업 처리가 완료된 것만 통보받는 완료 서비스 객체 생성
+          // 생성자 매개값으로 executorService 제공 
+          CompletionService<Integer> completionService =
+                  new ExecutorCompletionService<Integer>(executorService);
+  
+          System.out.println("[작업 처리 요청]");
+          for(int i=0; i<3; i++) {
+              // submit 으로 작업 처리 요청
+              completionService.submit(new Callable<Integer>() {
+                  @Override
+                  public Integer call() throws Exception {
+                      int sum = 0;
+                      for(int i=1; i<=10; i++) {
+                          sum += i;
+                      }
+                      return sum;
+                  }
+              });
+          }
+  
+          System.out.println("[처리 완료된 작업 확인]");
+          // 스레드풀의 스레드에서 실행하도록 한다
+          executorService.submit(new Runnable() {
+              @Override
+              public void run() {
+                  while(true) {
+                      try {
+                          // 완료된 작업 가져오기
+                          Future<Integer> future = completionService.take();
+                          int value = future.get();
+                          System.out.println("[처리 결과] " + value);
+                      } catch (Exception e) {
+                          break;
+                      }
+                  }
+              }
+          });
+          
+          // 3초 후 스레드풀 종료
+          try { Thread.sleep(3000); }
+          catch (InterruptedException e) {}
+          executorService.shutdownNow();
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  [작업 처리 요청]
+  [처리 완료된 작업 확인]
+  [처리 결과] 55
+  [처리 결과] 55
+  [처리 결과] 55
+  ```
+
+
+
+<br>
+
+### 12.9.4 콜백 방식의 작업 완료 통보
+
+* **콜백(callback)** : 애플리케이션이 스레드에게 작업 처리를 요청한 후, 스레드가 작업을 완료하면 특정 메소드를 자동 실행하는 기법. 이때 자동 실행되는 메소드를 콜백 메소드라 한다.
+
+* **블로킹 방식과 콜백 방식**
+
+  ![1548384853017](C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\1548384853017.png)
+
+  * 블로킹 방식은 작업 처리를 요청한 후 작업이 완료될 때까지 블로킹되지만, 콜백 방식은 작업 처리를 요청한 후 결과를 기다릴 필요 없이 다른 기능을 수행할 수 있다.
+
+* **콜백 객체 만드는 방법**
+
+  ```java
+  CompletionHandler<V, A> callback = new CompletionHandler<V, A>() {
+      @Override
+      public void completed(V result, A attachment) {
+      }
+      @Override
+      public void failed(Throwable exc, A attachment){
+      }
+  }
+  ```
+
+  * **completed() 메소드** : 작업을 정상 처리 완료했을 때 호출된다.
+  * **failed() 메소드** : 작업 처리 도중 예외가 발생했을 때 호출된다.
+  * **V 타입 파라미터**는 결과값의 타입이고, **A**는 첨부값(결과값 이외에 추가적으로 전달하는 객체)의 타입이다.
+
+* **예시**
+
+  ```java
+  Runnable task = new Runnable() {
+      @Override
+      public void run() {
+          try {
+              // 작업 처리
+              V result = ..;
+              callback.completed(result, null);
+          } catch(Exception e) {
+              callback.failed(e, null);
+          }
+      }
+  }
+  ```
+
+
+
+<br>
+
+# 확인문제
+
+1. 스레드에 대한 설명 중 틀린 것은 무엇입니까?
+   1. 자바 애플리케이션은 메인(main) 스레드가 main() 메소드를 실행시킨다.
+   2. 작업 스레드 클래스는 Thread 클래스를 상속해서 만들 수 있다.
+   3. Runnable 객체는 스레드가 실행해야 할 코드를 가지고 있는 객체라고 볼 수 있다.
+   4. 스레드 실행을 시작하려면 run() 메소드를 호출해야 한다.
