@@ -14,7 +14,6 @@ public class SchedulerMainUI extends Scheduler {
     private String times[] = getTimes();
     private JLabel currentTime = new JLabel("현재 시간 : ");
     private JButton addBtn = new JButton(getAddSchedule());
-    private JButton searchBtn = new JButton(getSearchSchedule());
     private JButton adjustBtn = new JButton(getDeleteSchedule());
     private JButton deleteBtn = new JButton(getAdjustSchedule());
     private JPanel panel = new JPanel();
@@ -55,15 +54,6 @@ public class SchedulerMainUI extends Scheduler {
         };
         addBtn.addActionListener(addListener);
 
-
-        ActionListener searchListener = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                searchSchedule();
-            }
-        };
-        searchBtn.addActionListener(searchListener);
-
         ActionListener adjustListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -95,7 +85,6 @@ public class SchedulerMainUI extends Scheduler {
         panel.add(scrollPane, BorderLayout.CENTER);
         panel1.setLayout(new GridLayout(1, 4));
         panel1.add(addBtn);
-        panel1.add(searchBtn);
         panel1.add(adjustBtn);
         panel1.add(deleteBtn);
         panel1.add(exitBtn);
@@ -122,13 +111,61 @@ public class SchedulerMainUI extends Scheduler {
     @Override
     public void addSchedule() {
         SchedulerAdd schedulerAdd = new SchedulerAdd();
-        schedulerAdd.schdulerAddView();
+        schedulerAdd.schedulerAddView();
         frame.setVisible(false);
     }
 
-    @Override
-    public void searchSchedule() {
+    public int daySearch(String day) {
 
+        String[] days = getDays();
+        int check = -1;
+
+        for (int i = 1; i < days.length; i++) {
+            if (days[i].equals(day)) {
+                check = i;
+                break;
+            }
+        }
+
+        return check;
+    }
+
+    public int[] timeSearch(String time) {
+        int check[] = new int[]{-1, -1};
+        String[] stringTimes = time.split("~");
+        String[] timeTokens = getTimesTokens();
+
+        if (stringTimes.length == 2) {
+            for (int i = 0; i < timeTokens.length; i++) {
+                if (stringTimes[0].equals(timeTokens[i])) {
+                    check[0] = i;
+                    break;
+                }
+            }
+            for (int i = 0; i < timeTokens.length; i++) {
+                if (stringTimes[1].equals(timeTokens[i])) {
+                    check[1] = i;
+                    break;
+                }
+            }
+        }
+        return check;
+    }
+
+    public int[] scheduleSearch(String schedule) {
+        int check[] = new int[] {-1, -1};
+        String[][] beforeSchedule = getContents();
+
+        for(int i=0; i<getHourRows(); i++) {
+            for(int j=0; j<getDaysColumns() + 2; j++) {
+                if(schedule.equals(beforeSchedule[i][j])) {
+                    check[0] = i;
+                    check[1] = j;
+                    break;
+                }
+            }
+        }
+        return check;
     }
 
     @Override
@@ -143,7 +180,7 @@ public class SchedulerMainUI extends Scheduler {
 
     @Override
     public void exitScheduler() {
-
+        System.exit(1);
     }
 
     @Override
