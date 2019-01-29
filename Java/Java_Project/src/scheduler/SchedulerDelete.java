@@ -16,7 +16,7 @@ public class SchedulerDelete extends SchedulerMainUI{
     private JButton okBtn = new JButton("확인");
     private JButton cancelBtn = new JButton("취소");
 
-    public void schdulerDeleteUiView() {
+    public void schedulerDeleteUiView() {
         removeFrame.setLocation(600, 200);
         removeFrame.setPreferredSize(dimension);
 
@@ -24,6 +24,8 @@ public class SchedulerDelete extends SchedulerMainUI{
                 BoxLayout.X_AXIS));
         schedulePanel.add(scheduleLabel);
         schedulePanel.add(textScheduleField);
+
+        scheduleTextEvent();
 
         btnPanel.setLayout(new BoxLayout(btnPanel, BoxLayout.X_AXIS));
         btnPanel.add(okBtn);
@@ -47,12 +49,16 @@ public class SchedulerDelete extends SchedulerMainUI{
 
             @Override
             public void keyPressed(KeyEvent e) {
-
             }
 
             @Override
             public void keyReleased(KeyEvent e) {
-
+                int check[] = scheduleSearch(textScheduleField.getText());
+                if (check[0] == -1 || check[1] == -1) {
+                    scheduleLabel.setText("찾을 수 없는 일정입니다.");
+                } else {
+                    scheduleLabel.setText(textScheduleField.getText());
+                }
             }
         };
         textScheduleField.addKeyListener(scheduleTextListener);
@@ -64,10 +70,5 @@ public class SchedulerDelete extends SchedulerMainUI{
 
     public void cancelButtonEvent() {
 
-    }
-
-    public static void main(String[] args) {
-        SchedulerDelete schedulerDelete = new SchedulerDelete();
-        schedulerDelete.schdulerDeleteUiView();
     }
 }

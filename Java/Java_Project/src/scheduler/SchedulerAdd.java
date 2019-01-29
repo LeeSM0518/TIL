@@ -36,6 +36,44 @@ public class SchedulerAdd extends SchedulerMainUI {
         scheduleLabel.setHorizontalAlignment(SwingConstants.CENTER);
         scheduleLabel.setVerticalAlignment(SwingConstants.CENTER);
 
+        textEvent();
+
+        dayPanel.setLayout(new BoxLayout(dayPanel, BoxLayout.X_AXIS));
+        dayPanel.add(new JLabel("요일 : "));
+        dayPanel.add(textDayField);
+
+        timePanel.setLayout(new BoxLayout(timePanel, BoxLayout.X_AXIS));
+        timePanel.add(new JLabel("시간 : "));
+        timePanel.add(textTimeField);
+
+        schedulePanel.setLayout(new BoxLayout(schedulePanel, BoxLayout.X_AXIS));
+        schedulePanel.add(new JLabel("할일 : "));
+        schedulePanel.add(textScheduleField);
+
+        okButtonEvent();
+        cancelButtonEvent();
+
+        JPanel btnPanel = new JPanel();
+        btnPanel.setLayout(new BoxLayout(btnPanel, BoxLayout.X_AXIS));
+        btnPanel.add(okBtn);
+        btnPanel.add(cancelBtn);
+
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+        mainPanel.add(dayLabel);
+        mainPanel.add(dayPanel);
+        mainPanel.add(timeLabel);
+        mainPanel.add(timePanel);
+        mainPanel.add(scheduleLabel);
+        mainPanel.add(schedulePanel);
+        mainPanel.add(btnPanel);
+
+        addFrame.add(mainPanel, BorderLayout.CENTER);
+        addFrame.pack();
+        addFrame.setVisible(true);
+    }
+
+    public void textEvent() {
         KeyListener dayListener = new KeyListener() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -103,19 +141,9 @@ public class SchedulerAdd extends SchedulerMainUI {
             }
         };
         textScheduleField.addKeyListener(scheduleListener);
+    }
 
-        dayPanel.setLayout(new BoxLayout(dayPanel, BoxLayout.X_AXIS));
-        dayPanel.add(new JLabel("요일 : "));
-        dayPanel.add(textDayField);
-
-        timePanel.setLayout(new BoxLayout(timePanel, BoxLayout.X_AXIS));
-        timePanel.add(new JLabel("시간 : "));
-        timePanel.add(textTimeField);
-
-        schedulePanel.setLayout(new BoxLayout(schedulePanel, BoxLayout.X_AXIS));
-        schedulePanel.add(new JLabel("할일 : "));
-        schedulePanel.add(textScheduleField);
-
+    public void okButtonEvent() {
         ActionListener okListener = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -150,26 +178,17 @@ public class SchedulerAdd extends SchedulerMainUI {
             }
         };
         okBtn.addActionListener(okListener);
+    }
 
-
-        JPanel btnPanel = new JPanel();
-        btnPanel.setLayout(new BoxLayout(btnPanel, BoxLayout.X_AXIS));
-        btnPanel.add(okBtn);
-        btnPanel.add(cancelBtn);
-
-        JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
-        mainPanel.add(dayLabel);
-        mainPanel.add(dayPanel);
-        mainPanel.add(timeLabel);
-        mainPanel.add(timePanel);
-        mainPanel.add(scheduleLabel);
-        mainPanel.add(schedulePanel);
-        mainPanel.add(btnPanel);
-
-        addFrame.add(mainPanel, BorderLayout.CENTER);
-        addFrame.pack();
-        addFrame.setVisible(true);
+    public void cancelButtonEvent() {
+        ActionListener cancelListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                addFrame.setVisible(false);
+                mainUiVisible(true);
+            }
+        };
+        cancelBtn.addActionListener(cancelListener);
     }
 
 }
