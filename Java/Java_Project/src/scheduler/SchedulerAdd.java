@@ -22,6 +22,11 @@ public class SchedulerAdd extends SchedulerMainUI {
     private JPanel schedulePanel = new JPanel();
     private JButton okBtn = new JButton("확인");
     private JButton cancelBtn = new JButton("취소");
+    private String[][] schedule = new String[24][7];
+
+    public SchedulerAdd(String[][] contents) {
+        schedule = contents;
+    }
 
     public void schedulerAddView() {
         addFrame.setLocation(600, 200);
@@ -152,18 +157,7 @@ public class SchedulerAdd extends SchedulerMainUI {
                         scheduleLabel.getText().equals("할일을 입력해주세요.")) {
 
                 } else {
-                    String[][] schedule = getContents();
-                    for(int i=0; i<24; i++) {
-                        for(int j=0; j<schedule[0].length; j++) {
-                            try {
-                                if(schedule[i][j] != null) {
-                                    System.out.println(schedule[i][j]);
-                                }
-                            } catch (NullPointerException exception) {
-                                continue;
-                            }
-                        }
-                    }
+
                     int updataDay = daySearch(textDayField.getText());
                     int[] updataTime = timeSearch(textTimeField.getText());
 
@@ -185,7 +179,8 @@ public class SchedulerAdd extends SchedulerMainUI {
             @Override
             public void actionPerformed(ActionEvent e) {
                 addFrame.setVisible(false);
-                mainUiVisible(true);
+                setContents(schedule);
+                viewOn();
             }
         };
         cancelBtn.addActionListener(cancelListener);

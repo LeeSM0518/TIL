@@ -10,20 +10,25 @@ public class SchedulerMainUI extends Scheduler {
     private Dimension dimension = new Dimension(600, 600);
     private JFrame frame = new JFrame("Scheduler");
     private String header[] = getDays();
-    private String contents[][] = new String[24][7];
+    private String contents[][] = new String[24][8];
     private String times[] = getTimes();
     private JLabel currentTime = new JLabel("현재 시간 : ");
     private JButton addBtn = new JButton(getAddSchedule());
-    private JButton adjustBtn = new JButton(getDeleteSchedule());
-    private JButton deleteBtn = new JButton(getAdjustSchedule());
+    private JButton adjustBtn = new JButton(getAdjustSchedule());
+    private JButton deleteBtn = new JButton(getDeleteSchedule());
     private JPanel panel = new JPanel();
     private JPanel panel1 = new JPanel();
     private JButton exitBtn = new JButton(getExit());
-    private SchedulerAdd schedulerAdd = new SchedulerAdd();
-    private SchedulerDelete schedulerDelete = new SchedulerDelete();
+    private SchedulerAdd schedulerAdd;
+    private SchedulerDelete schedulerDelete;
+    private SchedulerAdjust schedulerAdjust;
+    private JTable table;
 
     DefaultTableModel model;
     JScrollPane scrollPane;
+
+    public SchedulerMainUI() {
+    }
 
     public void modelUpdate() {
         for (int i=0; i < times.length; i++) {
@@ -31,10 +36,11 @@ public class SchedulerMainUI extends Scheduler {
         }
 
         model = new DefaultTableModel(contents, header);
-        JTable table = new JTable(model);
+        table = new JTable(model);
         table.setRowHeight(50);
         scrollPane = new JScrollPane(table);
     }
+
 
     public void viewOn() {
 
@@ -60,14 +66,6 @@ public class SchedulerMainUI extends Scheduler {
         frame.add(panel, BorderLayout.CENTER);
         frame.pack();
         frame.setVisible(true);
-    }
-
-    public void mainUiVisible(boolean state) {
-        if(state == true) {
-            frame.setVisible(true);
-        } else {
-            frame.setVisible(false);
-        }
     }
 
     public void addListener() {
@@ -109,7 +107,7 @@ public class SchedulerMainUI extends Scheduler {
     }
 
     public String[][] getContents() {
-        return contents;
+        return this.contents;
     }
 
     @Override
@@ -119,6 +117,7 @@ public class SchedulerMainUI extends Scheduler {
 
     @Override
     public void addSchedule() {
+        schedulerAdd = new SchedulerAdd(contents);
         schedulerAdd.schedulerAddView();
         frame.setVisible(false);
     }
@@ -140,12 +139,16 @@ public class SchedulerMainUI extends Scheduler {
 
     @Override
     public void adjustSchedule() {
-
+        schedulerAdjust = new SchedulerAdjust(contents);
+        schedulerAdjust.schedulerAdjustUiView();
+        frame.setVisible(false);
     }
 
     @Override
     public void deleteSchedule() {
+        schedulerDelete = new SchedulerDelete(contents);
         schedulerDelete.schedulerDeleteUiView();
+        frame.setVisible(false);
     }
 
     @Override
@@ -186,19 +189,22 @@ public class SchedulerMainUI extends Scheduler {
         return check;
     }
 
-    public int[] scheduleSearch(String schedule) {
+    public int[] scheduleSearch(String schedule, String[][] contents) {
         int check[] = new int[] {-1, -1};
-        String[][] beforeSchedule = getContents();
 
         for(int i=0; i<24; i++) {
-            for(int j=0; j<7; j++) {
-                if(schedule.equals(beforeSchedule[i][j])) {
-                    check[0] = i;
-                    check[1] = j;
-                    break;
-                }
+            for(int j=1; j<8; j++) {
+                try {
+                    if(schedule.equals(contents[i][j])) {
+                        check[0] = i;
+                        check[1] = j;
+                        break;
+                    }
+                } catch (Exception e) {}
+
             }
         }
         return check;
     }
+
 }
