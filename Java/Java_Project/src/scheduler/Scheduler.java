@@ -43,12 +43,12 @@ public abstract class Scheduler {
 
     public abstract void currentTimeUpdate();
 
-    public static String[] getTimesTokens() {
-        return TIMES_TOKENS;
-    }
-
     public static String getNowTime() {
         return NOW_TIME;
+    }
+
+    public static String[] getTimesTokens() {
+        return TIMES_TOKENS;
     }
 
     public static String[] getTimes() {
@@ -57,14 +57,6 @@ public abstract class Scheduler {
 
     public static String[] getDays() {
         return DAYS;
-    }
-
-    public static int getDaysColumns() {
-        return DAYS_COLUMNS;
-    }
-
-    public static int getHourRows() {
-        return HOUR_ROWS;
     }
 
     public static String getAddSchedule() {

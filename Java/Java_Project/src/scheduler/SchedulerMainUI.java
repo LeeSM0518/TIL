@@ -200,7 +200,7 @@ public class SchedulerMainUI extends Scheduler {
                         check[1] = j;
                         break;
                     }
-                } catch (Exception e) {}
+                } catch (NullPointerException e) {}
 
             }
         }
