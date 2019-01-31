@@ -21,7 +21,6 @@ public abstract class Scheduler {
             "", "월", "화", "수", "목", "금", "토", "일"
     };
     private static final String ADD_SCHEDULE = "일정 추가";
-    private static final String SEARCH_SCHEDULE = "일정 검색";
     private static final String ADJUST_SCHEDULE = "일정 수정";
     private static final String DELETE_SCHEDULE = "일정 삭제";
     private static final String NOW_TIME = "현재 시간 : ";
@@ -30,10 +29,11 @@ public abstract class Scheduler {
 
     public Scheduler() {
     }
+    public abstract int daySearch(String day);
+
+    public abstract int[] timeSearch(String time);
 
     public abstract void addSchedule();
-
-    public abstract void searchSchedule();
 
     public abstract void adjustSchedule();
 
@@ -71,9 +71,6 @@ public abstract class Scheduler {
         return ADD_SCHEDULE;
     }
 
-    public static String getSearchSchedule() {
-        return SEARCH_SCHEDULE;
-    }
 
     public static String getDeleteSchedule() {
         return DELETE_SCHEDULE;
