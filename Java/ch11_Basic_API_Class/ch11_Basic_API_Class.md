@@ -1983,4 +1983,798 @@ StringTokenizer st = new StringTokenizer("문자열", "구분자");
 
 ## 11.9 StringBuffer, StringBuilder 클래스
 
-: 
+: 문자열을 변경하는 작업이 많을 경우에는 String 클래스를 사용하는 것보다는 java.lang 패키지의 **StringBuffer 또는 StringBuilder 클래스**를 사용하는 것이 좋다. 이 두 클래스는 내부 버퍼(buffer: 데이터를 임시로 저장하는 메모리)에 문자열을 저장해 두고, 그 안에서 추가, 수정, 삭제 작업을 할 수 있도록 설계되어 있다.
+
+* **StringBuffer** : 멀티 스레드 환경에서 사용
+
+* **StringBuilder** : 단일 스레드 환경에서 사용
+
+  * **StringBuilder 생성자**
+
+    ```java
+    // StringBuilder(String str) 생성자는 str로 주어진 매개값을 버퍼의
+    // 초기값으로 저장한다.
+    StringBuilder sb = new StringBuilder();
+    StringBuilder sb = new StringBuilder(16);
+    StringBuilder sb = new StringBuilder("Java");
+    ```
+
+  * **메소드들**
+
+    | 메소드                         | 설명                                              |
+    | ------------------------------ | ------------------------------------------------- |
+    | append(...)                    | 문자열 끝에 주어진 매개값을 추가                  |
+    | insert(int offset, ...)        | 문자열 중간에 주어진 매개값을 추가                |
+    | delete(int start, int end)     | 문자열의 일부분을 삭제                            |
+    | deleteCharAt(int index)        | 문자열에서 주어진 index의 문자를 삭제             |
+    | replace(int start, String str) | 문자열의 일부분을 다른 문자열로 대치              |
+    | reverse()                      | 문자열의 순서를 뒤바꿈                            |
+    | setCharAt(int index, char ch)  | 문자열에서 주어진 index의 문자를 다른 문자로 대치 |
+
+* **예제**
+
+  ```java
+  package stringbuffer_and_stringbuilder;
+  
+  public class StringBuilderExample {
+      public static void main(String[] args) {
+          // StringBuilder 객체 생성
+          StringBuilder sb = new StringBuilder();
+  
+          // 문자열을 끝에 추가
+          sb.append("Java ");
+          sb.append("Program Study");
+          System.out.println(sb.toString());
+  
+          // 4번째 문자 뒤에 2를 삽입
+          sb.insert(4, "2");
+          System.out.println(sb.toString());
+  
+          // 4번째 문자 뒤의 문자를 6으로 변경
+          sb.setCharAt(4, '6');
+          System.out.println(sb.toString());
+  
+          // 5번째 문자 뒤부터 13번째 문자까지를
+          // "Book" 문자열로 대치
+          sb.replace(6, 13, "Book");
+          System.out.println(sb.toString());
+  
+          // 5번째 문자 삭제
+          sb.delete(4, 5);
+          System.out.println(sb.toString());
+  
+          // 총 문자수 얻기
+          int length = sb.length();
+          System.out.println("총문자수: " + length);
+  
+          // 버퍼에 있는 것을 String 타입으로 리턴
+          String result = sb.toString();
+          System.out.println(result);
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  Java Program Study
+  Java2 Program Study
+  Java6 Program Study
+  Java6 Book Study
+  Java Book Study
+  총문자수: 15
+  Java Book Study
+  ```
+
+
+
+## 11.10 정규 표현식과 Pattern 클래스
+
+: 정규 표현식은 문자 또는 숫자 기호와 반복 기호가 결합된 문자열이다.
+
+### 11.10.1 정규 표현식 작성 방법
+
+* **정규 표현식의 기본적인 기호들**
+
+  | 기호   | 설명                                                         |
+  | ------ | ------------------------------------------------------------ |
+  | []     | 한 개의 문자<br />**예) [abc] : a, b, c 중 하나의 문자**<br />**[^abc] : a, b, c 이외의 하나의 문자**<br />**[a-zA-Z] : a~z, A~Z 중 하나의 문자** |
+  | \d     | 한 개의 숫자, [0-9]와 동일                                   |
+  | \s     | 공백                                                         |
+  | \w     | 한 개의 알파벳 또는 한 개의 숫자, [a-zA-Z0-9]와 동일         |
+  | ?      | 없음 또는 한 개                                              |
+  | *      | 없음 또는 한 개 이상                                         |
+  | +      | 한 개 이상                                                   |
+  | {n}    | 정확히 n개                                                   |
+  | {n,}   | 최소한 n개                                                   |
+  | {n, m} | n개에서부터 m개까지                                          |
+  | ()     | 그룹핑                                                       |
+
+* **02-123-1234 또는 010-1234-5678과 같은 전화번호를 위한 정규 표현식**
+
+  ```java
+  (02|010)-\d{3,4}-\d{4}
+  ```
+
+  | 기호      | 설명                  |
+  | --------- | --------------------- |
+  | (02\|010) | 02 또는 010           |
+  | -         | - 포함                |
+  | \d{3,4}   | 3자리 또는 4자리 숫자 |
+  | -         | - 포함                |
+  | \d{4}     | 4자리 숫자            |
+
+* **white@naver\.com 과 같은 이메일을 위한 정규 표현식**
+
+  ```java
+  \w+@\w+\.\w+(\.\w+)?
+  ```
+
+  | 기호      | 설명                          |
+  | --------- | ----------------------------- |
+  | \w+       | 한 개 이상의 알파벳 또는 숫자 |
+  | @         | @                             |
+  | \w+       | 한 개 이상의 알파벳 또는 숫자 |
+  | \\.       | .                             |
+  | \w+       | 한 개 이상의 알파벳 또는 숫자 |
+  | (\\.\w+)? | \\.\w+ 이 없거나 한개         |
+
+  
+
+### 11.10.2 Pattern 클래스
+
+: 문자열을 정규 표현식으로 검증하는 기능은 java.util.regex.Pattern 클래스의 정적 메소드인 matches() 메소드가 제공한다.
+
+```java
+boolean result = Pattern.matches("정규식", "검증할 문자열");
+```
+
+* **예제(문자열 검증하기)**
+
+  ```java
+  package pattern_class;
+  
+  import java.util.regex.Pattern;
+  
+  public class PatternExample {
+      public static void main(String[] args) {
+          String regExp = "(02|010)-\\d{3,4}-\\d{4}";
+          String data = "010-123-4567";
+          boolean result = Pattern.matches(regExp, data);
+  
+          if(result) {
+              System.out.println("정규식과 일치합니다.");
+          } else {
+              System.out.println("정규식과 일치하지 않습니다.");
+          }
+  
+          regExp = "\\w+@\\w+\\.\\w+(\\.\\w+)?";
+          data = "angel@navercom";
+          result = Pattern.matches(regExp, data);
+          if(result) {
+              System.out.println("정규식과 일치합니다.");
+          } else {
+              System.out.println("정규식과 일치하지 않습니다.");
+          }
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  정규식과 일치합니다.
+  정규식과 일치하지 않습니다.
+  ```
+
+
+
+## 11.11 Arrays 클래스
+
+: Array 클래스는 **배열 조작 기능**을 가지고 있다. 배열 조작이란 배열의 **복사, 항목 정렬, 항목 검색**과 같은 기능을 말한다.
+
+* **System.arraycopy() 메소드** : 단순한 배열 복사
+
+ Array 클래스의 모든 메소드는 **정적(static)이므로** Arrays 클래스로 바로 사용이 가능하다.
+
+* **메소드들**
+
+  | 리턴 타입 | 메소드 이름                                 | 설명                                                         |
+  | --------- | ------------------------------------------- | ------------------------------------------------------------ |
+  | int       | binarySearch(배열, 찾는값)                  | 전체 배열 항목에서 찾는 값이 있는 인덱스 리턴                |
+  | 타겟 배열 | copyOf(원본배열, 복사할길이)                | 원본 배열의 0번 인덱스에서 복사할 길이만큼 복사한 배열 리턴, 복사할 길이는 원본 배열의 길이보다 커도 되며, 타겟 배열의 길이가 된다. |
+  | 타켓 배열 | copyOfRange(원본배열, 시작인덱스, 끝인덱스) | 원본 배열의 0번 인덱스에서 복사할 길이만큼 복사한 배열 리턴, 복사 할 길이는 원본 배열의 길이보다 커도 되며, 타겟 배열의 길이가 된다. |
+  | boolean   | deepEquals(배열, 배열)                      | 두 배열의 깊은 비교(중첩 배열의 항목까지 비교)               |
+  | boolean   | equals(배열, 배열)                          | 두 배열의 얕은 비교(중첩 배열의 항목은 비교하지 않음)        |
+  | void      | fill(배열, 값)                              | 전체 배열 항목에 동일한 값을 저장                            |
+  | void      | fill(배열, 시작인덱스, 끝인덱스, 값)        | 시작 인덱스부터 끝 인덱스까지 항목에만 동일한 값을 저장      |
+  | void      | sort(배열)                                  | 배열의 전체 항목을 오름차순으로 정렬                         |
+  | String    | toString(배열)                              | "[값1,값2,...]"와 같은 문자열 리턴                           |
+
+
+
+### 11.11.1 배열 복사
+
+* **copyOf(원본배열, 복사할길이) 메소드** : 원본 배열의 0번 인덱스에서 복사할 길이만큼 복사한 타겟 배열을 리턴.
+
+  ```java
+  char[] arr1 = {'J', 'A', 'V', 'A'};
+  char[] arr2 = Arrays.copyOf(arr1, arr1.length);
+  // arr2 = {'J', 'A', 'V', 'A'}
+  ```
+
+* **copyOfRange(원본배열, 시작인덱스, 끝인덱스)** : 원본 배열의 시작 인덱스에서 끝 인덱스까지 복사한 배열을 리턴한다. 시작 인덱스는 포함되지만, 끝 인덱스는 포함되지 않는다.
+
+  ```java
+  char[] arr1 = {'J', 'A', 'V', 'A'};
+  char[] arr2 = Arrays.copyOfRange(arr1, 1, 3);
+  // arr2 = {'A', 'V'}
+  ```
+
+* **System.arraycopy() 메소드**
+
+  ```java
+  // System.arraycopy(원본배열, 원본시작인덱스, 타겟배열, 타겟시작인덱스, 복사개수)
+  System.arraycopy(Object src, int srcPos, Object dest, int destPos, int length)
+  ```
+
+* **예제**
+
+  ```java
+  package arrays_class;
+  
+  import java.util.Arrays;
+  
+  public class ArrayCopyExample {
+      public static void main(String[] args) {
+          char[] arr1 = {'J', 'A', 'V', 'A'};
+  
+          // 방법1
+          // arr1 전체를 arr2로 복사
+          char[] arr2 = Arrays.copyOf(arr1, arr1.length);
+          System.out.println(Arrays.toString(arr2));
+  
+          // 방법2
+          // arr1[1] ~ arr1[2]를
+          // arr3[0] ~ arr3[1]로 복사
+          char[] arr3 = Arrays.copyOfRange(arr1, 1,3);
+          System.out.println(Arrays.toString(arr3));
+  
+          // 방법3
+          // arr1 전체를 arr4로 복사
+          char[] arr4 = new char[arr1.length];
+          System.arraycopy(arr1, 0, arr4, 0, arr1.length);
+          for(int i=0; i<arr4.length; i++) {
+              System.out.println("arr4[" + i + "]=" + arr4[i]);
+          }
+      }
+  }
+  ```
+
+
+
+### 11.11.2 배열 항목 비교
+
+* **equals()** : 1차 항목의 값만 비교
+
+* **deepEquals()** : 1차 항목이 서로 다른 배열을 참조할 경우 중첩된 배열의 항목까지 비교한다.
+
+* **예제**
+
+  ```java
+  package arrays_class;
+  
+  import java.lang.reflect.Array;
+  import java.util.Arrays;
+  
+  public class EqualsExample {
+      public static void main(String[] args) {
+          int[][] original = { {1,2}, {3,4} };
+  
+          // 얕은 복사후 비교
+          System.out.println("[얕은 복제후 비교]");
+          int[][] cloned1 = Arrays.copyOf(original, original.length);
+          System.out.println("배열 번지 비교: " + original.equals(cloned1));
+          System.out.println("1차 배열 항목값 비교: " +
+                  Arrays.equals(original, cloned1));
+          System.out.println("중첩 배열 항목값 비교: " +
+                  Arrays.deepEquals(original, cloned1));
+  
+          // 깊은 복사후 비교
+          System.out.println("\n[깊은 복제후 비교]");
+          int[][] cloned2 = Arrays.copyOf(original, original.length);
+          cloned2[0] = Arrays.copyOf(original[0], original[0].length);
+          cloned2[1] = Arrays.copyOf(original[1], original[1].length);
+          System.out.println("배열 번지 비교: " +
+                  original.equals(cloned2));
+          System.out.println("1차 배열 항목값 비교: " +
+                  Arrays.equals(original, cloned2));
+          System.out.println("중첩 배열 항목값 비교: " +
+                  Arrays.deepEquals(original, cloned2));
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  [얕은 복제후 비교]
+  배열 번지 비교: false
+  1차 배열 항목값 비교: true
+  중첩 배열 항목값 비교: true
+  
+  [깊은 복제후 비교]
+  배열 번지 비교: false
+  1차 배열 항목값 비교: false
+  중첩 배열 항목값 비교: true
+  ```
+
+
+
+### 11.11.3 배열 항목 정렬
+
+* **Arrays.sort() 메소드** : 배열이 자동으로 오름차순 정렬이된다.
+
+* **예제**
+
+  ```java
+  package arrays_class;
+  
+  import java.lang.reflect.Array;
+  import java.util.Arrays;
+  
+  public class SortExample {
+      public static void main(String[] args) {
+          int[] scores = { 99, 97, 98 };
+          Arrays.sort(scores);
+          for(int i=0; i<scores.length; i++) {
+              System.out.println("scores[" + i + "]=" + scores[i]);
+          }
+          System.out.println();
+  
+          String[] names = { "홍길동", "박동수", "김민수" };
+          Arrays.sort(names);
+          for(int i=0; i<names.length; i++) {
+              System.out.println("names[" + i + "]=" +
+                      names[i]);
+          }
+          System.out.println();
+  
+          Member m1 = new Member("홍길동");
+          Member m2 = new Member("박동수");
+          Member m3 = new Member("김민수");
+          Member[] members = { m1, m2, m3 };
+          Arrays.sort(members);
+          for(int i=0; i<members.length; i++) {
+              System.out.println("members[" + i + "].name=" +
+                      members[i].name);
+          }
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  scores[0]=97
+  scores[1]=98
+  scores[2]=99
+  
+  names[0]=김민수
+  names[1]=박동수
+  names[2]=홍길동
+  
+  members[0].name=김민수
+  members[1].name=박동수
+  members[2].name=홍길동
+  ```
+
+
+
+### 11.11.4 배열 항목 검색
+
+* **배열 검색** : 배열 항목에서 특정 값이 위치한 인덱스를 얻는 것을 배열 검색이라고 한다.
+
+* 배열 항목을 검색하려면 먼저 **Arrays.sort() 메소드**로 항목들을 오름차순으로 정렬한 후, **Arrays.binarySearch() 메소드**로 항목을 찾아야 한다.
+
+* **예제**
+
+  ```java
+  package arrays_class;
+  
+  import java.util.Arrays;
+  
+  public class SearchExample {
+      public static void main(String[] args) {
+          // 기본 타입값 탐색
+          int[] scores = { 99, 97, 98 };
+          Arrays.sort(scores);
+          int index = Arrays.binarySearch(scores, 99);
+          System.out.println("찾은 인덱스: " + index);
+  
+          // 문자열 검색
+          String[] names = { "홍길동", "박동수", "김민수" };
+          Arrays.sort(names);
+          index = Arrays.binarySearch(names, "홍길동");
+          System.out.println("찾은 인덱스: " + index);
+  
+          // 객체 검색
+          Member m1 = new Member("홍길동");
+          Member m2 = new Member("박동수");
+          Member m3 = new Member("김민수");
+          Member[] members = { m1, m2, m3 };
+          Arrays.sort(members);
+          index = Arrays.binarySearch(members, m1);
+          System.out.println("찾은 인덱스: " + index);
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  찾은 인덱스: 2
+  찾은 인덱스: 2
+  찾은 인덱스: 2
+  ```
+
+
+
+## 11.12 Wrapper(포장) 클래스
+
+: 자바는 기본 타입(byte, char, short, int, long, float, double, boolean)의 값을 갖는 객체를 생성할 수 있다. 이렁 객체를 **포장(Wrapper) 객체**라고 한다.
+
+* **포장 클래스들**
+
+  | 기본 타입 | 포장 클래스 |
+  | --------- | ----------- |
+  | byte      | Byte        |
+  | char      | Character   |
+  | short     | Short       |
+  | int       | Integer     |
+  | long      | Long        |
+  | float     | Float       |
+  | double    | Double      |
+  | boolean   | Boolean     |
+
+
+
+### 11.12.1 박싱(Boxing)과 언박싱(Unboxing)
+
+* **박싱(Boxing)** : 기본 타입의 값을 포장 객체로 만드는 과정
+
+* **언박싱(Unboxing)** : 포장 객체에서 기본 타입의 값을 얻어내는 과정
+
+* **박싱하는 방법**
+
+  | 기본 타입의 값을 줄 경우             | 문자열을 줄 경우                   |
+  | ------------------------------------ | ---------------------------------- |
+  | Byte obj = new Byte(10);             | Byte obj = new Byte("10");         |
+  | Character obj = new Character("가"); | 없음                               |
+  | Short obj = new Short(100);          | Short obj = new Short("100");      |
+  | Integer obj = new Integer(1000);     | Integer obj = new Integer("1000"); |
+  | Long obj = new Long(10000);          | Long obj = new Long("10000");      |
+  | Float obj = new Float(2.5F);         | Float obj = new Float("2.5F");     |
+  | Double obj = new Double(3.5);        | Double obj = new Double("3.5");    |
+  | Boolean obj = new Boolean(true);     | Boolean obj = new Boolean("true"); |
+
+* **생성자를 이용하지 않고 박싱하는 방법**
+
+  ```java
+  Integer obj = Integer.valueOf(1000);
+  Integer obj = Integer.valueOf("1000");
+  ```
+
+* **박싱된 포장 객체의 값을 얻어내는 방법**
+
+  | 타입    | 메소드                     |
+  | ------- | -------------------------- |
+  | byte    | num = obj.byteValue();     |
+  | char    | ch = obj.charValue();      |
+  | short   | num = obj.shortValue();    |
+  | int     | num = obj.intValue();      |
+  | long    | num = obj.longValue();     |
+  | float   | num = obj.floatValue();    |
+  | double  | num = obj.doubleValue();   |
+  | boolean | bool = obj.booleanValue(); |
+
+* **예제(기본 타입의 값을 박싱하고 언박싱하기)**
+
+  ```java
+  package wrapper_class;
+  
+  public class BoxingUnboxingExample {
+      public static void main(String[] args) {
+          // Boxing
+          Integer obj1 = new Integer(100);
+          Integer obj2 = new Integer("200");
+          Integer obj3 = Integer.valueOf("300");
+  
+          // Unboxing
+          int value1 = obj1.intValue();
+          int value2 = obj2.intValue();
+          int value3 = obj3.intValue();
+  
+          System.out.println(value1);
+          System.out.println(value2);
+          System.out.println(value3);
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  100
+  200
+  300
+  ```
+
+
+
+### 11.12.2 자동 박싱과 언박싱
+
+* **자동 박싱** : 은 포장 클래스 타입에 기본값이 대입될 경우에 발생한다.
+
+  ```java
+  Integer obj = 100;	// 자동 박싱
+  ```
+
+* **자동 언박싱** : 기본 타입에 포장 객체가 대입될 경우에 발생.
+
+  ```java
+  Integer obj = new Integer(200);
+  int value1 = obj;			// 자동 언박싱
+  int value2 = obj + 100;		// 자동 언박싱
+  ```
+
+* **예제**
+
+  ```java
+  package wrapper_class;
+  
+  public class AutoBoxingUnboxingExample {
+      public static void main(String[] args) {
+          // 자동 Boxing
+          Integer obj = 100;
+          System.out.println("value: " + obj.intValue());
+  
+          // 대입 시 자동 Unboxing
+          int value = obj;
+          System.out.println("value: " + value);
+  
+          // 연산 시 작동 Unboxing
+          int result = obj + 100;
+          System.out.println("result: " + result);
+      }
+  }
+  ```
+
+
+
+### 11.12.3 문자열을 기본 타입 값으로 변환
+
+: 대부분의 포장 클래스에는 "parse+기본타입" 명으로 되어 있는 정적(static) 메소드가 있다. 이 메소드는 문자열을 매개값으로 받아 기본 타입 값으로 변환한다.
+
+* **parse 메소드**
+
+  | 타입    | 메소드                               |
+  | ------- | ------------------------------------ |
+  | byte    | num = Byte.parseByte("10");          |
+  | short   | num = Short.parseShort("100");       |
+  | int     | num = Integer.parseInt("1000");      |
+  | long    | num = Long.parseLong("10000");       |
+  | float   | num = Float.parseFloat("2.5F");      |
+  | double  | num = Double.parseDouble("3.5");     |
+  | boolean | bool = Boolean.parseBoolean("true"); |
+
+* **예제(문자열을 기본 타입 값으로 변환)**
+
+  ```java
+  package wrapper_class;
+  
+  public class StringToPrimitiveValueExample {
+      public static void main(String[] args) {
+          int value1 = Integer.parseInt("10");
+          double value2 = Double.parseDouble("3.14");
+          boolean value3 = Boolean.parseBoolean("true");
+  
+          System.out.println("value1: " + value1);
+          System.out.println("value2: " + value2);
+          System.out.println("value3: " + value3);
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  value1: 10
+  value2: 3.14
+  value3: true
+  ```
+
+
+
+### 11.12.4 포장 값 비교
+
+: 포장 객체는 내부의 값을 비교하기 위해 **== 와 != 연산자**를 사용할 수 없다.
+
+* **예외**
+
+  | 타입             | 값의 범위       |
+  | ---------------- | --------------- |
+  | boolean          | true, false     |
+  | char             | \u0000 ~ \u007f |
+  | byte, short, int | -128 ~ 127      |
+
+  > 포장 객체에 정확히 어떤 값이 저장될지 모르는 상황이라면 ==와 != 연산자는 사용하지 않는 것이 좋다.
+
+* **equals() 메소드**로 내부 값을 비교하는 것이 좋다.
+
+  ```java
+  package wrapper_class;
+  
+  public class ValueCompareExample {
+      public static void main(String[] args) {
+          System.out.println("[-128~127 초과값일 경우]");
+          Integer obj1 = 300;
+          Integer obj2 = 300;
+          System.out.println("==결과: " + (obj1 == obj2));
+          System.out.println("언박싱후 == 결과: " +
+                  (obj1.intValue() == obj2.intValue()));
+          System.out.println("equals() 결과: " +
+                  obj1.equals(obj2));
+          System.out.println();
+  
+          System.out.println("[-128~127 범위값일 경우]");
+          Integer obj3 = 10;
+          Integer obj4 = 10;
+          System.out.println("==결과: " +
+                  (obj3 == obj4));
+          System.out.println("언박싱후 == 결과: " +
+                  (obj3.intValue() == obj4.intValue()));
+          System.out.println("equals() 결과: " +
+                  obj3.equals(obj4));
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  [-128~127 초과값일 경우]
+  ==결과: false
+  언박싱후 == 결과: true
+  equals() 결과: true
+  
+  [-128~127 범위값일 경우]
+  ==결과: true
+  언박싱후 == 결과: true
+  equals() 결과: true
+  ```
+
+
+
+## 11.13 Math.Random 클래스
+
+### 11.13.1 Math 클래스
+
+: java.lang.Math 클래스는 수학 계산에 사용할 수 있는 메소드를 제공한다.
+
+* **Math 클래스의 메소드들**
+
+  | 메소드                                                    | 설명                 | 예제코드                                                     | 리턴값                   |
+  | --------------------------------------------------------- | -------------------- | ------------------------------------------------------------ | ------------------------ |
+  | int abs(int a)<br />double abs(double a)                  | 절대값               | int v1 = Math.abs(-5);<br />double v2 = Math.abs(-3.14);     | v1 = 5<br />v2 = 3.14    |
+  | double ceil(double a)                                     | 올림 값              | double v3 = Math.ceil(5.3);<br />double v4 = Math.ceil(-5.3); | v3 = 6.0<br />v4 = -5.0  |
+  | double floor(double a)                                    | 버림 값              | double v5 = Math.floor(5.3);<br />double v6 = Math.floor(-5.3); | v5 = 5.0<br />v6 = -6.0  |
+  | int max(int a, int b)<br />double max(double a, double b) | 최대값               | int v7 = Math.max(5, 9);<br />double v10 = Math.max(5.3, 2.5) | v7 = 9<br />v8 = 5.3     |
+  | double random()                                           | 랜덤 값              | double v11 = Math.random();                                  | 0.0<=v11<1.0             |
+  | double rint(double a)                                     | 가까운 정수의 실수값 | double v12 = Math.rint(5.3);<br />double v13 = <br />Math.rint(5.7); | v12 = 5.0<br />v13 = 6.0 |
+  | long round(double a)                                      | 반올림값             | long v14 = Math.round(5.3);<br />long v15 = Math.round(5.7); | v14 = 5<br />v15 = 6     |
+
+* **예제**
+
+  ```java
+  package math_class;
+  
+  public class MathExample {
+      public static void main(String[] args) {
+          // 절대값
+          int v1 = Math.abs(-5);
+          double v2 = Math.abs(-3.14);
+          System.out.println("v1= " + v1);
+          System.out.println("v2= " + v2);
+          System.out.println();
+  
+          // 올림 값
+          double v3 = Math.ceil(5.3);
+          double v4 = Math.ceil(-5.3);
+          System.out.println("v3= " + v3);
+          System.out.println("v4= " + v4);
+          System.out.println();
+  
+          // 버림 값
+          double v5 = Math.floor(5.3);
+          double v6 = Math.floor(-5.3);
+          System.out.println("v5= " + v5);
+          System.out.println("v6= " + v6);
+          System.out.println();
+  
+          // 최대값
+          int v7 = Math.max(5, 9);
+          double v8 = Math.max(5.3, 2.5);
+          System.out.println("v7= " + v7);
+          System.out.println("v8= " + v8);
+          System.out.println();
+  
+          // 최소값
+          int v9 = Math.min(5, 9);
+          double v10 = Math.min(5.3, 2.5);
+          System.out.println("v9= " + v9  );
+          System.out.println("v10= " + v10);
+          System.out.println();
+  
+          // 랜덤값
+          double v11 = Math.random();
+          System.out.println("v11= " + v11);
+          System.out.println();
+  
+          // 가까운 정수의 실수값
+          double v12 = Math.rint(5.3);
+          double v17 = Math.rint(5.5);
+          double v13 = Math.rint(5.7);
+          System.out.println("v12= " + v12);
+          System.out.println("v13= " + v13);
+          System.out.println("v17= " + v17);
+          System.out.println();
+  
+          // 반올림값
+          long v14 = Math.round(5.3);
+          long v15 = Math.round(5.7);
+          System.out.println("v14= " + v14);
+          System.out.println("v15= " + v15);
+          System.out.println();
+  
+          double value = 12.3456;
+          double temp1 = value * 100;
+          long temp2 = Math.round(temp1);
+          double v16 = temp2 / 100.0;
+          System.out.println("v16= " + v16);
+          System.out.println();
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  v1= 5
+  v2= 3.14
+  
+  v3= 6.0
+  v4= -5.0
+  
+  v5= 5.0
+  v6= -6.0
+  
+  v7= 9
+  v8= 5.3
+  
+  v9= 5
+  v10= 2.5
+  
+  v11= 0.7004030061497114
+  
+  v12= 5.0
+  v13= 6.0
+  v17= 6.0
+  
+  v14= 5
+  v15= 6
+  
+  v16= 12.35
+  ```
+
+  
