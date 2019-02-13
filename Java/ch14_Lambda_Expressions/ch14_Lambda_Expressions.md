@@ -531,4 +531,848 @@
   | IntSupplier     | int getAsInt()         | int 값을 리턴     |
   | LongSupplier    | long getAsLong()       | long 값을 리턴    |
 
+* **예제**
+
+  ```java
+  package supplier_functional_interface;
   
+  import java.util.function.IntSupplier;
+  
+  public class SupplierExample {
+      public static void main(String[] args) {
+          // 람다식
+          IntSupplier intSupplier = () -> {
+              int num = (int) (Math.random() * 6) + 1;
+              return num;
+          };
+  
+          int num = intSupplier.getAsInt();
+          System.out.println("눈의 수: " + num);
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  눈의 수: 3
+  ```
+
+
+
+### 14.5.3 Function 함수적 인터페이스
+
+: 매개값과 리턴값이 있는 메소드를 가지고 있다.
+
+* **Function 함수적 인터페이스들**
+
+  | 인터페이스명             | 추상 메소드                      | 설명                       |
+  | ------------------------ | -------------------------------- | -------------------------- |
+  | Function\<T,R>           | R apply(T t)                     | 객체 T를 객체 R로 매핑     |
+  | BiFunction\<T,U,R>       | R apply(T t, U u)                | 객체 T와 U를 객체 R로 매핑 |
+  | DoubleFunction\<R>       | R apply(double value)            | double을 객체 R로 매핑     |
+  | IntFunction\<R>          | R apply(int value)               | int를 객체 R로 매핑        |
+  | IntToDoubleFunction      | double applyAsDouble(int value)  | int를 double로 매핑        |
+  | IntToLongFunction        | long applyAsLong(int value)      | int를 long으로 매핑        |
+  | LongToDoubleFunction     | double applyAsDouble(long value) | long을 double로 매핑       |
+  | LongToIntFunction        | int applyAsInt(long value)       | long을 int로 매핑          |
+  | ToDoubleBiFunction\<T,U> | double applyAsDouble(T t, U u)   | 객체 T와 U를 double로 매핑 |
+  | ToDoubleFunction\<T>     | double applyAsDouble(T t)        | 객체 T를 double로 매핑     |
+  | ToIntBiFunction\<T,U>    | int applyAsInt(T t, U u)         | 객체 T와 U를 int로 매핑    |
+  | ToIntFunction\<T>        | int applyAsInt(T t)              | 객체 T를 int로 매핑        |
+  | ToLongBiFunction\<T,U>   | long applyAsLong(T t, U u)       | 객체 T와 U를 long으로 매핑 |
+  | ToLongFunction\<T>       | long applyAsLong(T t)            | 객체 T를 long으로 매핑     |
+
+* **예제**
+
+  Student.java
+
+  ```java
+  package function_functional_interface;
+  
+  public class Student {
+      private String name;
+      private int englishScore;
+      private int mathScore;
+  
+      public Student(String name, int englishScore, int mathScore) {
+          this.name = name;
+          this.englishScore = englishScore;
+          this.mathScore = mathScore;
+      }
+  
+      public String getName() { return name; }
+      public int getEnglishScore() { return englishScore; }
+      public int getMathScore() { return mathScore; }
+  }
+  ```
+
+  FunctionExample1.java
+
+  ```java
+  package function_functional_interface;
+  
+  import java.util.Arrays;
+  import java.util.List;
+  import java.util.function.Function;
+  import java.util.function.ToIntFunction;
+  
+  public class FunctionExample1 {
+      private static List<Student> list = Arrays.asList(
+              new Student("홍길동", 90, 96),
+              new Student("신용권", 95, 93)
+      );
+  
+      public static void printString(Function<Student, String> function) {
+          for(Student student : list) {
+              System.out.println(function.apply(student) + " ");
+          }
+          System.out.println();
+      }
+  
+      public static void printInt(ToIntFunction<Student> function) {
+          for(Student student : list) {
+              System.out.println(function.applyAsInt(student) + " ");
+          }
+          System.out.println();
+      }
+  
+      public static void main(String[] args) {
+          System.out.println("[학생 이름]");
+          printString(t -> t.getName());
+  
+          System.out.println("[영어 점수]");
+          printInt(t -> t.getEnglishScore());
+  
+          System.out.println("[수학 점수]");
+          printInt(t -> t.getMathScore());
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  [학생 이름]
+  홍길동 
+  신용권 
+  
+  [영어 점수]
+  90 
+  95 
+  
+  [수학 점수]
+  96 
+  93
+  ```
+
+  FunctionExample2.java
+
+  ```java
+  package function_functional_interface;
+  
+  import java.util.Arrays;
+  import java.util.List;
+  import java.util.function.ToIntFunction;
+  
+  public class FunctionExample2 {
+      private static List<Student> list = Arrays.asList(
+              new Student("홍길동", 90, 96),
+              new Student("신용권", 95, 93)
+      );
+  
+      public static double avg(ToIntFunction<Student> function) {
+          int sum = 0;
+          for(Student student : list) {
+              sum += function.applyAsInt(student);
+          }
+          double avg = (double) sum / list.size();
+          return avg;
+      }
+  
+      public static void main(String[] args) {
+          double englishAvg = avg( s -> s.getEnglishScore());
+          System.out.println("영어 평균 점수: " + englishAvg);
+  
+          double mathAvg = avg( s -> s.getMathScore());
+          System.out.println("수학 평균 점수: " + mathAvg);
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  영어 평균 점수: 92.5
+  수학 평균 점수: 94.5
+  ```
+
+
+
+### 14.5.4 Operator 함수적 인터페이스
+
+: 매개값을 이용해서 연산을 수행한 후 동일한 타입으로 리턴값을 제공하는 역할을 한다.
+
+* **Operator 인터페이스들**
+
+  | 인터페이스명         | 추상 메소드                          | 설명                     |
+  | -------------------- | ------------------------------------ | ------------------------ |
+  | BinaryOperator\<T>   | T apply(T t, T t)                    | T와 T를 연산한 후 T 리턴 |
+  | UnaryOperator\<T>    | T apply(T t)                         | T를 연산한 후 T 리턴     |
+  | DoubleBinaryOperator | double applyAsDouble(double, double) | 두 개의 double 연산      |
+  | DoubleUnaryOperator  | double applyAsDouble(double)         | 한 개의 double 연산      |
+  | IntBinaryOperator    | int applyAsInt(int, int)             | 두 개의 int 연산         |
+  | IntUnaryOperator     | int applyAsInt(int)                  | 한 개의 int 연산         |
+  | LongBinaryOperator   | long applyAsLong(long,long)          | 두 개의 long 연산        |
+  | LongUnaryOperator    | long applyAsLong(long)               | 한 개의 long 연산        |
+
+* **예제**
+
+  ```java
+  package operator_functional_interface;
+  
+  import java.util.function.IntBinaryOperator;
+  
+  public class OperatorExample {
+      private static int[] scores = { 92, 95, 87 };
+  
+      public static int maxOrMin(IntBinaryOperator operator) {
+          int result = scores[0];
+          for(int score : scores) {
+              result = operator.applyAsInt(result, score);
+          }
+          return result;
+      }
+  
+      public static void main(String[] args) {
+          // 최대값 얻기
+          int max = maxOrMin(
+                  (a,b) -> {
+                      if(a>=b) return a;
+                      else return b;
+                  }
+          );
+          System.out.println("최대값: " + max);
+  
+          // 최소값 얻기
+          int min = maxOrMin(
+                  (a,b) -> {
+                      if(a<=b) return a;
+                      else return b;
+                  }
+          );
+          System.out.println("최소값: " + min);
+      }
+  }
+  ```
+
+
+
+### 14.5.5 Predicate 함수적 인터페이스
+
+: 매개 변수와 boolean 리턴값이 있는 인터페이스
+
+* **Predicate 함수적 인터페이스들**
+
+  | 인터페이스명      | 추상 메소드                | 설명                   |
+  | ----------------- | -------------------------- | ---------------------- |
+  | Predicate\<T>     | boolean test(T t)          | 객체 T를 조사          |
+  | BiPredicate\<T,U> | boolean test(T t, U u)     | 객체 T와 U를 비교 조사 |
+  | DoublePredicate   | boolean test(double value) | double 값을 조사       |
+  | IntPredicate      | boolean test(int value)    | int 값을 조사          |
+  | LongPredicate     | boolean test(long value)   | long 값을 조사         |
+
+* **예제**
+
+  **Student.java**
+
+  ```java
+  package predicate_functional_interface;
+  
+  public class Student {
+      private String name;
+      private String sex;
+      private int score;
+  
+      public Student(String name, String sex, int score) {
+          this.name = name;
+          this.sex = sex;
+          this.score = score;
+      }
+  
+      public String getSex() { return sex; }
+      public int getScore() { return score; }
+  }
+  ```
+
+  **PredicateExample.java**
+
+  ```java
+  package predicate_functional_interface;
+  
+  import java.util.Arrays;
+  import java.util.List;
+  import java.util.function.Predicate;
+  
+  public class PredicateExample {
+      private static List<Student> list = Arrays.asList(
+              new Student("홍길동", "남자", 90),
+              new Student("김순희", "여자", 90),
+              new Student("김자바", "남자", 95),
+              new Student("박한나", "여자", 92)
+      );
+  
+      public static double avg(Predicate<Student> predicate) {
+          int count = 0, sum = 0;
+          for(Student student : list) {
+              if(predicate.test(student)) {
+                  count++;
+                  sum += student.getScore();
+              }
+          }
+          return (double) sum / count;
+      }
+  
+      public static void main(String[] args) {
+          // Predicate<Student> 인스턴스 대입
+          double maleAvg = avg( t -> t.getSex().equals("남자") );
+          System.out.println("남자 평균 점수 : " + maleAvg);
+  
+          // Predicate<Student> 인스턴스 대입
+          double femaleAvg = avg( t -> t.getSex().equals("여자"));
+          System.out.println("여자 평균 점수 : " + femaleAvg);
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  남자 평균 점수 : 92.5
+  여자 평균 점수 : 91.0
+  ```
+
+
+
+### 14.5.6 andThen()과 compose() 디폴트 메소드
+
+* **함수적 인터페이스 성질** : 하나의 추상 메소드를 가지고 있고, 람다식으로 익명 구현 객체를 생성할 수 있는 것.
+
+* **andThen()과 compose() 디폴트 메소드(Consumer, Function, Operator 인터페이스)**
+
+  * 두 개의 함수적 인터페이스를 순차적으로 연결한다.
+  * 첫 번째 처리 결과를 두 번째 매개값으로 제공해서 최종 결과값을 얻을 때 사용.
+
+* **andThen() 메소드**
+
+  ```java
+  인터페이스AB = 인터페이스A.andThen(인터페이스B);
+  최종결과 = 인터페이스AB.method();
+  ```
+
+  > 인터페이스AB의 method()를 호출하면 우선 인터페이스A부터 처리하고 결과를 인터페이스B의 매개값으로 제공한다. 인터페이스B는 제공받은 매개값을 가지고 처리한 후 최종 결과를 리턴한다.
+
+* **compose() 메소드**
+
+  ```java
+  인터페이스AB = 인터페이스A.compose(인터페이스B);
+  최종결과 = 인터페이스AB.method();
+  ```
+
+  > 인터페이스AB의 method()를 호출하면 우선 인터페이스B부터 처리하고 결과를 인터페이스A의 매개값으로 제공한다. 인터페이스A는 제공받은 매개값을 가지고 처리한 후 최종 결과를 리턴한다.
+
+* **andThen()과 compose() 디폴트 메소드를 제공 여부**
+
+  | 종류     | 함수적 인터페이스   | andThen() | compose() |
+  | -------- | ------------------- | --------- | --------- |
+  | Consumer | Consumer\<T>        | O         |           |
+  |          | BiConsumer\<T,U>    | O         |           |
+  |          | DoubleConsumer      | O         |           |
+  |          | IntConsumer         | O         |           |
+  |          | LongConsumer        | O         |           |
+  | Fuction  | Fuction\<T,R>       | O         | O         |
+  |          | BiFuction\<T,U,R>   | O         |           |
+  | Operator | BinaryOperator\<T>  | O         |           |
+  |          | DoubleUnaryOperator | O         | O         |
+  |          | IntUnaryOperator    | O         | O         |
+  |          | LongUnaryOperator   | O         | O         |
+
+
+
+#### Consumer의 순차적 연결
+
+: andThen() 디폴트 메소드는 함수적 인터페이스의 호출 순서만 정한다.
+
+* **예제**
+
+  **Address.java**
+
+  ```java
+  package andthen_default_method;
+  
+  public class Address {
+      private String country;
+      private String city;
+  
+      public Address(String country, String city) {
+          this.country = country;
+          this.city = city;
+      }
+  
+      public String getCountry() { return country; }
+      public String getCity() { return city; }
+  }
+  ```
+
+  **Member.java**
+
+  ```java
+  package andthen_default_method;
+  
+  public class Member {
+      private String name;
+      private String id;
+      private Address address;
+  
+      public Member(String name, String id, Address address) {
+          this.name = name;
+          this.id = id;
+          this.address = address;
+      }
+  
+      public String getName() { return name; }
+      public String getId() { return id; }
+      public Address getAddress() { return address; }
+  }
+  ```
+
+  **ConsumerAndThenExample.java**
+
+  ```java
+  package andthen_default_method;
+  
+  import java.util.function.Consumer;
+  
+  public class ConsumerAndThenExample {
+      public static void main(String[] args) {
+          // 람다식으로 consumerA 선언
+          Consumer<Member> consumerA = (m) -> {
+              System.out.println("consumerA: " + m.getName());
+          };
+  
+          // 람다식으로 consumerB 선언
+          Consumer<Member> consumerB = (m) -> {
+              System.out.println("consumerB: " + m.getId());
+          };
+  
+          // consumerA와 consumerB를 순차적 연결
+          Consumer<Member> consumerAB = consumerA.andThen(consumerB);
+          
+          // consumerAB의 accept 메소드 실행
+          consumerAB.accept(new Member("홍길동", "hong", null));
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  consumerA: 홍길동
+  consumerB: hong
+  ```
+
+
+
+#### Function의 순차적 연결
+
+: Function과 Operator 종류의 함수적 인터페이스는 먼저 실행한 함수적 인터페이스의 결과를 다음 함수적 인터페이스의 매개값으로 넘겨주고, 최종 처리 결과를 리턴한다.
+
+* **예제**
+
+  ```java
+  package compose_default_method;
+  
+  import andthen_default_method.Address;
+  import andthen_default_method.Member;
+  
+  import java.util.function.Function;
+  
+  public class FunctionAndThenComposeExample {
+      public static void main(String[] args) {
+          // Function 함수적 인터페이스 선언
+          Function<Member, Address> functionA;
+          Function<Address, String> functionB;
+          Function<Member, String> functionAB;
+          String city;
+  
+          // 주소를 가져오는 람다식 선언
+          functionA = (m) -> m.getAddress();
+          // 도시를 가져오는 람다식 선언
+          functionB = (a) -> a.getCity();
+  
+          // A와 B를 순차적으로 연결(A 먼저 실행)
+          functionAB = functionA.andThen(functionB);
+          city = functionAB.apply(
+                  new Member("홍길동", "hong", new Address(
+                          "한국", "서울"
+                  ))
+          );
+          System.out.println("거주 도시: " + city);
+  
+          // A와 B를 순차적으로 연결(B 먼저 실행)
+          functionAB = functionB.compose(functionA);
+          city = functionAB.apply(
+                  new Member("홍길동", "hong", new Address(
+                          "한국", "서울"
+                  ))
+          );
+          System.out.println("거주 도시: " + city);
+      }
+  }
+  ```
+
+
+
+### 14.5.7 and(), or(), negate() 디폴트 메소드와 isEqual() 정적 메소드
+
+: and(), or(), negate()는 디폴트 메소드이다. 이 메소드들은 각각 논리 연산자인 &&, ||, ! 과 대응된다고 볼 수 있다.
+
+* **and(), or(), negate() 디폴트 메소드를 제공하는 Predicate 함수적 인터페이스들**
+
+  | 종류          | 함수적 인터페이스 |
+  | ------------- | ----------------- |
+  | **Predicate** | Predicate\<T>     |
+  |               | BiPredicate\<T,U> |
+  |               | DoublePredicate   |
+  |               | IntPredicate      |
+  |               | LongPredicate     |
+
+* **예제**
+
+  ```java
+  package and_or_negate_default_method;
+  
+  import java.util.function.IntPredicate;
+  
+  public class PredicateAndOrNegateExample {
+      public static void main(String[] args) {
+          // 2의 배수 검사
+          IntPredicate predicateA = a -> a%2 == 0;
+  
+          // 3의 배수 검사
+          IntPredicate predicateB = a -> a%3 == 0;
+  
+          IntPredicate predicateAB;
+          boolean result;
+  
+          // and()
+          predicateAB = predicateA.and(predicateB);
+          result = predicateAB.test(9);
+          System.out.println("9는 2와 3의 배수입니까? " + result);
+  
+          // or()
+          predicateAB = predicateA.or(predicateB);
+          result = predicateAB.test(9);
+          System.out.println("9와 2 또는 3의 배수입니까? " + result);
+  
+          // negate()
+          predicateAB = predicateA.negate();
+          result = predicateAB.test(9);
+          System.out.println("9는 홀수입니까? " + result);
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  9는 2와 3의 배수입니까? false
+  9와 2 또는 3의 배수입니까? true
+  9는 홀수입니까? true
+  ```
+
+  
+
+* **isEqual() 메소드 예제**
+
+  ```java
+  package isequals_method;
+  
+  import java.util.function.Predicate;
+  
+  public class PredicateIsEqualExample {
+      public static void main(String[] args) {
+          Predicate<String> predicate;
+  
+          predicate = Predicate.isEqual(null);
+          System.out.println("null, null : " + predicate.test(null));
+  
+          predicate = Predicate.isEqual("Java8");
+          System.out.println("null, Java8 : " + predicate.test(null));
+  
+          predicate = Predicate.isEqual(null);
+          System.out.println("Java8, null : " + predicate.test("Java8"));
+  
+          predicate = Predicate.isEqual("Java8");
+          System.out.println("Java8, Java8 : " + predicate.test("Java8"));
+  
+          predicate = Predicate.isEqual("Java8");
+          System.out.println("Java7, Java8 : " + predicate.test("Java7"));
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  null, null : true
+  null, Java8 : false
+  Java8, null : false
+  Java8, Java8 : true
+  Java7, Java8 : false
+  ```
+
+
+
+### 14.5.8 minBy(), maxBy() 정적 메소드
+
+: BinaryOperator\<T> 함수적 인터페이스는 minBy()와 maxBy() 정적 메소드를 제공한다. 
+
+| 리턴 타입          | 정적 메소드                              |
+| ------------------ | ---------------------------------------- |
+| BinaryOperator\<T> | minBy(Comparator\<? super T> comparator) |
+| BinaryOperator\<T> | maxBy(Comparator\<? super T> comparator) |
+
+* **예제**
+
+  ```java
+  package minby_maxby_static_method;
+  
+  import java.util.function.BinaryOperator;
+  
+  public class OperatorMinByMaxByExample {
+      public static void main(String[] args) {
+          BinaryOperator<Fruit> binaryOperator;
+          Fruit fruit;
+  
+          binaryOperator = BinaryOperator.minBy( (f1, f2) ->
+                  Integer.compare(f1.price, f2.price) );
+          fruit = binaryOperator.apply(new Fruit("딸기", 6000),
+                  new Fruit("수박", 10000));
+          System.out.println(fruit.name);
+  
+          binaryOperator = BinaryOperator.maxBy( (f1, f2) ->
+                  Integer.compare(f1.price, f2.price) );
+          fruit = binaryOperator.apply(new Fruit("딸기", 6000),
+                  new Fruit("수박", 10000));
+          System.out.println(fruit.name);
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  딸기
+  수박
+  ```
+
+
+
+## 14.6 메소드 참조
+
+: 메소드를 참조해서 매개 변수의 정보 및 리턴 타입을 알아내어, 람다식에서 불필요한 매개 변수를 제거하는 것이 목적이다. 메소드 참조는 정적 또는 인스턴스 메소드를 참조할 수 있고, 생성자 참조도 가능하다.
+
+* **예시**
+
+  ```java
+  (left, right) -> Math.max(left, right);
+  
+  Math :: max;	// 메소드 참조
+  
+  IntBinaryOperator operator = Math :: max;
+  ```
+
+
+
+### 14.6.1 정적 메소드와 인스턴스 메소드 참조
+
+* **정적(static) 메소드** : 클래스 이름 뒤에 :: 기호를 붙이고 정적 메소드 이름을 기술하면 된다.
+
+  ```java
+  클래스 :: 메소드
+  ```
+
+* **인스턴스 메소드** : 먼저 객체를 생성한 다음 참조 변수 뒤에 :: 기호를 붙이고 인스턴스 메소드 이름을 기술하면 된다.
+
+  ```java
+  참조변수 :: 메소드
+  ```
+
+* **예제**
+
+  Calculator.java
+
+  ```java
+  package static_and_instance_method;
+  
+  public class Calculator {
+      // 정적 메소드
+      public static int staticMethod(int x, int y) {
+          return x + y;
+      }
+  
+      // 인스턴스 메소드
+      public int instanceMethod(int x, int y) {
+          return x + y;
+      }
+  }
+  ```
+
+  MethodReferencesExample.java
+
+  ```java
+  package static_and_instance_method;
+  
+  import java.util.function.IntBinaryOperator;
+  
+  public class MethodReferencesExample {
+      public static void main(String[] args) {
+          IntBinaryOperator operator;
+  
+          // 정적 메소드 참조
+          operator = (x, y) -> Calculator.staticMethod(x, y);
+          System.out.println("결과1: " + operator.applyAsInt(1, 2));
+  
+          operator = Calculator :: staticMethod;
+          System.out.println("결과2: " + operator.applyAsInt(3, 4));
+  
+          // 인스턴스 메소드 참조
+          Calculator obj = new Calculator();
+          operator = (x, y) -> obj.instanceMethod(x, y);
+          System.out.println("결과3: " + operator.applyAsInt(5, 6));
+  
+          operator = obj :: instanceMethod;
+          System.out.println("결과4: " + operator.applyAsInt(7, 8));
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  결과1: 3
+  결과2: 7
+  결과3: 11
+  결과4: 15
+  ```
+
+
+
+### 14.6.2 매개 변수의 메소드 참조
+
+: 람다식에서 제공되는 매개 변수의 메소드를 호출해서 다른 매개 변수를 매개값으로 사용하는 경우도 있다.
+
+```java
+(a, b) -> { a.instanceMethod(b); }
+```
+
+* **예제**
+
+  ```java
+  package method_reference_of_parameter;
+  
+  import java.util.function.ToIntBiFunction;
+  
+  public class ArgumentMethodReferenceExample {
+      public static void main(String[] args) {
+          ToIntBiFunction<String, String> function;
+  
+          function = (a, b) -> a.compareToIgnoreCase(b);
+          print(function.applyAsInt("Java8", "JAVA8"));
+  
+          function = String::compareToIgnoreCase;
+          print(function.applyAsInt("Java8", "JAVA8"));
+      }
+  
+      public static void print(int order) {
+          if(order < 0) {
+              System.out.println("사전순으로 먼저 옵니다.");
+          } else if (order == 0) {
+              System.out.println("동일한 문자열 입니다.");
+          } else {
+              System.out.println("사전순으로 나중에 옵니다.");
+          }
+      }
+  }
+  ```
+
+
+
+### 14.6.3 생성자 참조
+
+: 단순히 객체를 생성하고 리턴하도록 구성된 람다식은 생성자 참조로 대치할 수 있다.
+
+```java
+// 단순히 객체 생성 후 리턴만 하는 람다식
+(a, b) -> { return new 클래스(a, b); }
+
+// 생성자 참조 표현
+클래스 :: new
+```
+
+* **예제**
+
+  Member.java
+
+  ```java
+  package constructor_reference;
+  
+  public class Member {
+      private String name;
+      private String id;
+  
+      public Member() {
+          System.out.println("Member() 실행");
+      }
+  
+      public Member(String id) {
+          System.out.println("Member(String id) 실행");
+          this.id = id;
+      }
+  
+      public Member(String name, String id) {
+          System.out.println("Member(String name, String id)");
+          this.name = name;
+          this.id = id;
+      }
+  
+      public String getId() { return id; }
+  }
+  ```
+
+  ConstructorReferenceExample.java
+
+  ```java
+  package constructor_reference;
+  
+  import java.util.function.BiFunction;
+  import java.util.function.Function;
+  
+  public class ConstructorReferencesExample {
+      public static void main(String[] args) {
+          // 생성자 참조
+          Function<String, Member> function1 = Member :: new;
+          Member member1 = function1.apply("angel");
+  
+          // 생성자 참조
+          BiFunction<String, String, Member> function2 = Member::new;
+          Member member2 = function2.apply("신천사", "angel");
+      }
+  }
+  ```
+
+
+
+# 확인문제
+
