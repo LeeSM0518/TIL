@@ -562,4 +562,774 @@ List<E> list = new Vector<E>();
   | 객체 삭제 | void clear()                        | 모든 Map.Entry(키와 값)를 삭제                               |
   |           | V remove(Object key)                | 주어진 키와 일치하는 Map.Entry를 삭제하고 값을 리턴          |
 
+* **Map 사용 예시**
+
+  ```java
+  Map<String, Integer> map = ~;
+  map.put("홍길동", 30);				// 객체 추가
+  int score = map.get("홍길동");		// 객체 찾기
+  map.remove("홍길동");				// 객체 삭제
+  
+  // keySet() 메소드로 모든 키 가져오기
+  Map<K, V> map = ~;
+  Set<K> keySet = map.keySet();
+  Iterator<K> keyIterator = key.Set.iterator();
+  while(keyIterator.hasNext()) {
+      K key = keyIterator.next();
+      V value = map.get(key);
+  }
+  
+  // entrySet() 메소드로 키와 값의 쌍 모두 가져오기
+  Set<Map.Entry<K,V>> entrySet = map.entrySet();
+  Iterator<Map.Entry<K, V>> entryIterator = entrySet.iterator();
+  while(entryIterator.hasNext()) {
+      Map.Entry<K, V> entry = entryIterator.next();
+      K key = entry.getKey();
+      V value = entry.getValue();
+  }
+  ```
+
+
+
+### 15.4.1 HashMap
+
+: HashMap은 Map 인터페이스를 구현한 대표적인 Map 컬렉션이다. 동등객체, 즉 동일한 키가 될 조건은 hashCode()의 리턴값이 같아야하고, equals() 메소드가 true를 리턴해야 한다.
+
+![1550124745834](C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\1550124745834.png)
+
+* **HashMap 생성자 호출**
+
+  ```java
+  // K = 키
+  // V = 값
+  Map<K, V> map = new HashMap<K, V>();
+  ```
+
+* **예제(이름을 키로 점수를 값으로 저장하기)**
+
+  ```java
+  package hash_map;
+  
+  import java.util.HashMap;
+  import java.util.Iterator;
+  import java.util.Map;
+  import java.util.Set;
+  
+  public class HashMapExample1 {
+      public static void main(String[] args) {
+          // Map 컬렉션 생성
+          Map<String, Integer> map = new HashMap<String, Integer>();
+  
+          // 객체 저장
+          map.put("신용권", 85);
+          map.put("홍길동", 90);
+          map.put("동장군", 80);
+          // "홍길동" 키 값이 같기 때문에
+          // 제일 마지막에 저장한 값으로 대치
+          map.put("홍길동", 95);
+  
+          // 저장된 총 Entry 수 얻기
+          System.out.println("총 Entry 수: " + map.size());
+  
+          // 객체 찾기
+          // 이름(키)으로 점수(값)를 검색
+          System.out.println("\t홍길동 : " + map.get("홍길동"));
+          System.out.println();
+  
+          // 객체를 하나씩 처리
+          // Key Set 얻기
+          Set<String> keySet = map.keySet();
+          
+          // 반복해서 키를 얻고 값을 Map 에서 얻어냄
+          Iterator<String> keyIterator = keySet.iterator();
+          while(keyIterator.hasNext()) {
+              String key = keyIterator.next();
+              Integer value = map.get(key);
+              System.out.println("\t" + key + " : " + value);
+          }
+          System.out.println();
+  
+          // 객체 삭제
+          // 키로 Map.Entry 를 제거
+          map.remove("홍길동");
+          System.out.println("총 Entry 수: " + map.size());
+  
+          // 객체를 하나씩 처리
+          // Map.Entry Set 얻기
+          Set<Map.Entry<String, Integer>> entrySet = map.entrySet();
+          Iterator<Map.Entry<String, Integer>> entryIterator =
+                  entrySet.iterator();
+  
+          // 반복해서 Map.Entry 를 얻고
+          // 키와 값을 얻어냄
+          while(entryIterator.hasNext()) {
+              Map.Entry<String, Integer> entry = entryIterator.next();
+              String key = entry.getKey();
+              Integer value = entry.getValue();
+              System.out.println("\t" + key + " : " + value);
+          }
+          System.out.println();
+  
+          // 객체 전체 삭제
+          // 모든 Map.Entry 삭제
+          map.clear();
+          System.out.println("총 Entry 수 : " + map.size());
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  총 Entry 수: 3
+  	홍길동 : 95
+  
+  	홍길동 : 95
+  	신용권 : 85
+  	동장군 : 80
+  
+  총 Entry 수: 2
+  	신용권 : 85
+  	동장군 : 80
+  
+  총 Entry 수 : 0
+  ```
+
+* **예제(학번과 이름이 동일한 경우 같은 키로 인식)**
+
+  Student.java
+
+  ```java
+  package hash_map;
+  
+  public class Student {
+      public int sno;
+      public String name;
+  
+      public Student(int sno, String name) {
+          this.sno = sno;
+          this.name = name;
+      }
+  
+      public boolean equals(Object obj) {
+          // 학번과 이름이 동일할 경우 true를 리턴
+          if(obj instanceof Student) {
+              Student student = (Student) obj;
+              return (sno==student.sno) && (name.equals(student.name));
+          } else {
+              return false;
+          }
+      }
+  
+      public int hashCode() {
+          // 학번과 이름이 같다면 동일한 값을 리턴
+          return sno + name.hashCode();
+      }
+  }
+  ```
+
+  HashMapExample2.java
+
+  ```java
+  package hash_map;
+  
+  import java.util.HashMap;
+  import java.util.Map;
+  
+  public class HashMapExample2 {
+      public static void main(String[] args) {
+          Map<Student, Integer> map = new HashMap<Student, Integer>();
+  
+          // 학번과 이름이 동일한 Student 를 키로 저장
+          map.put(new Student(1, "홍길동"), 95);
+          map.put(new Student(1, "홍길동"), 95);
+  
+          // 저장된 총 Map.Entry 수 얻기
+          System.out.println("총 Entry 수: " + map.size());
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  총 Entry 수: 1
+  ```
+
+
+
+### 15.4.2 Hashtable
+
+: HashMap과 동일한 내부 구조를 가지고 있다. Hashtable도 키로 사용할 객체는 hashCode()와 equals() 메소드를 재정의해서 동등 객체가 될 조건을 정해야 한다. HashMap과 차이점은 멀티 스레드 환경에서 안전하게 객체를 추가, 삭제할 수 있다.
+
+* **Hashtable 생성자 호출**
+
+  ```java
+  // K = 키 타입
+  // V = 값 타입
+  Map<K, V> map = new Hashtable<K, V>();
+  ```
+
+* **예제(아이디와 비밀번호 검사하기)**
+
+  ```java
+  package hash_table;
+  
+  import java.util.Hashtable;
+  import java.util.Map;
+  import java.util.Scanner;
+  
+  public class HashtableExample {
+      public static void main(String[] args) {
+          Map<String, String> map = new Hashtable<String, String>();
+  
+          // 아이디와 비밀번호를 미리 저장시킨다.
+          map.put("spring", "12");
+          map.put("summer", "123");
+          map.put("fall", "1234");
+          map.put("winter", "12345");
+  
+          // 키보드로부터 입력된 내용을 받기 위해 생성
+          Scanner scanner = new Scanner(System.in);
+  
+          while(true) {
+              System.out.println("아이디와 비밀번호를 입력해주세요");
+              System.out.print("아이디: ");
+              
+              // 키보드로 입력한 아이디를 읽는다.
+              String id = scanner.nextLine();
+              System.out.print("비밀번호: ");
+              
+              // 키보드로 입력한 비밀번호를 읽는다.
+              String password = scanner.nextLine();
+              System.out.println();
+  
+              // 아이디인 키가 존재하는지 확인한다.
+              if(map.containsKey(id)) {
+                  // 비밀번호를 비교한다.
+                  if(map.get(id).equals(password)) {
+                      System.out.println("로그인 되었습니다.");
+                      break;
+                  } else {
+                      System.out.println("비밀번호가 일치하지 않습니다.");
+                  }
+              } else {
+                  System.out.println("입력하신 아이디가 존재하지 않습니다.");
+              }
+          }
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  아이디와 비밀번호를 입력해주세요
+  아이디: sum'
+  비밀번호: 12
+  
+  입력하신 아이디가 존재하지 않습니다.
+  아이디와 비밀번호를 입력해주세요
+  아이디: summer
+  비밀번호: 123
+  
+  로그인 되었습니다.
+  ```
+
+
+
+### 15.4.3 Properties
+
+: Hashtable의 하위 클래스이다. Hashtable은 키와 값을 다양한 타입으로 지정이 가능한데 Properties는 키와 값을 String 타입으로 제한한 컬렉션이다. Properties는 애플리케이션의 옵션 정보, 데이터베이스 연결 정보 그리고 국제화 정보가 저장된 파일을 읽을 때 사용된다.
+
+* **프로퍼티 파일**
+
+  : driver, url, uername, password는 키가 되고 그 뒤의 문자열은 값이 된다.
+
+* **database.properties(키=값으로 구성된 프로퍼티)**
+
+  ```java
+  driver = oracle.jdbc.OracleDriver
+  url = jdbc:oracle:thin:@localhost:1521:orcl
+  username = scott
+  password = tiger                                                 
+  ```
+
+* **예제(프로퍼티 파일로부터 읽기)**
+
+  ```java
+  package properties;
+  
+  import java.io.FileReader;
+  import java.net.URLDecoder;
+  import java.util.Properties;
+  
+  public class PropertiesExample {
+      public static void main(String[] args) throws Exception {
+          // 프로퍼티 파일을 읽기 위해서는
+          // Properties 객체를 생성하고,
+          // load() 메소드를 호출하면 된다.
+          Properties properties = new Properties();
+          
+          //프로퍼티 파일의 경로를 얻으려면 Class의 
+          // getResource() 메소드를 이용하면 된다. 
+          // 그리고 getPath() 메소드는 
+          // URL 파일의 절대 경로를 리턴한다.
+          String path = PropertiesExample.class.getResource(
+                  "database.properties"
+          ).getPath();
+          path = URLDecoder.decode(path, "utf-8");
+          properties.load(new FileReader(path));
+          
+          String driver = properties.getProperty("driver");
+          String url = properties.getProperty("url");
+          String username = properties.getProperty("username");
+          String password = properties.getProperty("password");
+  
+          System.out.println("driver : " + driver);
+          System.out.println("url : " + url);
+          System.out.println("username : " + username);
+          System.out.println("password : " + password);
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  driver : oracle.jdbc.OracleDriver
+  url : jdbc:oracle:thin:@localhost:1521:orcl
+  username : scott
+  password : tiger
+  ```
+
+
+
+## 15.5 검색 기능을 강화시킨 컬렉션
+
+: 검색 기능을 강화시킨 TreeSet과 TreeMap을 제공하고 있다. TreeSet은 Set 컬렉션이고, TreeMap은 Map 컬렉션이다. 이 컬렉션들은 이진트리를 이용해서 계층적 구조(Tree 구조)를 가지면서 객체를 저장한다.
+
+
+
+### 15.5.1 이진 트리 구조
+
+: 여러 개의 노드(node)가 트리 형태로 연결된 구조. 각 노드에 최대 2개의 노드를 연결할 수 있는 구조를 가지고 있다.
+
+![1550132214213](C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\1550132214213.png)
+
+
+
+* **값들이 정렬되어 있어 그룹핑이 쉽다**
+
+  ![1550132235387](C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\1550132235387.png)
+
+
+
+### 15.5.2 TreeSet
+
+: TreeSet은 이진 트리를 기반으로한 Set 컬렉션이다. 
+
+![1550132374901](C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\1550132374901.png)
+
+> 부모값과 비교해서 낮은 것은 왼쪽, 높은 것은 오른쪽
+
+
+
+* **TreeSet 기본 생성자 호출**
+
+  ```java
+  TreeSet<E> treeSet = new TreeSet<E>();
+  ```
+
+* **TreeSet의 검색 관련 메소드들**
+
+  | 리턴 타입 | 메소드       | 설명                                                         |
+  | --------- | ------------ | ------------------------------------------------------------ |
+  | E         | firse()      | 제일 낮은 객체를 리턴                                        |
+  | E         | last()       | 제일 높은 객체를 리턴                                        |
+  | E         | lower(E e)   | 주어진 객체보다 바로 아래 객체를 리턴                        |
+  | E         | higher(E e)  | 주어진 객체보다 바로 위 객체를 리턴                          |
+  | E         | floor(E e)   | 주어진 객체와 동등한 객체가 있으면 리턴, <br />만약 없다면 주어진 객체의 바로 아래의 객체를 리턴 |
+  | E         | ceiling(E e) | 주어진 객체와 동등한 객체가 있으면 리턴,<br />만약 없다면 주어진 객체의 바루 위의 객체를 리턴 |
+  | E         | pollFirse()  | 제일 낮은 객체를 꺼내오고 컬렉션에서 제거함                  |
+  | E         | pollLast()   | 제일 높은 객체를 꺼내오고 컬렉션에서 제거함                  |
+
+* **예제(특정 객체 찾기)**
+
+  ```java
+  package treeset;
+  
+  import java.util.TreeSet;
+  
+  public class TreeSetExample1 {
+      public static void main(String[] args) {
+          TreeSet<Integer> scores = new TreeSet<Integer>();
+          scores.add(new Integer(87));
+          scores.add(new Integer(98));
+          scores.add(new Integer(75));
+          scores.add(new Integer(95));
+          scores.add(new Integer(80));
+  
+          Integer score = null;
+  
+          score = scores.first();
+          System.out.println("가장 낮은 점수: " + score);
+  
+          score = scores.last();
+          System.out.println("가장 높은 점수: " + score + '\n');
+  
+          score = scores.lower(new Integer(95));
+          System.out.println("95점 아래 점수: " + score);
+  
+          score = scores.higher(new Integer(95));
+          System.out.println("95점 위의 점수: " + score + "\n");
+  
+          score = scores.floor(new Integer(95));
+          System.out.println("95점 이거나 바로 아래 점수: " + score);
+  
+          score = scores.ceiling(new Integer(85));
+          System.out.println("85점 이거나 바로 위의 점수: " + score + "\n");
+  
+          while(!scores.isEmpty()) {
+              score = scores.pollFirst();
+              System.out.println(score + "(남은 객체 수: " + scores.size() + ")");
+          }
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  가장 낮은 점수: 75
+  가장 높은 점수: 98
+  
+  95점 아래 점수: 87
+  95점 위의 점수: 98
+  
+  95점 이거나 바로 아래 점수: 95
+  85점 이거나 바로 위의 점수: 87
+  
+  75(남은 객체 수: 4)
+  80(남은 객체 수: 3)
+  87(남은 객체 수: 2)
+  95(남은 객체 수: 1)
+  98(남은 객체 수: 0)
+  ```
+
+  
+
+* **TreeSet의 정렬 메소드들**
+
+  | 리턴 타입        | 메소드               | 설명                                    |
+  | ---------------- | -------------------- | --------------------------------------- |
+  | Iterator\<E>     | descendingIterator() | 내림차순으로 정렬된 Iterator를 리턴     |
+  | NavigableSet\<E> | descendingSet()      | 내림차순으로 정렬된 NavigableSet을 반환 |
+
+* **예제**
+
+  ```java
+  package treeset;
+  
+  import java.util.NavigableSet;
+  import java.util.TreeSet;
+  
+  public class TreeSetExample2 {
+      public static void main(String[] args) {
+          TreeSet<Integer> scores = new TreeSet<Integer>();
+          scores.add(new Integer(87));
+          scores.add(new Integer(98));
+          scores.add(new Integer(75));
+          scores.add(new Integer(95));
+          scores.add(new Integer(80));
+  
+          NavigableSet<Integer> descenginSet = scores.descendingSet();
+          for(Integer score : descenginSet) {
+              System.out.println(score + " ");
+          }
+          System.out.println();
+  
+          NavigableSet<Integer> ascendingSet = descenginSet.descendingSet();
+  
+          for(Integer score : ascendingSet) {
+              System.out.println(score + " ");
+          }
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  98 
+  95 
+  87 
+  80 
+  75 
+  
+  75 
+  80 
+  87 
+  95 
+  98
+  ```
+
+
+
+* **TreeSet이 가지고 있는 범위 검색과 관련된 메소드들**
+
+  | 리턴 탕비        | 메소드                                                       | 설명                                                         |
+  | ---------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+  | NavigableSet\<E> | headSet(E toElement, boolean inclusive)                      | 주어진 객체보다 낮은 객체들을 NavigableSet으로 리턴, 주어진 객체 포함 여부는 두번째 매개값에 따라 달라짐 |
+  | NavigableSet\<E> | tailSet(E fromElement, boolean inclusive)                    | 주어진 객체보다 높은 객체들을 NavigableSet으로 리턴, 주어진 객체 포함 여부는 두 번째 매개값에 따라 달라짐 |
+  | NavigableSet\<E> | subSet(E fromElement, boolean fromInclusive, E toElement, boolean toInclusive) | 시작과 끝으로 주어진 객체 사이의 객체들을 NavigableSet으로 리턴, 시작과 끝 객체의 포함 여부는 두 번째, 네 번째 매개값에 따라 달라짐 |
+
+* **예제(영어 단어를 정렬하고, 범위 검색해보기)**
+
+  ```java
+  package treeset;
+  
+  import java.util.NavigableSet;
+  import java.util.TreeSet;
+  
+  public class TreeSetExample3 {
+      public static void main(String[] args) {
+          TreeSet<String> treeSet = new TreeSet<String>();
+          treeSet.add("apple");
+          treeSet.add("forever");
+          treeSet.add("description");
+          treeSet.add("ever");
+          treeSet.add("zoo");
+          treeSet.add("base");
+          treeSet.add("guess");
+          treeSet.add("cherry");
+  
+          System.out.println("[c~f 사이의 단어 검색]");
+          
+          // "c" <= 검색 단어 <= "f"
+          NavigableSet<String> rangeSet = treeSet.subSet(
+                  "c", true, "f", true
+          );
+          
+          for(String word : rangeSet) {
+              System.out.println(word);
+          }
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  [c~f 사이의 단어 검색]
+  cherry
+  description
+  ever
+  ```
+
+
+
+### 15.5.3 TreeMap
+
+: TreeSet과의 차이점은 키와 값이 저장된 Map.Entry를 저장한다는 점이다. TreeMap에 객체를 저장하면 자동으로 정렬된다.
+
+* **TreeMap 생성자 호출**
+
+  ```java
+  // K = 키 타입
+  // V = 값 타입
+  TreeMap<K, V> treeMap = new TreeMap<K, V>();
+  ```
+
+* **TreeMap이 가지고 있는 검색 관련 메소드들**
+
+  | 리턴 타입       | 메소드              | 설명                                                         |
+  | --------------- | ------------------- | ------------------------------------------------------------ |
+  | Map.Entry\<K,V> | firstEntry()        | 제일 낮은 Map.Entry를 리턴                                   |
+  | Map.Entry\<K,V> | lastEntry()         | 제일 높은 Map.Entry를 리턴                                   |
+  | Map.Entry\<K,V> | lowerEntry(K key)   | 주어진 키보다 바로 아래 Map.Entry를 리턴                     |
+  | Map.Entry\<K,V> | higherEntry(K key)  | 주어진 키보다 바로 위 Map.Entry를 리턴                       |
+  | Map.Entry\<K,V> | floorEntry(K key)   | 주어진 키와 동등한 키가 있으면 해당 Map.Entry를 리턴, 없다면 주어진 키 바로 아래의 Map.Entry를 리턴 |
+  | Map.Entry\<K,V> | ceilingEntry(K key) | 주어진 키와 동등한 키가 있으면 해당 Map.Entry를 리턴, 없다면 주어진 키 바로 위의 Map.Entry를 리턴 |
+  | Map.Entry\<K,V> | pollFirstEntry()    | 제일 낮은 Map.Entry를 꺼내오고 컬렉션에서 제거함             |
+  | Map.Entry\<K,V> | pollLastEntry()     | 제일 높은 Map.Entry를 꺼내오고 컬렉션에서 제거함.            |
+
+* **예제(특정 Map.Entry 찾기)**
+
+  ```java
+  package treemap;
+  
+  import java.util.Map;
+  import java.util.TreeMap;
+  
+  public class TreeMapExample1 {
+      public static void main(String[] args) {
+          TreeMap<Integer, String> scores = new TreeMap<
+                  Integer, String>();
+          scores.put(new Integer(87), "홍길동");
+          scores.put(new Integer(98), "이동수");
+          scores.put(new Integer(75), "박길순");
+          scores.put(new Integer(95), "신용권");
+          scores.put(new Integer(80), "김자바");
+  
+          Map.Entry<Integer, String> entry = null;
+  
+          entry = scores.firstEntry();
+          System.out.println("가장 낮은 점수: " + entry.getKey() +
+                  "-" + entry.getValue());
+  
+          entry = scores.lastEntry();
+          System.out.println("가장 높은 점수: " + entry.getKey() +
+                  "-" + entry.getValue() + '\n');
+  
+          entry = scores.lowerEntry(new Integer(95));
+          System.out.println("95점 아래 점수: " + entry.getKey() +
+                  "-" + entry.getValue());
+  
+          entry = scores.higherEntry(new Integer(95));
+          System.out.println("95점 위의 점수: " + entry.getKey() +
+                  "-" + entry.getValue() + '\n');
+  
+          entry = scores.floorEntry(new Integer(95));
+          System.out.println("95점 이거나 바로 아래 점수: " +
+                  entry.getKey() + "-" + entry.getValue());
+  
+          entry = scores.ceilingEntry(new Integer(85));
+          System.out.println("85점 이거나 바로 위의 점수: " +
+                  entry.getKey() + "-" + entry.getValue() + "\n");
+  
+          while(!scores.isEmpty()) {
+              entry = scores.pollFirstEntry();
+              System.out.println(entry.getKey() + "-" + entry.getValue() +
+                      "(남은 객체 수: " + scores.size() + ")");
+          }
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  가장 낮은 점수: 75-박길순
+  가장 높은 점수: 98-이동수
+  
+  95점 아래 점수: 87-홍길동
+  95점 위의 점수: 98-이동수
+  
+  95점 이거나 바로 아래 점수: 95-신용권
+  85점 이거나 바로 위의 점수: 87-홍길동
+  
+  75-박길순(남은 객체 수: 4)
+  80-김자바(남은 객체 수: 3)
+  87-홍길동(남은 객체 수: 2)
+  95-신용권(남은 객체 수: 1)
+  98-이동수(남은 객체 수: 0)
+  ```
+
+
+
+* **TreeMap이 가지고 있는 정렬과 관련된 메소드들**
+
+  | 리턴 타입          | 메소드             | 설명                                                |
+  | ------------------ | ------------------ | --------------------------------------------------- |
+  | NavigableSet\<K>   | descendingKeySet() | 내림차순으로 정렬된 키의 NavigableSet을 리턴        |
+  | NavigableMap\<K,V> | descendingMap()    | 내림차순으로 정렬된 Map.Entry의 NaVigableMap을 리턴 |
+
+* **예제(객체 정렬하기)**
+
+  ```java
+  package treemap;
+  
+  import java.util.*;
+  
+  public class TreeMapExample2 {
+      public static void main(String[] args) {
+          TreeMap<Integer, String> scores = new TreeMap<
+                  Integer, String>();
+          scores.put(new Integer(87), "홍길동");
+          scores.put(new Integer(98), "이동수");
+          scores.put(new Integer(75), "박길순");
+          scores.put(new Integer(95), "신용권");
+          scores.put(new Integer(80), "김자바");
+  
+          NavigableMap<Integer, String> descendingMap =
+                  scores.descendingMap();
+          Set<Map.Entry<Integer, String>> descendingEntrySet =
+                  descendingMap.entrySet();
+          for(Map.Entry<Integer, String> entry : descendingEntrySet) {
+              System.out.print(entry.getKey() + "-" + entry.getValue());
+          }
+          System.out.println();
+  
+          NavigableMap<Integer, String> ascendingMap =
+                  descendingMap.descendingMap();
+          Set<Map.Entry<Integer,String>> ascendingEntrySet =
+                  ascendingMap.entrySet();
+          for(Map.Entry<Integer,String> entry : ascendingEntrySet) {
+              System.out.print(entry.getKey() + "-" +
+                      entry.getValue() + " ");
+          }
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  98-이동수95-신용권87-홍길동80-김자바75-박길순
+  75-박길순 80-김자바 87-홍길동 95-신용권 98-이동수
+  ```
+
+
+
+* **TreeMap이 가지고 있는 범위 검색과 관련된 메소드들**
+
+  | 리턴 타입          | 메소드                                                       | 설명                                                         |
+  | ------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+  | NavigableMap\<K,V> | heapMap(K toKey,<br /> boolean inclusive)                    | 주어진 키보다 작은 Map.Entry들을 NavigableMap으로 리턴,<br />주어진 키의 Map.Entry 포함 여부는 두 번째 매개값에 따라 달라짐 |
+  | NavigableMap\<K,V> | tailMap(K fromKey,<br />boolean inclusive)                   | 주어진 객체보다 높은 Map.Entry들을 NavigableMap으로 리턴, <br />주어진 객체 포함 여부는 두 번째 매개값에 따라 달라짐 |
+  | NavigableMap\<K,V> | subMap(K fromKey, boolean fromInclusive, K toKey, boolean toInclusive) | 시작과 끝으로 주어진 키 사이의 Map.Entry들을 NavigableMap 컬렉션으로 반환, 시작과 끝 키의 Map.Entry 포함 여부는 두 번째, 네 번째 매개값에 따라 달라짐 |
+
+* **예제(키로 정렬하고 범위 검색하기)**
+
+  ```java
+  package treemap;
+  
+  import java.util.Map;
+  import java.util.NavigableMap;
+  import java.util.TreeMap;
+  
+  public class TreeMapExample3 {
+      public static void main(String[] args) {
+          TreeMap<String,Integer> treeMap = new TreeMap<String, Integer>();
+          treeMap.put("apple", new Integer(10));
+          treeMap.put("forever", new Integer(60));
+          treeMap.put("description", new Integer(40));
+          treeMap.put("ever", new Integer(50));
+          treeMap.put("zoo", new Integer(10));
+          treeMap.put("base", new Integer(20));
+          treeMap.put("guess", new Integer(70));
+          treeMap.put("cherry", new Integer(30));
+  
+          System.out.println("[c~f 사이의 단어 검색]");
+          NavigableMap<String, Integer> rangeMap =
+                  treeMap.subMap("c", true,
+                          "f", true);
+          for(Map.Entry<String, Integer> entry : rangeMap.entrySet()) {
+              System.out.println(entry.getKey() + "-" +
+                      entry.getValue() + "페이지");
+          }
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  [c~f 사이의 단어 검색]
+  cherry-30페이지
+  description-40페이지
+  ever-50페이지
+  ```
+
   
