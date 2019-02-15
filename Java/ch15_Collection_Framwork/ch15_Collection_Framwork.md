@@ -96,7 +96,7 @@
   >
   > 객체를 삽입하면 해당 인덱스부터 마지막 인덱스까지 모두 1씩 밀려난다. 객체를 제거하면 바로 뒤 인덱스부터 마지막 인덱스까지 모두 앞으로 1씩 당겨진다.
   >
-  > 빈번한 객체 삭제와 십입이 일어나면 **LinkedList**를 사용하고 인덱스 검색이나, 맨 마지막에 객체를 추가하는 경우에는 **ArrayList**가 적절하다.
+  > 빈번한 객체 삭제와 삽입이 일어나면 **LinkedList**를 사용하고 인덱스 검색이나, 맨 마지막에 객체를 추가하는 경우에는 **ArrayList**가 적절하다.
 
 * **예제**
 
@@ -475,6 +475,20 @@ List<E> list = new Vector<E>();
       }
   }
   ```
+
+  ```
+  총 객체수: 4
+  	Java
+  	JDBC
+  	Servlet/JSP
+  	iBATIS
+  총 객체수: 2
+  	Java
+  	Servlet/JSP
+  비어 있음
+  ```
+
+  
 
 * **예제(중복 저장 없이 저장)**
 
@@ -1330,6 +1344,398 @@ List<E> list = new Vector<E>();
   cherry-30페이지
   description-40페이지
   ever-50페이지
+  ```
+
+
+
+
+### 15.5.4 Comparable과 Comparator
+
+: Integer, Double, String은 모두 Comparable 인터페이스를 구현하고 있다. 사용자 정의 클래스도 Comparable을 구현한다면 자동 정렬이 가능하다.
+
+* **compareTo() 메소드** : 사용자 정의 클래스에서 이 메소드를 오버라이딩하여 다음과 같이 리턴 값을 만들어 내야 한다.
+
+  | 리턴 타입 | 메소드         | 설명                                                         |
+  | --------- | -------------- | ------------------------------------------------------------ |
+  | int       | compareTo(T o) | 주어진 객체와 같으면 0을 리턴<br />주어진 객체보다 적으면 음수를 리턴<br />주어진 객체보다 크면 양수를 리턴 |
+
+* **예제(사용자 정의 객체를 나이 순으로 정렬하기**
+
+  Person.java(**Comparable 구현 클래스**)
+
+  ```java
+  package comparable;
+  
+  public class Person implements Comparable<Person>{
+      public String name;
+      public int age;
+  
+      public Person(String name, int age) {
+          this.name = name;
+          this.age = age;
+      }
+  
+      // compareTo 오버라이딩
+      @Override
+      public int compareTo(Person o) {
+          if(age < o.age) return -1;
+          else if(age == o.age) return 0;
+          else return 1;
+      }
+  }
+  ```
+
+  ComparableExample.java
+
+  ```java
+  package comparable;
+  
+  import java.util.Iterator;
+  import java.util.TreeSet;
+  
+  public class ComparableExample {
+      public static void main(String[] args) {
+          TreeSet<Person> treeSet = new TreeSet<Person>();
+  
+          // 저장될 때 나이 순으로 정렬됨.
+          treeSet.add(new Person("홍길동", 45));
+          treeSet.add(new Person("감자바", 25));
+          treeSet.add(new Person("박지원", 31));
+  
+          // 왼쪽 마지막 노드에서
+          // 오른쪽 마지막 노드까지
+          // 반복해서 가져오기
+          // (오름차순)
+          Iterator<Person> iterator = treeSet.iterator();
+          while(iterator.hasNext()) {
+              Person person = iterator.next();
+              System.out.println(person.name + " : " + person.age);
+          }
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  감자바 : 25
+  박지원 : 31
+  홍길동 : 45
+  ```
+
+* **TreeSet과 TreeMap의 키 사용시 주의할 점**
+
+  : Key 객체가 Comparable을 구현하고 있지 않을 경우에는 저장하는 순간 ClassCastException이 발생한다.
+
+- **Comparable 비구현 객체 정렬 방법**
+
+  ```java
+  // 오름차순 정렬자 사용(AscendingComparator)
+  TreeSet<E> treeSet = new TreeSet<E>(new AscendingComparator());
+  
+  // 내림차순 정렬자 사용(DescendingComparator)
+  TreeMap<K,V> treeMap = new TreeMap<K,V>(new DescendingComparator());
+  ```
+
+- **Comparator 인터페이스를 구현한 정렬자 객체의 메소드**
+
+  | 리턴 타입 | 메소드             | 설명                                                         |
+  | --------- | ------------------ | ------------------------------------------------------------ |
+  | int       | compare(T o1, To2) | o1과 o2가 동등하다면 O을 리턴<br />o1이 o2보다 앞에 오게 하려면 음수를 리턴<br />o1이 o2보다 뒤에 오게 하려면 양수를 리턴 |
+
+- **예제(내림차순 정렬자)**
+
+  Fruit.java(**Comparable을 구현하지 않은 클래스**)
+
+  ```java
+  package comparable;
+  
+  public class Fruit {
+      public String name;
+      public int price;
+  
+      public Fruit(String nama, int price) {
+          this.name = nama;
+          this.price = price;
+      }
+  }
+  ```
+
+  DescendingComparator.java(**Fruit의 내림차순 정렬자**)
+
+  ```java
+  package comparable;
+  
+  import java.util.Comparator;
+  
+  public class DescendingComparator implements Comparator<Fruit> {
+      @Override
+      public int compare(Fruit o1, Fruit o2) {
+          if(o1.price < o2.price) return 1;
+          else if(o1.price == o2.price) return 0;
+          else return -1;
+      }
+  }
+  ```
+
+  ComparatorExample.java(**내림차순 정렬자를 사용하는 TreeSet**)
+
+  ```java
+  package comparable;
+  
+  import java.util.Iterator;
+  import java.util.TreeSet;
+  
+  public class ComparatorExample {
+      public static void main(String[] args) {
+          /*
+          TreeSet<Fruit> treeSet = new TreeSet<Fruit>();
+          // Fruit 이 Comparable 을 구현하지
+          // 않았기 때문에 예외 발생!
+          treeSet.add(new Fruit("포도", 3000));
+          treeSet.add(new Fruit("수박", 10000));
+          treeSet.add(new Fruit("딸기", 6000));
+          */
+  
+          // 내림차순 정렬자 제공
+          TreeSet<Fruit> treeSet =
+                  new  TreeSet<Fruit>(new DescendingComparator());
+          
+          // 저장될 때 가격을 기준으로 내림차순 정렬됨
+          treeSet.add(new Fruit("포도", 3000));
+          treeSet.add(new Fruit("수박", 10000));
+          treeSet.add(new Fruit("딸기", 6000));
+          Iterator<Fruit> iterator = treeSet.iterator();
+          while(iterator.hasNext()) {
+              Fruit fruit = iterator.next();
+              System.out.println(fruit.name + " : " + fruit.price);
+          }
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  수박 : 10000
+  딸기 : 6000
+  포도 : 3000
+  ```
+
+
+
+## 15.6 LIFO와 FIFO 컬렉션
+
+- **LIFO(Last In First Out)** : 후입선출, 나중에 넣은 객체가 먼저 빠져나가는 자료구조
+- **FIFO(First In First Out** : 선입선출, 먼저 넣은 객체가 먼저 빠져나가는 자료구조
+
+![1550233358153](C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\1550233358153.png)
+
+
+
+### 15.6.1 Stack
+
+- **Stack 클래스의 주요 메소드들**
+
+  | 리턴 타입 | 메소드       | 설명                                                         |
+  | --------- | ------------ | ------------------------------------------------------------ |
+  | E         | push(E item) | 주어진 객체를 스택에 넣는다.                                 |
+  | E         | peek()       | 스택의 맨 위 객체를 가져온다.<br />객체를 스택에서 제거하지 않는다. |
+  | E         | pop()        | 스택의 맨 위 객체를 가져온다.<br />객체를 스택에서 제거한다. |
+
+- **Stack 객체 생성**
+
+  ```java
+  Stack<E> stack = new Stack<E>();
+  ```
+
+- **예제(동전 케이스)**
+
+  Coin.java(**동전 클래스**)
+
+  ```java
+  package stack;
+  
+  public class Coin {
+      private int value;
+  
+      public Coin(int value) {
+          this.value = value;
+      }
+  
+      public int getValue() {
+          return value;
+      }
+  }
+  ```
+
+  StackExample.java(**Stack을 이용한 동전케이스**)
+
+  ```java
+  package stack;
+  
+  import java.util.Stack;
+  
+  public class StackExample {
+      public static void main(String[] args) {
+          Stack<Coin> coinBox = new Stack<Coin>();
+  
+          coinBox.push(new Coin(100));
+          coinBox.push(new Coin(50));
+          coinBox.push(new Coin(500));
+          coinBox.push(new Coin(10));
+  
+          while(!coinBox.isEmpty()) {
+              Coin coin = coinBox.pop();
+              System.out.println("꺼내온 동전 : " + coin.getValue()
+              + "원");
+          }
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  꺼내온 동전 : 10원
+  꺼내온 동전 : 500원
+  꺼내온 동전 : 50원
+  꺼내온 동전 : 100원
+  ```
+
+
+
+### 15.6.2 Queue
+
+- **Queue 인터페이스의 메소드들**
+
+  | 리턴 타입 | 메소드     | 설명                                                      |
+  | --------- | ---------- | --------------------------------------------------------- |
+  | boolean   | offer(E e) | 주어진 객체를 넣는다.                                     |
+  | E         | peek()     | 객체 하나를 가져온다.<br />객체를 큐에서 제거하지 않는다. |
+  | E         | poll()     | 객체 하나를 가져온다.<br />객체를 큐에서 제거한다.        |
+
+  > Queue 인터페이스를 구현한 대표적인 클래스는 LinkedList이다.
+
+- **Queue 객체 생성**
+
+  ```java
+  Queue<E> queue = new LinkedList<E>();
+  ```
+
+- **예제(메시지 큐 구현)**
+
+  Message.java(**Message 클래스**)
+
+  ```java
+  package queue;
+  
+  public class Message {
+      public String command;
+      public String to;
+  
+      public Message(String command, String to) {
+          this.command = command;
+          this.to = to;
+      }
+  }
+  ```
+
+  QueueExample.java(**Queue를 이용한 메시지 큐**)
+
+  ```java
+  package queue;
+  
+  import java.util.LinkedList;
+  import java.util.Queue;
+  
+  public class QueueExample {
+      public static void main(String[] args) {
+          Queue<Message> messageQueue = new LinkedList<Message>();
+  
+          // 메시지 저장
+          messageQueue.offer(
+                  new Message("sendMail", "홍길동")
+          );
+          messageQueue.offer(
+                  new Message("sendSMS", "신용권")
+          );
+          messageQueue.offer(
+                  new Message("sendKakaotalk", "홍두께")
+          );
+  
+          // 메시지 큐가 비어있는지 확인
+          while(!messageQueue.isEmpty()) {
+              // 메시지 큐에서 한 개의 메시지 꺼냄
+              Message message = messageQueue.poll();
+              switch (message.command) {
+                  case "sendMail":
+                      System.out.println(message.to +
+                              "님에게 메일을 보냅니다.");
+                      break;
+                  case "sendSMS":
+                      System.out.println(message.to +
+                              "님에게 SMS를 보냅니다.");
+                      break;
+                  case "sendKakaotalk":
+                      System.out.println(message.to +
+                              "님에게 카카오톡을 보냅니다.");
+                      break;
+              }
+          }
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  홍길동님에게 메일을 보냅니다.
+  신용권님에게 SMS를 보냅니다.
+  홍두께님에게 카카오톡을 보냅니다.
+  ```
+
+
+
+## 15.7 동기화된 컬렉션
+
+: Vector와 Hashtable은 동기화된(synchronized) 메소드로 구성되어 있기 때문에 멀티 스레드 환경에서 안전하게 요소를 처리할 수 있다. 하지만 ArrayList, HashSet, HashMap은 그렇지 않기 때문에 싱글 스레드 환경에서 사용하다가 멀티 스레드 환경으로 전달할 필요도 있을 것이다. 이런 경우를 대비해서 비동기화된 메소드를 동기화된 메소드로 래핑하는 Collection의 **synchronizedXXX() 메소드**를 제공하고 있다.
+
+| 리턴 타입 | 메소드(매개변수)                | 설명                        |
+| --------- | ------------------------------- | --------------------------- |
+| List\<T>  | synchronizedList(List\<T> list) | List를 동기화된 List로 리턴 |
+| Map\<K,V> | synchronizedMap(Map\<K,V> m)    | Map을 동기화된 Map으로 리턴 |
+| Set\<T>   | synchronizedSet(Set\<T> s)      | Set을 동기화된 Set으로 리턴 |
+
+- **래핑하는 예시**
+
+  ```java
+  // ArrayList를 동기화된 List로
+  List<T> list = Collections.synchronizedList(new ArrayList<T>());
+  
+  // HashSet을 동기화된 Set으로
+  Set<E> set = Collections.synchronizedSet(new HashSet<E>());
+  
+  // HashMap을 동기화된 Map으로
+  Map<K, V> map = Collections.synchronizedMap(new HashMap<K, V>());
+  ```
+
+
+
+## 15.8 병렬 처리를 위한 컬렉션
+
+: 멀티 스레드가 컬렉션의 요소를 병렬적으로 처리할 수 있도록 특별한 컬렉션을 제공하고 있다. java.util.concurrent 패키지의 ConcurrentHashMap과 ConcurrentLinkedQueue이다. ConcurrentHashMap은 Map 구현 클래스이고, ConcurrentLinkedQueue는 Queue 구현 클래스이다.
+
+- **ConcurrentHashMap 객체 생성**
+
+  ```java
+  Map<K,V> map = new ConcurrentHashMap<K,V>();
+  ```
+
+- **ConcurrentLinkedQueue 객체 생성**
+
+  ```java
+  Queue<E> queue = new ConcurrentLinkedQueue<E>();
   ```
 
   
