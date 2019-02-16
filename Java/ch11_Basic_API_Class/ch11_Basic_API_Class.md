@@ -2777,4 +2777,253 @@ boolean result = Pattern.matches("정규식", "검증할 문자열");
   v16= 12.35
   ```
 
+
+
+
+* **Math.random()** : 0.0과 1.0 사이의 범위에 속하는 하나의 double 타입의 값을 리턴한다.
+
+  * **주사위 번호 뽑기 예시**
+
+    ```java
+    // 1 ~ 6
+    int num = (int) (Math.random() * 6) + 1;
+    ```
+
+  * **로또 번호 뽑기 예시**
+
+    ```java
+    // 1 ~ 45
+    int num = (int) (Math.random() * 45) + 1;
+    ```
+
+
+
+### 11.13.2 Random 클래스
+
+: boolean, int, long, float, double 난수를 얻을 수 있다. 또 Random 클래스는 종자값(seed)을 설정할 수 있다. 종자값은 난수를 만드는 알고리즘에 사용되는 값으로 종자값이 같으면 같은 난수를 얻는다.
+
+* **Random 객체 생성자**
+
+  | 생성자            | 설명                                                    |
+  | ----------------- | ------------------------------------------------------- |
+  | Random()          | 호출 시마다 다른 종자값(현재시간 이용)이 자동 설정된다. |
+  | Random(long seed) | 매개값으로 주어진 종자값이 설정된다.                    |
+
+* **Random 클래스의 메소드들**
+
+  | 리턴값  | 메소드(매개 변수) | 설명                                          |
+  | ------- | ----------------- | --------------------------------------------- |
+  | boolean | nextBoolean()     | boolean 타입의 난수를 리턴                    |
+  | double  | nextDouble()      | double 타입의 난수를 리턴(0.0 <= ~ < 1.0)     |
+  | int     | nextInt()         | int 타입의 난수를 리턴(-2^31 <= ~ <= 2^31-1); |
+  | int     | nextInt(int n)    | int 타입의 난수를 리턴(0 <= ~ < n)            |
+
+* **예제(로또 번호 얻기)**
+
+  ```java
+  package random_class;
   
+  import java.util.Arrays;
+  import java.util.Random;
+  
+  public class RandomExample {
+      public static void main(String[] args) {
+          
+          // 선택번호
+          // 선택 번호 6개가 저장될 배열 생성
+          int[] selectNumber = new int[6];
+          // 선택 번호를 얻기 위한 Random 객체 생성
+          Random random = new Random(3);
+          System.out.print("선택 번호: ");
+          for(int i=0; i<6; i++) {
+              // 선택 번호를 얻어 배열에 저장
+              selectNumber[i] = random.nextInt(45) + 1;
+              System.out.print(selectNumber[i] + " ");
+          }
+          System.out.println();
+  
+          // 당첨번호
+          // 당첨 번호 6개가 저장된 배열 생성
+          int[] winningNumber = new int[6];
+          // 당첨 번호를 얻기 위한 Random 객체 생성
+          random = new Random(5);
+          System.out.print("당첨 번호: ");
+          for(int i=0; i<6; i++) {
+              // 당첨 번호를 얻어 배열에 저장
+              winningNumber[i] = random.nextInt(45) + 1;
+              System.out.print(winningNumber[i] + " ");
+          }
+          System.out.println();
+          
+          // 당첨여부
+          // 비교하기 전에 정렬시킴
+          Arrays.sort(selectNumber);
+          Arrays.sort(winningNumber);
+          
+          // 배열 항목 값 비교
+          boolean result = Arrays.equals(selectNumber, winningNumber);
+          System.out.print("당첨 여부: ");
+  
+          if(result) {
+              System.out.println("1등에 당첨");
+          } else {
+              System.out.println("당첨되지 않았습니다.");
+          }
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  선택 번호: 15 21 16 17 34 28 
+  당첨 번호: 18 38 45 15 22 36 
+  당첨 여부: 당첨되지 않았습니다.
+  ```
+
+
+
+## 11.14 Date, Calendar 클래스
+
+: 날짜 및 시각을 읽을 수 있도록 하는 클래스들. 이 두 클래스는 모두 java.util 패키지에 포함되어 있다.
+
+### 11.14.1 Date 클래스
+
+: 날짜를 표현하는 클래스이다. Date 클래스는 객체 간에 날짜 정보를 주고 받을 때 주로 사용된다.
+
+* **Date() 생성자**
+
+  ```java
+  Date now = new Date();
+  ```
+
+  > 현재 날짜를 문자열로 얻고 싶다면 toString() 메소드를 사용하면 된다. 그리고 특정 문자열 포맷으로 얻고 싶다면 SimpleDateFormat 클래스를 이용하면 된다.
+
+* **예제(현재 날짜를 출력하기)**
+
+  ```java
+  package date_class;
+  
+  import java.text.SimpleDateFormat;
+  import java.util.Date;
+  
+  public class DateExample {
+      public static void main(String[] args) {
+          Date now = new Date();
+          String strNow1 = now.toString();
+          System.out.println(strNow1);
+  
+          SimpleDateFormat sdf =
+                  new SimpleDateFormat(
+                          "yyyy년 MM월 dd일 hh시 mm분 ss초"
+                  );
+          String strNow2 = sdf.format(now);
+          System.out.println(strNow2);
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  Sat Feb 16 18:44:38 KST 2019
+  2019년 02월 16일 06시 44분 38초
+  ```
+
+
+
+### 11.14.2 Calendar 클래스
+
+: 달력을 표현한 클래스이다. Calendar 클래스는 추상(abstract) 클래스이므로 new 연산자를 사용해서 인스턴스를 생성할 수 없다. Calendar 클래스의 정적 메소드인 getInstance() 메소드를 이용하면 현재 운영체제에 설정되어 있는 시간대를 기준으로 한 Calendar 하위 객체를 얻을 수 있다.
+
+* **예시**
+
+  ```java
+  // Calendar 하위 객체
+  Calendar now = Calendar.getInstance();
+  
+  // Calendar 객체를 얻은 후 get() 메소드를 이용해서 날짜와 시간 정보 읽기
+  int year = now.get(Calendar.YEAR);			// 년도
+  int month = now.get(Calendar.MONTH) + 1;	// 월
+  int day = now.get(Calendar.DAY_OF_MONTH);	// 일
+  int week = now.get(Calendar.DAY_OF_WEEK);	// 요일
+  int amPm = now.get(Calendar.AM_PM);			// 오전/오후
+  int hour = now.get(Calendar.HOUR);			// 시간
+  int minute = now.get(Calendar.MINUTE);		// 분
+  int second = now.get(Calendar.SECOND);		// 초
+  ```
+
+* **예제**
+
+  ```java
+  package calendar_class;
+  
+  import java.util.Calendar;
+  
+  public class CalendarExample {
+      public static void main(String[] args) {
+          Calendar now = Calendar.getInstance();
+  
+          int year = now.get(Calendar.YEAR);
+          int month = now.get(Calendar.MONTH) + 1;
+          int day = now.get(Calendar.DAY_OF_MONTH);
+  
+          int week = now.get(Calendar.DAY_OF_WEEK);
+          String strWeek = null;
+          switch (week) {
+              case Calendar.MONDAY:
+                  strWeek = "월";
+                  break;
+              case Calendar.TUESDAY:
+                  strWeek = "화";
+                  break;
+              case Calendar.WEDNESDAY:
+                  strWeek = "수";
+                  break;
+              case Calendar.THURSDAY:
+                  strWeek = "목";
+                  break;
+              case Calendar.FRIDAY:
+                  strWeek = "금";
+                  break;
+              case Calendar.SATURDAY:
+                  strWeek = "토";
+                  break;
+              default:
+                  strWeek = "일";
+          }
+  
+          int amPm = now.get(Calendar.AM_PM);
+          String strAmPm = null;
+          if(amPm == Calendar.AM) {
+              strAmPm = "오전";
+          } else {
+              strAmPm = "오후";
+          }
+  
+          int hour = now.get(Calendar.HOUR);
+          int minute = now.get(Calendar.MINUTE);
+          int second = now.get(Calendar.SECOND);
+  
+          System.out.print(year + "년 ");
+          System.out.print(month + "월 ");
+          System.out.print(day + "일 ");
+          System.out.print(strWeek + "요일 ");
+          System.out.print(strAmPm + " ");
+          System.out.print(hour + "시 ");
+          System.out.print(minute + "분 ");
+          System.out.print(second + "초 ");
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  2019년 2월 16일 토요일 오후 7시 16분 16초
+  ```
+
+  
+
+
+
