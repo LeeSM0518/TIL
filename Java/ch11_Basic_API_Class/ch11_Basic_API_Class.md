@@ -3023,7 +3023,215 @@ boolean result = Pattern.matches("정규식", "검증할 문자열");
   2019년 2월 16일 토요일 오후 7시 16분 16초
   ```
 
+
+
+
+## 11.15 Format 클래스
+
+: 원하는 문자열로 조합하는 형식 클래스이다.
+
+### 11.15.1 숫자 형식 클래스(DecimalFormat)
+
+: 숫자 데이터를 원하는 형식으로 표현하기 위해서 패턴을 사용.
+
+* **DecimalFormat 생성자**
+
+  ```java
+  DecimalFormat df = new DecimalFormat("#,###.0");
+  String result = df.format(1234567.89)
+  ```
+
+* **예제**
+
+  ```java
+  package format_class;
   
+  import java.text.DecimalFormat;
+  
+  public class DecimalFormatExample {
+      public static void main(String[] args) {
+          double num = 1234567.89;
+          int i = 1;
+  
+          DecimalFormat df = new DecimalFormat("0");
+          System.out.println(i++ + ". " + df.format(num));
+  
+          df = new DecimalFormat("0.0");
+          System.out.println(i++ + ". " + df.format(num));
+  
+          df = new DecimalFormat("0000000000.00000");
+          System.out.println(i++ + ". " + df.format(num));
+  
+          df = new DecimalFormat("#");
+          System.out.println(i++ + ". " + df.format(num));
+  
+          df = new DecimalFormat("#.#");
+          System.out.println(i++ + ". " + df.format(num));
+  
+          df = new DecimalFormat("##########.#####");
+          System.out.println(i++ + ". " + df.format(num));
+  
+          df = new DecimalFormat("#.0");
+          System.out.println(i++ + ". " + df.format(num));
+  
+          df = new DecimalFormat("+#.0");
+          System.out.println(i++ + ". " + df.format(num));
+  
+          df = new DecimalFormat("-#.0");
+          System.out.println(i++ + ". " + df.format(num));
+  
+          df = new DecimalFormat("#,###.0");
+          System.out.println(i++ + ". " + df.format(num));
+  
+          df = new DecimalFormat("0.0E0");
+          System.out.println(i++ + ". " + df.format(num));
+  
+          df = new DecimalFormat("+#,### ; -#,###");
+          System.out.println(i++ + ". " + df.format(num));
+  
+          df = new DecimalFormat("#.# %");
+          System.out.println(i++ + ". " + df.format(num));
+  
+          df = new DecimalFormat("\u00A4 #,###");
+          System.out.println(i++ + ". " + df.format(num));
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  1. 1234568
+  2. 1234567.9
+  3. 0001234567.89000
+  4. 1234568
+  5. 1234567.9
+  6. 1234567.89
+  7. 1234567.9
+  8. +1234567.9
+  9. -1234567.9
+  10. 1,234,567.9
+  11. 1.2E6
+  12. +1,234,568 
+  13. 123456789 %
+  14. ₩ 1,234,568
+  ```
 
 
 
+### 11.15.2 날짜 형식 클래스(SimpleDateFormat)
+
+: Date 클래스의 toString() 메소드는 영문으로된 날짜를 리턴하는데 만약 특정 문자열 포맷으로 얻고 싶다면 이 형식 클래스를 사용한다.
+
+* **SimpleDateFormat 생성자**
+
+  ```java
+  SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일");
+  String strDate = sdf.format(new Date());
+  ```
+
+* **예제**
+
+  ```java
+  package format_class;
+  
+  import java.text.SimpleDateFormat;
+  import java.util.Date;
+  
+  public class SimpleDateFormatExample {
+      public static void main(String[] args) {
+          Date now = new Date();
+  
+          SimpleDateFormat sdf = new SimpleDateFormat(
+                  "yyyy-MM-dd"
+          );
+          System.out.println(sdf.format(now));
+  
+          sdf = new SimpleDateFormat(
+                  "yyyy년 MM월 dd일"
+          );
+          System.out.println(sdf.format(now));
+  
+          sdf = new SimpleDateFormat(
+                  "yyyy.MM.dd a HH:mm:ss"
+          );
+          System.out.println(sdf.format(now));
+  
+          sdf = new SimpleDateFormat(
+                  "오늘은 E요일"
+          );
+          System.out.println(sdf.format(now));
+  
+          sdf = new SimpleDateFormat(
+                  "올해의 D번째 날"
+          );
+          System.out.println(sdf.format(now));
+  
+          sdf = new SimpleDateFormat(
+                  "이달의 d번째 날"
+          );
+          System.out.println(sdf.format(now));
+      }
+  }
+  ```
+
+
+
+### 11.15.3 문자열 형식 클래스(MessageFormat)
+
+: 이 클래스를 사용하면 문자열에 데이터가 들어갈 자리를 표시해 두고, 프로그램이 실행하면서 동적으로 데이터를 삽입해 문자열을 완성시킨다.
+
+* **예시**
+
+  다음과 같이 회원 정보를 출력한다고 가정.
+
+  ```
+  회원 ID: blue
+  회원 이름: 신용권
+  회원 전화: 010-123-1234
+  ```
+
+  MessageFormat 클래스를 사용하면 좀 더 깔끔하게 데이터를 삽입시켜주고 전체 문자열을 쉽게 예측할 수 있다.
+
+  ```java
+  String message = "회원 ID: {0} \n회원이름 : {1} \n회원 전화: {2}";
+  String result = MessageFormat.format(message, id, name, tel);
+  ```
+
+  > format() 메소드를 호출해서 완성된 문자열을 리턴시킨다.
+
+* **예제**
+
+  ```java
+  package format_class;
+  
+  import java.text.MessageFormat;
+  
+  public class MessageFormatExample {
+      public static void main(String[] args) {
+          String id = "java";
+          String name = "신용권";
+          String tel = "010-123-5678";
+  
+          String text = "회원 ID: {0} \n회원 이름: {1} \n회원 전화: {2}";
+          String result1 = MessageFormat.format(text, id, name, tel);
+          System.out.println(result1);
+          System.out.println();
+  
+          String sql = "insert into member values( {0}, {1}, {2} )";
+          Object[] arguments = {"'java'", "'신용권'", "'010-123-5678'"};
+          String result2 = MessageFormat.format(sql, arguments);
+          System.out.println(result2);
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  회원 ID: java 
+  회원 이름: 신용권 
+  회원 전화: 010-123-5678
+  
+  insert into member values( 'java', '신용권', '010-123-5678' )
+  ```
