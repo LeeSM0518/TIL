@@ -153,4 +153,63 @@
   }
   ```
 
+
+
+
+## 10장. 프로세싱과 아두이노 통신
+
+* **프로세싱**
+
+  ```c
+  import processing.serial.*;
   
+  Serial port;
+  color c;
+  PFont font;
+  
+  void setup() {
+    size(300, 300);
+    font = loadFont("ArialNarrow-48.vlw");
+    
+    fill(255);
+    textFont(font, 32);
+    
+    String arduinoPort = Serial.list()[0];
+    port = new Serial(this, arduinoPort, 9600);
+  }
+  
+  void draw() {
+    background(c);
+    if (port.available() > 0) {
+      int inByte = port.read();
+      text("Hello", 50, 100);
+      port.clear();
+    }
+  }
+  ```
+
+* **아두이노**
+
+  ```c
+  int val = 0;
+  void setup() {
+    Serial.begin(9600);
+    pinMode(13, OUTPUT);
+    digitalWrite(12, HIGH);
+  }
+  
+  void loop() {
+    val = digitalRead(12);
+    if(val == HIGH) {
+      digitalWrite(13, LOW);
+    }
+    else {
+      digitalWrite(13, HIGH);
+      Serial.println(val);
+    }
+  }
+  ```
+
+* **실행 결과**
+
+  ![1550476199961](C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\1550476199961.png)
