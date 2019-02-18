@@ -1374,5 +1374,140 @@
 
 
 
-# 확인문제
+# 확인 문제
+
+4. 다음 코드는 컴파일 에러가 발생합니다. 그 이유가 무엇입니까?
+
+   ```java
+   package check_problem;
+   
+   import java.util.function.IntSupplier;
+   
+   public class LambdaExample {
+       public static int method(int x, int y) {
+           IntSupplier supplier = () -> {
+               x *= 10;					// 에러 발생
+               int result = x + y;			// 에러 발생
+               return result;
+           };
+           int result = supplier.getAsInt();
+           return result;
+       }
+   
+       public static void main(String[] args) {
+           System.out.println(method(3,5));
+       }
+   }
+   ```
+
+   **이유**
+
+   : 메소드의 매개 변수는 final 특성을 가지고 있기 때문에 값을 수정할 수 없다.
+
+5. 다음은 배열 항목 중에 최대값 또는 최소값을 찾는 코드입니다. maxOrMin() 메소드의 매개값을 람다식으로 기술해보세요.
+
+   ```java
+   package check_problem;
+   
+   import java.util.function.IntBinaryOperator;
+   
+   public class LambdaExample2 {
+       private static int[] scores = { 10, 50, 3 };
+   
+       public static int maxOrMin(IntBinaryOperator operator) {
+           int result = scores[0];
+           for(int score : scores) {
+               result = operator.applyAsInt(result, score);
+           }
+           return result;
+       }
+   
+       public static void main(String[] args) {
+           // 최대값 얻기
+           int max = maxOrMin( (x,y) -> (x>y) ? x : y);	// 빈칸
+           System.out.println("최대값: " + max);
+   
+           // 최소값 얻기
+           int min = maxOrMin( (x,y) -> (x>y) ? y : x);	// 빈칸
+           System.out.println("최소값: " + min);
+       }
+   }
+   ```
+
+6. 다음은 학생의 영어 평균 점수와 수학 평균 점수를 계산하는 코드입니다. avg() 메소드를 선언해보세요.
+
+   ```java
+   package check_problem;
+   
+   import java.util.function.*;
+   
+   public class LambdaExample3 {
+   
+       private static Student[] students = {
+               new Student("홍길동", 90, 96),
+               new Student("신용권", 95, 93)
+       };
+   
+       // avg() 메소드 작성
+       public static double avg(ToDoubleFunction<Student> function) {
+           double avg = 0;
+           for (Student student : students) {
+               avg += function.applyAsDouble(student);
+           }
+           avg /= students.length;
+           return avg;
+       }
+   
+       public static void main(String[] args) {
+           double englishAvg = avg( s -> s.getEnglishScore());
+           System.out.println("영어 평균 점수: " + englishAvg);
+   
+           double mathAvg = avg( s -> s.getMathScore());
+           System.out.println("수학 평균 점수: " + mathAvg);
+       }
+   
+       public static class Student {
+           private String name;
+           private int englishScore;
+           private int mathScore;
+   
+           public Student(String name, int englishScore, int mathScore) {
+               this.name = name;
+               this.englishScore = englishScore;
+               this.mathScore = mathScore;
+           }
+   
+           public String getName() {
+               return name;
+           }
+   
+           public int getEnglishScore() {
+               return englishScore;
+           }
+   
+           public int getMathScore() {
+               return mathScore;
+           }
+       }
+   }
+   ```
+
+   **실행 결과**
+
+   ```
+   영어 평균 점수: 92.5
+   수학 평균 점수: 94.5
+   ```
+
+7. 6번의 main() 메소드에서 avg()를 호출할 때 매개값으로 준 람다식을 메소드 참조로 변경해 보세요.
+
+   ```java
+   double englishAvg = avg( s -> s.getEnglishScore());
+   double englishAvg = avg( Student::getEnglishScore );	// 빈칸
+   
+   double mathAvg = avg( s -> s.getMathScore());
+   double mathAvg = avg( Student::getMathScore );			// 빈칸
+   ```
+
+   
 
