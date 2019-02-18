@@ -271,7 +271,7 @@ List<E> list = new Vector<E>();
 
 ### 15.2.3 LinkedList
 
-: ArrayList와 사용 방법은 똑같지만 내부 구조는 완전 다르다. LinkedList는 인접 참조를 링크해서 체인 처럼 관리한다. 특정 인덱스의 객체를 제거하면 앞뒤 링크만 병경되고 나머지 링크는 변경되지 않는다. 
+: ArrayList와 사용 방법은 똑같지만 내부 구조는 완전 다르다. LinkedList는 인접 참조를 링크해서 체인 처럼 관리한다. 특정 인덱스의 객체를 제거하면 앞뒤 링크만 변경되고 나머지 링크는 변경되지 않는다. 
 
 * **LinkedList 생성**
 
@@ -587,7 +587,7 @@ List<E> list = new Vector<E>();
   // keySet() 메소드로 모든 키 가져오기
   Map<K, V> map = ~;
   Set<K> keySet = map.keySet();
-  Iterator<K> keyIterator = key.Set.iterator();
+  Iterator<K> keyIterator = keySet.iterator();
   while(keyIterator.hasNext()) {
       K key = keyIterator.next();
       V value = map.get(key);
@@ -959,12 +959,12 @@ List<E> list = new Vector<E>();
 
   | 리턴 타입 | 메소드       | 설명                                                         |
   | --------- | ------------ | ------------------------------------------------------------ |
-  | E         | firse()      | 제일 낮은 객체를 리턴                                        |
+  | E         | first()      | 제일 낮은 객체를 리턴                                        |
   | E         | last()       | 제일 높은 객체를 리턴                                        |
   | E         | lower(E e)   | 주어진 객체보다 바로 아래 객체를 리턴                        |
   | E         | higher(E e)  | 주어진 객체보다 바로 위 객체를 리턴                          |
   | E         | floor(E e)   | 주어진 객체와 동등한 객체가 있으면 리턴, <br />만약 없다면 주어진 객체의 바로 아래의 객체를 리턴 |
-  | E         | ceiling(E e) | 주어진 객체와 동등한 객체가 있으면 리턴,<br />만약 없다면 주어진 객체의 바루 위의 객체를 리턴 |
+  | E         | ceiling(E e) | 주어진 객체와 동등한 객체가 있으면 리턴,<br />만약 없다면 주어진 객체의 바로 위의 객체를 리턴 |
   | E         | pollFirse()  | 제일 낮은 객체를 꺼내오고 컬렉션에서 제거함                  |
   | E         | pollLast()   | 제일 높은 객체를 꺼내오고 컬렉션에서 제거함                  |
 
@@ -1300,7 +1300,7 @@ List<E> list = new Vector<E>();
 
   | 리턴 타입          | 메소드                                                       | 설명                                                         |
   | ------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-  | NavigableMap\<K,V> | heapMap(K toKey,<br /> boolean inclusive)                    | 주어진 키보다 작은 Map.Entry들을 NavigableMap으로 리턴,<br />주어진 키의 Map.Entry 포함 여부는 두 번째 매개값에 따라 달라짐 |
+  | NavigableMap\<K,V> | headMap(K toKey,<br /> boolean inclusive)                    | 주어진 키보다 작은 Map.Entry들을 NavigableMap으로 리턴,<br />주어진 키의 Map.Entry 포함 여부는 두 번째 매개값에 따라 달라짐 |
   | NavigableMap\<K,V> | tailMap(K fromKey,<br />boolean inclusive)                   | 주어진 객체보다 높은 Map.Entry들을 NavigableMap으로 리턴, <br />주어진 객체 포함 여부는 두 번째 매개값에 따라 달라짐 |
   | NavigableMap\<K,V> | subMap(K fromKey, boolean fromInclusive, K toKey, boolean toInclusive) | 시작과 끝으로 주어진 키 사이의 Map.Entry들을 NavigableMap 컬렉션으로 반환, 시작과 끝 키의 Map.Entry 포함 여부는 두 번째, 네 번째 매개값에 따라 달라짐 |
 
@@ -1351,7 +1351,7 @@ List<E> list = new Vector<E>();
 
 ### 15.5.4 Comparable과 Comparator
 
-: Integer, Double, String은 모두 Comparable 인터페이스를 구현하고 있다. 사용자 정의 클래스도 Comparable을 구현한다면 자동 정렬이 가능하다.
+: Integer, Double, String은 모두 Comparable 인터페이스를 구현하고 있다. 사용자 정의 클래스도 **Comparable을 구현한다면 자동 정렬**이 가능하다.
 
 * **compareTo() 메소드** : 사용자 정의 클래스에서 이 메소드를 오버라이딩하여 다음과 같이 리턴 값을 만들어 내야 한다.
 
@@ -1738,4 +1738,251 @@ List<E> list = new Vector<E>();
   Queue<E> queue = new ConcurrentLinkedQueue<E>();
   ```
 
-  
+
+
+
+# 확인 문제
+
+7. BoardDao 객체의 getBoardList() 메소드를 호출하면 List\<Board> 타입의 컬렉션을 리턴합니다. ListExample 클래스를 실행시켰을 때 다음과 같이 출력될 수 있도록 BoardDao의 getBoardList() 메소드를 작성해보세요.
+
+   **ListExample.java**
+
+   ```java
+   package check_problem;
+   
+   import java.util.List;
+   
+   public class ListExample {
+       public static void main(String[] args) {
+           BoardDao dao = new BoardDao();
+           List<Board> list = dao.getBoardList();
+           for(Board board : list) {
+               System.out.println(board.getTitle() + "-" + board.getContent());
+           }
+       }
+   }
+   ```
+
+   **Board.java**
+
+   ```java
+   package check_problem;
+   
+   public class Board {
+       private String title;
+       private String content;
+   
+       public Board(String title, String content) {
+           this.title = title;
+           this.content = content;
+       }
+   
+       public String getTitle() {
+           return title;
+       }
+   
+       public String getContent() {
+           return content;
+       }
+   }
+   ```
+
+   **BoardDao.java**
+
+   ```java
+   package check_problem;
+   
+   import java.util.ArrayList;
+   import java.util.List;
+   
+   public class BoardDao {
+       private List<Board> list = new ArrayList<Board>();
+   
+       public BoardDao() {
+           list.add(new Board("제목1", "내용1"));
+           list.add(new Board("제목2", "내용2"));
+           list.add(new Board("제목3", "내용3"));
+       }
+   
+        public List<Board> getBoardList() {
+           return list;
+        }
+   }
+   ```
+
+   **실행 결과**
+
+   ```
+   제목1-내용1
+   제목2-내용2
+   제목3-내용3
+   ```
+
+
+
+8. HashSet에 Student 객체를 저장하려고 합니다. 학번이 같으면 동일한 Student라고 가정하고 중복 저장이 되지 않도록 하고 싶습니다. Student 클래스에서 재정의해야 하는 hashCode()와 equals() 메소드의 내용을 채워보세요. Student의 해시코드는 학번이라고 가정합니다.
+
+   **HashSetExample.java**
+
+   ```java
+   package check_problem;
+   
+   import java.util.HashSet;
+   import java.util.Iterator;
+   import java.util.Set;
+   
+   public class HashSetExample {
+       public static void main(String[] args) {
+           Set<Student> set = new HashSet<Student>();
+   
+           set.add(new Student(1, "홍길동"));
+           set.add(new Student(2, "신용권"));
+           // 학번이 같으므로 저장되지 않음
+           set.add(new Student(1, "조민우"));
+   
+           Iterator<Student> iterator = set.iterator();
+           while(iterator.hasNext()) {
+               Student student = iterator.next();
+               System.out.println(student.studentNum + ":" + student.name);
+           }
+       }
+   }
+   ```
+
+   **Student.java**
+
+   ```java
+   package check_problem;
+   
+   public class Student {
+       public int studentNum;
+       public String name;
+   
+       public Student (int studentNum, String name) {
+           this.studentNum = studentNum;
+           this.name = name;
+       }
+   
+       @Override
+       public int hashCode() {
+           // 빈칸
+           return studentNum;
+       }
+   
+       @Override
+       public boolean equals(Object obj) {
+           // 빈칸
+           if(obj instanceof Student) {
+               Student student = (Student) obj;
+               return student.studentNum == this.studentNum;
+           } else {
+               return false;
+           }
+       }
+   }
+   ```
+
+9. HashMap에 아이디(String)와 점수(Integer)가 저장되어 있습니다. 실행 결과와 같이 평균 점수를 출력하고, 최고 점수와 최고 점수를 받은 아이디를 출력해보세요.
+
+   ```java
+   package check_problem;
+   
+   import java.util.HashMap;
+   import java.util.Iterator;
+   import java.util.Map;
+   import java.util.Set;
+   
+   public class MapExample {
+       public static void main(String[] args) {
+           Map<String, Integer> map = new HashMap<String, Integer>();
+           map.put("blue", 96);
+           map.put("hong", 86);
+           map.put("white", 92);
+   
+           // 최고 점수를 받은 아이디 저장
+           String name = null;
+           // 최고 점수 저장
+           int maxScore = 0;
+           // 점수 합계 저장
+           int totalScore = 0;
+           
+           // 아래부터 빈칸 위치
+           Set<Map.Entry<String, Integer>> entrySet = map.entrySet();
+           Iterator<Map.Entry<String, Integer>> entryIterator =
+                   entrySet.iterator();
+   
+           while(entryIterator.hasNext()) {
+               Map.Entry<String, Integer> entry =
+                       entryIterator.next();
+               String key = entry.getKey();
+               Integer value = entry.getValue();
+               totalScore += value;
+               if(value > maxScore) {
+                   name = key;
+                   maxScore = value;
+               }
+           }
+   
+           System.out.println("평균점수: " + totalScore/map.size());
+           System.out.println("최고점수: " + maxScore);
+           System.out.println("최고점수를 받은 아이디: " + name);
+       }
+   }
+   ```
+
+   **실행 결과**
+
+   ```
+   평균점수: 91
+   최고점수: 96
+   최고점수를 받은 아이디: blue
+   ```
+
+10. TreeSet에 Student 객체를 저장하려고 합니다. Student의 score 필드값으로 자동 정렬하도록 구현하고 싶습니다. TreeSet의 last() 메소드를 호출했을 때 가장 높은 score의 Student 객체가 리턴되도록 Student 클래스를 완성해보세요.
+
+    **TreeSetExample.java**
+
+    ```java
+    package check_problem;
+    
+    import java.util.TreeSet;
+    
+    public class TreeSetExample {
+        public static void main(String[] args) {
+            TreeSet<Student2> treeSet = new TreeSet<Student2>();
+            treeSet.add(new Student2("blue", 96));
+            treeSet.add(new Student2("hong", 86));
+            treeSet.add(new Student2("white", 92));
+    
+            Student2 student = treeSet.last();
+            System.out.println("최고점수: " + student.score);
+            System.out.println("최고점수를 받은 아이디: " + student.id);
+        }
+    }
+    ```
+
+    **Student.java**
+
+    ```java
+    package check_problem;
+    
+    public class Student2 implements Comparable<Student2>{
+        public String id;
+        public int score;
+    
+        public Student2 (String id, int score) {
+            this.id = id;
+            this.score = score;
+        }
+    
+        @Override
+        public int compareTo(Student2 o) {
+            if (score < o.score) return -1;
+            else if (score == o.score) return 0;
+            else return 1;
+        }
+    }
+    ```
+
+    
+
