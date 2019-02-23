@@ -874,4 +874,412 @@
 
 ## 16.6 정렬(sorted())
 
-: 
+: 스트림은 요소가 최종 처리되기 전에 중간 단계에서 요소를 정렬해서 최종 처리 순서를 벼경할 수 있다.
+
+* **정렬 메소드 종류**
+
+  ![1550668134032](C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\1550668134032.png)
+
+  > 객체 요소일 경우에는 클래스가 **Comparable을 구현하지 않으면** sorted() 메소드를 호출했을 때 ClassCastException이 발생한다.
+
+* **예제(점수를 기준으로 학생 요소를 오름차순으로 정렬)**
+
+  Student.java(**정렬 가능한 클래스**)
+
+  ```java
+  package sorted;
+  
+  // Comparable 구현 클래스
+  public class Student implements Comparable<Student> {
+      private String name;
+      private int score;
+  
+      public Student(String name, int score) {
+          this.name = name;
+          this.score = score;
+      }
+  
+      public int getScore() {
+          return score;
+      }
+  
+      public String getName() {
+          return name;
+      }
+  
+      @Override
+      public int compareTo(Student o) {
+          // score < o.score : 음수 리턴
+          // score == o.score : 0 리턴
+          // score > o.score : 양수 리턴
+          return Integer.compare(score, o.score);
+      }
+  }
+  ```
+
+  > Comparable을 구현한 상태에서 기본 비교(Comparable) 방법으로 정렬하고 싶다면 다음 세 가지 방법 중 하나를 선택해서 sorted()를 호출하면 된다.
+
+  ```java
+  sorted();
+  sorted( (a,b) -> a.compareTo(b));
+  sorted( Comparator.naturalOrder() );
+  ```
+
+  > 만약 객체 요소가 Comparable을 구현하고 있지만, 기본 비교 방법과 정반대로 정렬하고 싶다면 다음과 같이 sorted()를 호출하면 된다.
+
+  ```java
+  sorted( (a,b) -> b.compareTo(a) );
+  sorted( Comparator.reverseOrder() );
+  ```
+
+  > 객체 요소가 Comparable를 구현하지 않았다면 Comparator를 매개값으로 갖는 sorted() 메소드를 사용하면 된다.
+
+  ```java
+  // 중괄호 안에 a와 b를 비교해서 a가 작으면 음수, 같으면 0, a가 크면 양수를 리턴하는 코드 작성
+  sorted( (a,b) -> { ... } )
+  ```
+
+  <br/>
+
+  SortingExample.java(**점수를 기준으로 오름차순 정렬**)
+
+  ```java
+  package sorted;
+  
+  import java.util.Arrays;
+  import java.util.Comparator;
+  import java.util.List;
+  import java.util.stream.IntStream;
+  
+  public class SortingExample {
+      public static void main(String[] args) {
+          // 숫자 요소일 경우
+          IntStream intStream = Arrays.stream(new int[] {5, 3, 2, 1, 4});
+          intStream
+                  .sorted()   // 숫자를 오름차순으로 정렬
+                  .forEach(n -> System.out.print(n + ","));
+          System.out.println();
+  
+          // 객체 요소일 경우
+          List<Student> studentsList = Arrays.asList(
+                  new Student("홍길동", 30),
+                  new Student("신용권", 10),
+                  new Student("유미선", 20)
+          );
+  
+          studentsList.stream()
+                  .sorted()   // 정수를 기준으로 오름차순으로 Student 정렬
+                  .forEach(s -> System.out.print(s.getScore() + ","));
+          System.out.println();
+  
+          studentsList.stream()   // 정수를 기준으로 내림차순으로 Student 정렬
+                  .sorted(Comparator.reverseOrder())
+                  .forEach(s -> System.out.print(s.getScore() + ","));
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  1,2,3,4,5,
+  10,20,30,
+  30,20,10,
+  ```
+
+
+
+## 16.7 루핑(peek(), forEach())
+
+* **루핑(looping)** : 요소 전체를 반복하는 것.
+
+  * **peek() 메소드** : 중간 처리 메소드, 중간 처리 단계에서 전체 요소를 루핑하면서 추가적인 작업을 하기 위해 사용한다.
+
+    **예시)**
+
+    ```java
+    intStream
+    	.filter( a -> a%2==0 )
+        .peek( a -> System.out.println(a) )
+        .sum()
+    ```
+
+    > 이처럼 필터과 요소 확인 후 반드시 최종 처리 메소드가 호출되어야 한다.
+
+  * **forEach() 메소드** : 최종 처리 메소드, 요소를 소비하는 최종 처리 메소드이므로 이후에 sum()과 같은 다른 최종 메소드를 호출하면 안 된다.
+
+* **예제**
+
+  ```java
+  package looping;
+  
+  import java.util.Arrays;
+  
+  public class LoopingExample {
+      public static void main(String[] args) {
+          int[] intArr = { 1, 2, 3, 4, 5 };
+  
+          System.out.println("[peek()를 마지막에 호출한 경우]");
+          Arrays.stream(intArr)
+                  .filter(a -> a%2==0)
+                  .peek(n -> System.out.println(n));  // 동작 X
+  
+          System.out.println("[최종 처리 메소드를 마지막에 호출한 경우]");
+          int total = Arrays.stream(intArr)
+                  .filter(a -> a%2==0)
+                  .peek(n -> System.out.println(n))   // 동작 O
+                  .sum();                             // 최종 메소드
+          System.out.println("총합: " + total);
+  
+          System.out.println("[forEach()를 마지막에 호출한 경우]");
+          Arrays.stream(intArr)
+                  .filter(a -> a%2==0)
+                  .forEach(n -> System.out.println(n));   // 최종 메소드로 동작
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  [peek()를 마지막에 호출한 경우]
+  [최종 처리 메소드를 마지막에 호출한 경우]
+  2
+  4
+  총합: 6
+  [forEach()를 마지막에 호출한 경우]
+  2
+  4
+  ```
+
+
+
+## 16.8 매칭(allMatch(), anyMatch(), noneMatch())
+
+: 스트림 클래스는 최종 처리 단계에서 요소들이 특정 조건에 만족하는지 조사할 수 있도록 세 가지 매칭 메소드를 제공하고 있다.
+
+* **allMatch() 메소드** : 모든 요소들이 매개값으로 주어진 Predicate의 조건을 만족하는지 조사
+* **anyMatch() 메소드** : 최소한 한 개의 요소가 매개값으로 주어진 Predicate의 조건을 만족하는지 조사
+* **noneMatch() 메소드** : 모든 요소들이 매개값으로 주어진 Predicate의 조건을 만족하지 않는지 조사
+
+| 리턴 타입 | 메소드(매개변수)                                             | 제공 인터페이스 |
+| --------- | ------------------------------------------------------------ | --------------- |
+| boolean   | allMatch(Predicate\<T> predicate)<br />anyMatch(Predicate\<T> predicate)<br />noneMatch(Predicate\<T> predicate) | Stream          |
+| boolean   | allMatch(IntPredicate\<T> predicate)<br />anyMatch(IntPredicate\<T> predicate)<br />noneMatch(IntPredicate\<T> predicate) | IntStream       |
+| boolean   | allMatch(LongPredicate\<T> predicate)<br />anyMatch(LongPredicate\<T> predicate)<br />noneMatch(LongPredicate\<T> predicate) | LongStream      |
+| boolean   | allMatch(DoublePredicate\<T> predicate)<br />anyMatch(DoublePredicate\<T> predicate)<br />noneMatch(DoublePredicate\<T> predicate) | DoubleStream    |
+
+* **예제(모든 요소가 2의 배수인지, 하나라도 3의 배수가 존재하는지, 모든 요소가 3의 배수가 아닌지 조사)**
+
+  ```java
+  package matching;
+  
+  import java.util.Arrays;
+  
+  public class MatchExample {
+      public static void main(String[] args) {
+          int[] intArr = { 2, 4, 6 };
+  
+          boolean result = Arrays.stream(intArr)
+                  .allMatch(a -> a%2==0);
+          System.out.println("모두 2의 배수인가? " + result);
+  
+          result = Arrays.stream(intArr)
+                  .anyMatch(a -> a%3==0);
+          System.out.println("하나라도 3의 배수가 있는가? " + result);
+  
+          result = Arrays.stream(intArr)
+                  .noneMatch(a -> a%3==0);
+          System.out.println("3의 배수가 없는가? " + result);
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  모두 2의 배수인가? true
+  하나라도 3의 배수가 있는가? true
+  3의 배수가 없는가? false
+  ```
+
+
+
+## 16.9 기본 집계(sum(), count(), average(), max(), min())
+
+* **집계(Aggregate)** : 최종 처리 기능으로 요소들을 처리해서 카운팅, 합계, 평균값, 최대값, 최소값 등과 같이 하나의 값으로 산출하는 것을 말한다. 집계는 대량의 데이터를 가공해서 축소하는 **리덕션(Reduction)**이라고 볼 수 있다.
+
+
+
+### 16.9.1 스트림이 제공하는 기본 집계
+
+![1550670491692](C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\1550670491692.png)
+
+* **OptionalXXX 리턴 타입** : Optional, OptionalDouble, OptionalInt, OptionalLong 클래스 타입을 말한다. 이들은 값을 저장하는 **값 기반 클래스(value-based class)들이다**. 이 객체에서 값을 얻기 위해서는 get(), getAsDouble(), getAsInt(), getAsLong()을 호출하면 된다.ㅋ
+
+* **예제**
+
+  ```java
+  package basic_aggregation;
+  
+  import java.util.Arrays;
+  
+  public class AggregateExample {
+      public static void main(String[] args) {
+          long count = Arrays.stream(new int[] { 1, 2, 3, 4, 5 })
+                  .filter(n -> n%2==0)
+                  .count();   // 요소 개수
+          System.out.println("2의 배수 개수: " + count);
+  
+          long sum = Arrays.stream(new int[] {1, 2, 3, 4, 5})
+                  .filter(n -> n%2==0)
+                  .sum();     // 요소 총합
+          System.out.println("2의 배수의 합: " + sum);
+  
+          double avg = Arrays.stream(new int[] {1, 2, 3, 4, 5})
+                  .filter(n -> n%2==0)
+                  .average()  // 요소 평균
+                  .getAsDouble();
+          System.out.println("2의 배수의 평균: " + avg);
+  
+          int max = Arrays.stream(new int[] {1 ,2 ,3 ,4 ,5 })
+                  .filter(n -> n%2==0)
+                  .max()      // 요소 최대값
+                  .getAsInt();
+          System.out.println("최대값: " + max);
+  
+          int min = Arrays.stream(new int[] {1, 2, 3, 4, 5})
+                  .filter(n -> n%2==0)
+                  .min()      // 요소 최소값
+                  .getAsInt();
+          System.out.println("최소값: " + min);
+  
+          int first = Arrays.stream(new int[] {1, 2, 3, 4, 5})
+                  .filter(n -> n%3==0)
+                  .findFirst()    // 첫 번재 요소
+                  .getAsInt();
+          System.out.println("첫번째 3의 배수: " + first);
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  2의 배수 개수: 2
+  2의 배수의 합: 6
+  2의 배수의 평균: 3.0
+  최대값: 4
+  최소값: 2
+  첫번째 3의 배수: 3
+  ```
+
+
+
+### 16.9.2 Optional 클래스
+
+: Optional, OptionalDouble, OptionalInt, OptionalLong 클래스들은 저장하는 값의 타입만 다를 뿐 제공하는 기능은 거의 동일하다. Optional 클래스는 집계 값이 존재하지 않을 경우 디폴트 값을 설정할 수도 있고, 집계 값을 처리하는 Consumer도 등록할 수 있다.
+
+* **Optional 메소드들**
+
+  ![1550671631127](C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\1550671631127.png)
+
+* **사용 예시**
+
+  ```java
+  // 컬렉션의 요소가 추가되지 않아 저장된 요소가 없을 경우
+  List<Integer> list = new ArrayList<>();
+  double avg = list.stream()
+      .mapToInt(Integer :: intValue)
+      .average()
+      .getAsDouble();
+  System.out.println("평균: " + avg);
+  ```
+
+  > 요소가 없기 때문에 평균값도 있을 수 없다. 그래서 NoSuchElementException 예외 발생.
+
+  **요소가 없을 경우 예외를 피하는 방법**
+
+  1. Optional 객체를 얻어 isPresent() 메소드로 평균값 여부 확인
+
+     ```java
+     OptionalDouble optional = list.stream()
+         .mapToInt(Integer :: intValue)
+         .average();
+     if(optional.isPresent()) {
+         System.out.println("평균: " + optional.getAsDouble());
+     } else {
+         System.out.println("평균: 0.0");
+     }
+     ```
+
+  2. orElse() 메소드로 디폴트 값을 정해 놓는다.
+
+     ```java
+     double avg = list.stream()
+         .mapToInt(Integer :: intValue)
+         .average()
+         .orElse(0.0);
+     System.out.println("평균: " + avg);
+     ```
+
+  3. ifPresent() 메소드로 평균값이 있을 경우에만 값을 이용하는 람다식을 실행
+
+     ```java
+     list.stream()
+         .mapToInt(Integer :: intValue)
+         .average()
+         .ifPresent(a -> System.out.println("평균: " + a));
+     ```
+
+* **예제**
+
+  ```java
+  package basic_aggregation;
+  
+  import java.util.ArrayList;
+  import java.util.List;
+  import java.util.OptionalDouble;
+  
+  public class OptionalExample {
+      public static void main(String[] args) {
+          List<Integer> list = new ArrayList<>();
+  
+          /* 예외 발생(java.util.NoSuchElementException)
+          double avg = list.stream()
+                  .mapToInt(Integer :: intValue)
+                  .average()
+                  .getAsDouble();
+          */
+  
+          OptionalDouble optional = list.stream()
+                  .mapToInt(Integer :: intValue)
+                  .average();
+          if(optional.isPresent()) {
+              System.out.println("방법1_평균: " + optional.getAsDouble());
+          } else {
+              System.out.println("방법1_평균: 0.0");
+          }
+  
+          double avg = list.stream()
+                  .mapToInt(Integer :: intValue)
+                  .average()
+                  .orElse(0.0);
+          System.out.println("방법2_평균: " + avg);
+  
+          list.stream()
+                  .mapToInt(Integer::intValue)
+                  .average()
+                  .ifPresent(a -> System.out.println("방법3_평균: " + a));
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  방법1_평균: 0.0
+  방법2_평균: 0.0
+  ```
+
+  
