@@ -14,12 +14,32 @@ public class LambdaExample2 {
     }
 
     public static void main(String[] args) {
+        IntBinaryOperator findMax = new IntBinaryOperator() {
+            @Override
+            public int applyAsInt(int left, int right) {
+                return (left > right) ? left : right;
+            }
+        };
+
+        IntBinaryOperator findMin = new IntBinaryOperator() {
+            @Override
+            public int applyAsInt(int left, int right) {
+                return (left < right) ? left : right;
+            }
+        };
+
         // 최대값 얻기
         int max = maxOrMin( (x,y) -> (x>y) ? x : y);
         System.out.println("최대값: " + max);
 
         // 최소값 얻기
         int min = maxOrMin( (x,y) -> (x>y) ? y : x);
+        System.out.println("최소값: " + min);
+
+        max = maxOrMin(findMax);
+        min = maxOrMin(findMin);
+
+        System.out.println("최대값: " + max);
         System.out.println("최소값: " + min);
     }
 }
