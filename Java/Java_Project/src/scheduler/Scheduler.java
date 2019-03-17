@@ -29,6 +29,7 @@ public abstract class Scheduler {
 
     public Scheduler() {
     }
+
     public abstract int daySearch(String day);
 
     public abstract int[] timeSearch(String time);
@@ -62,7 +63,6 @@ public abstract class Scheduler {
     public static String getAddSchedule() {
         return ADD_SCHEDULE;
     }
-
 
     public static String getDeleteSchedule() {
         return DELETE_SCHEDULE;

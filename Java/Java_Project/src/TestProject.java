@@ -20,11 +20,13 @@ class ManLabel extends JLabel {
         this.setForeground(Color.red);
     }
 }
+
 class MonsterLabel extends JLabel {
     MonsterLabel () {
         this.setText("M");
     }
 }
+
 class OpenChallenge extends JFrame {
     ManLabel manLabel;
     MonsterLabel monsterLabel;
