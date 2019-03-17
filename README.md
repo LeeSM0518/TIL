@@ -31,7 +31,7 @@ TIL ( Today I Learned )
 * [Chapter 13. 제네릭](https://github.com/LeeSM0518/TIL/blob/master/Java/ch13_Generic/Generic.md)
 * [Chapter 14. 람다식](https://github.com/LeeSM0518/TIL/blob/master/Java/ch14_Lambda_Expressions/ch14_Lambda_Expressions.md)
 * [Chapter 15. 컬렉션 프레임워크](https://github.com/LeeSM0518/TIL/blob/master/Java/ch15_Collection_Framwork/ch15_Collection_Framwork.md)
-* [Chapter 16. 스트림과 병렬 처리]
+* [Chapter 16. 스트림과 병렬 처리](https://github.com/LeeSM0518/TIL/blob/master/Java/ch16_Stream_and_Parallel_Operation/ch16_Stream_and_Parallel_Operation.md)
 
 <br/>
 
