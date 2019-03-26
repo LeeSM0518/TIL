@@ -4,11 +4,21 @@ public class Desktop {
     private CPU cpu;
     private RAM ram;
     private GraphicCard graphicCard;
+    private int price;
 
-    public Desktop(CPU cpu, RAM ram, GraphicCard graphicCard) {
+    public Desktop(CPU cpu, RAM ram, GraphicCard graphicCard, int price) {
         this.cpu = cpu;
         this.ram = ram;
         this.graphicCard = graphicCard;
+        this.price = price;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 
     public CPU getCpu() {
