@@ -1,9 +1,7 @@
 package seminar_project.management;
 
-import seminar_project.stock.*;
-import sun.security.krb5.internal.crypto.Des;
+import seminar_project.parts.*;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -14,6 +12,7 @@ import java.util.stream.Stream;
 public class StockManagement {
     List<Stock> stocks = new ArrayList<>();
     List<Desktop> desktops = new ArrayList<>();
+
     static List<Stock> CPUList;
     static List<Stock> RAMList;
     static List<Stock> GraphicCardList;
@@ -60,7 +59,7 @@ public class StockManagement {
         System.out.println("CPU 재고");
         CPUList.stream()
                 .forEach(s -> {
-                    System.out.println(number++ + ". " + "제품명 : " + s.getHadrware() +
+                    System.out.println(number++ + ". " + "제품명 : " + s.getHardware() +
                             ", 성능 : " + s.getPerformance() + ", 가격 : " + s.getPrice());
                 });
         System.out.println();
@@ -69,7 +68,7 @@ public class StockManagement {
         System.out.println("RAM 재고");
         RAMList.stream()
                 .forEach(s -> {
-                    System.out.println(number++ + ". " + "제품명 : " + s.getHadrware() +
+                    System.out.println(number++ + ". " + "제품명 : " + s.getHardware() +
                             ", 성능 : " + s.getPerformance() + ", 가격 : " + s.getPrice());
                 });
         System.out.println();
@@ -78,7 +77,7 @@ public class StockManagement {
         System.out.println("Graphic 재고");
         GraphicCardList.stream()
                 .forEach(s -> {
-                    System.out.println(number++ + ". " + "제품명 : " + s.getHadrware() +
+                    System.out.println(number++ + ". " + "제품명 : " + s.getHardware() +
                             ", 성능 : " + s.getPerformance() + ", 가격 : " + s.getPrice());
                 });
         System.out.println();
@@ -213,11 +212,11 @@ public class StockManagement {
             desktops.stream()
                     .forEach(desktop -> {
                         System.out.println("데스크톱" + number++ + ".\n" +
-                                "CPU\n" + "제품명 : " + desktop.getCpu().getHadrware() + "\n" +
+                                "CPU\n" + "제품명 : " + desktop.getCpu().getHardware() + "\n" +
                                 "성능 : " + desktop.getCpu().getPerformance() + "\n\n" +
-                                "Graphic Card\n" + "제품명 : " + desktop.getGraphicCard().getHadrware() + "\n" +
+                                "Graphic Card\n" + "제품명 : " + desktop.getGraphicCard().getHardware() + "\n" +
                                 "성능 : " + desktop.getGraphicCard().getPerformance() + "\n\n" +
-                                "RAM\n" + "제품명 : " + desktop.getRam().getHadrware() + "\n" +
+                                "RAM\n" + "제품명 : " + desktop.getRam().getHardware() + "\n" +
                                 "성능 : " + desktop.getRam().getPerformance() + "\n\n" +
                                 "Price : " + desktop.getPrice() + "\n\n");
                     });
