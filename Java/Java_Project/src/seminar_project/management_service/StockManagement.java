@@ -4,9 +4,11 @@ import java.util.List;
 
 public interface StockManagement {
 
-    public <T> void inquiry(List<T> list);
+    final static int CPU_NUM = 1;
+    final static int RAM_NUM = 2;
+    final static int GRAPHIC_CARD_NUM = 3;
 
-    public <T> void purchase(List<T> list);
+    public void inquiry();
 
     public <T> void sale(List<T> list);
 }

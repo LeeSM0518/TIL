@@ -3,50 +3,45 @@ package seminar_project.management_service;
 import seminar_project.parts.CPU;
 import seminar_project.parts.GraphicCard;
 import seminar_project.parts.RAM;
-import seminar_project.parts.Stock;
+import seminar_project.parts.Parts;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
-public class PartsManagementService implements StockManagement{
+public class PartsManagementService implements StockManagement {
 
-    List<Stock> stocks = new ArrayList<Stock>();
+    final int SUCCESS = 1;
+    final int ERROR = -1;
+
+    List<Parts> parts = new ArrayList<Parts>();
 
     @Override
-    public <T> void inquiry(List<T> list) {
+    public void inquiry() {
+        Stream<Parts> partsStream = parts.stream();
+
 
     }
 
-    @Override
-    public <T> void purchase(List<T> list) {
-        Stock stock;
-        String select;
+    public int purchase(int part, String partName, String partPerformance, int partPrice) {
+        switch (part) {
+            case StockManagement.CPU_NUM:
+                parts.add(new CPU(partName, partPerformance, partPrice));
+                break;
 
-        scanner.nextLine();
+            case StockManagement.RAM_NUM:
+                parts.add(new RAM(partName, partPerformance, partPrice));
+                break;
 
-        System.out.println("구매할 재고가 무엇입니까?");
-        System.out.println("1. CPU");
-        System.out.println("2. RAM");
-        System.out.println("3. Graphic Card");
-        System.out.print("입력 : ");
-        select = scanner.nextLine();
+            case StockManagement.GRAPHIC_CARD_NUM:
+                parts.add(new GraphicCard(partName, partPerformance, partPrice));
+                break;
 
-        while (true) {
-            switch (select) {
-                case "1":
-                    return new CPU();
-                case "2":
-                    stock = new RAM();
-                    return stock;
-                case "3":
-                    stock = new GraphicCard();
-                    return stock;
-                default:
-                    System.out.print("다시 입력해주세요 : ");
-                    select = scanner.nextLine();
-            }
-
+            default:
+                System.out.println();
+                return ERROR;
         }
+        return SUCCESS;
     }
 
     @Override
@@ -54,7 +49,4 @@ public class PartsManagementService implements StockManagement{
 
     }
 
-    public static void main(String[] args) {
-
-    }
 }

@@ -5,11 +5,10 @@ import java.util.List;
 public class DesktopManagementService implements StockManagement {
 
     @Override
-    public <T> void inquiry(List<T> list) {
+    public void inquiry() {
 
     }
 
-    @Override
     public <T> void purchase(List<T> list) {
 
     }

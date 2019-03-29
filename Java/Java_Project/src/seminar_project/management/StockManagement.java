@@ -1,5 +1,6 @@
 package seminar_project.management;
 
+import seminar_project.desktop.Desktop;
 import seminar_project.parts.*;
 
 import java.util.ArrayList;
@@ -10,12 +11,12 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class StockManagement {
-    List<Stock> stocks = new ArrayList<>();
+    List<Parts> stocks = new ArrayList<>();
     List<Desktop> desktops = new ArrayList<>();
 
-    static List<Stock> CPUList;
-    static List<Stock> RAMList;
-    static List<Stock> GraphicCardList;
+    static List<Parts> CPUList;
+    static List<Parts> RAMList;
+    static List<Parts> GraphicCardList;
 
     Scanner scanner = new Scanner(System.in);
 
@@ -36,8 +37,8 @@ public class StockManagement {
         return scanner.nextInt();
     }
 
-    public void inquiryStock(List<Stock> stocks) {
-        Stream<Stock> stockStream = stocks.stream();
+    public void inquiryStock(List<Parts> stocks) {
+        Stream<Parts> stockStream = stocks.stream();
 
         CPUList = stockStream
                 .filter(s -> s.getClass() == CPU.class)
@@ -56,19 +57,19 @@ public class StockManagement {
         System.out.println();
 
         number = 1;
-        System.out.println("CPU 재고");
+        System.out.println("CPU_NUM 재고");
         CPUList.stream()
                 .forEach(s -> {
-                    System.out.println(number++ + ". " + "제품명 : " + s.getHardware() +
+                    System.out.println(number++ + ". " + "제품명 : " + s.getProductName() +
                             ", 성능 : " + s.getPerformance() + ", 가격 : " + s.getPrice());
                 });
         System.out.println();
 
         number = 1;
-        System.out.println("RAM 재고");
+        System.out.println("RAM_NUM 재고");
         RAMList.stream()
                 .forEach(s -> {
-                    System.out.println(number++ + ". " + "제품명 : " + s.getHardware() +
+                    System.out.println(number++ + ". " + "제품명 : " + s.getProductName() +
                             ", 성능 : " + s.getPerformance() + ", 가격 : " + s.getPrice());
                 });
         System.out.println();
@@ -77,22 +78,22 @@ public class StockManagement {
         System.out.println("Graphic 재고");
         GraphicCardList.stream()
                 .forEach(s -> {
-                    System.out.println(number++ + ". " + "제품명 : " + s.getHardware() +
+                    System.out.println(number++ + ". " + "제품명 : " + s.getProductName() +
                             ", 성능 : " + s.getPerformance() + ", 가격 : " + s.getPrice());
                 });
         System.out.println();
 
     }
 
-    public Stock purchaseStock() {
-        Stock stock;
+    public Parts purchaseStock() {
+        Parts stock;
         String select;
 
         scanner.nextLine();
 
         System.out.println("구매할 재고가 무엇입니까?");
-        System.out.println("1. CPU");
-        System.out.println("2. RAM");
+        System.out.println("1. CPU_NUM");
+        System.out.println("2. RAM_NUM");
         System.out.println("3. Graphic Card");
         System.out.print("입력 : ");
         select = scanner.nextLine();
@@ -115,7 +116,7 @@ public class StockManagement {
         }
     }
 
-    public void addStock(Stock stock) {
+    public void addStock(Parts stock) {
         String productName = "";
         String performance = "";
         int price;
@@ -148,7 +149,7 @@ public class StockManagement {
         this.stocks.add(stock);
     }
 
-    public void createDesktop(List<Stock> stocks) {
+    public void createDesktop(List<Parts> stocks) {
         int number;
 
         CPU cpu;
@@ -193,8 +194,8 @@ public class StockManagement {
                     this.desktops.add(desktop);
                     return;
                 } else {
-                    if (CPUList.size() < 1) System.out.println("CPU 재고가 부족합니다.\n");
-                    else if (RAMList.size() < 1) System.out.println("RAM 재고가 부족합니다.\n");
+                    if (CPUList.size() < 1) System.out.println("CPU_NUM 재고가 부족합니다.\n");
+                    else if (RAMList.size() < 1) System.out.println("RAM_NUM 재고가 부족합니다.\n");
                     else System.out.println("Graphic Card 재고가 부족합니다.\n");
                     return;
                 }
@@ -212,11 +213,11 @@ public class StockManagement {
             desktops.stream()
                     .forEach(desktop -> {
                         System.out.println("데스크톱" + number++ + ".\n" +
-                                "CPU\n" + "제품명 : " + desktop.getCpu().getHardware() + "\n" +
+                                "CPU_NUM\n" + "제품명 : " + desktop.getCpu().getProductName() + "\n" +
                                 "성능 : " + desktop.getCpu().getPerformance() + "\n\n" +
-                                "Graphic Card\n" + "제품명 : " + desktop.getGraphicCard().getHardware() + "\n" +
+                                "Graphic Card\n" + "제품명 : " + desktop.getGraphicCard().getProductName() + "\n" +
                                 "성능 : " + desktop.getGraphicCard().getPerformance() + "\n\n" +
-                                "RAM\n" + "제품명 : " + desktop.getRam().getHardware() + "\n" +
+                                "RAM_NUM\n" + "제품명 : " + desktop.getRam().getProductName() + "\n" +
                                 "성능 : " + desktop.getRam().getPerformance() + "\n\n" +
                                 "Price : " + desktop.getPrice() + "\n\n");
                     });
@@ -249,7 +250,7 @@ public class StockManagement {
 
     public static void main(String[] args) {
         StockManagement stockManagement = new StockManagement();
-        Stock stock;
+        Parts stock;
 
         while (true) {
             int selectMenu = stockManagement.mainMenu();
