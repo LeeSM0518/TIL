@@ -1,25 +1,29 @@
 package seminar_project.management_service;
 
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import seminar_project.parts.CPU;
+import seminar_project.parts.Parts;
+
+import java.util.*;
 
 public class UIService {
+
+    Scanner scanner = new Scanner(System.in);
 
     final int SUCCESS = 1;
     final int ERROR = -1;
 
-    final int INQUIRY_PARTS = 1;
-    final int PURCHASE_PARTS = 2;
-    final int SALE_PARTS = 3;
-    final int MAKE_DESKTOP = 4;
-    final int INQUIRY_DESKTOPS = 5;
-    final int SALE_DESKTOP = 6;
-    final int EXIT_PROGRAM = 7;
+    private final int INQUIRY_PARTS = 1;
+    private final int PURCHASE_PARTS = 2;
+    private final int SALE_PARTS = 3;
+    private final int MAKE_DESKTOP = 4;
+    private final int INQUIRY_DESKTOPS = 5;
+    private final int SALE_DESKTOP = 6;
+    private final int EXIT_PROGRAM = 7;
 
-    PartsManagementService partsManagementService = new PartsManagementService();
-    Scanner scanner = new Scanner(System.in);
-    int mainMenuSelect;
-    int partSelect;
+    private PartsManagementService partsManagementService = new PartsManagementService();
+
+    private int mainMenuSelect;
+    private int partSelect;
 
     public void mainMenu() {
         System.out.println("==============================");
@@ -35,31 +39,41 @@ public class UIService {
 
         switch (mainMenuSelect) {
             case INQUIRY_PARTS:
+                partsManagementService.inquiry();
+                break;
 
             case PURCHASE_PARTS:
                 purchasePartsUI();
                 break;
+
             case SALE_PARTS:
+                break;
 
             case MAKE_DESKTOP:
-
+                break;
             case INQUIRY_DESKTOPS:
+                break;
 
             case SALE_DESKTOP:
+                break;
 
             case EXIT_PROGRAM:
-
+                break;
         }
     }
 
-    public void inquiryPartsUI() {
-
+    public static <T> void inquiryPartsUI(T t) {
+        Parts part = (Parts) t;
+        System.out.println("제품명 : " + part.getProductName());
+        System.out.println("성능 : " + part.getPerformance());
+        System.out.println("가격 : " + part.getPrice());
+        System.out.println();
     }
 
     public void purchasePartsUI() {
         System.out.println("==============================");
-        System.out.println("(1) CPU_NUM");
-        System.out.println("(2) RAM_NUM");
+        System.out.println("(1) CPU");
+        System.out.println("(2) RAM");
         System.out.println("(3) Graphic Card");
         System.out.print("구매할 부품을 번호로 입력해주세요 : ");
 
@@ -83,7 +97,6 @@ public class UIService {
         }
     }
 
-
     public void partInformation(final int part) {
         String partName;
         String partPerformance;
@@ -96,7 +109,6 @@ public class UIService {
         partName = scanner.nextLine();
         System.out.print("구매할 재고의 성능을 입력해주세요 : ");
         partPerformance = scanner.nextLine();
-
 
         try {
             System.out.print("구매할 재고의 가격을 입력해주세요 : ");
@@ -115,6 +127,9 @@ public class UIService {
 
     public static void main(String[] args) {
         UIService UI = new UIService();
-        UI.mainMenu();
+
+        while (true) {
+            UI.mainMenu();
+        }
     }
 }

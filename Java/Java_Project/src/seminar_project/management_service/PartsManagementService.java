@@ -5,22 +5,42 @@ import seminar_project.parts.GraphicCard;
 import seminar_project.parts.RAM;
 import seminar_project.parts.Parts;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Stream;
+
+import static seminar_project.management_service.UIService.inquiryPartsUI;
 
 public class PartsManagementService implements StockManagement {
 
     final int SUCCESS = 1;
     final int ERROR = -1;
 
-    List<Parts> parts = new ArrayList<Parts>();
+    private List<Parts> parts = new LinkedList<>();
+
+    public void inquiryPart(String partClass) {
+        parts.stream()
+                .forEach(part -> {
+                    if (partClass.equals("CPU") &&
+                            part.getClass() == CPU.class) {
+                        inquiryPartsUI(part);
+                    } else if (partClass.equals("RAM") &&
+                            part.getClass() == RAM.class) {
+                        inquiryPartsUI(part);
+                    } else {
+                        inquiryPartsUI(part);
+                    }
+                });
+    }
 
     @Override
     public void inquiry() {
-        Stream<Parts> partsStream = parts.stream();
-
-
+        System.out.println("==============================");
+        System.out.println("CPU 재고");
+        inquiryPart("CPU");
+        System.out.println("RAM 재고");
+        inquiryPart("RAM");
+        System.out.println("Graphic Card 재고");
+        inquiryPart("GraphicCard");
     }
 
     public int purchase(int part, String partName, String partPerformance, int partPrice) {
