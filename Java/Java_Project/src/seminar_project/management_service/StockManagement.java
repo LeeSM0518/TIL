@@ -13,5 +13,4 @@ public interface StockManagement {
 
     public void inquiry();
 
-    public <T> void sale(List<T> list);
 }
