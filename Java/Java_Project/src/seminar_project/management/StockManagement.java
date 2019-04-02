@@ -11,12 +11,12 @@
 //import java.util.stream.Stream;
 //
 //public class StockManagement {
-//    List<Parts> stocks = new ArrayList<>();
+//    List<Part> stocks = new ArrayList<>();
 //    List<Desktop> desktops = new ArrayList<>();
 //
-//    static List<Parts> CPUList;
-//    static List<Parts> RAMList;
-//    static List<Parts> GraphicCardList;
+//    static List<Part> CPUList;
+//    static List<Part> RAMList;
+//    static List<Part> GraphicCardList;
 //
 //    Scanner scanner = new Scanner(System.in);
 //
@@ -37,8 +37,8 @@
 //        return scanner.nextInt();
 //    }
 //
-//    public void inquiryStock(List<Parts> stocks) {
-//        Stream<Parts> stockStream = stocks.stream();
+//    public void inquiryStock(List<Part> stocks) {
+//        Stream<Part> stockStream = stocks.stream();
 //
 //        CPUList = stockStream
 //                .filter(s -> s.getClass() == CPU.class)
@@ -85,8 +85,8 @@
 //
 //    }
 //
-//    public Parts purchaseStock() {
-//        Parts stock;
+//    public Part purchaseStock() {
+//        Part stock;
 //        String select;
 //
 //        scanner.nextLine();
@@ -116,7 +116,7 @@
 //        }
 //    }
 //
-//    public void addStock(Parts stock) {
+//    public void addStock(Part stock) {
 //        String productName = "";
 //        String performance = "";
 //        int price;
@@ -149,7 +149,7 @@
 //        this.stocks.add(stock);
 //    }
 //
-//    public void createDesktop(List<Parts> stocks) {
+//    public void createDesktop(List<Part> stocks) {
 //        int number;
 //
 //        CPU cpu;
@@ -250,7 +250,7 @@
 //
 //    public static void main(String[] args) {
 //        StockManagement stockManagement = new StockManagement();
-//        Parts stock;
+//        Part stock;
 //
 //        while (true) {
 //            int selectMenu = stockManagement.mainMenu();

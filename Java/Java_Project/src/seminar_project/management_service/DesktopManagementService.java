@@ -1,21 +1,24 @@
 package seminar_project.management_service;
 
+import seminar_project.desktop.Desktop;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class DesktopManagementService implements StockManagement {
+public class DesktopManagementService {
 
-    @Override
+    private List<Desktop> Desktops = new LinkedList<>();
+
     public void inquiry() {
 
     }
 
-    public <T> void purchase(List<T> list) {
+    public void makeDesktop () {
 
     }
 
-    @Override
+
     public <T> void sale(List<T> list) {
 
     }
