@@ -102,9 +102,72 @@
 2. 객체들은 각각 독립적으로 존재하고 다른 객체와 서로 상호 작용하면서 동작한다. 
 
 - **상호작용 수단** : 메소드
+
 - **메소드 호출** : 다른 객체의 기능을 이용하는 것
+
 -  **객체의 핵심은 기능을 제공하는 것이다.**
+
   - 예를 들어,  소리 크기 제어 객체가 있으면, 이 객체의 기능은 소리 크기 증가, 소리 크기 감소, 음소거 일 것이다. 이 객체를 사용하는 사용자는 소리의 크기가 어떻게 증가하고 감소하는지에 대해서는 알 필요가 없고 소리를 증가, 감소, 음소거 시키는 세 개의 기능을 제공받는 것이 핵심인 것이다.
+
+- **예시**
+
+  ```java
+  class SoundControl {
+    private Signal signal;				// 신호
+    private Frequency frequency;	// 주파수
+    private volume;
+    
+    private void frequencyProcess() {
+      // 	주파수 처리
+    }
+    
+    ... // 소리에 대한 자세한 처리 기능들
+    
+    public void volumeUp(){
+      // 소리를 올림
+    }
+    
+    public void volumeDown() {
+      // 소리를 줄임
+    }
+    
+    public void mute() {
+      // 음소거
+    }
+  }
+  ```
+
+  사용자
+
+  ```java
+  class RomoteControl {
+    private Button button;
+    
+    ...
+    
+    public void pressVolumeUpButton(Button button) {
+      if (button == PRESS) {
+        SoundControl.volumeUp();
+      } 
+    }
+    
+    public void pressVolumeDownButton(Button button) {
+      if (button == PRESS) {
+        SoundControl.volumeDown();
+      } 
+    }
+    
+    public void pressVolumeMuteButton(Button button) {
+      if (button == PRESS) {
+        SoundControl.mute();
+      } 
+    }
+    
+    ...
+  }
+  ```
+
+  
 
 
 
