@@ -9,13 +9,10 @@ public class PartsManagementService extends StocksManagementService {
 
     private PartsManagementUI partsManagementUI = new PartsManagementUI();
 
-    public PartsManagementService() {}
-
     public PartsManagementService(StocksManagementService stocksManagementService) {
         this.parts = stocksManagementService.parts;
         this.desktops = stocksManagementService.desktops;
     }
-
 
     public void purchase() {
 
@@ -45,10 +42,19 @@ public class PartsManagementService extends StocksManagementService {
 
     }
 
+    public void inquiryAllParts() {
+
+        inquiryParts("CPU");
+        inquiryParts("RAM");
+        inquiryParts("GraphicCard");
+
+    }
+
     public void sale() {
 
+        inquiryAllParts();
         Map<String, String> information = partsManagementUI.salePartsUI();
-        inquirySelectedPart(new Integer(information.get("select")));
+
 
         switch (new Integer(information.get("select"))) {
             case CPU_NUM:
@@ -63,23 +69,5 @@ public class PartsManagementService extends StocksManagementService {
         }
 
     }
-
-    private void inquirySelectedPart(int part) {
-
-        switch (part) {
-            case CPU_NUM:
-                inquiryParts("CPU");
-                break;
-            case RAM_NUM:
-                inquiryParts("RAM");
-                break;
-            case GRAPHIC_CARD_NUM:
-                inquiryParts("GraphicCard");
-                break;
-        }
-
-    }
-
-
 
 }

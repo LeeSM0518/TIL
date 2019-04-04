@@ -2,7 +2,7 @@ package seminar_project.management_service;
 
 import seminar_project.desktop.Desktop;
 import seminar_project.parts.*;
-import seminar_project.ui.PartsManagementUI;
+import seminar_project.ui.StocksManagementUI;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -10,30 +10,42 @@ import java.util.Map;
 
 public class StocksManagementService {
 
-    private PartsManagementUI partsManagementUi = new PartsManagementUI();
+    private StocksManagementUI stocksManagementUI = new StocksManagementUI();
 
-    // TODO 부품을 선택할 때 선택한 번호와 매칭시키기 위해 상수 선언
     final int CPU_NUM = 1;
     final int RAM_NUM = 2;
     final int GRAPHIC_CARD_NUM = 3;
 
-    // TODO 부품들을 저장할 연결리스트 선언
     List<Part> parts = new LinkedList<>();
     List<Desktop> desktops = new LinkedList<>();
 
-    // TODO 스트림을 이용해서 부품을 삭제할 때 필요한 변수 선언
     private Part searchedPart = null;
 
-    // TODO inquiry() 에서 부품을 String 으로 받고 그 부품을 Stream 을 사용해서 출력
     public void inquiryParts(final String partClass) {
+
+        switch (partClass) {
+
+            case "CPU" :
+                System.out.println("CPU 재고");
+                break;
+
+            case "RAM" :
+                System.out.println("RAM 재고");
+                break;
+
+            case "GraphicCard" :
+                System.out.println("Graphic Card 재고");
+                break;
+
+        }
 
         parts.forEach(part -> {
             if (partClass.equals("CPU") && part.getClass() == CPU.class) {
-                partsManagementUi.inquiryPart(part);
+                stocksManagementUI.inquiryPart(part);
             } else if (partClass.equals("RAM") && part.getClass() == RAM.class) {
-                partsManagementUi.inquiryPart(part);
+                stocksManagementUI.inquiryPart(part);
             } else if (partClass.equals("GraphicCard") && part.getClass() == GraphicCard.class) {
-                partsManagementUi.inquiryPart(part);
+                stocksManagementUI.inquiryPart(part);
             }
         });
 
@@ -56,7 +68,9 @@ public class StocksManagementService {
 
     }
 
-    void deleteSearchedPart() {
+    <T> void deletePart(final String name, final T t) {
+
+        searchPart(name, (Class) t);
 
         if (searchedPart != null) {
             parts.remove(searchedPart);
@@ -65,14 +79,7 @@ public class StocksManagementService {
 
     }
 
-    <T> void deletePart(String name, T t) {
-
-        searchPart(name, (Class) t);
-        deleteSearchedPart();
-
-    }
-
-    <T> void addPart(T t, Map<String ,String> partInformation) {
+    <T> void addPart(final T t, final Map<String ,String> partInformation) {
 
         Part part = (Part) t;
         part.createPart(partInformation, part);
@@ -96,6 +103,5 @@ public class StocksManagementService {
         return (int) parts.stream().filter(part -> part.getClass() == t).count();
 
     }
-
 
 }

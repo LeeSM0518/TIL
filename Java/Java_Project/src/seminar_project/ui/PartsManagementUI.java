@@ -1,23 +1,10 @@
 package seminar_project.ui;
 
-import seminar_project.parts.*;
-
 import java.util.*;
 
-public class PartsManagementUI {
+public class PartsManagementUI extends StocksManagementUI {
 
     private static Scanner scanner = new Scanner(System.in);
-
-    // TODO 부품서비스 클래스에서 조회할 때 import 해서 UI 부분 사용
-    public <T> void inquiryPart(final T t) {
-
-        Part part = (Part) t;
-        System.out.println("제품명 : " + part.getProductName());
-        System.out.println("성능 : " + part.getPerformance());
-        System.out.println("가격 : " + part.getPrice());
-        System.out.println();
-
-    }
 
     // TODO 메인메뉴에서 부품구매 호출시 사용
     public void purchasePartsUI() {
@@ -33,7 +20,7 @@ public class PartsManagementUI {
     //  (예외 처리 및 중복 코드 수정해야함)
     private Integer selectPartNumber() {
 
-        int select = -1;
+        int select;
 
         while (true) {
             try {
@@ -43,14 +30,15 @@ public class PartsManagementUI {
                 System.out.println("잘못된 입력입니다. 1~3 까지의 숫자로 입력해주세요.");
                 System.out.print("입력 : ");
                 select = scanner.nextInt();
-            } finally { // 중복코드 => 재사용 가능 코드
-                if (select > 3 || select < 0) {
-                    System.out.println("잘못된 입력입니다. 1~3 까지의 숫자로 입력해주세요.");
-                    System.out.print("입력 : ");
-                } else {
-                    break;
-                }
             }
+
+            if (select > 3 || select < 0) {
+                System.out.println("잘못된 입력입니다. 1~3 까지의 숫자로 입력해주세요.");
+                System.out.print("입력 : ");
+            } else {
+                break;
+            }
+
         }
 
         return select;
@@ -92,23 +80,6 @@ public class PartsManagementUI {
 
     }
 
-    // TODO 정보에 대한 입력을 확인해주는 메소드
-    public String informationInput() {
-
-        String information = scanner.nextLine();
-
-        while (true) {
-            if (information.equals("")) {
-                System.out.println("다시 입력해주세요.");
-                System.out.print("입력 : ");
-                information = scanner.nextLine();
-            } else {
-                return information;
-            }
-        }
-
-    }
-
 
     // TODO 부품 판매 메소드
     public Map<String, String> salePartsUI() {
@@ -129,20 +100,6 @@ public class PartsManagementUI {
 
         return information;
 
-    }
-
-    // TODO selectPart()
-    //  1. 부품을 입력한다.
-    //  2. 부품 서비스에서 존재하는지 확인한다.
-    public String inputPartNameUI() {
-
-        scanner.nextLine();
-
-        System.out.println("부품의 제품명을 입력해주세요.");
-        System.out.print("입력 : ");
-        String partName = informationInput();
-
-        return partName;
     }
 
 }

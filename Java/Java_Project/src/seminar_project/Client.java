@@ -21,7 +21,7 @@ public class Client {
     private static final int EXIT_PROGRAM = 7;
 
     // TODO 메인메뉴에서 선택한 메뉴에 따라 UI를 출력시키거나 서비스를 사용한다.
-    private void mainMenu() {
+    private boolean mainMenu() {
 
         System.out.println("==============================");
         System.out.println("1. 부품 조회");
@@ -37,12 +37,7 @@ public class Client {
         switch (mainMenuSelect) {
             case INQUIRY_PARTS:
                 System.out.println("==============================");
-                System.out.println("CPU 재고");
-                stocksManagementService.inquiryParts("CPU");
-                System.out.println("RAM 재고");
-                stocksManagementService.inquiryParts("RAM");
-                System.out.println("Graphic Card 재고");
-                stocksManagementService.inquiryParts("GraphicCard");
+                partsManagementService.inquiryAllParts();
                 break;
 
             case PURCHASE_PARTS:
@@ -62,24 +57,33 @@ public class Client {
 
             case INQUIRY_DESKTOPS:
                 System.out.println("==============================");
-
+                desktopsManagementService.inquiryDesktops();
                 break;
 
             case SALE_DESKTOP:
+                System.out.println("==============================");
+                desktopsManagementService.sale();
                 break;
 
             case EXIT_PROGRAM:
-                break;
+                return true;
+
+            default:
+                System.out.println("다시 입력해주세요.");
         }
+
+        return false;
     }
 
     public static void main(String[] args) {
 
         Client client = new Client();
 
-        while(true) {
-            client.mainMenu();
-        }
+        boolean exit = false;
+
+        do {
+            exit = client.mainMenu();
+        } while (!exit);
 
     }
 
