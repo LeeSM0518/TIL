@@ -20,7 +20,6 @@ public class Client {
     private static final int SALE_DESKTOP = 6;
     private static final int EXIT_PROGRAM = 7;
 
-    // TODO 메인메뉴에서 선택한 메뉴에 따라 UI를 출력시키거나 서비스를 사용한다.
     private boolean mainMenu() {
 
         System.out.println("==============================");
@@ -79,7 +78,7 @@ public class Client {
 
         Client client = new Client();
 
-        boolean exit = false;
+        boolean exit;
 
         do {
             exit = client.mainMenu();

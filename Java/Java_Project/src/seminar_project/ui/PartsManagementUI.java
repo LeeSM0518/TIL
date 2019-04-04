@@ -6,7 +6,6 @@ public class PartsManagementUI extends StocksManagementUI {
 
     private static Scanner scanner = new Scanner(System.in);
 
-    // TODO 메인메뉴에서 부품구매 호출시 사용
     public void purchasePartsUI() {
 
         System.out.println("(1) CPU");
@@ -16,8 +15,6 @@ public class PartsManagementUI extends StocksManagementUI {
 
     }
 
-    // TODO 부품을 선택할 때 사용하고 int 타입 입력에 대한 예외 처리
-    //  (예외 처리 및 중복 코드 수정해야함)
     private Integer selectPartNumber() {
 
         int select;
@@ -45,9 +42,6 @@ public class PartsManagementUI extends StocksManagementUI {
     }
 
 
-    // TODO 부품에 대한 정보를 입력받을 때 사용
-    //  (예외 처리 수정해야하고 정보 입력 메소드인데 부품 구매도 같이 하기 때문에
-    //  수정 해야함)
     public Map<String, String> partInformation() {
 
         Map<String, String> information = new HashMap<>();
@@ -81,7 +75,6 @@ public class PartsManagementUI extends StocksManagementUI {
     }
 
 
-    // TODO 부품 판매 메소드
     public Map<String, String> salePartsUI() {
 
         Map<String, String> information = new HashMap<>();

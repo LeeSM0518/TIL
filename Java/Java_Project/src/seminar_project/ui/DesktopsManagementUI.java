@@ -9,9 +9,6 @@ public class DesktopsManagementUI extends StocksManagementUI {
 
     private Scanner scanner = new Scanner(System.in);
 
-    // TODO selectPart()
-    //  1. 부품을 입력한다.
-    //  2. 부품 서비스에서 존재하는지 확인한다.
     public String inputPartNameUI() {
 
         System.out.println("부품의 제품명을 입력해주세요.");
@@ -23,9 +20,6 @@ public class DesktopsManagementUI extends StocksManagementUI {
         return partName;
     }
 
-    // TODO inquiryDesktopUI()
-    //  1. 데스크탑 서비스에서 Desktop 스트림을 받는다.
-    //  2. Desktop 스트림을 forEach 로 출력시킨다.
     public void inquiryDesktopsUI(final List<Desktop> desktops) {
 
         System.out.println();

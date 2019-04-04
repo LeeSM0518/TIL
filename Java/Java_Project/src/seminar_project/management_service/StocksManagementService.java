@@ -8,6 +8,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+// TODO inquiryParts forEach 보완
+// TODO searchPart forEach 보완 -> match, collect
 public class StocksManagementService {
 
     private StocksManagementUI stocksManagementUI = new StocksManagementUI();
@@ -21,7 +23,7 @@ public class StocksManagementService {
 
     private Part searchedPart = null;
 
-    public void inquiryParts(final String partClass) {
+    void inquiryParts(final String partClass) {
 
         switch (partClass) {
 
@@ -87,7 +89,6 @@ public class StocksManagementService {
 
     }
 
-    // TODO 부품들의 개수를 확인하는 메소드
     boolean checkAllPartCount() {
 
         int cpuCount = partCount(CPU.class);

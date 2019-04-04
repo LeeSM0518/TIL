@@ -8,7 +8,7 @@ public class StocksManagementUI {
 
     private Scanner scanner = new Scanner(System.in);
 
-    // TODO 부품서비스 클래스에서 조회할 때 import 해서 UI 부분 사용
+    // 하나의 부품의 정보들을 조회하는 메소드
     public <T> void inquiryPart(final T t) {
 
         Part part = (Part) t;
@@ -19,7 +19,7 @@ public class StocksManagementUI {
 
     }
 
-    // TODO 정보에 대한 입력을 확인해주는 메소드
+    // 문자열 정보를 입력할 때 사용하는 메소드
     public String informationInput() {
 
         String information = scanner.nextLine();
@@ -37,7 +37,5 @@ public class StocksManagementUI {
         }
 
     }
-
-
 
 }
