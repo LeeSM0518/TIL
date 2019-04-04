@@ -5,6 +5,7 @@ import seminar_project.parts.GraphicCard;
 import seminar_project.parts.RAM;
 
 public class Desktop {
+
     private CPU cpu;
     private RAM ram;
     private GraphicCard graphicCard;
@@ -48,4 +49,5 @@ public class Desktop {
     public void setGraphicCard(GraphicCard graphicCard) {
         this.graphicCard = graphicCard;
     }
+
 }
