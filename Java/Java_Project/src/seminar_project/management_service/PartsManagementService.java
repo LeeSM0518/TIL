@@ -52,19 +52,23 @@ public class PartsManagementService extends StocksManagementService {
 
     public void sale() {
 
+        CPU cpu  = new CPU();
+        RAM ram = new RAM();
+        GraphicCard graphicCard = new GraphicCard();
+
         inquiryAllParts();
         Map<String, String> information = partsManagementUI.salePartsUI();
 
 
         switch (new Integer(information.get("select"))) {
             case CPU_NUM:
-                deletePart(information.get("name"), CPU.class);
+                deletePart(information.get("name"), cpu);
                 break;
             case RAM_NUM:
-                deletePart(information.get("name"), RAM.class);
+                deletePart(information.get("name"), ram);
                 break;
             case GRAPHIC_CARD_NUM:
-                deletePart(information.get("name"), GraphicCard.class);
+                deletePart(information.get("name"), graphicCard);
                 break;
         }
 

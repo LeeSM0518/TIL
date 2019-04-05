@@ -25,6 +25,10 @@ public class DesktopsManagementService extends StocksManagementService {
 
     public void makeDesktop() {
 
+        CPU cpu = new CPU();
+        RAM ram = new RAM();
+        GraphicCard graphicCard = new GraphicCard();
+
         if (!checkAllPartCount()) {
             System.out.println("부품이 부족합니다.");
             return;
@@ -33,29 +37,29 @@ public class DesktopsManagementService extends StocksManagementService {
         System.out.print("데스크탑의 제품명을 입력해주세요: ");
         String desktopName = desktopsManagementUI.informationInput();
 
-        CPU cpu = (CPU) selectPart("CPU", CPU.class);
-        RAM ram = (RAM) selectPart("RAM", RAM.class);
-        GraphicCard graphicCard = (GraphicCard) selectPart("GraphicCard", GraphicCard.class);
+        cpu = selectPart("CPU", cpu);
+        ram = selectPart("RAM", ram);
+        graphicCard = selectPart("GraphicCard", graphicCard);
 
         int sumPrice = cpu.getPrice() + ram.getPrice() + graphicCard.getPrice();
 
         desktops.add(new Desktop(desktopName, cpu, ram, graphicCard, sumPrice));
 
-        deletePart(cpu.getProductName(), CPU.class);
-        deletePart(ram.getProductName(), RAM.class);
-        deletePart(graphicCard.getProductName(), GraphicCard.class);
+        deletePart(cpu.getProductName(), cpu);
+        deletePart(ram.getProductName(), ram);
+        deletePart(graphicCard.getProductName(), graphicCard);
 
     }
 
-    private Part selectPart(String partKind, Class partClass) {
+    private <T extends Part> T selectPart(String partKind, T t) {
 
-        Part part;
+        T part;
 
         inquiryParts(partKind);
         System.out.println();
 
         do {
-            part = searchPart(desktopsManagementUI.inputPartNameUI(), partClass);
+            part = searchPart(desktopsManagementUI.inputPartNameUI(), t);
         } while (part == null);
 
         return part;

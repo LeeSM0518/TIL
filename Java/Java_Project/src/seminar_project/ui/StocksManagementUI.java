@@ -9,12 +9,11 @@ public class StocksManagementUI {
     private Scanner scanner = new Scanner(System.in);
 
     // 하나의 부품의 정보들을 조회하는 메소드
-    public <T> void inquiryPart(final T t) {
+    public <T extends Part> void inquiryPart(final T t) {
 
-        Part part = (Part) t;
-        System.out.println("제품명 : " + part.getProductName());
-        System.out.println("성능 : " + part.getPerformance());
-        System.out.println("가격 : " + part.getPrice());
+        System.out.println("제품명 : " + t.getProductName());
+        System.out.println("성능 : " + t.getPerformance());
+        System.out.println("가격 : " + t.getPrice());
         System.out.println();
 
     }

@@ -8,8 +8,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-// TODO inquiryParts forEach 보완
-// TODO searchPart forEach 보완 -> match, collect
 public class StocksManagementService {
 
     private StocksManagementUI stocksManagementUI = new StocksManagementUI();
@@ -53,11 +51,11 @@ public class StocksManagementService {
 
     }
 
-    Part searchPart(final String partName, final Class partClass) {
+    <T extends Part> T searchPart(final String partName, final T t) {
 
         parts.forEach(part -> {
             if (partName.equals(part.getProductName()) &&
-                    part.getClass() == partClass) {
+                    part.getClass() == t.getClass()) {
                 searchedPart = part;
             }
         });
@@ -66,13 +64,13 @@ public class StocksManagementService {
             System.out.println("없는 부품입니다.");
         }
 
-        return searchedPart;
+        return (T) searchedPart;
 
     }
 
-    <T> void deletePart(final String name, final T t) {
+    <T extends Part> void deletePart(final String name, final T t) {
 
-        searchPart(name, (Class) t);
+        searchPart(name, t);
 
         if (searchedPart != null) {
             parts.remove(searchedPart);
@@ -81,27 +79,30 @@ public class StocksManagementService {
 
     }
 
-    <T> void addPart(final T t, final Map<String ,String> partInformation) {
+    <T extends Part> void addPart(final T t, final Map<String ,String> partInformation) {
 
-        Part part = (Part) t;
-        part.createPart(partInformation, part);
-        parts.add(part);
+        t.createPart(partInformation, t);
+        parts.add(t);
 
     }
 
     boolean checkAllPartCount() {
 
-        int cpuCount = partCount(CPU.class);
-        int ramCount = partCount(RAM.class);
-        int graphicCount = partCount(GraphicCard.class);
+        CPU cpu = new CPU();
+        RAM ram = new RAM();
+        GraphicCard graphicCard = new GraphicCard();
+
+        int cpuCount = partCount(cpu);
+        int ramCount = partCount(ram);
+        int graphicCount = partCount(graphicCard);
 
         return cpuCount > 0 && ramCount > 0 && graphicCount > 0;
 
     }
 
-    private <T> int partCount(final T t) {
+    private <T extends Part> int partCount(final T t) {
 
-        return (int) parts.stream().filter(part -> part.getClass() == t).count();
+        return (int) parts.stream().filter(part -> part.getClass() == t.getClass()).count();
 
     }
 

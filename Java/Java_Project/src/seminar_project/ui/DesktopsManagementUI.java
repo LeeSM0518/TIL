@@ -18,6 +18,7 @@ public class DesktopsManagementUI extends StocksManagementUI {
         System.out.println();
 
         return partName;
+
     }
 
     public void inquiryDesktopsUI(final List<Desktop> desktops) {
