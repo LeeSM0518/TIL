@@ -1,4 +1,4 @@
-package week_1;
+package week1;
 
 public class ContinueEx1 {
     public static void main(String[] args) {

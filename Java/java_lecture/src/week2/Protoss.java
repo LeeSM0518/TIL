@@ -1,17 +1,18 @@
-package week_2;
-class Zerg extends Unit{
+package week2;
+
+class Protoss extends Unit {
 	boolean fly;
-	public Zerg(String n, boolean b){
+	public Protoss(String n, boolean b){
 		name = n;
 		fly = b;
 	}
 
 	@Override
 	public void encEnergy() {
-		energy += 60;
+		energy += 10;
 	}
 
 	public void decEnergy(){
-		energy -= 6;
+		energy--;
 	}
 }

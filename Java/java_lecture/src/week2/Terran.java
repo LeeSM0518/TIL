@@ -1,18 +1,18 @@
-package week_2;
+package week2;
 
-class Protoss extends Unit {
+class Terran extends Unit{
 	boolean fly;
-	public Protoss(String n, boolean b){
+	public Terran(String n, boolean b){
 		name = n;
 		fly = b;
 	}
 
 	@Override
 	public void encEnergy() {
-		energy += 10;
+		energy += 30;
 	}
 
 	public void decEnergy(){
-		energy--;
+		energy -= 3;
 	}
 }

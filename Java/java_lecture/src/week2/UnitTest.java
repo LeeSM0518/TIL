@@ -1,4 +1,4 @@
-package week_2;
+package week2;
 class UnitTest
 {
 	public static void main(String[] args) 

@@ -1,4 +1,4 @@
-package week_2;
+package week2;
 
 abstract class Unit{
 	protected String name;
