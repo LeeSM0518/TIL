@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
-public class KBKeyPad extends Frame implements ActionListener, WindowListener {
+public class KBKeyPad extends Frame {
     Panel pbtn, ptf;
     Button b1, b2, b3, b4, b5, b6, b7, b8, b9, b0, b_cfrm, b_clear, b_del;
 
@@ -41,7 +41,16 @@ public class KBKeyPad extends Frame implements ActionListener, WindowListener {
 
         List<Button> list = new Vector<>();
 
-
+        list.add(b1);
+        list.add(b2);
+        list.add(b3);
+        list.add(b4);
+        list.add(b5);
+        list.add(b6);
+        list.add(b7);
+        list.add(b8);
+        list.add(b9);
+        list.add(b0);
 
         b_cfrm = new Button("확인");
         b_clear = new Button("전체지움");
@@ -50,16 +59,9 @@ public class KBKeyPad extends Frame implements ActionListener, WindowListener {
         pbtn.add(passwordLabel);
         pbtn.add(textField);
 
-        ptf.add(b1);
-        ptf.add(b2);
-        ptf.add(b3);
-        ptf.add(b4);
-        ptf.add(b5);
-        ptf.add(b6);
-        ptf.add(b7);
-        ptf.add(b8);
-        ptf.add(b9);
-        ptf.add(b0);
+        list.stream().forEach(s -> {
+            ptf.add(s);
+        });
         ptf.add(b_del);
         ptf.add(b_clear);
 
@@ -70,6 +72,8 @@ public class KBKeyPad extends Frame implements ActionListener, WindowListener {
                 textField.setText(string);
             }
         });
+
+
     }
 
 
