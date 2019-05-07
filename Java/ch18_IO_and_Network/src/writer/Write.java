@@ -7,12 +7,14 @@ import java.io.Writer;
 public class Write {
     public static void main(String[] args) throws IOException {
         String current = new java.io.File(".").getCanonicalPath();
-        Writer writer = new FileWriter(current + "/writer.txt");
+        Writer writer = new FileWriter(current + "/writer.txt", true);
 
         char[] data = "홍길동".toCharArray();
 
         for (int i=0; i<data.length; i++) {
             writer.write(data[i]);      // 홍, 길, 동 하나씩 출력
         }
+
+        writer.close(); // 반드시 닫아 주어야한다.
     }
 }
