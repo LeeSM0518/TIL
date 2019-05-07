@@ -927,4 +927,316 @@ IO 패키지에서 제공하는 File 클래스는 파일 크기, 파일 속성, 
   | boolean   | mkdirs()        | 경로상에 없는 모든 디렉토리를 생성 |
   | boolean   | delete()        | 파일 또는 디렉토리 삭제            |
 
+* **파일 및 디렉토리 존재 여부 확인 메소드들**
+
+  | 리턴 타입 | 메소드                           | 설명                                                         |
+  | --------- | -------------------------------- | ------------------------------------------------------------ |
+  | boolean   | canExecute( )                    | 실행할 수 있는 파일인지 여부                                 |
+  | boolean   | canRead( )                       | 읽을 수 있는 파일인지 여부                                   |
+  | boolean   | canWrite( )                      | 수정 및 저장할 수 있는 파일인지 여부                         |
+  | String    | getName( )                       | 파일의 이름을 리턴                                           |
+  | String    | getParent( )                     | 부모 디렉토리 리턴                                           |
+  | File      | getParentFile( )                 | 부모 디렉토리를 File 객체로 생성 후 리턴                     |
+  | String    | getPath( )                       | 전체 경로를 리턴                                             |
+  | boolean   | isDirectory( )                   | 디렉토리인지 여부                                            |
+  | boolean   | isFile( )                        | 파일인지 여부                                                |
+  | boolean   | isHidden( )                      | 숨김 파일인지 여부                                           |
+  | long      | lastModified( )                  | 마지막 수정 날짜 및 시간을 리턴                              |
+  | long      | length( )                        | 파일의 크기를 리턴                                           |
+  | String[ ] | list( )                          | 디렉토리에 포함된 파일 및 서브 디렉토리 목록 전부를 String 배열로 리턴 |
+  | String[ ] | list(FilenameFilter filter)      | 디렉토리에 포함된 파일 및 서브디렉토리 목록 중에 FilenameFilter에 맞는 것만 String 배열로 리턴 |
+  | File[ ]   | listFiles( )                     | 디렉토리에 포함된 파일 및 서브 디렉토리 목록 전부를 File 배열로 리턴 |
+  | File[ ]   | listFiles(FilenameFilter filter) | 디렉토리에 포함된 파일 및 서브 디렉토리 목록 중에 FilenameFilter에 맞는 것만 File 배열로 리턴 |
+
+* **예제) File 클래스를 이용한 파일 및 디렉토리 정보 출력**
+
+  ```java
+  package file;
+  
+  import java.io.File;
+  import java.io.IOException;
+  import java.net.URL;
+  import java.text.SimpleDateFormat;
+  import java.util.Date;
+  
+  public class FileExample {
+      public static void main(String[] args) throws IOException {
+          String current = new java.io.File(".").getCanonicalPath();
+          
+          // 파일 및 디렉토리 객체 생성
+          File dir = new File(current + "/Dir");
+          File file1 = new File(current + "/file1.txt");
+          File file2 = new File(current + "/file2.txt");
+  
+          // 파일 및 디렉토리 존재 여부 확인
+          if (!dir.exists()) dir.mkdirs();
+          if (!file1.exists()) file1.createNewFile();
+          if (!file2.exists()) file2.createNewFile();
+  
+          File temp = new File(current);
+          // 날짜 form 생성
+          SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd   a  HH:mm");
+          File[] contents = temp.listFiles();
+          System.out.println("날짜            시간     형태  크기          이름");
+          System.out.println("--------------------------------------------------------------");
+          for (File file : contents) {
+              // 파일 수정날짜
+              System.out.print(sdf.format(new Date(file.lastModified())));
+              if (file.isDirectory()) {
+                  // 디렉토리 이름
+                  System.out.print("\t<DIR>\t\t\t\t" + file.getName());
+              } else {
+                  // 파일 이름
+                  System.out.print("\t\t\t" + file.length() + "\t\t\t" + file.getName());
+              }
+              System.out.println();
+          }
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  날짜            시간     형태  크기          이름
+  --------------------------------------------------------------
+  2019-05-07   PM  22:57			0			file2.txt
+  2019-04-30   AM  09:06			423			ch18_IO_and_Network.iml
+  2019-05-07   PM  22:57			0			file1.txt
+  2019-05-07   PM  19:38			9			test_reader.txt
+  2019-05-07   AM  10:24			2			test_write.txt
+  2019-04-30   AM  09:28			6148			.DS_Store
+  2019-05-07   PM  22:59	<DIR>				out
+  2019-05-07   PM  19:47			10			writer.txt
+  2019-05-07   PM  22:57	<DIR>				Dir
+  2019-04-30   AM  10:51			15			test.txt
+  2019-05-07   PM  22:57	<DIR>				.idea
+  2019-05-07   PM  22:59	<DIR>				src
+  2019-05-07   PM  22:49			29473			ch18_IO_and_Network.md
+  ```
+
+
+
+## 18.4.2. FileInputStream
+
+이 클래스는 파일로부터 **바이트 단위로 읽어들일 때** 사용하는 바이트 기반 입력 스트림이다. 바이트 단위로 읽기 때문에 그림, 오디오, 비디오, 텍스트 파일 등 **모든 종류의 파일을** 읽을 수 있다.
+
+* **FileInputStream 생성하는 두 가지 방법**
+
+  ```java
+  // 첫번째 방법
+  FileInputStream fis = new FileInputStream("C:/Temp/image.gif");
+  
+  // 두번째 방법
+  File file = new File("C:/Temp/image.gif");
+  FileInputStream = new FileInputStream(file);
+  ```
+
+* **파일 내용을 읽는 방법**
+
+  ```java
+  FileInputStream fis = new FileInputStream("C:/Temp/image.gif");
+  int readByteNo;
+  byte[] readBytes = new byte[100];
+  while ((readByteNo = fis.read(readBytes)) != -1) {
+    // 읽은 바이트 배열(readBytes)을 처리
+  }
+  fis.close();
+  ```
+
+* **예제) 텍스트 파일을 읽고 출력**
+
+  ```java
+  package file;
+  
+  import java.io.FileInputStream;
+  
+  public class FileInputStreamExample {
+      public static void main(String[] args) {
+          try {
+              String current = new java.io.File(".").getCanonicalPath();
+              System.out.println(current);
+              FileInputStream fis = new FileInputStream(
+                      current + "/src/file/FileInputStreamExample.java"
+              );
+  
+              int data;
+              
+              // 1byte 씩 읽고 콘솔에 출력 
+              while ((data = fis.read()) != -1) {
+                  System.out.write(data);
+              }
+              
+              fis.close();
+              
+          } catch (Exception e) {
+              e.printStackTrace();
+          }
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  /Users/sangminlee/Desktop/TIL/Java/ch18_IO_and_Network
+  package file;
+  
+  import java.io.FileInputStream;
+  
+  public class FileInputStreamExample {
+      public static void main(String[] args) {
+          try {
+              String current = new java.io.File(".").getCanonicalPath();
+              System.out.println(current);
+              FileInputStream fis = new FileInputStream(
+                      current + "/src/file/FileInputStreamExample.java"
+              );
+  
+              int data;
+              while ((data = fis.read()) != -1) {
+                  System.out.write(data);
+              }
+              fis.close();
+          } catch (Exception e) {
+              e.printStackTrace();
+          }
+      }
+  }
+  ```
+
+
+
+## 18.4.3. FileOutputStream
+
+이 클래스는 바이트 단위로 **데이터를 파일에 저장할 때** 사용하는 바이트 기반 출력 스트림이다. 모든 종류의 데이터를 파일로 저장 가능.
+
+* **FileOutputStream을 생성하는 두 가지 방법**
+
+  ```java
+  // 방법1
+  FileOutputStream fos = new FileOutputStream("C:/Temp/image.gif");
+  
+  // 방법2
+  File file = new File("C:/Temp/image.gif");
+  FileOutputStream fos = new FileOutputStream(file);
+  ```
+
+  > **주의할 점**
+  >
+  > 파일이 이미 존재할 경우, 데이터를 출력하면 **파일을 덮어쓰게** 된다. 기존의 파일 내용 **끝에 데이터를 추가할 경우에는** 생성자에 두 번째 매개값을 true 로 주면 된다.
+
+  ```java
+  FileOutputStream fos = new FileOutputStream("C:/Temp/data.txt", true);
+  ```
+
+* **예제) 파일 복사**
+
+  ```java
+  package file;
+  
+  import java.io.FileInputStream;
+  import java.io.FileOutputStream;
+  import java.io.IOException;
+  
+  public class FileOutputStreamExample {
+      public static void main(String[] args) throws IOException {
+          String current = new java.io.File(".").getCanonicalPath();
+          String originalFileName = current + "/dukeplug.gif";
+          String targetFileName = current + "/dukeplug2.gif";
+  
+          FileInputStream fis = new FileInputStream(originalFileName);
+          FileOutputStream fos = new FileOutputStream(targetFileName);
+  
+          int readByteNo;                     // 읽은 바이트 수가 저장될 변수
+          byte[] readBytes = new byte[100];   // 읽은 바이트가 저장되는 배열
+          while((readByteNo = fis.read(readBytes)) != -1) {
+              // 100 바이트씩 읽어서 readBytes 배열에 저장하고 100을 readByteNo 에 저장.
+              fos.write(readBytes, 0, readByteNo);
+          }
+  
+          fos.flush();
+          fos.close();
+          fis.close();
+  
+          System.out.println("복사가 잘 되었습니다.");
+      }
+  }
+  ```
+
+
+
+## 18.4.4. FileReader
+
+이 클래스는 텍스트 파일을 프로그램으로 읽어들일 때 사용하는 문자 기반 스트림이다. 그림, 오디오, 비디오 등의 파일은 읽을 수 없다.
+
+```java
+FileReader fr = new FileReader("C:/Temp/file.txt");
+```
+
+> FileReader 객체가 생성될 때 파일과 직접 연결이 되는데, 만약 **파일이 존재하지 않으면** FileNotFoundException을 발생시키므로 try-catch문으로 예외 처리를 해야 한다.
+
+```java
+FileReader fr = new FileReader("C:/Temp/file.txt");
+int readCharNo;
+char[] cbuf = new char[100];
+while ((readCharNo = fr.read(cbuf)) != -1) {
+  // 읽은 문자 배열(cbuf)를 처리
+}
+fr.close();
+```
+
+* **예제) 텍스트 파일 읽기**
+
+  ```java
+  package file;
+  
+  import java.io.FileReader;
+  import java.io.IOException;
+  
+  public class FileReaderExample {
+      public static void main(String[] args) throws IOException {
+          String current = new java.io.File(".").getCanonicalPath();
+          FileReader fr = new FileReader(
+                  current + "/src/file/FileReaderExample.java"
+          );
+  
+          int readCharNo;
+          char[] cbuf = new char[100];
+          while ((readCharNo = fr.read(cbuf)) != -1) {
+              String data = new String(cbuf, 0, readCharNo);
+              System.out.println(data);
+          }
+          fr.close();
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  package file;
+  
+  import java.io.FileReader;
+  import java.io.IOException;
+  
+  public class FileReaderExample {
+      public static void main(String[] args) throws IOException {
+          String current = new jav
+  a.io.File(".").getCanonicalPath();
+          FileReader fr = new FileReader(
+                  current + "/src/file/FileReaderExample.java"
+          );
+  
+          int readCharNo;
+          char[] cbuf = new char[200];
+          while ((readCharNo = fr.read(cbuf)) != -1) {
+              String data = new String(cbuf, 0, readCharNo);
+              System.out.println(data);
+          }
+          fr.close();
+      }
+  }
+  ```
+
   
