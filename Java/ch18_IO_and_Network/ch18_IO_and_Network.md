@@ -1239,4 +1239,199 @@ fr.close();
   }
   ```
 
+
+
+## 18.4.5. FileWriter
+
+이 클래스는 텍스트 데이터를 파일에 저장할 때 사용하는 문자 기반 스트림이다. 그림, 오디오, 비디오 등의 데이터를 파일로 저장할 수 없다.
+
+* **FileWriter 생성**
+
+  ```java
+  FileWriter fw = new FileWriter("C:/Temp/file.txt");
+  ```
+
+* **파일 내용 끝에 데이터 추가**
+
+  ```java
+  FileWriter fw = new FileWriter("C:/Temp/file.txt", true);
+  ```
+
+* **사용 예시**
+
+  ```java
+  FileWriter fw = new FileWriter("C:/Temp/file.txt");
+  String data = "저장할 문자열";
+  fw.write(data);
+  fw.flush();
+  fw.close();
+  ```
+
+* **예제) 문자열을 파일에 저장**
+
+  ```java
+  package file;
   
+  import java.io.File;
+  import java.io.FileWriter;
+  import java.io.IOException;
+  
+  public class FileWriterExample {
+      public static void main(String[] args) throws IOException {
+          String current = new java.io.File(".").getCanonicalPath();
+          File file = new File(current + "/file3.txt");
+          FileWriter fw = new FileWriter(file, true);
+          fw.write("FileWriter는 한글로된 " + "\r\n");
+          fw.write("문자열을 바로 출력할 수 있다." + "\r\n");
+          fw.flush();
+          fw.close();
+          System.out.println("파일에 저장되었습니다.");
+      }
+  }
+  ```
+
+
+
+# 18.5. 보조 스트림
+
+* **보조 스트림** : 다른 스트림과 연결되어 여러 가지 편리한 기능을 제공해주는 스트림을 말한다. 필터(filter) 스트림이라고도 한다.
+
+  * 보조 스트림은 **자체적으로 입출력이 불가하다.** 그렇기 때문에 OutStream, FileOutputStream, Writer, FileWriter 등에 연결해서 입출력을 수행한다.
+  * 문자 변환, 입출력 성능 향상, 기본 데이터 타입 입출력, 객체 입출력 등의 기능 제공
+
+* **보조 스트림 생성 예시**
+
+  ```java
+  InputStream is = System.in;
+  InputStreamReader reader = new InputStreamReader(is);
+  ```
+
+  <img src="../capture/스크린샷 2019-05-08 오후 5.00.03.png">
+
+  ```java
+  InputStram is = System.in;
+  InputStreamReader reader = new InputStreamReader(is);
+  BufferedReader br = new BufferReader(reader);
+  ```
+
+  <img src="../capture/스크린샷 2019-05-08 오후 5.02.43.png">
+
+
+
+## 18.5.1. 문자 변환 보조 스트림
+
+소스 스트림이 바이트 기반 스트림 (InputStream, OutputStream, FileInputStream, FileOutputStream) 이면서 입출력 데이터가 문자라면 **Reader 와 Writer 로 변환해서** 사용하는 것을 고려해야 한다.
+
+
+
+### InputStreamReader
+
+이 보조 스트림은 바이트 입력 스트림에 연결되어 문자 입력 스트림인 Reader로 변환시키는 보조 스트림이다.
+
+<img src="../capture/스크린샷 2019-05-08 오후 5.12.08.png">
+
+```java
+Reader reader = new InputStreamReader(바이트입력스트림);
+```
+
+* **스트림 예시**
+
+  ```java
+  // 콘솔 입력을 위한 InputStream -> Reader 변환
+  InputStream is = System.in;
+  Reader reader = new InputStreamReader(is);
+  
+  // 파일 입력을 위한 FileInputStream -> Reader 변환
+  FileInputStream fis = new FileInputStream("C:/Temp/file.txt");
+  Reader reader = new InputStreamReader(fis);
+  ```
+
+* **예제) 콘솔에서 한글 입력받기**
+
+  ```java
+  package secondary_stream;
+  
+  import java.io.IOException;
+  import java.io.InputStream;
+  import java.io.InputStreamReader;
+  import java.io.Reader;
+  
+  public class InputStreamReaderExample {
+      public static void main(String[] args) throws IOException {
+          InputStream is = System.in;
+          Reader reader = new InputStreamReader(is);
+  
+          int readCharNo;
+          char[] cbuf = new char[100];
+          while ((readCharNo = reader.read(cbuf)) != -1) {
+              String data = new String(cbuf, 0, readCharNo);
+              System.out.println(data);
+          }
+  
+          reader.close();
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  바이트입력스트림을 문자입력스트림으로 변환		// Enter
+  바이트입력스트림을 문자입력스트림으로 변환
+  ```
+
+
+
+### OutputStreamWriter
+
+이 보조 스트림은 바이트 출력 스트림에 연결되어 문자 출력 스트림인 Writer로 변환시키는 것 이다.
+
+<img src="../capture/스크린샷 2019-05-08 오후 7.08.03.png">
+
+```java
+Writer writer = new OutputStreamWriter(바이트출력스트림);
+```
+
+* **파일 출력 예시**
+
+  ```java
+  FileOutputStream fos = new FileOutputStream("C:/Temp/file.txt");
+  Writer writer = new OutputStreamWriter(fos);
+  ```
+
+* **예제) 파일로 출력하기**
+
+  ```java
+  package file;
+  
+  import java.io.FileOutputStream;
+  import java.io.IOException;
+  import java.io.OutputStreamWriter;
+  import java.io.Writer;
+  
+  public class OutputStreamWriterExample {
+      public static void main(String[] args) throws IOException {
+          String current = new java.io.File(".").getCanonicalPath();
+  
+          // FileOutputStream 에서 Writer 로 변환
+          FileOutputStream fos = new FileOutputStream(current + "/file4.txt");
+          Writer writer = new OutputStreamWriter(fos);
+  
+          String data = "바이트 출력 스트림을 문자 출력 스트림으로 변환";
+          writer.write(data);
+  
+          writer.flush();
+          writer.close();
+          System.out.println("파일 저장이 끝났습니다.");
+      }
+  }
+  ```
+
+
+
+## 18.5.2. 성능 향상 보조 스트림
+
+메모리 버퍼를 제공하여 프로그램의 실행 성능을 향상시키는 것들이 있다. 바이트 기반 스트림에는 BufferedInputStream, BufferedOutputStream 이 있고, 문자 기반 스트림에는 BufferedReader, BufferedWriter 가 있다.
+
+
+
