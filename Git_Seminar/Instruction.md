@@ -21,7 +21,7 @@ $ git config --list
 $ git config --global color.ui "auto"
 
 - 저장소 복제하기
-$ git git clone <저장소 url>
+$ git clone <저장소 url>
 ```
 ---
 <br/>
