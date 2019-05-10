@@ -5,7 +5,7 @@ public class Main {
         ArrayList arrayList = new ArrayList(5);
 
         arrayList.addListData(0, 10);
-        arrayList.addListData(0, 20);
+        arrayList.addListData(1, 20);
         arrayList.addListData(1, 30);
 
 
