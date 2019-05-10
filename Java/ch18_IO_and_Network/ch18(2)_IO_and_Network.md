@@ -347,3 +347,307 @@
 
 
 
+Socket의 close( ) 메소드도 IOException이 발생할 수 있기 때문에 예외 처리가 필요하다.
+
+```java
+try {
+  socket.close();
+} catch (IOException e) {}
+```
+
+
+
+* **예제) localhost 5001 포트로 연결 요청**
+
+  ```java
+  package tcp_networking;
+  
+  import java.io.IOException;
+  import java.net.InetSocketAddress;
+  import java.net.Socket;
+  
+  public class ClientExample {
+      public static void main(String[] args) {
+          Socket socket = null;
+  
+          try {
+              // Socket 생성
+              socket = new Socket();
+              System.out.println("[연결 요청]");
+              
+              // 연결 요청
+              socket.connect(new InetSocketAddress("localhost", 5001));
+              System.out.println("[연결 성공]");
+  
+          } catch (IOException e) { }
+  
+          // 연결이 되어 있을 경우
+          if (!socket.isClosed()) {
+              try {
+                  // 연결 끊기
+                  socket.close();
+              } catch (IOException e1) {}
+          }
+      }
+  }
+  ```
+
+
+
+### 18.7.4. Socket 데이터 통신
+
+클라이언트가 연결 요청(connect) 하고 서버가 연결 수락(accept) 했다면, 양쪽의 Socket 객체로부터 각각 입력 스트림(InputStream) 과 출력 스트림(OutputStream)을 얻을 수 있다.
+
+<img src="../capture/스크린샷 2019-05-10 오후 4.20.14.png">
+
+* **Stream 얻는 방법**
+
+  ```java
+  // 입력 스트림 얻기
+  InputStream is = socket.getInputStream();
+  
+  // 출력 스트림 얻기
+  OutputStream os = socket.getOutputStream();
+  ```
+
+* **데이터 보내는 방법**
+
+  ```java
+  String data = "보낼 데이터";
+  byte[] byteArr = data.getBytes("UTF-8");
+  OutputStream outputStream = socket.getOutputStream();
+  outputStream.write(byteArr);
+  outputStream.flush();
+  ```
+
+* **데이터 받는 방법**
+
+  ```java
+  byte[] byteArr = new byte[100];
+  InputStream inputStream = socket.getInputStream();
+  int readByteCount = inputStream.read(byteArr);
+  String data = new String(byteArr, 0, readByteCount, "UTF-8");
+  ```
+
+* **예제) 데이터 보내고 받기**
+
+  ClientExample.java
+
+  ```java
+  package socket_data_communication;
+  
+  import java.io.IOException;
+  import java.io.InputStream;
+  import java.io.OutputStream;
+  import java.net.InetSocketAddress;
+  import java.net.Socket;
+  import java.nio.charset.StandardCharsets;
+  
+  public class ClientExample {
+      public static void main(String[] args) {
+          Socket socket = null;
+  
+          try {
+              // 소켓 생성
+              socket = new Socket();
+              System.out.println("[연결 요청]");
+  
+              // 서버에 연결을 요청하기 위해 IP 주소와 바인딩 포트 제공하여 연결 요청
+              socket.connect(new InetSocketAddress("localhost", 5001));
+              System.out.println("[연결 성공]");
+  
+              // 보낼 데이터를 저장할 공간
+              byte[] bytes = null;
+              String message = null;
+  
+              // 출력 스트림 생성
+              OutputStream os = socket.getOutputStream();
+              message = "Hello Server";
+  
+              // "Hello Server"를 바이트 배열로 바꾼다.
+              bytes = message.getBytes(StandardCharsets.UTF_8);
+  
+              // 서버로 바이트 배열을 보낸다.
+              os.write(bytes);
+              os.flush();
+              System.out.println("[데이터 보내기 성공]");
+  
+              // 입력 스트림 생성
+              InputStream is = socket.getInputStream();
+  
+              // 입력 받을 데이터 배열 생성
+              bytes = new byte[100];
+  
+              // 바이트 배열에 데이터를 저장하고 입력받은 바이트 개수를 저장
+              int readByteCount = is.read(bytes);
+  
+              // 바이트 배열을 String 형으로 바꾼다.
+              message = new String(bytes, 0, readByteCount, StandardCharsets.UTF_8);
+              System.out.println("[데이터 받기 성공]: " + message);
+  
+              os.close();
+              is.close();
+  
+          } catch (Exception e) {}
+  
+          if (!socket.isClosed()) {
+              try {
+                  socket.close();
+              } catch (IOException e1) {}
+          }
+  
+      }
+  }
+  ```
+
+  ServerExample.java
+
+  ```java
+  package socket_data_communication;
+  
+  import java.io.IOException;
+  import java.io.InputStream;
+  import java.io.OutputStream;
+  import java.net.InetSocketAddress;
+  import java.net.ServerSocket;
+  import java.net.Socket;
+  import java.nio.charset.StandardCharsets;
+  
+  public class ServerExample {
+      public static void main(String[] args) {
+          ServerSocket serverSocket = null;
+  
+          try {
+              // 서버소켓 생성
+              serverSocket = new ServerSocket();
+              
+              // 서버소켓의 IP와 포트 바인딩
+              serverSocket.bind(new InetSocketAddress("localhost", 5001));
+  
+              while (true) {
+                  // 클라이언트 연결 수락
+                  System.out.println("[연결 기다림]");
+                  Socket socket = serverSocket.accept();
+                  
+                  // 연결된 클라이언트 정보 얻기
+                  InetSocketAddress isa = (InetSocketAddress) socket.getRemoteSocketAddress();
+                  System.out.println("[연결 수락함] " + isa.getHostName());
+  
+                  // 입력받을 데이터 공간
+                  byte[] bytes = null;
+                  String message = null;
+  
+                  // 입력 스트림 생성
+                  InputStream is = socket.getInputStream();
+                  
+                  // 데이터를 입력받을 바이트 배열 생성
+                  bytes = new byte[100];
+                  
+                  // 데이터를 저장하고, 바이트 개수 저장
+                  int readByteCount = is.read(bytes);
+                  
+                  // 바이트 배열을 String 으로 변환한다.
+                  message = new String(bytes, 0, readByteCount, StandardCharsets.UTF_8);
+                  System.out.println("[데이터 받기 성공]: " + message);
+  
+                  // 출력 스트림 생성
+                  OutputStream os = socket.getOutputStream();
+                  
+                  // 출력할 문자열
+                  message = "Hello Client";
+                  
+                  // 바이트 배열로 변환
+                  bytes = message.getBytes(StandardCharsets.UTF_8);
+                  
+                  // 바이트 배열 출력
+                  os.write(bytes);
+                  os.flush();
+                  System.out.println("[데이터 보내기 성공]");
+  
+                  // 종료
+                  is.close();
+                  os.close();
+                  socket.close();
+              }
+              
+          } catch (Exception e) {}
+  
+          if (!serverSocket.isClosed()) {
+              try {
+                  serverSocket.close();
+              } catch (IOException e1) {}
+          }
+      }
+  }
+  ```
+
+  **연결후 실행 결과**
+
+  ServerExample 실행 결과
+
+  ```
+  [연결 기다림]
+  [연결 수락함] localhost
+  [데이터 받기 성공]: Hello Server
+  [데이터 보내기 성공]
+  [연결 기다림]
+  ```
+
+  ClientExample 실행 결과
+
+  ```
+  [연결 요청]
+  [연결 성공]
+  [데이터 보내기 성공]
+  [데이터 받기 성공]: Hello Client
+  ```
+
+
+
+* **InputStream의 read( ) 메소드가 블로킹(blocking) 해제되고 리턴되는 경우**
+
+  | 블로킹이 해제되는 경우                      | 리턴값           |
+  | ------------------------------------------- | ---------------- |
+  | 상대방이 데이터를 보냄                      | 읽은 바이트      |
+  | 상대방이 정상적으로 Socket의 close()를 호출 | -1               |
+  | 상대방이 비정상적으로 종료                  | IOException 발생 |
+
+
+
+상대방이 정상적으로 Socket의 close( ) 를 호출하고 연결을 끊었을 경우와 비정상적으로 종료했을 경우, 모두 예외 처리를 해야한다.
+
+```java
+try {
+  ...
+  // 상대방이 비정상적으로 종료했을 경우 IOException 발생
+  int readByteCount = inputStream.read(byteArr);
+  
+  // 상대방이 정상적으로 Socket의 close()를 호출했을 경우
+  if (readByteCount == -1) {
+    throw new IOException();	// 강제로 IOException 발생시킴
+  }
+  ...
+} catch (Exception e) {
+  try { socket.close(); } catch(Exception e2) {}
+}
+```
+
+
+
+### 18.7.5. 스레드 병렬 처리
+
+ServerSocket 과 Socket 은 동기(블로킹) 방식으로 구동된다. 그렇기 때문에 **accept(), connect(), read(), write()** 는 별도의 작업 스레드를 생성해서 병력적으로 처리하는 것이 좋다.
+
+* **다중 클라이언트와 병렬적으로 통신하는 모습**
+
+  <img src="../capture/스크린샷 2019-05-10 오후 6.54.59.png">
+
+  > 이와 같은 구조는 클라이언트의 폭증으로 인해 서버의 과도한 스레드를 생성할 수도 있다.
+
+
+
+* **스레드풀을 이용한 서버 구현 방식**
+
+  <img src="../capture/스크린샷 2019-05-10 오후 6.57.55.png">
+
+  
