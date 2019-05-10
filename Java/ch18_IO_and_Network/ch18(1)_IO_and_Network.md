@@ -1435,3 +1435,729 @@ Writer writer = new OutputStreamWriter(바이트출력스트림);
 
 
 
+### BufferedInputStream 과 BufferedReader
+
+- **BufferedInputStream** : 바이트 입력 스트림에 연결되어 버퍼를 제공해주는 보조 스트림
+- **BufferedReader** : 문자 입력 스트림에 연결되어 버퍼를 제공해주는 보조 스트림
+
+> BufferedInputStream 은 최대 8192 내부 버퍼를 저장
+>
+> BufferedReader 은 최대 8192 문자를 저장
+
+- **생성 예시**
+
+  ```java
+  BufferedInputStream bis = new BufferedInput(바이트입력스트림);
+  BufferedReader br = new BufferedReader(문자입력스트림);
+  ```
+
+- **예제) 버퍼 사용여부에 따른 성능비교**
+
+  ```java
+  package improved_secondary_stream;
+  
+  import java.io.BufferedInputStream;
+  import java.io.FileInputStream;
+  import java.io.IOException;
+  
+  public class BufferedInputStreamExample {
+      public static void main(String[] args) throws IOException {
+          long start = 0;
+          long end = 0;
+  
+          String current = new java.io.File(".").getCanonicalPath();
+          FileInputStream fis1 = new FileInputStream(current + "/dukeplug.gif");
+  
+          start = System.currentTimeMillis();
+          while (fis1.read() != -1){}
+          end = System.currentTimeMillis();
+  
+          System.out.println("사용하지 않았을 때: " + (end-start) + "ms");
+          fis1.close();
+  
+          FileInputStream fis2 = new FileInputStream(current + "/dukeplug.gif");
+          BufferedInputStream bis = new BufferedInputStream(fis2);    // 버퍼 스트림 생성
+  
+          start = System.currentTimeMillis();
+          while (bis.read() != -1){}
+          end = System.currentTimeMillis();
+  
+          System.out.println("사용했을 때: " + (end - start) + "ms");
+  
+          bis.close();
+          fis2.close();
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  사용하지 않았을 때: 4ms
+  사용했을 때: 1ms
+  ```
+
+
+
+- **Enter키를 입력하기 전까지 콘솔에서 입력한 모든 문자열 얻기**
+
+  ```java
+  Reader reader = new InputStreamReader(System.in);
+  BufferedReader br = new BufferedReader(reader);
+  String inputStr = br.readLine();
+  ```
+
+- **예제) 콘솔로부터 라인 단위로 읽기**
+
+  ```java
+  package improved_secondary_stream;
+  
+  import java.io.*;
+  
+  public class BufferedReaderExample {
+      public static void main(String[] args) throws IOException {
+          InputStream is = System.in;
+          Reader reader = new InputStreamReader(is);
+          
+          // 버퍼 스트림 생성
+          BufferedReader br = new BufferedReader(reader);
+          
+          System.out.println("입력: ");
+          String lineString = br.readLine();
+  
+          System.out.println("출력: " + lineString);
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  입력: 가나다라
+  출력: 가나다라
+  ```
+
+
+
+### BufferedOutputStream 과 BufferedWriter
+
+- **BufferedOutputStream** : 바이트 출력 스트림에 연결되어 버퍼를 제공해주는 보조 스트림
+
+- **BufferedWriter** : 문자 출력 스트림에 연결되어 버퍼를 제공해주는 보조 스트림
+
+  - **생성 예시**
+
+    ```java
+    BufferedOutputStream bos = new BufferedOutputStream(바이트출력스트림);
+    BufferedWriter bw = new BufferedWriter(문자출력스트림);
+    ```
+
+    > **주의할 점**
+    >
+    > 마지막 출력 작업을 마친 후에는 반드시 **flush( )** 메소드를 호출하여 버퍼에서 잔류하고 있는 데이터를 모두 보내도록 해야 한다.
+
+- **예제) 버퍼를 사용했을 때의 성능 테스트**
+
+  ```java
+  package improved_secondary_stream;
+  
+  import java.io.*;
+  
+  public class BufferedOutputStreamExample {
+      public static void main(String[] args) throws IOException {
+          String current = new java.io.File(".").getCanonicalPath();
+  
+          FileInputStream fis = null;
+          FileOutputStream fos = null;
+          BufferedInputStream bis = null;
+          BufferedOutputStream bos = null;
+  
+          int data = -1;
+          long start = 0;
+          long end = 0;
+  
+          fis = new FileInputStream(current + "/dukeplug2.gif");
+          bis = new BufferedInputStream(fis);
+          
+          // FileOutputStream 직접 사용
+          fos = new FileOutputStream(current + "/dukeplug3.gif");
+  
+          start = System.currentTimeMillis();
+          while((data = bis.read()) != -1) {
+              fos.write(data);
+          }
+          fos.flush();
+          end = System.currentTimeMillis();
+  
+          fos.close(); bis.close(); fis.close();
+          System.out.println("사용하지 않았을 때: " + (end-start) + "ms");
+  
+          fis = new FileInputStream(current + "/dukeplug2.gif");
+          bis = new BufferedInputStream(fis);
+          fos = new FileOutputStream(current + "/dukeplug3.gif");
+          
+          // BufferedOutputStream 사용
+          bos = new BufferedOutputStream(fos);
+  
+          start = System.currentTimeMillis();
+          while((data = bis.read()) != -1) {
+              bos.write(data);
+          }
+          bos.flush();
+          end = System.currentTimeMillis()`
+  
+          bos.close(); fos.close(); bis.close(); fis.close();
+          System.out.println("사용했을 때: " + (end-start) + "ms");
+  `
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  사용하지 않았을 때: 16ms
+  사용했을 때: 0ms
+  ```
+
+
+
+## 18.5.3. 기본 타입 입출력 보조 스트림
+
+이 보조 스트림을 사용하면 기본 데이터 타입으로 입출력이 가능하다.
+
+<img src="capture/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202019-05-09%20%EC%98%A4%EC%A0%84%2010.38.31.png">
+
+- **생성 예시**
+
+  ```java
+  DataInputStream dis = new DataInputStream(바이트입력스트림);
+  DataOutputStream dos = new DataOutputStream(바이트출력스트림);
+  ```
+
+- **제공하는 메소드들**
+
+  <img src="capture/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202019-05-09%20%EC%98%A4%EC%A0%84%2010.42.03.png">
+
+- **예제) 기본 데이터 타입 입출력**
+
+  ```java
+  package data_secondary_stream;
+  
+  import java.io.*;
+  
+  public class DataInputOutputStreamExample {
+      public static void main(String[] args) throws IOException {
+          String current = new java.io.File(".").getCanonicalPath();
+  
+          FileOutputStream fos = new FileOutputStream(current + "/primitive.dat");
+          DataOutputStream dos = new DataOutputStream(fos);
+  
+          dos.writeUTF("홍길동");
+          dos.writeDouble(95.5);
+          dos.writeInt(1);
+  
+          dos.writeUTF("감자바");
+          dos.writeDouble(90.3);
+          dos.writeInt(2);
+  
+          dos.flush(); dos.close(); fos.close();
+  
+          FileInputStream fis = new FileInputStream(current + "/primitive.dat");
+          DataInputStream dis = new DataInputStream(fis);
+  
+          for(int i = 0; i < 2; i++) {
+              String name = dis.readUTF();
+              double score = dis.readDouble();
+              int order = dis.readInt();
+              System.out.println(name + " : " + score + " : " + order);
+          }
+  
+          dis.close(); fis.close();
+      }
+  }
+  ```
+
+  > 출력할 때의 순서가 int => boolean => double 이므로
+  >
+  > 읽을 때의 순서도 int => boolean => double 이여야 한다.
+
+  **실행 결과**
+
+  ```
+  홍길동 : 95.5 : 1
+  감자바 : 90.3 : 2
+  ```
+
+
+
+## 18.5.4. 프린터 보조 스트림
+
+PrintStream 과 PrintWriter 는 프린터와 유사하게 출력하는 print(), println() 메소드를 가지고 있는 보조 스트림이다.
+
+<img src="capture/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202019-05-09%20%EC%98%A4%EC%A0%84%2010.59.52.png">
+
+- **생성 예시**
+
+  ```java
+  PrintStream ps = new PrintStream(바이트출력스트림);
+  PrintWriter pw = new PrintWriter(문자출력스트림);
+  ```
+
+- **제공하는 메소드들**
+
+  <img src="capture/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202019-05-09%20%EC%98%A4%EC%A0%84%2011.01.34.png">
+
+- **예제) 라인 단위로 출력하기**
+
+  ```java
+  package print_secondary_stream;
+  
+  import java.io.FileOutputStream;
+  import java.io.IOException;
+  import java.io.PrintStream;
+  
+  public class PrintStreamExample {
+      public static void main(String[] args) throws IOException {
+          String current = new java.io.File(".").getCanonicalPath();
+          FileOutputStream fos = new FileOutputStream(current + "/file5.txt");
+          PrintStream ps = new PrintStream(fos);
+  
+          ps.println("[프린터 보조 스트림]");
+          ps.print("마치 ");
+          ps.println("프린터가 출력하는 것처럼 ");
+          ps.println("데이터를 출력합니다.");
+  
+          ps.flush();
+          ps.close();
+          fos.close();
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  file5.txt
+
+  ```
+  [프린터 보조 스트림]
+  마치 프린터가 출력하는 것처럼 
+  데이터를 출력합니다.
+  ```
+
+
+
+## 18.5.5. 객체 입출력 보조 스트림
+
+자바는 메모리에 생성된 **객체를 파일 또는 네트워크로 출력할** 수가 있다. 객체는 문자가 아니기 때문에 **바이트 기반 스트림으로** 출력해야 한다. 
+
+- **객체 직렬화 (serialization)** : 객체의 데이터(필드값) 를 일렬로 늘어선 연속적인 바이트로 변경하는 것.
+- **객체 역직렬화 (deserialization)** : 입력 스트림으로부터 읽어들인 연속적인 바이트를 객체로 복원하는 것.
+
+
+
+### ObjectInputStream, ObjectOutputStream
+
+객체를 입출력하는 두 개의 보조 스트림
+
+<img src="capture/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202019-05-09%20%EC%98%A4%EC%A0%84%2011.10.53.png">
+
+- **생성 예제**
+
+  ```java
+  ObjectInputStream ois = new ObjectInputStream(바이트입력스트림);
+  ObjectOutputStream oos = new ObjectOutputStream(바이트출력스트림);
+  ```
+
+- **직렬화 & 역직렬화**
+
+  ```java
+  // 직렬화
+  oos.writeObject(객체);
+  
+  // 역직렬화
+  객체타입 변수 = (객체타입) ois.readObject();
+  ```
+
+- **예제) 다양한 객체를 쓰고 읽기**
+
+  ```java
+  package object_secondary_stream;
+  
+  import java.io.*;
+  
+  public class ObjectInputOuputStreamExample {
+      public static void main(String[] args) throws IOException, ClassNotFoundException {
+          String current = new java.io.File(".").getCanonicalPath();
+          FileOutputStream fos = new FileOutputStream(current + "/Object.dat");
+          
+          // 객체 출력 스트림
+          ObjectOutputStream oos = new ObjectOutputStream(fos);
+  
+          // 객체 직렬화
+          oos.writeObject(new Integer(10));
+          oos.writeObject(new Double(3.14));
+          oos.writeObject(new int[] {1, 2, 3});
+          oos.writeObject(new String("홍길동"));
+  
+          oos.flush(); oos.close(); fos.close();
+  
+          FileInputStream fis = new FileInputStream(current + "/Object.dat");
+          
+          // 객체 입력 스트림
+          ObjectInputStream ois = new ObjectInputStream(fis);
+  
+          // 객체 역직렬화
+          Integer obj1 = (Integer) ois.readObject();
+          Double obj2 = (Double) ois.readObject();
+          int[] obj3 = (int[]) ois.readObject();
+          String obj4 = (String) ois.readObject();
+  
+          ois.close(); fis.close();
+  
+          System.out.println(obj1);
+          System.out.println(obj2);
+          System.out.println(obj3[0] + "," + obj3[1] + "," + obj3[2]);
+          System.out.println(obj4);
+  
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  10
+  3.14
+  1,2,3
+  홍길동
+  ```
+
+
+
+### 직렬화가 가능한 클래스 (Serializable)
+
+자바는 **Serializable 인터페이스를 구현한 클래스만** 직렬화할 수 있도록 제한하고 있다.
+
+- **생성 예시**
+
+  ```java
+  public class XXX implements Serializable {
+    ...
+  }
+  ```
+
+- **주의할 점**
+
+  객체를 직렬화하면 바이트로 변환되는 것은 필드들이고, **생성자 및 메소드는 직렬화에 포함되지 않는다.** 따라서 역직렬화할 때에는 필드의 값만 복원된다. 그리고 필드 선언에 **static 또는 transient가** 붙어 있을 경우에는 직렬화가 되지 않는다.
+
+- **예제) 직렬화가 가능한 클래스**
+
+  ClassA.java
+
+  ```java
+  package object_secondary_stream;
+  
+  import java.io.Serializable;
+  
+  public class ClassA implements Serializable {
+      int field1;                     // 직렬화 포함
+      ClassB field2 = new ClassB();   // 직렬화 포함
+      static int field3;              // 직렬화에서 제외
+      transient int field4;           // 직렬화에서 제외
+  }
+  ```
+
+  ClassB.java
+
+  ```java
+  package object_secondary_stream;
+  
+  import java.io.Serializable;
+  
+  public class ClassB implements Serializable {
+      int field1;
+  }
+  ```
+
+  SerializableWriter.java
+
+  ```java
+  package object_secondary_stream;
+  
+  import java.io.FileInputStream;
+  import java.io.FileOutputStream;
+  import java.io.IOException;
+  import java.io.ObjectOutputStream;
+  
+  public class SerializableWriter {
+      public static void main(String[] args) throws IOException {
+          String current = new java.io.File(".").getCanonicalPath();
+          FileOutputStream fos = new FileOutputStream(current + "/Object2.dat");
+  
+          // 객체 출력 스트림
+          ObjectOutputStream oos = new ObjectOutputStream(fos);
+  
+          // 객체 생성 및 값 저장
+          ClassA classA = new ClassA();
+          classA.field1 = 1;
+          classA.field2.field1 = 2;
+          classA.field3 = 3;
+          classA.field4 = 4;
+  
+          // 객체 직렬화
+          oos.writeObject(classA);
+          oos.flush(); oos.close(); fos.close();
+      }
+  }
+  ```
+
+  SerializableReader.java
+
+  ```java
+  package object_secondary_stream;
+  
+  import java.io.FileInputStream;
+  import java.io.IOException;
+  import java.io.ObjectInputStream;
+  
+  public class SerializableReader {
+      public static void main(String[] args) throws IOException, ClassNotFoundException {
+          String current = new java.io.File(".").getCanonicalPath();
+          FileInputStream fis = new FileInputStream(current + "/Object2.dat");
+  
+          // 객체 입력 스트림
+          ObjectInputStream ois = new ObjectInputStream(fis);
+  
+          // 객체 역직렬화
+          ClassA v = (ClassA) ois.readObject();
+  
+          System.out.println("filed1: " + v.field1);
+          System.out.println("field2.field1: " + v.field2.field1);
+          System.out.println("fiedl3: " + v.field3);
+          System.out.println("field4: " + v.field4);
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  filed1: 1
+  field2.field1: 2
+  fiedl3: 0			// static 이므로 복원 안됨
+  field4: 0			// transient 이므로 복원 안됨
+  ```
+
+  > 1. SerializableWriter 클래스를 실행하면 ClassA 객체를 직렬화해서 Object.dat 에 저장
+  > 2. SerializableReader 클래스를 실행하면 Object.dat 에 저장된 데이터를 읽고 ClassA 객체로 역직렬화한다.
+
+  
+
+### serialVersionUID 필드
+
+직렬화된 객체를 역직렬화할 때는 직렬화했을 때와 같은 클래스를 사용해야 한다. 
+
+- **serialVersionUID** : 같은 클래스임을 알려주는 식별자 역할을 한다.
+
+  - Serializable 인터페이스를 구현한 클래스를 컴파일하면 자동적으로 serialVersionUID 정적 필드가 추가된다.
+  - 클래스를 재컴파일하면 serialVersionUID의 값이 달라진다.
+
+- **예제) 역직렬화 실패**
+
+  ClassC.java
+
+  ```java
+  package object_secondary_stream;
+  
+  import java.io.Serializable;
+  
+  public class ClassC implements Serializable {
+      int field1;
+      int field2;		// field2를 객체 직렬화를 한 뒤 추가
+  }
+  ```
+
+  SerialVersionUIDExample1.java
+
+  ```java
+  package object_secondary_stream;
+  
+  import java.io.FileOutputStream;
+  import java.io.IOException;
+  import java.io.ObjectOutputStream;
+  
+  public class SerialVersionUIDExample1 {
+      public static void main(String[] args) throws IOException {
+          String current = new java.io.File(".").getCanonicalPath();
+          FileOutputStream fos = new FileOutputStream(current + "/Object3.dat");
+          ObjectOutputStream oos = new ObjectOutputStream(fos);
+  
+          ClassC classC = new ClassC();
+          classC.field1 = 1;
+  
+          oos.writeObject(classC);
+          oos.flush(); oos.close(); fos.close();
+      }
+  }
+  ```
+
+  SerialVersionUIDExample2.java
+
+  ```java
+  package object_secondary_stream;
+  
+  import java.io.FileInputStream;
+  import java.io.IOException;
+  import java.io.ObjectInputStream;
+  
+  public class SerialVersionUIDExample2 {
+      public static void main(String[] args) throws IOException, ClassNotFoundException {
+          String current = new java.io.File(".").getCanonicalPath();
+          FileInputStream fis = new FileInputStream(current + "/Object3.dat");
+          ObjectInputStream ois = new ObjectInputStream(fis);
+          ClassC classC = (ClassC) ois.readObject();
+          System.out.println("field1: " + classC.field1);
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  Exception in thread "main" java.io.InvalidClassException: object_secondary_stream.ClassC; local class incompatible: stream classdesc serialVersionUID = -3192209908149850774, local class serialVersionUID = 2123350267087467152
+  	at java.io.ObjectStreamClass.initNonProxy(ObjectStreamClass.java:699)
+  	at java.io.ObjectInputStream.readNonProxyDesc(ObjectInputStream.java:1885)
+  	at java.io.ObjectInputStream.readClassDesc(ObjectInputStream.java:1751)
+  	at java.io.ObjectInputStream.readOrdinaryObject(ObjectInputStream.java:2042)
+  	at java.io.ObjectInputStream.readObject0(ObjectInputStream.java:1573)
+  	at java.io.ObjectInputStream.readObject(ObjectInputStream.java:431)
+  	at object_secondary_stream.SerialVersionUIDExample2.main(SerialVersionUIDExample2.java:12)
+  ```
+
+  > ClassC가 직렬화 하기 전과 후가 다르기 때문에 역직렬화 할 때 UID 에러가 발생한다.
+
+
+
+- **만약 불가피하게 클래스의 수정이 필요할 때**
+
+  ```java
+  // UID 를 명시적으로 선언하면 된다.
+  public class XXX implements Serializable {
+    static final long serialVersionUID = 정수값;
+    ...
+  }
+  ```
+
+
+
+### writeObject()와 readObject() 메소드
+
+부모 클래스가 Serializable 인터페이스를 구현하고 있으면 자식 클래스는 Serializable 인터페이스를 구현할 필요 없이 자식 객체를 직렬화하면 부모 필드 및 자식 필드가 모두 직렬화된다.
+
+- **부모 클래스의 필드 직렬화의 두 가지 방법**
+
+  - 부모 클래스가 Serializable 인터페이스를 구현하도록 한다.
+  - 자식 클래스에서 writeObject() 와 readObject() 메소드를 선언해서 부모 객체의 필드를 직접 출력시킨다.
+
+- **writeObject() 와 readObject() 메소드의 선언 방법**
+
+  ```java
+  private void writeObject(ObjectOutputStream out) throws IOException {
+    out.writeXXX(부모필드);				// 부모 객체의 필드값을 출력함
+    ...
+    out.defaultWriteObject();		// 자식 객체의 필드값을 직렬화
+  }
+  
+  private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+    부모필드 = in.readXXX();		// 부모 객체의 필드값을 읽어옴
+    ...
+    in.defaultReadObject();		// 자식 객체의 필드값을 역직렬화
+  }
+  ```
+
+- **예제) 직렬화되지 않는 부모 클래스 직렬화**
+
+  Parent.java
+
+  ```java
+  package object_secondary_stream;
+  
+  public class Parent {
+      public String field1;
+  }
+  ```
+
+  Child.java
+
+  ```java
+  package object_secondary_stream;
+  
+  import java.io.IOException;
+  import java.io.ObjectInputStream;
+  import java.io.ObjectOutputStream;
+  import java.io.Serializable;
+  
+  // Serializable 구현
+  public class Child extends Parent implements Serializable {
+      public String field2;
+  
+    // writeObject 구현
+      private void writeObject(ObjectOutputStream out) throws IOException {
+          out.writeUTF(field1);
+          out.defaultWriteObject();
+      }
+  
+    // readObject 구현
+      private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+          field1 = in.readUTF();
+          in.defaultReadObject();
+      }
+  }
+  ```
+
+  NonSerializableParentExample.java
+
+  ```java
+  package object_secondary_stream;
+  
+  import java.io.*;
+  
+  public class NonSerializableParentExample {
+      public static void main(String[] args) throws IOException, ClassNotFoundException {
+          String current = new java.io.File(".").getCanonicalPath();
+          FileOutputStream fos = new FileOutputStream(current + "/Object4.dat");
+          
+          // 객체 출력 스트림
+          ObjectOutputStream oos = new ObjectOutputStream(fos);
+  
+          // 객체 생성 및 값 저장
+          Child child = new Child();
+          child.field1 = "홍길동";
+          child.field2 = "홍삼원";
+  
+          // 객체 직렬화
+          oos.writeObject(child);
+          oos.flush(); oos.close(); fos.close();
+  
+          FileInputStream fis = new FileInputStream(current + "/Object4.dat");
+          
+          // 객체 입력 스트림
+          ObjectInputStream ois = new ObjectInputStream(fis);
+  
+          Child v = (Child) ois.readObject();
+  
+          System.out.println("filed1: " + v.field1);
+          System.out.println("field2: " + v.field2);
+          ois.close(); fis.close();
+      }
+  }
+  ```
+
+  **실행 결과**
+
+  ```
+  filed1: 홍길동
+  field2: 홍삼원
+  ```
+
