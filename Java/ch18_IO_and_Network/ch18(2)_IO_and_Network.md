@@ -1654,3 +1654,177 @@ public class ClientExample {
 
 
 
+## 18.8. UDP 네트워킹
+
+* **UDP(User Datagram Protocol)** : 비연결 지향적 프로토콜이다. 즉, 발신자가 일방적으로 데이터를 발신하는 방식이다.
+
+<img src="../capture/스크린샷 2019-05-12 오후 11.08.12.png">
+
+### 18.8.1. 발신자 구현
+
+- **DatagramSocket 객체 생성**
+
+  ```java
+  DatagramSocket datagramSocket = new DatagramSocket();
+  ```
+
+- **보내고자 하는 데이터 생성**
+
+  ```java
+  byte[] byteArr = data.getBytes("UTF-8");
+  ```
+
+- **DatagramPacket 생성**
+
+  ```java
+  byte[] byteArr = data.getBytes("UTF-8");
+  // 첫 번째 매개값 : 보낼 데이터 (byte 배열)
+  // 두 번째 매개값 : 보내고자 하는 항목 수 (byte.length)
+  // 세 번째 매개값 : 수신자 IP 와 포트 정보 (SocketAddress)
+  DatagramPacket packet = new DatagramPacket(
+  	byteArr, byteArr.length,
+    new InetSocketAddress("localhost", 5001)
+  );
+  ```
+
+- **데이터 전달**
+
+  ```java
+  datagramSocket.send(packet);
+  ```
+
+- **더 이상 보낼 데이터가 없을 때**
+
+  ```java
+  datagramSocket.close();
+  ```
+
+- **예제) 발신자**
+
+  ```java
+  package udp_networking;
+  
+  import java.net.DatagramPacket;
+  import java.net.DatagramSocket;
+  import java.net.InetSocketAddress;
+  import java.nio.charset.StandardCharsets;
+  
+  public class UdpSendExample {
+      public static void main(String[] args) throws Exception {
+          // DatagramSocket 객체 생성
+          DatagramSocket datagramSocket = new DatagramSocket();
+  
+          System.out.println("[발신 시작]");
+          
+          for (int i = 1; i < 3; i++) {
+              String data = "메시지" + i;
+              byte[] byteArr = data.getBytes(StandardCharsets.UTF_8);
+              
+              // DatagramPacket 생성
+              DatagramPacket packet = new DatagramPacket(
+                      byteArr, byteArr.length,
+                      new InetSocketAddress("localhost", 5001)
+              );
+  
+              // DatagramPacket 전송
+              datagramSocket.send(packet);
+              System.out.println("[보낸 바이트 수]: " + byteArr.length + " bytes");
+          }
+  
+          System.out.println("[발신 종료]");
+          
+          // DatagramSocket 닫기
+          datagramSocket.close();
+          
+      }
+  }
+  ```
+
+
+
+### 18.8.2. 수신자 구현
+
+- **수신자 DatagramSocket 생성**
+
+  ```java
+  DatagramSocket datagramSocket = new DatagramSocket(5001);
+  ```
+
+- **패킷 읽을 준비**
+
+  ```java
+  // receive() 메소드를 호출해서 패킷 읽을 준비
+  // 블로킹이 된다.
+  datagramSocket.receive(datagramPacket);
+  ```
+
+- **패킷의 내용 저장**
+
+  ```java
+  DatagramPacket datagramPacket = new DatagramPacket(new byte[100], 100);
+  ```
+
+- **문자열로 변환**
+
+  ```java
+  String data = new String(packet.getData(), 0, packet.getLength(), "UTF-8");
+  ```
+
+- **발신자의 IP 와 포트 알아내기**
+
+  ```java
+  SocketAddress socketAddress = packet.getSocketAddress();
+  ```
+
+- **작업 스레드 종료**
+
+  ```java
+  datagramSocket.close();
+  ```
+
+- **예제) 수신자**
+
+  ```java
+  package udp_networking;
+  
+  import java.net.DatagramPacket;
+  import java.net.DatagramSocket;
+  import java.nio.charset.StandardCharsets;
+  
+  public class UdpReceiveExample extends Thread {
+  
+      public static void main(String[] args) throws Exception {
+          // 5001 번 포트에서 수신하는 DatagramSocket 생성
+          DatagramSocket datagramSocket = new DatagramSocket(5001);
+  
+          Thread thread = new Thread() {
+              @Override
+              public void run() {
+                  System.out.println("[수신 시작]");
+                  try {
+                      while (true) {
+                          // DatagramPacket 수신
+                          DatagramPacket packet = new DatagramPacket(new byte[100], 100);
+                          datagramSocket.receive(packet);
+  
+                          // 패킷을 스트링을 변환
+                          String data = new String(packet.getData(), 0, packet.getLength(),
+                                  StandardCharsets.UTF_8);
+  
+                          System.out.println("[받은 내용: " + packet.getSocketAddress() + "] " + data);
+                      }
+                  } catch (Exception e) {
+                      System.out.println("[수신 종료]");
+                  }
+              }
+          };
+  
+          thread.start();
+  
+          Thread.sleep(10000);
+          
+          // 종료
+          datagramSocket.close();
+      }
+  }
+  ```
