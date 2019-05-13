@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -159,7 +160,7 @@ public class ServerExample {
                             // 문자열로 변환
                             String data = new String(byteArr, 0, readByteCount, StandardCharsets.UTF_8);
 
-                            // 모든 클라이언트에게 보냄
+                            // 모든 클라이언트에게 보냄 (선택적으로도 보낼 수 있다)
                             for (Client client : connections) {
                                 client.send(data);
                             }

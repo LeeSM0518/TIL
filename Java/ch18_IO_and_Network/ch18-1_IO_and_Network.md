@@ -1626,7 +1626,7 @@ Writer writer = new OutputStreamWriter(바이트출력스트림);
 
 이 보조 스트림을 사용하면 기본 데이터 타입으로 입출력이 가능하다.
 
-<img src="capture/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202019-05-09%20%EC%98%A4%EC%A0%84%2010.38.31.png">
+<img src="../capture/스크린샷 2019-05-09 오전 10.59.52.png">
 
 - **생성 예시**
 
@@ -1637,7 +1637,7 @@ Writer writer = new OutputStreamWriter(바이트출력스트림);
 
 - **제공하는 메소드들**
 
-  <img src="capture/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202019-05-09%20%EC%98%A4%EC%A0%84%2010.42.03.png">
+  <img src="../capture/스크린샷 2019-05-09 오전 11.01.34.png">
 
 - **예제) 기본 데이터 타입 입출력**
 
@@ -1760,7 +1760,7 @@ PrintStream 과 PrintWriter 는 프린터와 유사하게 출력하는 print(), 
 
 객체를 입출력하는 두 개의 보조 스트림
 
-<img src="capture/%EC%8A%A4%ED%81%AC%EB%A6%B0%EC%83%B7%202019-05-09%20%EC%98%A4%EC%A0%84%2011.10.53.png">
+<img src="../capture/스크린샷 2019-05-09 오전 11.10.53.png">
 
 - **생성 예제**
 

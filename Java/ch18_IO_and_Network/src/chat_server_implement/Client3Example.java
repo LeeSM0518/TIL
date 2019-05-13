@@ -11,7 +11,7 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
-public class Client2Example {
+public class Client3Example {
 
     Socket socket;
     JPanel mainPanel = new JPanel();
