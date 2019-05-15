@@ -2091,7 +2091,7 @@ PrintStream 과 PrintWriter 는 프린터와 유사하게 출력하는 print(), 
   Child.java
 
   ```java
-  package object_secondary_stream;
+  package object_secondary_stream;	
   
   import java.io.IOException;
   import java.io.ObjectInputStream;

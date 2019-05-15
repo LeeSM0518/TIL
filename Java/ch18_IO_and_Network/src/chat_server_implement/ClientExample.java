@@ -130,7 +130,7 @@ public class ClientExample {
     }
 
     void start() {
-        Client3Example client = new Client3Example();
+        ClientExample client = new ClientExample();
 
         JFrame jFrame = new JFrame("Client");
 
@@ -182,7 +182,7 @@ public class ClientExample {
     }
 
     public static void main(String[] args) {
-        Client3Example client = new Client3Example();
+        ClientExample client = new ClientExample();
         client.start();
     }
 }
