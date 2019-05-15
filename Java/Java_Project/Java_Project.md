@@ -731,7 +731,7 @@ public class InsertAndRemove {
 
 ## UI
 
-![1547881142283](C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\1547881142283.png)
+![1547881142283](C:\Users\lenovo\AppData\Roaming\Typora\typora-identity-images\1547881142283.png)
 
 <br>
 

@@ -89,25 +89,6 @@
 
 
 
-# Sequence
-
-## 서버 생성 및 클라이언트 연결
-
-```sequence
-Server->Client: 연결 대기
-Client->Server: 연결 요청
-Note left of Server: 서버 내의 Client 객체를 생성
-Server->Client: 연결 수락 및 데이터 요청
-Client->Server: 데이터 요청
-
-```
-
-
-
-## 로그인
-
-
-
 # 소켓 통신 예제
 
 ## Server(서버)
