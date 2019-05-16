@@ -24,8 +24,6 @@
 
 ## 서버 생성 및 클라이언트 연결
 
-* **Sequence**
-
 ```sequence
 Note over Server: startServer()
 Note over Server: new ServerSocket & bind
@@ -36,9 +34,14 @@ Note over Client: new Socket
 Note over Client: connect()
 Client->Server: 연결 요청
 Note over Server: client = new ClientInServer(socket)
+Note over Server: client.num = count
 Note over Server: connections.add(client)
-Note over Server: client.num = count++
-Server->Client: 연결 수락
+Note over Server: new Message("CONNECT", client.num)
+Note over Server: count++
+Note over Server: sendToTarget(message)
+Server->Client: 연결 수락 및 클라이언트 번호 전송
+Note over Client: message = receive()
+Note over Client: if (message.type == CONNECT) client.num = receive()
 Note over Client: receive() or send()
 Client->Server: 데이터 전송 or 대기
 Note over Server: receive() or send()
@@ -59,9 +62,11 @@ Note Over Server: message = receive()
 Note Over Server: if (message.type == SIGNUP)
 Note Over Server: signUpResult = signUp(message)
 Server->Database: 가입 요청
-Note Over Database: check = boolean checkIdExistence(message.id)
-Note Over Database: if (check == false) addUser(message)
+Note Over Database: result = boolean checkIdExistence(message.id)
+Note right of Database: 아이디 존재 여부 확인
+Note Over Database: if (result == false) addUser(message)
 Note right of Database: 아이디가 없을시 회원 정보 저장
+Note Over Database: return result
 Database->Server: 결과 반환
 Note Over Server: message.setResult(signUpResult)
 Server->Message: 결과 메시지 요청
@@ -72,13 +77,32 @@ Server->Client: 결과 메시지 전송
 
 
 
-## 로그인
-
-```sequence
-Client->Server: 로그인
 ```
 
 
+
+## 로그인
+
+```sequence
+Note over Client: new Message(this.num, "LOGIN", "ID", "PW")
+Client->Message: 로그인 메시지 요청
+Message->Client: 로그인 메시지 반환
+Note over Client: send(message)
+Client->Server: 로그인 메시지 전송
+Note over Server: message = receive()
+Note Over Server: if (message.type == LOGIN)
+Note Over Server: loginResult = Login(message)
+Server->Database: 로그인 요청
+Note Over Database: result = boolean checkIdPw(message.id, message.pw)
+Note right of Database: id, password 확인
+Note Over Database: return result
+Database->Server: 결과 반환
+Note Over Server: message.setResult(loginResult)
+Server->Message: 결과 메시지 요청
+Message->Server: 결과 메시지 반환
+Note Over Server: sendToTarget(message)
+Server->Client: 결과 메시지 전송
+```
 
 
 
