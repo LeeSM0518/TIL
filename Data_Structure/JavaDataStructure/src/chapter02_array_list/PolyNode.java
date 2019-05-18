@@ -1,6 +1,6 @@
 package chapter02_array_list;
 
-public class PolyNode<T, R> extends Node{
+public class PolyNode<T, R> extends Node {
 
     private T key;
     private R value;

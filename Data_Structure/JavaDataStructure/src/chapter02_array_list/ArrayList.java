@@ -13,10 +13,8 @@ public class ArrayList {
 
     // 새로운 자료 추가
     public <T> void addNode(final int position, final T data) {
-        int i = 0;
-
         // 추가되는 위치와 그 오른쪽에 있는 기존 자료를 모두 오른쪽으로 한 칸씩 이동
-        for (i = currentCount - 1; i >= position; i--) {
+        for (int i = currentCount - 1; i >= position; i--) {
             nodes[i + 1] = nodes[i];
         }
 
@@ -24,11 +22,9 @@ public class ArrayList {
         currentCount++;                     // 현재 저장된 자료 개수 1 증가
     }
 
-    public <T,K> void addNode(final int position, final T key, final K value) {
-        int i = 0;
-
+    public <T, K> void addNode(final int position, final T key, final K value) {
         // 추가되는 위치와 그 오른쪽에 있는 기존 자료를 모두 오른쪽으로 한 칸씩 이동
-        for (i = currentCount - 1; i >= position; i--) {
+        for (int i = currentCount - 1; i >= position; i--) {
             nodes[i + 1] = nodes[i];
         }
 
@@ -38,11 +34,9 @@ public class ArrayList {
 
     // 기존 자료의 제거
     public void removeNode(final int position) {
-        int i = 0;
-
         // 제거되는 원소의 위치와 그 오른쪽으로 있는 원소를 왼쪽으로 한 칸씩 이동
-        for (i = position; i < currentCount - 1; i++) {
-            nodes[i] = nodes[i+1];
+        for (int i = position; i < currentCount - 1; i++) {
+            nodes[i] = nodes[i + 1];
         }
 
         currentCount--;
