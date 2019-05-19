@@ -13,12 +13,4 @@ public class DoublyListNode<T> {
         this.data = data;
     }
 
-    DoublyListNode(DoublyListNode lLink, DoublyListNode rLink) {
-        this.lLink = lLink;
-        this.rLink = rLink;
-    }
-
-    DoublyListNode(T data, DoublyListNode lLink, DoublyListNode rLink) {
-        this.data = data;
-    }
 }
