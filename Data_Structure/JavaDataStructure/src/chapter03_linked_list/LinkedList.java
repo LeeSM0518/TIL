@@ -10,7 +10,7 @@ class LinkedList<T> {
         this.currentCount = 0;
     }
 
-    T getLinkedListData(int position) {
+    public T getData(final int position) {
         try {
             // 헤더 노드 저장
             Node<T> node = this.headerNode;
@@ -28,7 +28,7 @@ class LinkedList<T> {
         }
     }
 
-    void addLinkedListData(int position, T data) {
+    public void addData(final int position, final T data) {
         Node newNode = new Node<>(data);    // 새롭게 저장할 노드
         Node preNode = this.headerNode;     // 이전 노드
 
@@ -50,7 +50,7 @@ class LinkedList<T> {
         }
     }
 
-    void removeLinkedListData(int position) {
+    public void removeData(int position) {
         Node delNode;   // 지울 노드
         Node preNode;   // 지울 노드의 이전 노드
 
@@ -77,13 +77,13 @@ class LinkedList<T> {
         }
     }
 
-    void displayList() {
+    public void displayList() {
         for (int i = 0; i < this.currentCount; i++) {
-            System.out.println("[" + i + "], " + this.getLinkedListData(i));
+            System.out.println("[" + i + "], " + this.getData(i));
         }
     }
 
-    void iterateLinkedList() {
+    public void iterateList() {
         int count = 0;
         Node node = this.headerNode.link;
 
@@ -95,7 +95,7 @@ class LinkedList<T> {
         System.out.println("노드 개수: " + count);
     }
 
-    void concatLinkedList(LinkedList listB) {
+    public void concatList(LinkedList listB) {
         if (listB != null) {
             // this 연결리스트의 마지막 노드를 가리킬 노드
             Node node = this.headerNode;
@@ -107,7 +107,7 @@ class LinkedList<T> {
 
             // this 의 마지막 노드의 다음 노드로 listB 의 첫 번째 노드로 설정한다.
             node.link = listB.headerNode.link;
-            listB = null;
+            listB.headerNode = null;
         }
     }
 
