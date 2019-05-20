@@ -1,5 +1,7 @@
 package lecture_manager;
 
+import lecture_manager2.database.Database;
+
 public class Message {
 
     final static String LOGIN = "LOGIN";

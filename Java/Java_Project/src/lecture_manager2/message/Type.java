@@ -1,4 +1,4 @@
-package lecture_manager2;
+package lecture_manager2.message;
 
 public enum Type {
 

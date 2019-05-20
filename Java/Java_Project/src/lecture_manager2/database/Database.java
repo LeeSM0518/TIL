@@ -1,17 +1,14 @@
-package lecture_manager;
+package lecture_manager2.database;
+
+import lecture_manager.Message;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+
+import static lecture_manager2.database.Result.*;
 
 public class Database {
 
     static int check;
-    final static int EXISTENCE = 1;
-    final static int NONEXISTENCE = 2;
-    final static int NOT_EQUALS_PASSWORD = 3;
-    final static int EQUALS_PASSWORD = 4;
-    final static int SUCCESS_SIGNUP = 5;
 
     private Users users = new Users();
     private String currentDir;
@@ -47,7 +44,7 @@ public class Database {
     }
 
     // TODO 회원가입
-    public int signUpMember(Message message) {
+    public Result signUpMember(Message message) {
         checkUser(message);
 
         if (check != NONEXISTENCE) {
@@ -57,7 +54,7 @@ public class Database {
 
         User newUser = new User(message.identity, message.id, message.password);
 
-        if (newUser.identity.equals(Message.STUDENT)) {
+        if (newUser.identity.equals(lecture_manager.Message.STUDENT)) {
             users.student.add(newUser);
         } else {
             users.professor.add(newUser);
@@ -79,9 +76,9 @@ public class Database {
         return SUCCESS_SIGNUP;
     }
 
-    public int checkUser(Message message) {
+    public int checkUser(lecture_manager.Message message) {
 
-        if (message.identity.equals(Message.STUDENT)) {
+        if (message.identity.equals(lecture_manager.Message.STUDENT)) {
             this.users.student.forEach(student -> {
                 if (student.id.equals(message.id)) {
                   if (student.password.equals(message.password)) {

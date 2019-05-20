@@ -1,4 +1,4 @@
-package lecture_manager;
+package lecture_manager2.database;
 
 import java.io.Serializable;
 
