@@ -1,16 +1,18 @@
 package chapter03_linked_list;
 
-class LinkedList<T> {
+import chapter04_expansion_of_linked_list.polylist.PolyNode;
 
-    private int currentCount;
-    private Node<T> headerNode;
+public class LinkedList<T> {
 
-    LinkedList() {
+    protected int currentCount;
+    protected Node<T> headerNode;
+
+    public LinkedList() {
         this.headerNode = new Node<>();
         this.currentCount = 0;
     }
 
-    public T getData(final int position) {
+    public Node getNode(final int position) {
         try {
             // 헤더 노드 저장
             Node<T> node = this.headerNode;
@@ -21,17 +23,21 @@ class LinkedList<T> {
             }
 
             // 찾은 위치의 데이터 반환
-            return node.data;
+            return node;
 
         } catch (NullPointerException e) {
             return null;
         }
     }
 
-    public void addData(final int position, final T data) {
+    public void addNode(final int position, final T data) {
         Node newNode = new Node<>(data);    // 새롭게 저장할 노드
         Node preNode = this.headerNode;     // 이전 노드
 
+        addProcess(preNode, newNode, position);
+    }
+
+    protected void addProcess(Node preNode, Node newNode, int position) {
         try {
             // 이전 노드를 삽입할 노드 위치 전까지 이동
             for (int i = 0; i < position; i++) {
@@ -79,7 +85,7 @@ class LinkedList<T> {
 
     public void displayList() {
         for (int i = 0; i < this.currentCount; i++) {
-            System.out.println("[" + i + "], " + this.getData(i));
+            System.out.println("[" + i + "], " + this.getNode(i).data);
         }
     }
 

@@ -4,23 +4,23 @@ public class Main {
     public static void main(String[] args) {
         LinkedList<Integer> linkedList = new LinkedList<>();
 
-        linkedList.addData(0, 10);
-        linkedList.addData(1, 20);
-        linkedList.addData(1, 30);
+        linkedList.addNode(0, 10);
+        linkedList.addNode(1, 20);
+        linkedList.addNode(1, 30);
 
-        System.out.println("위치: " + 0 + ", 값: " + linkedList.getData(0));
-        System.out.println("위치: " + 1 + ", 값: " + linkedList.getData(1));
-        System.out.println("위치: " + 2 + ", 값: " + linkedList.getData(2));
+        System.out.println("위치: " + 0 + ", 값: " + linkedList.getNode(0));
+        System.out.println("위치: " + 1 + ", 값: " + linkedList.getNode(1));
+        System.out.println("위치: " + 2 + ", 값: " + linkedList.getNode(2));
         System.out.println();
 
-        int value = linkedList.getData(1);
+        Node value = linkedList.getNode(1);
         System.out.println("위치: " + 1 + ", 값: " + value);
         System.out.println();
 
         linkedList.removeData(0);
 
-        System.out.println("위치: " + 0 + ", 값: " + linkedList.getData(0));
-        System.out.println("위치: " + 1 + ", 값: " + linkedList.getData(1));
+        System.out.println("위치: " + 0 + ", 값: " + linkedList.getNode(0));
+        System.out.println("위치: " + 1 + ", 값: " + linkedList.getNode(1));
         System.out.println();
 
         linkedList.displayList();
@@ -31,9 +31,9 @@ public class Main {
 
         LinkedList<Integer> linkedList2 = new LinkedList<>();
 
-        linkedList2.addData(0, 30);
-        linkedList2.addData(1, 40);
-        linkedList2.addData(2, 50);
+        linkedList2.addNode(0, 30);
+        linkedList2.addNode(1, 40);
+        linkedList2.addNode(2, 50);
 
         linkedList2.iterateList();
         System.out.println();
