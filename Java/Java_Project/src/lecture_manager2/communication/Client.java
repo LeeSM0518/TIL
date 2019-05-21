@@ -1,5 +1,6 @@
 package lecture_manager2.communication;
 
+import lecture_manager2.database.Result;
 import lecture_manager2.message.Message;
 
 import java.io.*;
@@ -11,6 +12,7 @@ public class Client {
 
     private Socket socket;
     private int socketNumber;
+    private static Result result = null;
 
     public void startClient() {
         Thread thread = new Thread(() -> {
@@ -84,25 +86,41 @@ public class Client {
         thread.start();
     }
 
-    void signUpMessageSend(Message message) {
-
-    }
-
+    // TODO 회원가입 구현
     private void messageProcess(Message message) {
         switch (message.getType()) {
             case SIGNUP:
+                while (result == null) result = message.getResult();
                 break;
             case CONNECT:
                 socketNumber = message.getTargetNumber();
-                System.out.println("소켓 번호: " + socketNumber);
                 break;
             default:
                 break;
         }
     }
 
-    public static void main(String[] args) {
-        Client client = new Client();
-        client.startClient();
+    public Socket getSocket() {
+        return socket;
+    }
+
+    public void setSocket(Socket socket) {
+        this.socket = socket;
+    }
+
+    public int getSocketNumber() {
+        return socketNumber;
+    }
+
+    public void setSocketNumber(int socketNumber) {
+        this.socketNumber = socketNumber;
+    }
+
+    public Result getResult() {
+        return result;
+    }
+
+    public void setResult(Result result) {
+        this.result = result;
     }
 }

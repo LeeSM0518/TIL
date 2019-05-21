@@ -1,6 +1,8 @@
 package lecture_manager2.userinterface;
 
+import lecture_manager2.communication.Client;
 import lecture_manager2.database.Identity;
+import lecture_manager2.database.Result;
 import lecture_manager2.database.User;
 import lecture_manager2.message.Message;
 
@@ -36,7 +38,6 @@ public class SignUp {
     private JLabel pw_lb = new JLabel("     비밀번호    ");
     private JLabel pw_check_lb = new JLabel("비밀번호 재확인");
 
-    private JButton overlap_bt = new JButton("중복확인");
     private JButton signup_bt = new JButton("회원가입");
 
     private ButtonGroup check_box_group = new ButtonGroup();
@@ -44,7 +45,11 @@ public class SignUp {
     private JRadioButton pro_check = new JRadioButton("교수용");
     private JRadioButton stu_check = new JRadioButton("학생용");
 
-    public void viewSignUpUI() {
+    private Client client;
+    private Result result = null;
+
+    public SignUp(Client client) {
+        this.client = client;
         all_pn.setLayout(new BoxLayout(all_pn, BoxLayout.Y_AXIS));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         check_pn.setBorder(new TitledBorder(null, null, TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -63,22 +68,32 @@ public class SignUp {
             }
         });
 
-        overlap_bt.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-
         signup_bt.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (pw_fd.getText() != pw_check_fd.getText()) {
-
+                if (! String.valueOf(pw_fd.getPassword()).equals(String.valueOf(pw_check_fd.getPassword()))) {
+                    // TODO 비밀번호 재입력 실패 UI
                 } else {
-//                    User user = new User(signUpOption, name_fd.getText(), );
-//                    Message message = new Message();
-//                    message.setSignUpMessage();
+                    // TODO 회원 가입 구현
+                    User user = new User(signUpOption, name_fd.getText(), number_fd.getText(), String.valueOf(pw_fd.getPassword()));
+                    Message message = new Message();
+                    message.setSignUpMessage(client.getSocketNumber(), user);
+                    client.send(message);
+
+                    while (result == null) {
+                        result = client.getResult();
+                    }
+
+                    if (result == Result.EXISTENCE) {
+                        // TODO 아이디 존재시 보여줄 UI
+                        System.out.println("아이디 존재");
+                    } else {
+                        // TODO 회원가입 성공시 UI
+                        System.out.println("회원 가입 성공");
+                    }
+
+                    client.setResult(null);
+                    result = null;
                 }
             }
         });
@@ -88,7 +103,6 @@ public class SignUp {
 
         number_pn.add(number_lb, BorderLayout.WEST);
         number_pn.add(number_fd, BorderLayout.CENTER);
-        number_pn.add(overlap_bt, BorderLayout.EAST);
 
         pw_pn.add(pw_lb, BorderLayout.WEST);
         pw_pn.add(pw_fd, BorderLayout.CENTER);
@@ -116,7 +130,14 @@ public class SignUp {
 
         frame.setContentPane(all_pn);
         frame.setSize(300, 200);
+    }
+
+    public void visibleSignUpUI() {
         frame.setVisible(true);
+    }
+
+    public void invisibleSignUpUI() {
+        frame.setVisible(false);
     }
 
 }

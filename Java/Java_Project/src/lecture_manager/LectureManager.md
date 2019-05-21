@@ -102,6 +102,18 @@ Server->Client: 결과 메시지 전송
 
 
 
+## UI
+
+```sequence
+MainUI->Client: 클라이언트 요청
+Client->MainUI: 클라이언트 반환
+MainUI->SignInUI: 
+```
+
+
+
+
+
 # 소켓 통신 예제
 
 ## Server(서버)

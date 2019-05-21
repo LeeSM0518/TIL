@@ -53,7 +53,7 @@ public class Database {
             return EXISTENCE;
         }
 
-        User newUser = new User(message.getUser().getIdentity(),
+        User newUser = new User(message.getUser().getIdentity(), message.getUser().getName(),
                 message.getUser().getId(), message.getUser().getPassword());
 
         if (newUser.getIdentity().equals(Identity.STUDENT)) {

@@ -1,5 +1,7 @@
 package lecture_manager2.communication;
 
+import lecture_manager2.database.Database;
+import lecture_manager2.database.Result;
 import lecture_manager2.message.Message;
 
 import java.io.*;
@@ -18,6 +20,7 @@ public class Server {
     private ExecutorService executorService;
     private ServerSocket serverSocket;
     private List<SocketInServer> connections = new ArrayList<>();
+    private Database database = new Database();
 
     private void startServer() {
 
@@ -160,6 +163,7 @@ public class Server {
                         try {
                             connections.remove(SocketInServer.this);
                             System.out.println("[receive 에러, 클라이언트 통신 안됨]");
+                            System.out.println("[" + socketNumber + "번 소켓 종료]");
                             socket.close();
                         } catch (IOException e2) {
                             e2.printStackTrace();
@@ -174,6 +178,9 @@ public class Server {
                 case SIGNIN:
                     break;
                 case SIGNUP:
+                    // TODO 회원가입 구현
+                    Result result = database.signUpMember(message);
+//                    send()
                     break;
                 default:
                     break;
