@@ -8,6 +8,7 @@ import static lecture_manager2.database.Result.*;
 
 public class Database {
 
+    static Result check;
     private Users users = new Users();
     private String currentDir;
 
@@ -33,7 +34,9 @@ public class Database {
 
             oos.writeObject(users);
 
-            oos.flush(); oos.close(); fos.close();
+            oos.flush();
+            oos.close();
+            fos.close();
         } catch (IOException e) {
             System.out.println("Database.newDatabase 오류");
             e.printStackTrace();
@@ -46,13 +49,14 @@ public class Database {
         checkUser(message);
 
         if (check != NONEXISTENCE) {
-            check = 0;
+            check = null;
             return EXISTENCE;
         }
 
-        User newUser = new User(message.identity, message.id, message.password);
+        User newUser = new User(message.getUser().getIdentity(),
+                message.getUser().getId(), message.getUser().getPassword());
 
-        if (newUser.identity.equals(lecture_manager.Message.STUDENT)) {
+        if (newUser.getIdentity().equals(Identity.STUDENT)) {
             users.student.add(newUser);
         } else {
             users.professor.add(newUser);
@@ -64,7 +68,9 @@ public class Database {
 
             oos.writeObject(users);
 
-            oos.flush(); oos.close(); fos.close();
+            oos.flush();
+            oos.close();
+            fos.close();
 
         } catch (IOException e) {
             System.out.println("Database.signUpMember 오류");
@@ -74,31 +80,32 @@ public class Database {
         return SUCCESS_SIGNUP;
     }
 
+
     public Result checkUser(Message message) {
 
-        if (message.getUser().getIdentity().equals(Message.STUDENT)) {
+        if (message.getUser().getIdentity().equals(Identity.STUDENT)) {
             this.users.student.forEach(student -> {
-                if (student.id.equals(message.id)) {
-                  if (student.password.equals(message.password)) {
-                      check = Database.EQUALS_PASSWORD;
-                  } else {
-                      check = Database.NOT_EQUALS_PASSWORD;
-                  }
+                if (student.getId().equals(message.getUser().getId())) {
+                    if (student.getPassword().equals(message.getUser().getPassword())) {
+                        check = Result.EQUALS_PASSWORD;
+                    } else {
+                        check = Result.NOT_EQUALS_PASSWORD;
+                    }
                 }
             });
-        } else if (message.identity.equals(Message.PROFESSOR)){
+        } else if (message.getUser().getIdentity().equals(Identity.PROFESSOR)) {
             this.users.professor.forEach(professor -> {
-                if (professor.id.equals(message.id)) {
-                    if (professor.password.equals(professor.password)) {
-                        check = Database.EQUALS_PASSWORD;
+                if (professor.getId().equals(message.getUser().getId())) {
+                    if (professor.getPassword().equals(message.getUser().getPassword())) {
+                        check = Result.EQUALS_PASSWORD;
                     } else {
-                        check = Database.NOT_EQUALS_PASSWORD;
+                        check = Result.NOT_EQUALS_PASSWORD;
                     }
                 }
             });
         }
 
-        if (check == 0) check = NONEXISTENCE;
+        if (check == null) check = NONEXISTENCE;
 
         return check;
 

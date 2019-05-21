@@ -12,7 +12,7 @@ public class Client {
     private Socket socket;
     private int socketNumber;
 
-    private void startClient() {
+    public void startClient() {
         Thread thread = new Thread(() -> {
             try {
                 socket = new Socket();
@@ -66,7 +66,7 @@ public class Client {
         }
     }
 
-    void send(Message message) {
+    public void send(Message message) {
         Thread thread = new Thread(() -> {
            try {
                OutputStream outputStream = socket.getOutputStream();
@@ -84,7 +84,7 @@ public class Client {
         thread.start();
     }
 
-    void signUpMessageSend() {
+    void signUpMessageSend(Message message) {
 
     }
 

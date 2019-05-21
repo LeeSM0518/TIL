@@ -2,7 +2,6 @@ package lecture_manager2.message;
 
 import lecture_manager2.database.Result;
 import lecture_manager2.database.User;
-
 import java.io.Serializable;
 
 public class Message implements Serializable {
@@ -31,6 +30,12 @@ public class Message implements Serializable {
     public void setConnectMessage(int targetNumber) {
         this.type = Type.CONNECT;
         this.targetNumber = targetNumber;
+    }
+
+    public void setSignUpMessage(int targetNumber, User user) {
+        this.type = Type.SIGNUP;
+        this.targetNumber = targetNumber;
+        this.user = user;
     }
 
     public Type getType() {

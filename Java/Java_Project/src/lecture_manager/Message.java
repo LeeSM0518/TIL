@@ -1,5 +1,7 @@
 package lecture_manager;
 
+import lecture_manager2.database.Database;
+
 public class Message {
 
     final static String LOGIN = "LOGIN";
@@ -55,10 +57,10 @@ public class Message {
 
         switch (message.type) {
             case Message.LOGIN:
-                check = database.checkUser(message);
+//                check = database.checkUser(message);
                 break;
             case Message.SIGN_UP:
-                check = database.signUpMember(message);
+//                check = database.signUpMember(message);
                 break;
         }
 

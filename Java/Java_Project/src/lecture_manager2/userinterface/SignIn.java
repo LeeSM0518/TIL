@@ -1,46 +1,55 @@
 package lecture_manager2.userinterface;
 
+import lecture_manager2.communication.Client;
+import lecture_manager2.database.Identity;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 
-public class SignIn extends JFrame {
+public class SignIn {
+    
+    private static Identity signInOption = null;
 
-    static int option;
+    private JPanel button = new JPanel(new GridLayout(1,2));
+    private JPanel id_panel = new JPanel(new BorderLayout());
+    private JPanel pw_panel = new JPanel(new BorderLayout());
+    private JPanel check_panel = new JPanel();
+    private JFrame frame = new JFrame("Lecture Manager - 로그인");
+    private JPanel all_panel = new JPanel();
+    private JButton login = new JButton("로그인");
+    private JButton signup = new JButton("회원가입");
+    private ButtonGroup check_box_group = new ButtonGroup();
+    private JRadioButton pro_check = new JRadioButton("교수용");
+    private JRadioButton stu_check = new JRadioButton("학생용");
+    private JLabel id_label = new JLabel("     학    번     ");
+    private JLabel pw_label = new JLabel("    비밀번호     ");
+    private JTextField id_field = new JTextField();
+    private JPasswordField pw_field = new JPasswordField();
+    
+    protected Client client = new Client();
+    
+    public SignIn() {
+        client.startClient();
+    }
 
-    JPanel button = new JPanel(new GridLayout(1,2));
-    JPanel id_panel = new JPanel(new BorderLayout());
-    JPanel pw_panel = new JPanel(new BorderLayout());
-    JPanel check_panel = new JPanel();
-    JFrame frame = new JFrame("Lecture Manager - 로그인");
-    JPanel all_panel = new JPanel();
-    JButton login = new JButton("로그인");
-    JButton signup = new JButton("회원가입");
-    ButtonGroup check_box_group = new ButtonGroup();
-    JRadioButton pro_check = new JRadioButton("교수용");
-    JRadioButton stu_check = new JRadioButton("학생용");
-    JLabel id_label = new JLabel("     학    번     ");
-    JLabel pw_label = new JLabel("    비밀번호     ");
-    JTextField id_field = new JTextField();
-    JPasswordField pw_field = new JPasswordField();
-
-    SignIn() {
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    public void visibleSignIn() {
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         all_panel.setLayout(new BoxLayout(all_panel, BoxLayout.Y_AXIS));
         check_panel.setBorder(new TitledBorder(null,null,TitledBorder.LEADING,TitledBorder.TOP,null,null));
 
         pro_check.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                option = 1;
+                signInOption = Identity.PROFESSOR;
             }
         });
         stu_check.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                option = 2;
+                signInOption = Identity.STUDENT;
             }
         });
 
@@ -59,17 +68,18 @@ public class SignIn extends JFrame {
         signup.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                new SignUp();
+
+                signUpUI.viewSignUpUI();
             }
         });
 
         login.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(option == 1) {
+                if(signInOption == Identity.PROFESSOR) {
                     new AssignmentCheck();
 
-                } else if (option == 2) {
+                } else if (signInOption == Identity.STUDENT) {
                     new Programming();
                 }
             }
@@ -92,8 +102,14 @@ public class SignIn extends JFrame {
         frame.setVisible(true);
     }
 
+    public void invisibleSignIn() {
+        frame.setVisible(false);
+    }
+
+
     public static void main(String[] args) {
-        new SignIn();
+        SignIn signIn = new SignIn();
+        signIn.visibleSignIn();
     }
 
 }

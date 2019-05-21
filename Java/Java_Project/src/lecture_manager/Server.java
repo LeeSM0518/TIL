@@ -1,5 +1,7 @@
 package lecture_manager;
 
+import lecture_manager2.database.Database;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

@@ -20,6 +20,7 @@ public class Server {
     private List<SocketInServer> connections = new ArrayList<>();
 
     private void startServer() {
+
         executorService = Executors.newFixedThreadPool(
                 Runtime.getRuntime().availableProcessors()
         );
@@ -88,8 +89,7 @@ public class Server {
 
     }
 
-    private void sendToTarget(Message message) {
-
+    void sendToTarget(Message message) {
         switch (message.getType()) {
             case CONNECT:
                 socketCount++;
@@ -97,13 +97,11 @@ public class Server {
             case SIGNIN:
                 break;
             case SIGNUP:
-
                 break;
             default:
                 System.out.println("잘못된 메시지 타입 입니다.");
                 break;
         }
-
         connections.forEach(connection -> {
             if (connection.socketNumber == message.getTargetNumber()) {
                 connection.send(message);
