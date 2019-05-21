@@ -1,5 +1,7 @@
 package lecture_manager;
 
+import lecture_manager2.database.User;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -20,32 +22,29 @@ public class Client {
 
     void startClient() {
         // 스레드 생성
-        Thread thread = new Thread() {
-            @Override
-            public void run() {
-                try {
-                    // 소켓 생성 및 연결 요청
-                    socket = new Socket();
-                    socket.connect(new InetSocketAddress("localhost", 5001));
+        Thread thread = new Thread(() -> {
+            try {
+                // 소켓 생성 및 연결 요청
+                socket = new Socket();
+                socket.connect(new InetSocketAddress("localhost", 5001));
 
-                    String message = "[연결 완료: " + socket.getRemoteSocketAddress() + "]";
-                    System.out.println(message);
+                String message = "[연결 완료: " + socket.getRemoteSocketAddress() + "]";
+                System.out.println(message);
 
-                    jTextArea.append(message + "\n");
-                } catch (Exception e) {
-                    String message = "[서버 통신 안됨]";
-                    System.out.println(message);
+                jTextArea.append(message + "\n");
+            } catch (Exception e) {
+                String message = "[서버 통신 안됨]";
+                System.out.println(message);
 
-                    jTextArea.append(message + "\n");
-                    if (!socket.isClosed()) {
-                        stopClient();
-                    }
-                    return;
+                jTextArea.append(message + "\n");
+                if (!socket.isClosed()) {
+                    stopClient();
                 }
-                // 서버에서 보낸 데이터 받기
-                receive();
+                return;
             }
-        };
+            // 서버에서 보낸 데이터 받기
+            receive();
+        });
         // 스레드 시작
         thread.start();
     }

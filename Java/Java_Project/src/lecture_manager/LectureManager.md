@@ -77,10 +77,6 @@ Server->Client: 결과 메시지 전송
 
 
 
-```
-
-
-
 ## 로그인
 
 ```sequence
