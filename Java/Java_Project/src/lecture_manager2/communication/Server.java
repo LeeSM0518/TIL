@@ -19,7 +19,11 @@ public class Server {
     private ServerSocket serverSocket;
     private List<SocketInServer> connections = new ArrayList<>();
 
+<<<<<<< HEAD
     private void startServer() {
+=======
+    void startServer() {
+>>>>>>> 153eec044e360cb8b8b000eb13508702c2c89613
         executorService = Executors.newFixedThreadPool(
                 Runtime.getRuntime().availableProcessors()
         );
@@ -63,7 +67,11 @@ public class Server {
         executorService.submit(runnable);
     }
 
+<<<<<<< HEAD
     private void stopServer() {
+=======
+    void stopServer() {
+>>>>>>> 153eec044e360cb8b8b000eb13508702c2c89613
         try {
             connections.forEach(client -> {
                 try {
@@ -88,27 +96,44 @@ public class Server {
 
     }
 
+<<<<<<< HEAD
     private void sendToTarget(Message message) {
 
         switch (message.getType()) {
             case CONNECT:
+=======
+    void sendToTarget(Message message) {
+        switch (message.getType()) {
+            case CONNECT:
+                connections.forEach(connection -> {
+                    if (connection.socketNumber == message.getTargetNumber()) {
+                        connection.send(message);
+                    }
+                });
+>>>>>>> 153eec044e360cb8b8b000eb13508702c2c89613
                 socketCount++;
                 break;
             case SIGNIN:
                 break;
+<<<<<<< HEAD
             case SIGNUP:
 
                 break;
+=======
+>>>>>>> 153eec044e360cb8b8b000eb13508702c2c89613
             default:
                 System.out.println("잘못된 메시지 타입 입니다.");
                 break;
         }
+<<<<<<< HEAD
 
         connections.forEach(connection -> {
             if (connection.socketNumber == message.getTargetNumber()) {
                 connection.send(message);
             }
         });
+=======
+>>>>>>> 153eec044e360cb8b8b000eb13508702c2c89613
     }
 
     class SocketInServer {

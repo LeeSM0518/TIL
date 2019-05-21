@@ -1,12 +1,24 @@
 package lecture_manager2.database;
 
+<<<<<<< HEAD:Java/Java_Project/src/lecture_manager2/database/Database.java
 import lecture_manager2.message.*;
+
+import java.io.*;
+=======
+import lecture_manager.Message;
 
 import java.io.*;
 
 import static lecture_manager2.database.Result.*;
+>>>>>>> 153eec044e360cb8b8b000eb13508702c2c89613:Java/Java_Project/src/lecture_manager2/database/Database.java
 
+import static lecture_manager2.database.Result.*;
+
+<<<<<<< HEAD:Java/Java_Project/src/lecture_manager2/database/Database.java
 public class Database {
+=======
+    static int check;
+>>>>>>> 153eec044e360cb8b8b000eb13508702c2c89613:Java/Java_Project/src/lecture_manager2/database/Database.java
 
     private Users users = new Users();
     private String currentDir;
@@ -74,9 +86,15 @@ public class Database {
         return SUCCESS_SIGNUP;
     }
 
+<<<<<<< HEAD:Java/Java_Project/src/lecture_manager2/database/Database.java
     public Result checkUser(Message message) {
 
         if (message.getUser().getIdentity().equals(Message.STUDENT)) {
+=======
+    public int checkUser(lecture_manager.Message message) {
+
+        if (message.identity.equals(lecture_manager.Message.STUDENT)) {
+>>>>>>> 153eec044e360cb8b8b000eb13508702c2c89613:Java/Java_Project/src/lecture_manager2/database/Database.java
             this.users.student.forEach(student -> {
                 if (student.id.equals(message.id)) {
                   if (student.password.equals(message.password)) {

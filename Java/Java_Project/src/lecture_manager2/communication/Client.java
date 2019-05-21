@@ -84,10 +84,13 @@ public class Client {
         thread.start();
     }
 
+<<<<<<< HEAD
     void signUpMessageSend() {
 
     }
 
+=======
+>>>>>>> 153eec044e360cb8b8b000eb13508702c2c89613
     private void messageProcess(Message message) {
         switch (message.getType()) {
             case SIGNUP:
