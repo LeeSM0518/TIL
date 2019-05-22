@@ -187,7 +187,7 @@ public class GetText {
         frame.setPreferredSize(dimension);
 
         JLabel label = new JLabel();
-        label.setText("setText Test");
+        label.setText(StudentClientUI);
         
         // 세로 아래 정렬
         label.setVerticalAlignment(SwingConstants.BOTTOM);

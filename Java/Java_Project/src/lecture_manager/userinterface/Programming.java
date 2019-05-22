@@ -7,8 +7,6 @@ public class Programming extends JFrame {
     public Programming() {
         JFrame frame = new JFrame("Lecture Manager - Programming");
 
-
-
         frame.setSize(1000,1000);
         frame.setVisible(true);
     }

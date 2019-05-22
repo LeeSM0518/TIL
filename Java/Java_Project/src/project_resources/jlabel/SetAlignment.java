@@ -12,7 +12,7 @@ public class SetAlignment {
         frame.setPreferredSize(dimension);
 
         JLabel label = new JLabel();
-        label.setText("setText Test");
+        label.setText("setText StudentClientUI");
 
         // 세로 아래 정렬
         label.setVerticalAlignment(SwingConstants.BOTTOM);
