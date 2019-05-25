@@ -176,6 +176,10 @@ public class Server {
         void messageProcess(Message message) {
             Result result;
             switch (message.getType()) {
+                case SEND_CODE_AND_RESULT:
+                    // TODO 교수님 클라이언트로 전달
+                    System.out.println(message.getCode());
+                    break;
                 case SIGNIN:
                     result = database.checkUser(message);
                     Database.check = null;

@@ -102,12 +102,13 @@ public class Client {
     public Result signInRequest(Message message) {
         send(message);
         Message receiveMessage = receive();
+        if (receiveMessage.getResult() == Result.EQUALS_PASSWORD) {
+            user = message.getUser();
+        }
         return receiveMessage.getResult();
     }
 
-    // TODO 회원가입 구현
     private Result messageProcess(Message message) {
-        Result result;
         switch (message.getType()) {
             case CONNECT:
                 socketNumber = message.getTargetNumber();
@@ -115,6 +116,11 @@ public class Client {
             default:
                 return null;
         }
+    }
+
+    public void sendCodeAndRunResult(Message message) {
+        message.setUser(this.user);
+        send(message);
     }
 
     public Socket getSocket() {
