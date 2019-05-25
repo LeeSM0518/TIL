@@ -48,12 +48,14 @@ public class SignIn {
 
     protected Client client;
     protected SignUp signUpUI;
+    private StudentClientUI studentClientUI;
 
     public SignIn(Client client) {
         this.client = client;
         client.startClient();
 
         signUpUI = new SignUp(client);
+        studentClientUI = new StudentClientUI(client);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         all_panel.setLayout(new BoxLayout(all_panel, BoxLayout.Y_AXIS));
@@ -89,10 +91,18 @@ public class SignIn {
         failPanel.add(failLabel, BorderLayout.CENTER);
         failFrame.add(failPanel);
 
+        Dimension frameSize = failFrame.getSize();
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        failFrame.setLocation((screenSize.width - frameSize.width) / 2, (screenSize.height - frameSize.height) / 2);
+
         successFrame.setSize(300, 100);
         successLabel.setHorizontalAlignment(SwingConstants.CENTER);
         successPanel.add(successLabel, BorderLayout.CENTER);
         successFrame.add(successPanel);
+
+        frameSize = successFrame.getSize();
+        screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        successFrame.setLocation((screenSize.width - frameSize.width) / 2, (screenSize.height - frameSize.height) / 2);
 
         signup.addActionListener(new ActionListener() {
             @Override
@@ -110,7 +120,8 @@ public class SignIn {
                 Result result = client.signInRequest(message);
                 if (signInOption == Identity.PROFESSOR) {
                     if (result == Result.EQUALS_PASSWORD) {
-                        new AssignmentCheck();
+                        // TODO 교수 클라이언트
+                        // TODO User 객체에 정보 저장
                         invisibleSignIn();
                     } else {
                         failFrame.setVisible(true);
@@ -119,7 +130,8 @@ public class SignIn {
 
                 } else if (signInOption == Identity.STUDENT) {
                     if (result == Result.EQUALS_PASSWORD) {
-                        new Programming();
+                        // TODO User 객체에 정보 저장
+                        studentClientUI.visibleStudentClientUI();
                         invisibleSignIn();
                     } else {
                         failFrame.setVisible(true);
@@ -140,9 +152,11 @@ public class SignIn {
         all_panel.add(Box.createVerticalStrut(30));
         all_panel.add(button);
 
-        frame.setContentPane(all_panel);
-
         frame.setSize(300, 200);
+        frame.setContentPane(all_panel);
+        frameSize = frame.getSize();
+        screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        frame.setLocation((screenSize.width - frameSize.width) / 2, (screenSize.height - frameSize.height) / 2);
     }
 
     public void visibleSignIn() {

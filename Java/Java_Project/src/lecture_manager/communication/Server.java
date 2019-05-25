@@ -184,7 +184,6 @@ public class Server {
                     send(message);
                     break;
                 case SIGNUP:
-                   // TODO 회원가입 구현
                     result = database.signUpMember(message);
                     message.setResult(result);
                     send(message);

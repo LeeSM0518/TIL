@@ -78,10 +78,18 @@ public class SignUp {
         failPanel.add(failLabel, BorderLayout.CENTER);
         failFrame.add(failPanel);
 
+        Dimension frameSize = failFrame.getSize();
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        failFrame.setLocation((screenSize.width - frameSize.width) / 2, (screenSize.height - frameSize.height) / 2);
+
         successFrame.setSize(300, 100);
         successLabel.setHorizontalAlignment(SwingConstants.CENTER);
         successPanel.add(successLabel, BorderLayout.CENTER);
         successFrame.add(successPanel);
+
+        frameSize = successFrame.getSize();
+        screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        successFrame.setLocation((screenSize.width - frameSize.width) / 2, (screenSize.height - frameSize.height) / 2);
 
         signup_bt.addActionListener(new ActionListener() {
             @Override
@@ -89,7 +97,6 @@ public class SignUp {
                 if (! String.valueOf(pw_fd.getPassword()).equals(String.valueOf(pw_check_fd.getPassword()))) {
                     // TODO 비밀번호 재입력 실패 UI
                 } else {
-                    // TODO 회원 가입 구현
                     User user = new User(signUpOption, name_fd.getText(), number_fd.getText(), String.valueOf(pw_fd.getPassword()));
                     Message message = new Message();
                     message.setSignUpMessage(client.getSocketNumber(), user);
@@ -99,6 +106,10 @@ public class SignUp {
                         failFrame.setVisible(true);
                     } else {
                         successFrame.setVisible(true);
+                        name_fd.setText("");
+                        number_fd.setText("");
+                        pw_fd.setText("");
+                        pw_check_fd.setText("");
                         invisibleSignUpUI();
                     }
 
@@ -140,6 +151,9 @@ public class SignUp {
 
         frame.setContentPane(all_pn);
         frame.setSize(300, 200);
+        frameSize = frame.getSize();
+        screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        frame.setLocation((screenSize.width - frameSize.width) / 2, (screenSize.height - frameSize.height) / 2);
     }
 
     public void visibleSignUpUI() {
