@@ -1,6 +1,7 @@
 package lecture_manager.userinterface;
 
 import lecture_manager.communication.Client;
+import lecture_manager.message.Message;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -37,6 +38,7 @@ public class StudentClientUI extends JFrame {
     private JScrollPane codeInputScrollPane;
     private JScrollPane resultScrollPane;
     private JScrollPane problemTablePane;
+    private JScrollPane problemScrollPane;
 
     private Client client;
 
@@ -57,6 +59,16 @@ public class StudentClientUI extends JFrame {
             }
         });
 
+        submitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Message message = new Message();
+                message.setSendCode(codeInputTextArea.getText(), resultTextArea.getText());
+                client.sendCodeAndRunResult(message);
+                JOptionPane.showMessageDialog(null, "Code & RunResult 전달이 완료되었습니다.", "제출", JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
+
         resultTextArea.setEditable(false);
     }
 
@@ -64,16 +76,21 @@ public class StudentClientUI extends JFrame {
         String[] codeArr = code.split(" ");
         String className = null;
 
-        for (String s : codeArr) {
-            if (s.equals("class")) {
-                className = s;
+        for (int i = 0; i < codeArr.length; i++) {
+            if (codeArr[i].equals("class")) {
+                className = codeArr[i+1];
                 break;
             }
         }
 
+        if (className == null) {
+            resultTextArea.setText("컴파일 오류 입니다.");
+            return;
+        }
+
         try {
             String current = new java.io.File(".").getCanonicalPath();
-            File file = new File(current + "/test.java");
+            File file = new File(current + "/" + className + ".java");
             FileWriter fileWriter = new FileWriter(file, false);
 
             fileWriter.write(code);
@@ -81,20 +98,25 @@ public class StudentClientUI extends JFrame {
             fileWriter.close();
 
             try {
-                String[] cmdArray = {"javac test.java", "java " + className};
+                String[] cmdArray = {"javac " + className + ".java", "java " + className};
                 Runtime.getRuntime().exec(cmdArray[0]);
 
                 Process process = Runtime.getRuntime().exec(cmdArray[1]);
 
-                BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
+                InputStreamReader reader = new InputStreamReader(process.getInputStream());
 
-                String line = null;
+                int readData;
+                char[] cbuf = new char[100];
+                String str = "";
 
-                while ((line = br.readLine()) != null) {
-                    line += line;
+                while ((readData = reader.read(cbuf)) != -1) {
+                    String data = new String(cbuf, 0, readData);
+                    str += data;
                 }
 
-                // TODO line RunTextArea 에 넣는 기능 구현
+                resultTextArea.setText(str);
+
+                reader.close();
 
             } catch (Exception e2) {
                 e2.printStackTrace();

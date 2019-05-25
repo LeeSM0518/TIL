@@ -125,7 +125,6 @@ public class SignIn {
                         invisibleSignIn();
                     } else {
                         failFrame.setVisible(true);
-                        System.out.println("로그인 실패");
                     }
 
                 } else if (signInOption == Identity.STUDENT) {
@@ -135,7 +134,6 @@ public class SignIn {
                         invisibleSignIn();
                     } else {
                         failFrame.setVisible(true);
-                        System.out.println("로그인 실패");
                     }
                 }
             }
