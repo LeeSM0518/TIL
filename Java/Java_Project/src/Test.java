@@ -15,7 +15,7 @@ public class Test {
 
         try {
             String[] cmdArray = {"javac test.java", "java Test"};
-            Process process = Runtime.getRuntime().exec(cmdArray[0]);
+            Process process = Runtime.getRuntime().exec(cmdArray[1]);
             BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
 
             String line = null;

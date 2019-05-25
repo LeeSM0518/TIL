@@ -1,8 +1,11 @@
 package lecture_manager.communication;
 
 import lecture_manager.database.Database;
+import lecture_manager.database.Identity;
 import lecture_manager.database.Result;
+import lecture_manager.database.User;
 import lecture_manager.message.Message;
+import lecture_manager.userinterface.Problem;
 
 import java.io.*;
 import java.net.InetSocketAddress;
@@ -96,25 +99,29 @@ public class Server {
         switch (message.getType()) {
             case CONNECT:
                 socketCount++;
+                connections.forEach(connection -> {
+                    if (connection.socketNumber == message.getTargetNumber()) {
+                        connection.send(message);
+                    }
+                });
                 break;
-            case SIGNIN:
-                break;
-            case SIGNUP:
+            case SEND_PROBLEMS:
+                connections.forEach(connection -> {
+                    if (connection.user.getIdentity() == Identity.STUDENT) {
+                        connection.send(message);
+                    }
+                });
                 break;
             default:
                 System.out.println("잘못된 메시지 타입 입니다.");
                 break;
         }
-        connections.forEach(connection -> {
-            if (connection.socketNumber == message.getTargetNumber()) {
-                connection.send(message);
-            }
-        });
     }
 
     class SocketInServer {
         Socket socket;
         int socketNumber;
+        User user;
 
         SocketInServer(Socket socket, int socketNumber) {
             this.socket = socket;
@@ -147,28 +154,28 @@ public class Server {
 
         void receive() {
             Runnable runnable = () -> {
-                    try {
-                        while (true) {
-                            InputStream inputStream = socket.getInputStream();
-                            ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
+                try {
+                    while (true) {
+                        InputStream inputStream = socket.getInputStream();
+                        ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
 
-                            Message message = (Message) objectInputStream.readObject();
+                        Message message = (Message) objectInputStream.readObject();
 
-                            System.out.println(message.getType());
+                        System.out.println(message.getType());
 
-                            messageProcess(message);
-                        }
-
-                    } catch (Exception e) {
-                        try {
-                            connections.remove(SocketInServer.this);
-                            System.out.println("[receive 에러, 클라이언트 통신 안됨]");
-                            System.out.println("[" + socketNumber + "번 소켓 종료]");
-                            socket.close();
-                        } catch (IOException e2) {
-                            e2.printStackTrace();
-                        }
+                        messageProcess(message);
                     }
+
+                } catch (Exception e) {
+                    try {
+                        connections.remove(SocketInServer.this);
+                        System.out.println("[receive 에러, 클라이언트 통신 안됨]");
+                        System.out.println("[" + socketNumber + "번 소켓 종료]");
+                        socket.close();
+                    } catch (IOException e2) {
+                        e2.printStackTrace();
+                    }
+                }
             };
             executorService.submit(runnable);
         }
@@ -176,12 +183,18 @@ public class Server {
         void messageProcess(Message message) {
             Result result;
             switch (message.getType()) {
+                case SEND_PROBLEMS:
+                    sendToTarget(message);
+                    break;
                 case SEND_CODE_AND_RESULT:
                     // TODO 교수님 클라이언트로 전달
                     System.out.println(message.getCode());
                     break;
                 case SIGNIN:
                     result = database.checkUser(message);
+                    if (result == Result.EQUALS_PASSWORD) {
+                        this.user = message.getUser();
+                    }
                     Database.check = null;
                     System.out.println(result);
                     message.setResult(result);
