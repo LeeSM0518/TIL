@@ -10,6 +10,8 @@ public class Message implements Serializable {
     private int targetNumber;
     private Result result;
     private User user;
+    private String code;
+    private String runResult;
 
     public User getUser() {
         return user;
@@ -44,6 +46,12 @@ public class Message implements Serializable {
         this.user = user;
     }
 
+    public void setSendCode(String code, String runResult) {
+        this.type = Type.SEND_CODE_AND_RESULT;
+        this.code = code;
+        this.runResult = runResult;
+    }
+
     public Type getType() {
         return type;
     }
@@ -58,5 +66,21 @@ public class Message implements Serializable {
 
     public void setTargetNumber(int targetNumber) {
         this.targetNumber = targetNumber;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getRunResult() {
+        return runResult;
+    }
+
+    public void setRunResult(String runResult) {
+        this.runResult = runResult;
     }
 }

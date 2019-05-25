@@ -4,6 +4,6 @@ public enum Type {
 
     CONNECT,
     SIGNUP,
-    SIGNIN
-
+    SIGNIN,
+    SEND_CODE_AND_RESULT
 }
