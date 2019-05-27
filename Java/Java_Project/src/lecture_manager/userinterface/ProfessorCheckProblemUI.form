@@ -39,20 +39,17 @@
                   <text value="학생 수 : 0"/>
                 </properties>
               </component>
-              <scrollpane id="6943c" binding="studentScrollPane">
+              <scrollpane id="8708f">
                 <constraints>
                   <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
-                <properties>
-                  <font/>
-                </properties>
+                <properties/>
                 <border type="none"/>
                 <children>
-                  <component id="57eae" class="javax.swing.JTable" binding="StudentTable">
+                  <component id="3849c" class="javax.swing.JList" binding="studentList">
                     <constraints/>
                     <properties>
-                      <intercellSpacing width="1" height="1"/>
-                      <preferredScrollableViewportSize width="200" height="400"/>
+                      <font size="16"/>
                     </properties>
                   </component>
                 </children>

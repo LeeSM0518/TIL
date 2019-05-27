@@ -4,19 +4,19 @@ import lecture_manager.communication.Client;
 import lecture_manager.message.Message;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumnModel;
-import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class StudentClientUI extends JFrame {
 
     private JPanel mainPanel;
 
-    private JTable problemTable;
     private JPanel TablePanel;
 
     private JPanel rightSideMainPanel;
@@ -32,14 +32,24 @@ public class StudentClientUI extends JFrame {
     private JPanel runOrSubmitPanel;
     private JButton runButton;
     private JButton submitButton;
-    private JLabel empty;
     private JLabel codeLabel;
     private JScrollPane codeInputScrollPane;
     private JScrollPane resultScrollPane;
-    private JScrollPane problemTablePane;
     private JScrollPane problemScrollPane;
+    private DefaultListModel model;
+
+    private JList problemList;
+    private JPanel listPanel;
+    private JList checkList;
+    private JScrollPane checkScrollPane;
+
+    private List<Problem> problemArrayList = new ArrayList<>();
 
     private Client client;
+
+    private static DefaultListModel newModel;
+    private static DefaultListModel newModel2;
+    private static int yes = 0;
 
     public StudentClientUI(Client client) {
         this.client = client;
@@ -50,6 +60,37 @@ public class StudentClientUI extends JFrame {
         Dimension frameSize = getSize();
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         setLocation((screenSize.width - frameSize.width) / 2, (screenSize.height - frameSize.height) / 2);
+
+        problemList.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    Problem problem = problemArrayList.get(problemList.getSelectedIndex());
+
+                    new ProblemViewDetail(problem.getTitle(), problem.getContext());
+                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
 
         runButton.addActionListener(new ActionListener() {
             @Override
@@ -68,7 +109,48 @@ public class StudentClientUI extends JFrame {
             }
         });
 
+        refreshButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                settingListModel();
+                yes = 0;
+                problemArrayList.forEach(problem -> {
+                    if (problem.getCheck()) {
+                        yes++;
+                    }
+                });
+                problemCountLabel.setText(" 문제 개수 : " + yes + " / " + problemArrayList.size() + " ");
+            }
+        });
+
         resultTextArea.setEditable(false);
+    }
+
+    private void settingListModel() {
+        try {
+            Message message = new Message();
+            message.setProblemsRequest();
+            problemArrayList = client.requestProblems(message);
+            newModel = new DefaultListModel();
+            newModel2 = new DefaultListModel();
+
+            problemArrayList.forEach(problem -> {
+                newModel.addElement(problem.getTitle());
+            });
+
+            problemArrayList.forEach(check -> {
+                if (!check.getCheck()) {
+                    newModel2.addElement("X");
+                } else {
+                    newModel2.addElement("O");
+                }
+            });
+
+            problemList.setModel(newModel);
+            checkList.setModel(newModel2);
+        } catch (Exception e) {
+
+        }
     }
 
     private void runCode(String code) {
@@ -133,12 +215,6 @@ public class StudentClientUI extends JFrame {
 
     public void invisibleStudentClientUI() {
         setVisible(false);
-    }
-
-    public static void main(String[] args) {
-        Client client = new Client();
-        StudentClientUI studentClientUI = new StudentClientUI(client);
-        studentClientUI.visibleStudentClientUI();
     }
 
 }

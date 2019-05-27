@@ -48,7 +48,9 @@
                 <children>
                   <component id="54196" class="javax.swing.JList" binding="problemList">
                     <constraints/>
-                    <properties/>
+                    <properties>
+                      <font size="16"/>
+                    </properties>
                   </component>
                 </children>
               </scrollpane>

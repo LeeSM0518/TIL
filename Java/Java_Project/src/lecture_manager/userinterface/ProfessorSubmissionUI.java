@@ -39,6 +39,7 @@ public class ProfessorSubmissionUI extends JFrame {
     private List<Problem> problemArrayList = new ArrayList<>();
 
     public ProfessorSubmissionUI(Client client) {
+        this.client = client;
         add(mainPanel);
 
         setTitle("Professor Client");
@@ -115,12 +116,6 @@ public class ProfessorSubmissionUI extends JFrame {
         Message message = new Message();
         message.setSendProblems(this.problemArrayList);
         client.sendProblems(message);
-    }
-
-    public static void main(String[] args) {
-        Client client = new Client();
-        ProfessorSubmissionUI professorSubmissionUI = new ProfessorSubmissionUI(client);
-        professorSubmissionUI.visibleUI();
     }
 
 }

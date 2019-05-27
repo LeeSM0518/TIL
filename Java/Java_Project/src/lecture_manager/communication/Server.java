@@ -6,6 +6,7 @@ import lecture_manager.database.Result;
 import lecture_manager.database.User;
 import lecture_manager.message.Message;
 import lecture_manager.userinterface.Problem;
+import lecture_manager.userinterface.Student;
 
 import java.io.*;
 import java.net.InetSocketAddress;
@@ -24,6 +25,8 @@ public class Server {
     private ServerSocket serverSocket;
     private List<SocketInServer> connections = new ArrayList<>();
     private Database database = new Database();
+    private List<Problem> problemsArrayList = new ArrayList<>();
+    private List<Student> studentList = new ArrayList<>();
 
     private void startServer() {
 
@@ -122,6 +125,7 @@ public class Server {
         Socket socket;
         int socketNumber;
         User user;
+        List<Problem> problemsForCheck = new ArrayList<>();
 
         SocketInServer(Socket socket, int socketNumber) {
             this.socket = socket;
@@ -168,6 +172,7 @@ public class Server {
 
                 } catch (Exception e) {
                     try {
+                        e.printStackTrace();
                         connections.remove(SocketInServer.this);
                         System.out.println("[receive 에러, 클라이언트 통신 안됨]");
                         System.out.println("[" + socketNumber + "번 소켓 종료]");
@@ -183,17 +188,29 @@ public class Server {
         void messageProcess(Message message) {
             Result result;
             switch (message.getType()) {
+                case REQUEST_STUDENTS:
+                    // TODO 학생과 푼 문제들 요청
+                    break;
+                case REQUEST_PROBLEMS:
+                    // TODO 학생이 푼 문제랑 교수가 내준 문제 따로 비교할 방법 필요
+                    message.setProblems(problemsArrayList);
+                    send(message);
+                    break;
                 case SEND_PROBLEMS:
+                    problemsArrayList = message.getProblems();
                     sendToTarget(message);
                     break;
                 case SEND_CODE_AND_RESULT:
-                    // TODO 교수님 클라이언트로 전달
-                    System.out.println(message.getCode());
+                    sendToTarget(message);
                     break;
                 case SIGNIN:
                     result = database.checkUser(message);
                     if (result == Result.EQUALS_PASSWORD) {
                         this.user = message.getUser();
+                        if (user.getIdentity() == Identity.STUDENT) {
+                            Student student = new Student(this.problemsForCheck, this.user);
+                            studentList.add(student);
+                        }
                     }
                     Database.check = null;
                     System.out.println(result);

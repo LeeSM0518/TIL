@@ -4,11 +4,13 @@ import lecture_manager.database.Result;
 import lecture_manager.database.User;
 import lecture_manager.message.Message;
 import lecture_manager.userinterface.Problem;
+import lecture_manager.userinterface.Student;
 
 import java.io.*;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Client {
@@ -17,7 +19,7 @@ public class Client {
     private int socketNumber;
     private static Result result = null;
     private User user;
-    private List<Problem> problems;
+    private List<Problem> problems = new ArrayList<>();
 
     public void startClient() {
         Thread thread = new Thread(() -> {
@@ -118,6 +120,24 @@ public class Client {
         thread.start();
     }
 
+    public List<Problem> requestProblems(Message message) {
+        // TODO 잘 돌아가는지 확인 필요
+        send(message);
+        List<Problem> beforeProblems = this.problems;
+        Message receiveMessage = returnMessage();
+        this.problems = receiveMessage.getProblems();
+
+        for (int i = 0; i < beforeProblems.size(); i++) {
+            for (int j = 0; j < problems.size(); j++) {
+                if (beforeProblems.get(i).getTitle().equals(problems.get(j).getTitle()) &&
+                beforeProblems.get(i).getContext().equals(problems.get(j).getContext())) {
+                    problems.get(j).setCheck(beforeProblems.get(i).getCheck());
+                }
+            }
+        }
+        return problems;
+    }
+
     public Result signUpRequest(Message message) {
         send(message);
         Message receiveMessage = returnMessage();
@@ -129,7 +149,6 @@ public class Client {
         Message receiveMessage = returnMessage();
         if (receiveMessage.getResult() == Result.EQUALS_PASSWORD) {
             user = message.getUser();
-            continueReceive();
         }
         return receiveMessage.getResult();
     }
@@ -144,6 +163,11 @@ public class Client {
             default:
                 return null;
         }
+    }
+
+    private List<Student> requestStudents(Message message) {
+        // TODO 학생 정보들 요청
+        send(message);
     }
 
     public void sendCodeAndRunResult(Message message) {

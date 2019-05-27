@@ -49,6 +49,7 @@ public class SignIn {
     protected Client client;
     protected SignUp signUpUI;
     private StudentClientUI studentClientUI;
+    private ProfessorChoiceUI professorChoiceUI;
 
     public SignIn(Client client) {
         this.client = client;
@@ -56,6 +57,7 @@ public class SignIn {
 
         signUpUI = new SignUp(client);
         studentClientUI = new StudentClientUI(client);
+        professorChoiceUI = new ProfessorChoiceUI(client);
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         all_panel.setLayout(new BoxLayout(all_panel, BoxLayout.Y_AXIS));
@@ -120,8 +122,7 @@ public class SignIn {
                 Result result = client.signInRequest(message);
                 if (signInOption == Identity.PROFESSOR) {
                     if (result == Result.EQUALS_PASSWORD) {
-                        // TODO 교수 클라이언트
-                        // TODO User 객체에 정보 저장
+                        professorChoiceUI.visible();
                         invisibleSignIn();
                     } else {
                         failFrame.setVisible(true);
@@ -129,7 +130,6 @@ public class SignIn {
 
                 } else if (signInOption == Identity.STUDENT) {
                     if (result == Result.EQUALS_PASSWORD) {
-                        // TODO User 객체에 정보 저장
                         studentClientUI.visibleStudentClientUI();
                         invisibleSignIn();
                     } else {

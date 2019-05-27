@@ -1,10 +1,15 @@
 package lecture_manager.userinterface;
 
-public class Problem {
+import java.io.Serializable;
+
+public class Problem implements Serializable {
     private String title;
     private String context;
     private String code;
     private String runResult;
+    private boolean check;
+
+    public Problem() {}
 
     public Problem(String title, String context) {
         this.title = title;
@@ -47,5 +52,13 @@ public class Problem {
 
     public void setRunResult(String runResult) {
         this.runResult = runResult;
+    }
+
+    public boolean getCheck() {
+        return check;
+    }
+
+    public void setCheck(boolean check) {
+        this.check = check;
     }
 }

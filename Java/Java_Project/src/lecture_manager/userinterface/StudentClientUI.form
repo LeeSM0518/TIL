@@ -7,7 +7,7 @@
     <properties/>
     <border type="none"/>
     <children>
-      <grid id="52676" binding="TablePanel" layout-manager="GridLayoutManager" row-count="4" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="52676" binding="TablePanel" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="10" left="10" bottom="0" right="0"/>
         <constraints border-constraint="West"/>
         <properties>
@@ -17,19 +17,13 @@
         <children>
           <component id="45cfe" class="javax.swing.JButton" binding="refreshButton">
             <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false">
+                <maximum-size width="100" height="-1"/>
+              </grid>
             </constraints>
             <properties>
               <font size="16"/>
               <text value="새로고침"/>
-            </properties>
-          </component>
-          <component id="f496b" class="javax.swing.JLabel" binding="empty">
-            <constraints>
-              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value=" "/>
             </properties>
           </component>
           <component id="d3f6d" class="javax.swing.JLabel" binding="problemCountLabel">
@@ -42,35 +36,47 @@
               <text value="문제 개수 : 0 / 0"/>
             </properties>
           </component>
-          <scrollpane id="724c" binding="problemScrollPane">
+          <grid id="cb850" binding="listPanel" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="20" right="0"/>
             <constraints>
-              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties/>
             <border type="none"/>
             <children>
-              <scrollpane id="4ae4b" binding="problemTablePane">
-                <constraints/>
+              <scrollpane id="724c" binding="problemScrollPane">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                </constraints>
                 <properties/>
-                <border type="none">
-                  <font/>
-                  <title-color color="-4473925"/>
-                </border>
+                <border type="none"/>
                 <children>
-                  <component id="1c447" class="javax.swing.JTable" binding="problemTable">
+                  <component id="e9a58" class="javax.swing.JList" binding="problemList">
                     <constraints/>
                     <properties>
-                      <preferredScrollableViewportSize width="200" height="400"/>
+                      <font size="16"/>
                     </properties>
-                    <clientProperties>
-                      <JTable.autoStartsEdit class="java.lang.Boolean" value="false"/>
-                      <Table.isFileList class="java.lang.Boolean" value="true"/>
-                    </clientProperties>
+                  </component>
+                </children>
+              </scrollpane>
+              <scrollpane id="e1948" binding="checkScrollPane">
+                <constraints>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="8080f" class="javax.swing.JList" binding="checkList">
+                    <constraints/>
+                    <properties>
+                      <font size="16"/>
+                      <layoutOrientation value="2"/>
+                    </properties>
                   </component>
                 </children>
               </scrollpane>
             </children>
-          </scrollpane>
+          </grid>
         </children>
       </grid>
       <grid id="fde8f" binding="rightSideMainPanel" layout-manager="BorderLayout" hgap="0" vgap="0">

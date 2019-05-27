@@ -3,6 +3,7 @@ package lecture_manager.message;
 import lecture_manager.database.Result;
 import lecture_manager.database.User;
 import lecture_manager.userinterface.Problem;
+import lecture_manager.userinterface.Student;
 
 import java.io.Serializable;
 import java.util.List;
@@ -16,6 +17,7 @@ public class Message implements Serializable {
     private String code;
     private String runResult;
     private List<Problem> problems;
+    private List<Student> students;
 
     public User getUser() {
         return user;
@@ -31,6 +33,10 @@ public class Message implements Serializable {
 
     public void setResult(Result result) {
         this.result = result;
+    }
+
+    public void setProblemsRequest() {
+        this.type = Type.REQUEST_PROBLEMS;
     }
 
     public void setConnectMessage(int targetNumber) {
@@ -59,6 +65,10 @@ public class Message implements Serializable {
     public void setSendProblems(List<Problem> problems) {
         this.type = Type.SEND_PROBLEMS;
         this.problems = problems;
+    }
+
+    public void setRequestStudents() {
+        this.type = Type.REQUEST_STUDENTS;
     }
 
     public Type getType() {
@@ -99,5 +109,13 @@ public class Message implements Serializable {
 
     public void setProblems(List<Problem> problems) {
         this.problems = problems;
+    }
+
+    public List<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(List<Student> students) {
+        this.students = students;
     }
 }
