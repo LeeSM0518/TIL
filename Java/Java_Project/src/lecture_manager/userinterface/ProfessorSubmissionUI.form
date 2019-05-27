@@ -62,7 +62,7 @@
             <children>
               <component id="10a3d" class="javax.swing.JLabel" binding="problemLabel">
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <font size="18"/>
@@ -79,13 +79,13 @@
               </component>
               <component id="2a72" class="javax.swing.JLabel" binding="problemContextLabel">
                 <constraints>
-                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <font size="18"/>
                   <text value="문제 내용 :"/>
-                  <verticalAlignment value="0"/>
-                  <verticalTextPosition value="0"/>
+                  <verticalAlignment value="1"/>
+                  <verticalTextPosition value="1"/>
                 </properties>
               </component>
               <scrollpane id="8f967" binding="problemContextScrollPane">

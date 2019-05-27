@@ -21,7 +21,6 @@ public class StudentClientUI extends JFrame {
 
     private JPanel rightSideMainPanel;
     private JPanel buttonMainPanel;
-    private JButton problemContextButton;
     private JPanel codeMainPanel;
     private JButton refreshButton;
     private JTextArea codeInputTextArea;
