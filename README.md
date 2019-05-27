@@ -40,4 +40,4 @@ TIL ( Today I Learned )
 
 ## Contributors
 - 이름 : 이상민 
-- 이메일 : [(nalsm98@naver.com)](nalsm98@naver.com)
+- 이메일 : [nalsm98@naver.com](nalsm98@naver.com)
