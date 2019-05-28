@@ -5,8 +5,8 @@ import lecture_manager.database.Identity;
 import lecture_manager.database.Result;
 import lecture_manager.database.User;
 import lecture_manager.message.Message;
-import lecture_manager.userinterface.Problem;
-import lecture_manager.userinterface.Student;
+import lecture_manager.information.Problem;
+import lecture_manager.information.Student;
 
 import java.io.*;
 import java.net.InetSocketAddress;
@@ -27,6 +27,7 @@ public class Server {
     private Database database = new Database();
     private List<Problem> problemsArrayList = new ArrayList<>();
     private List<Student> studentList = new ArrayList<>();
+    private static Student delStudent = null;
 
     private void startServer() {
 
@@ -100,17 +101,17 @@ public class Server {
 
     void sendToTarget(Message message) {
         switch (message.getType()) {
-            case CONNECT:
-                socketCount++;
+            case SEND_CODE_AND_RESULT:
                 connections.forEach(connection -> {
-                    if (connection.socketNumber == message.getTargetNumber()) {
+                    if (connection.user.getIdentity() == Identity.PROFESSOR) {
                         connection.send(message);
                     }
                 });
                 break;
-            case SEND_PROBLEMS:
+            case CONNECT:
+                socketCount++;
                 connections.forEach(connection -> {
-                    if (connection.user.getIdentity() == Identity.STUDENT) {
+                    if (connection.socketNumber == message.getTargetNumber()) {
                         connection.send(message);
                     }
                 });
@@ -176,6 +177,13 @@ public class Server {
                         connections.remove(SocketInServer.this);
                         System.out.println("[receive 에러, 클라이언트 통신 안됨]");
                         System.out.println("[" + socketNumber + "번 소켓 종료]");
+                        studentList.forEach(student -> {
+                            if (student.getUser().getId().equals(this.user.getId())) {
+                                delStudent = student;
+                            }
+                        });
+                        studentList.remove(delStudent);
+                        delStudent = null;
                         socket.close();
                     } catch (IOException e2) {
                         e2.printStackTrace();
@@ -185,24 +193,110 @@ public class Server {
             executorService.submit(runnable);
         }
 
+        void removeProblem(List<Problem> problems) {
+            String delTitle;
+            String delContext;
+            boolean check = false;
+            int i;
+            for (i = 0; i < problems.size(); i++) {
+                delTitle = problems.get(i).getTitle();
+                delContext = problems.get(i).getContext();
+                for (int j = 0; j < problemsArrayList.size(); j++) {
+                    if (delTitle.equals(problemsArrayList.get(j).getTitle()) &&
+                            delContext.equals(problemsArrayList.get(j).getContext())) {
+                        check = true;
+                        break;
+                    } else {
+                        check = false;
+                    }
+                }
+                if (!check) {
+                    break;
+                }
+            }
+
+            try {
+                problems.remove(i);
+            } catch (Exception e) {
+                problems.remove(i-1);
+            }
+
+        }
+
+        void addProblem(List<Problem> problems) {
+            String addTitle = null;
+            String addContext = null;
+            boolean check = true;
+            int i;
+            for (i = 0; i < problemsArrayList.size(); i++) {
+                addTitle = problemsArrayList.get(i).getTitle();
+                addContext = problemsArrayList.get(i).getContext();
+                for (int j = 0; j < problems.size(); j++) {
+                    if (addTitle.equals(problems.get(j).getTitle()) &&
+                            addContext.equals(problems.get(j).getContext())) {
+                        check = false;
+                        break;
+                    } else {
+                        check = true;
+                    }
+                }
+                if (check) {
+                    break;
+                }
+            }
+            Problem problem = new Problem(addTitle, addContext);
+            problems.add(i, problem);
+        }
+
         void messageProcess(Message message) {
             Result result;
             switch (message.getType()) {
-                case REQUEST_STUDENTS:
-                    // TODO 학생과 푼 문제들 요청
+                case REQUEST_CHECKLIST:
+                    // TODO 체크 리스트 요청
                     break;
-                case REQUEST_PROBLEMS:
-                    // TODO 학생이 푼 문제랑 교수가 내준 문제 따로 비교할 방법 필요
-                    message.setProblems(problemsArrayList);
+
+                case REQUEST_STUDENTS:
+                    message.setStudents(studentList);
                     send(message);
                     break;
+
+                case REQUEST_PROBLEMS:
+                    List<Problem> problems = message.getProblems();
+
+                    if (problems.size() > problemsArrayList.size()) {
+                        removeProblem(problems);
+                    } else if (problems.size() < problemsArrayList.size()) {
+                        addProblem(problems);
+                    } else {
+                        if (problemsArrayList.size() != 0) {
+                            removeProblem(problems);
+                            addProblem(problems);
+                        }
+                    }
+
+                    studentList.forEach(student -> {
+                        if (student.getUser().getId().equals(message.getUser().getId())) {
+                            student.setProblemList(message.getProblems());
+                        }
+                    });
+
+                    message.setProblems(problems);
+                    send(message);
+                    break;
+
                 case SEND_PROBLEMS:
                     problemsArrayList = message.getProblems();
-                    sendToTarget(message);
                     break;
+
                 case SEND_CODE_AND_RESULT:
-                    sendToTarget(message);
+                    problemsForCheck = message.getProblems();
+                    studentList.forEach(student -> {
+                        if (student.getUser().getId().equals(message.getUser().getId())) {
+                            student.setProblemList(message.getProblems());
+                        }
+                    });
                     break;
+
                 case SIGNIN:
                     result = database.checkUser(message);
                     if (result == Result.EQUALS_PASSWORD) {
@@ -217,11 +311,13 @@ public class Server {
                     message.setResult(result);
                     send(message);
                     break;
+
                 case SIGNUP:
                     result = database.signUpMember(message);
                     message.setResult(result);
                     send(message);
                     break;
+
                 default:
                     break;
             }

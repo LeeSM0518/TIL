@@ -39,7 +39,7 @@
                   <text value="학생 수 : 0"/>
                 </properties>
               </component>
-              <scrollpane id="8708f">
+              <scrollpane id="8708f" binding="StudentListScrollPane">
                 <constraints>
                   <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
@@ -164,21 +164,12 @@
                   <text value="Code"/>
                 </properties>
               </component>
-              <component id="823b8" class="javax.swing.JButton" binding="runButton">
-                <constraints>
-                  <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <font size="16"/>
-                  <text value="Run"/>
-                </properties>
-              </component>
               <hspacer id="746b0">
                 <constraints>
                   <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
               </hspacer>
-              <component id="804e7" class="javax.swing.JComboBox" binding="comboBox1" default-binding="true">
+              <component id="804e7" class="javax.swing.JComboBox" binding="problemComboBox">
                 <constraints>
                   <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>

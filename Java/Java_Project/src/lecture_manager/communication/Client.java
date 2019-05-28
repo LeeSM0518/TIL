@@ -2,9 +2,9 @@ package lecture_manager.communication;
 
 import lecture_manager.database.Result;
 import lecture_manager.database.User;
+import lecture_manager.information.Student;
 import lecture_manager.message.Message;
-import lecture_manager.userinterface.Problem;
-import lecture_manager.userinterface.Student;
+import lecture_manager.information.Problem;
 
 import java.io.*;
 import java.net.InetSocketAddress;
@@ -20,6 +20,7 @@ public class Client {
     private static Result result = null;
     private User user;
     private List<Problem> problems = new ArrayList<>();
+    private List<Student> students = new ArrayList<>();
 
     public void startClient() {
         Thread thread = new Thread(() -> {
@@ -49,34 +50,6 @@ public class Client {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private void continueReceive() {
-        Thread thread = new Thread(() -> {
-            while (true) {
-                try {
-                    InputStream inputStream = socket.getInputStream();
-                    ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
-
-                    Message message = (Message) objectInputStream.readObject();
-
-                    messageProcess(message);
-
-                } catch (SocketException e) {
-                    e.printStackTrace();
-                } catch (EOFException e) {
-
-                } catch (Exception e2) {
-                    e2.printStackTrace();
-                    System.out.println("[continueReceive Error]");
-                    System.out.println("[서버 통신 안됨]");
-
-                    stopClient();
-                    break;
-                }
-            }
-        });
-        thread.start();
     }
 
     private Message returnMessage() {
@@ -121,20 +94,10 @@ public class Client {
     }
 
     public List<Problem> requestProblems(Message message) {
-        // TODO 잘 돌아가는지 확인 필요
+        message.setUser(this.user);
         send(message);
-        List<Problem> beforeProblems = this.problems;
         Message receiveMessage = returnMessage();
         this.problems = receiveMessage.getProblems();
-
-        for (int i = 0; i < beforeProblems.size(); i++) {
-            for (int j = 0; j < problems.size(); j++) {
-                if (beforeProblems.get(i).getTitle().equals(problems.get(j).getTitle()) &&
-                beforeProblems.get(i).getContext().equals(problems.get(j).getContext())) {
-                    problems.get(j).setCheck(beforeProblems.get(i).getCheck());
-                }
-            }
-        }
         return problems;
     }
 
@@ -153,6 +116,13 @@ public class Client {
         return receiveMessage.getResult();
     }
 
+    public List<Problem> requestCheckList(Message message) {
+        send(message);
+        Message receiveMessage = returnMessage();
+        this.problems = receiveMessage.getProblems();
+        return problems;
+    }
+
     private Result messageProcess(Message message) {
         switch (message.getType()) {
             case CONNECT:
@@ -160,18 +130,27 @@ public class Client {
                 return null;
             case SEND_PROBLEMS:
                 this.problems = message.getProblems();
+                return null;
             default:
                 return null;
         }
     }
 
-    private List<Student> requestStudents(Message message) {
-        // TODO 학생 정보들 요청
+    public List<Student> requestStudents(Message message) {
         send(message);
+        Message receiveMessage = returnMessage();
+        try {
+            students = receiveMessage.getStudents();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return this.students;
     }
 
     public void sendCodeAndRunResult(Message message) {
         message.setUser(this.user);
+        this.problems = message.getProblems();
         send(message);
     }
 

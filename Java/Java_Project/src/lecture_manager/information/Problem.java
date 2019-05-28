@@ -1,4 +1,4 @@
-package lecture_manager.userinterface;
+package lecture_manager.information;
 
 import java.io.Serializable;
 
@@ -14,6 +14,7 @@ public class Problem implements Serializable {
     public Problem(String title, String context) {
         this.title = title;
         this.context = context;
+        this.check = false;
     }
 
     public Problem(String title, String code, String runResult) {

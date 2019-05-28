@@ -1,4 +1,4 @@
-package lecture_manager.userinterface;
+package lecture_manager.information;
 
 import lecture_manager.database.User;
 
@@ -17,6 +17,22 @@ public class Student implements Serializable {
 
     public Student(List<Problem> problemList, User user) {
         this.problemList = problemList;
+        this.user = user;
+    }
+
+    public List<Problem> getProblemList() {
+        return problemList;
+    }
+
+    public void setProblemList(List<Problem> problemList) {
+        this.problemList = problemList;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
         this.user = user;
     }
 }

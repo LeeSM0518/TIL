@@ -1,6 +1,7 @@
 package lecture_manager.userinterface;
 
 import lecture_manager.communication.Client;
+import lecture_manager.information.Problem;
 import lecture_manager.message.Message;
 
 import javax.swing.*;
@@ -43,7 +44,7 @@ public class StudentClientUI extends JFrame {
     private JList checkList;
     private JScrollPane checkScrollPane;
 
-    private List<Problem> problemArrayList = new ArrayList<>();
+    private List<Problem> problemsInf = new ArrayList<>();
 
     private Client client;
 
@@ -65,7 +66,15 @@ public class StudentClientUI extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {
-                    Problem problem = problemArrayList.get(problemList.getSelectedIndex());
+                    Problem problem = problemsInf.get(problemList.getSelectedIndex());
+
+                    if (problem.getCode() != null) {
+                        codeInputTextArea.setText(problem.getCode());
+                        resultTextArea.setText(problem.getRunResult());
+                    } else {
+                        codeInputTextArea.setText("");
+                        resultTextArea.setText("");
+                    }
 
                     new ProblemViewDetail(problem.getTitle(), problem.getContext());
                 }
@@ -95,6 +104,12 @@ public class StudentClientUI extends JFrame {
         runButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                Problem problem = problemsInf.get(problemList.getSelectedIndex());
+
+                problem.setCode(codeInputTextArea.getText());
+                problem.setRunResult(resultTextArea.getText());
+
+                problemsInf.set(problemList.getSelectedIndex(), problem);
                 runCode(codeInputTextArea.getText());
             }
         });
@@ -103,57 +118,71 @@ public class StudentClientUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Message message = new Message();
-                message.setSendCode(codeInputTextArea.getText(), resultTextArea.getText());
+                Problem problem = problemsInf.get(problemList.getSelectedIndex());
+
+                problem.setCode(codeInputTextArea.getText());
+                problem.setRunResult(resultTextArea.getText());
+
+                problemsInf.set(problemList.getSelectedIndex(), problem);
+
+                message.setSendCode(problemsInf);
                 client.sendCodeAndRunResult(message);
-                JOptionPane.showMessageDialog(null, "Code & RunResult 전달이 완료되었습니다.", "제출", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null,
+                        "Code & RunResult 전달이 완료되었습니다.",
+                        "제출",
+                        JOptionPane.INFORMATION_MESSAGE);
             }
         });
 
         refreshButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                settingListModel();
+                settingProblemListModel();
+                settingCheckListModel();
                 yes = 0;
-                problemArrayList.forEach(problem -> {
+                problemsInf.forEach(problem -> {
                     if (problem.getCheck()) {
                         yes++;
                     }
                 });
-                problemCountLabel.setText(" 문제 개수 : " + yes + " / " + problemArrayList.size() + " ");
+                problemCountLabel.setText(" 문제 개수 : " + yes + " / " + problemsInf.size() + " ");
             }
         });
 
         resultTextArea.setEditable(false);
     }
 
-    private void settingListModel() {
+    private void settingProblemListModel() {
         try {
             Message message = new Message();
-            message.setProblemsRequest();
-            problemArrayList = client.requestProblems(message);
+            message.setProblemsRequest(problemsInf);
+            problemsInf = client.requestProblems(message);
             newModel = new DefaultListModel();
-            newModel2 = new DefaultListModel();
 
-            problemArrayList.forEach(problem -> {
+            problemsInf.forEach(problem -> {
                 newModel.addElement(problem.getTitle());
             });
 
-            problemArrayList.forEach(check -> {
-                if (!check.getCheck()) {
-                    newModel2.addElement("X");
-                } else {
-                    newModel2.addElement("O");
-                }
-            });
-
             problemList.setModel(newModel);
-            checkList.setModel(newModel2);
+
         } catch (Exception e) {
 
         }
     }
 
-    private void runCode(String code) {
+    private void settingCheckListModel() {
+        newModel2 = new DefaultListModel();
+        problemsInf.forEach(check -> {
+            if (!check.getCheck()) {
+                newModel2.addElement("X");
+            } else {
+                newModel2.addElement("O");
+            }
+        });
+        checkList.setModel(newModel2);
+    }
+
+    public void runCode(String code) {
         String[] codeArr = code.split(" ");
         String className = null;
 

@@ -1,13 +1,10 @@
 package lecture_manager.userinterface;
 
 import lecture_manager.communication.Client;
+import lecture_manager.information.Problem;
 import lecture_manager.message.Message;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -67,6 +64,8 @@ public class ProfessorSubmissionUI extends JFrame {
                 Problem problem = new Problem(problemTitleTextField.getText(), problemContextTextArea.getText());
                 problemArrayList.add(problem);
                 model.addElement(problemTitleTextField.getText());
+                problemTitleTextField.setText("");
+                problemContextTextArea.setText("");
                 sendProblems();
             }
         });
