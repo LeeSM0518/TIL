@@ -214,18 +214,21 @@ public class Server {
                     break;
                 }
             }
-
-            try {
-                problems.remove(i);
-            } catch (Exception e) {
-                problems.remove(i-1);
+            if (!check) {
+                try {
+                    problems.remove(i);
+                } catch (Exception e) {
+                    problems.remove(i-1);
+                }
             }
-
         }
 
         void addProblem(List<Problem> problems) {
             String addTitle = null;
             String addContext = null;
+            String addCode = null;
+            String addResult = null;
+
             boolean check = true;
             int i;
             for (i = 0; i < problemsArrayList.size(); i++) {
@@ -234,6 +237,8 @@ public class Server {
                 for (int j = 0; j < problems.size(); j++) {
                     if (addTitle.equals(problems.get(j).getTitle()) &&
                             addContext.equals(problems.get(j).getContext())) {
+                        addCode = problems.get(j).getCode();
+                        addResult = problems.get(j).getRunResult();
                         check = false;
                         break;
                     } else {
@@ -244,8 +249,12 @@ public class Server {
                     break;
                 }
             }
-            Problem problem = new Problem(addTitle, addContext);
-            problems.add(i, problem);
+
+            if (check) {
+                Problem problem = new Problem(addTitle, addContext, addCode, addResult);
+                problems.add(i, problem);
+            }
+
         }
 
         void messageProcess(Message message) {
@@ -261,11 +270,19 @@ public class Server {
 
                 case REQUEST_STUDENTS:
                     message.setStudents(studentList);
+
                     send(message);
                     break;
 
                 case REQUEST_PROBLEMS:
                     List<Problem> problems = message.getProblems();
+
+                    // TODO 1
+                    problems.forEach(problem -> {
+                        System.out.println(1);
+                        System.out.println(problem.getTitle());
+                        System.out.println(problem.getCode());
+                    });
 
                     if (problems.size() > problemsArrayList.size()) {
                         removeProblem(problems);
@@ -278,23 +295,46 @@ public class Server {
                         }
                     }
 
-                    // TODO 문제와 문제 체크 구분 필요
-                    //  requestProblems 구현
+                    // TODO 2
+                    problems.forEach(problem -> {
+                        System.out.println(2);
+                        System.out.println(problem.getTitle());
+                        System.out.println(problem.getCode());
+                    });
 
-//                    Student subStudent = (Student) studentList.stream()
-//                            .filter(s -> s.getUser().getId().equals(message.getUser().getId()))
-//                            .collect()
-//
-//                    List<Problem> subProblems = subStudent.getProblemList();
-//
-//                    System.out.println(subProblems.size());
-//
-//                    if (subProblems.size() == 0) {
-//                        subStudent.setProblemList(problems);
-//                    } else {
-//
-//                    }
+                    Student compareStudent = null;
 
+                    for (Student student : studentList) {
+                        if (student.getUser().getId().equals(message.getUser().getId())) {
+                            compareStudent = student;
+                        }
+                    }
+
+                    if (compareStudent.getProblemList().size() == 0) {
+
+                    } else {
+                        List<Problem> problemsToCompare = compareStudent.getProblemList();
+                        for (Problem problem : problems) {
+                            for (Problem problemToCompare : problemsToCompare) {
+                                if (problem.getTitle().equals(problemToCompare.getTitle())
+                                        && (problem.getCheck() != problemToCompare.getCheck())) {
+                                    problem.setCheck(problemToCompare.getCheck());
+                                } else if (problem.getTitle().equals(problemToCompare.getTitle())
+                                        && (problem.getCode() != null && problem.getCode().equals(problemToCompare.getCode()))) {
+                                    problemToCompare.setCode(problem.getCode());
+                                }
+                            }
+                        }
+                    }
+
+                    // TODO 3
+                    problems.forEach(problem -> {
+                        System.out.println(3);
+                        System.out.println(problem.getTitle());
+                        System.out.println(problem.getCode());
+                    });
+
+                    compareStudent.setProblemList(problems);
                     message.setProblems(problems);
                     send(message);
                     break;
@@ -305,11 +345,23 @@ public class Server {
 
                 case SEND_CODE_AND_RESULT:
                     problemsForCheck = message.getProblems();
-                    studentList.forEach(student -> {
+
+                    Student compareStudent1 = null;
+
+                    for (Student student : studentList) {
                         if (student.getUser().getId().equals(message.getUser().getId())) {
-                            student.setProblemList(message.getProblems());
+                            compareStudent1 = student;
                         }
-                    });
+                    }
+
+                    for (Problem problem : compareStudent1.getProblemList()) {
+                        for (Problem problemToCompare : problemsForCheck) {
+                            if (problem.getTitle().equals(problemToCompare.getTitle())) {
+                                problem.setCode(problemToCompare.getCode());
+                                problem.setRunResult(problemToCompare.getRunResult());
+                            }
+                        }
+                    }
                     break;
 
                 case SIGNIN:

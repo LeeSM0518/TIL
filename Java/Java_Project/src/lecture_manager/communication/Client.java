@@ -116,13 +116,6 @@ public class Client {
         return receiveMessage.getResult();
     }
 
-    public List<Problem> requestCheckList(Message message) {
-        send(message);
-        Message receiveMessage = returnMessage();
-        this.problems = receiveMessage.getProblems();
-        return problems;
-    }
-
     private Result messageProcess(Message message) {
         switch (message.getType()) {
             case CONNECT:
@@ -145,6 +138,7 @@ public class Client {
             e.printStackTrace();
             return null;
         }
+
         return this.students;
     }
 

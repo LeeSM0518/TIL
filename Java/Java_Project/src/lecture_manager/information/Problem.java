@@ -17,8 +17,9 @@ public class Problem implements Serializable {
         this.check = false;
     }
 
-    public Problem(String title, String code, String runResult) {
+    public Problem(String title, String context, String code, String runResult) {
         this.title = title;
+        this.context = context;
         this.code = code;
         this.runResult = runResult;
     }

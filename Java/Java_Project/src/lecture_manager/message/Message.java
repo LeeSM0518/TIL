@@ -38,7 +38,6 @@ public class Message implements Serializable {
     public void setProblemsRequest(List<Problem> problems) {
         this.type = Type.REQUEST_PROBLEMS;
         this.problems = problems;
-        this.user = user;
     }
 
     public void setConnectMessage(int targetNumber) {

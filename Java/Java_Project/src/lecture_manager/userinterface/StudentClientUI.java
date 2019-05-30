@@ -104,33 +104,48 @@ public class StudentClientUI extends JFrame {
         runButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Problem problem = problemsInf.get(problemList.getSelectedIndex());
+                if (problemList.getSelectedIndex() == -1) {
+                    JOptionPane.showMessageDialog(null,
+                            "문제를 눌러주세요.",
+                            "경고",
+                            JOptionPane.WARNING_MESSAGE);
+                } else {
+                    Problem problem = problemsInf.get(problemList.getSelectedIndex());
 
-                problem.setCode(codeInputTextArea.getText());
-                problem.setRunResult(resultTextArea.getText());
+                    problem.setCode(codeInputTextArea.getText());
+                    problem.setRunResult(resultTextArea.getText());
 
-                problemsInf.set(problemList.getSelectedIndex(), problem);
-                runCode(codeInputTextArea.getText());
+                    problemsInf.set(problemList.getSelectedIndex(), problem);
+                    runCode(codeInputTextArea.getText());
+                }
+
             }
         });
 
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Message message = new Message();
-                Problem problem = problemsInf.get(problemList.getSelectedIndex());
+                if (problemList.getSelectedIndex() == -1) {
+                    JOptionPane.showMessageDialog(null,
+                            "문제를 눌러주세요.",
+                            "경고",
+                            JOptionPane.WARNING_MESSAGE);
+                } else {
+                    Message message = new Message();
+                    Problem problem = problemsInf.get(problemList.getSelectedIndex());
 
-                problem.setCode(codeInputTextArea.getText());
-                problem.setRunResult(resultTextArea.getText());
+                    problem.setCode(codeInputTextArea.getText());
+                    problem.setRunResult(resultTextArea.getText());
 
-                problemsInf.set(problemList.getSelectedIndex(), problem);
+                    problemsInf.set(problemList.getSelectedIndex(), problem);
 
-                message.setSendCode(problemsInf);
-                client.sendCodeAndRunResult(message);
-                JOptionPane.showMessageDialog(null,
-                        "Code & RunResult 전달이 완료되었습니다.",
-                        "제출",
-                        JOptionPane.INFORMATION_MESSAGE);
+                    message.setSendCode(problemsInf);
+                    client.sendCodeAndRunResult(message);
+                    JOptionPane.showMessageDialog(null,
+                            "Code & RunResult 전달이 완료되었습니다.",
+                            "제출",
+                            JOptionPane.INFORMATION_MESSAGE);
+                }
             }
         });
 

@@ -36,6 +36,7 @@ public class ProfessorCheckProblemUI extends JFrame {
     private JPanel buttonPanel;
     private JList problemCountList;
     private JLabel problemCountLabel;
+    private JScrollPane problemCountScrollPane;
     private List<Student> studentArrayList;
 
 
@@ -106,6 +107,10 @@ public class ProfessorCheckProblemUI extends JFrame {
                 Message message = new Message();
                 message.setSendStudentList(studentArrayList);
                 client.send(message);
+                JOptionPane.showMessageDialog(null,
+                        "승인이 완료되었습니다.\n새로 고침을 눌러주세요.",
+                        "승인",
+                        JOptionPane.INFORMATION_MESSAGE);
             }
         });
 
@@ -120,6 +125,10 @@ public class ProfessorCheckProblemUI extends JFrame {
                 Message message = new Message();
                 message.setSendStudentList(studentArrayList);
                 client.send(message);
+                JOptionPane.showMessageDialog(null,
+                        "거부가 완료되었습니다.\n새로 고침을 눌러주세요.",
+                        "거부",
+                        JOptionPane.INFORMATION_MESSAGE);
            }
         });
 
@@ -128,17 +137,24 @@ public class ProfessorCheckProblemUI extends JFrame {
         problemComboBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    Problem problem = studentArrayList
-                            .get(studentList.getSelectedIndex())
-                            .getProblemList()
-                            .get(problemComboBox.getSelectedIndex());
-                    codeTextArea.setText(problem.getCode());
-                    resultTextArea.setText(problem.getRunResult());
-                } catch (Exception e2) {
-                    e2.printStackTrace();
-                    codeTextArea.setText("");
-                    resultTextArea.setText("");
+                if (studentList.getSelectedIndex() == -1) {
+                    JOptionPane.showMessageDialog(null,
+                            "학생을 눌러주세요.",
+                            "경고",
+                            JOptionPane.WARNING_MESSAGE);
+                } else {
+                    try {
+                        Problem problem = studentArrayList
+                                .get(studentList.getSelectedIndex())
+                                .getProblemList()
+                                .get(problemComboBox.getSelectedIndex());
+                        codeTextArea.setText(problem.getCode());
+                        resultTextArea.setText(problem.getRunResult());
+                    } catch (Exception e2) {
+                        e2.printStackTrace();
+                        codeTextArea.setText("");
+                        resultTextArea.setText("");
+                    }
                 }
             }
         });
