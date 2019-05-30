@@ -61,12 +61,24 @@ public class ProfessorSubmissionUI extends JFrame {
         submissionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Problem problem = new Problem(problemTitleTextField.getText(), problemContextTextArea.getText());
-                problemArrayList.add(problem);
-                model.addElement(problemTitleTextField.getText());
-                problemTitleTextField.setText("");
-                problemContextTextArea.setText("");
-                sendProblems();
+                if (!(problemTitleTextField.getText().equals("") || problemContextTextArea.getText().equals(""))) {
+                    Problem problem = new Problem(problemTitleTextField.getText(), problemContextTextArea.getText());
+                    problemArrayList.add(problem);
+                    model.addElement(problemTitleTextField.getText());
+                    problemTitleTextField.setText("");
+                    problemContextTextArea.setText("");
+                    sendProblems();
+
+                    JOptionPane.showMessageDialog(null,
+                            "문제 제출이 완료되었습니다.",
+                            "제출",
+                            JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null,
+                            "제목이나 내용을 입력해주세요.",
+                            "경고",
+                            JOptionPane.WARNING_MESSAGE);
+                }
             }
         });
 

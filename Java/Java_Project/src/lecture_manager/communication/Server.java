@@ -251,6 +251,10 @@ public class Server {
         void messageProcess(Message message) {
             Result result;
             switch (message.getType()) {
+                case SEND_STUDENTLIST:
+                    studentList = message.getStudents();
+                    break;
+
                 case REQUEST_CHECKLIST:
                     // TODO 체크 리스트 요청
                     break;
@@ -274,11 +278,22 @@ public class Server {
                         }
                     }
 
-                    studentList.forEach(student -> {
-                        if (student.getUser().getId().equals(message.getUser().getId())) {
-                            student.setProblemList(message.getProblems());
-                        }
-                    });
+                    // TODO 문제와 문제 체크 구분 필요
+                    //  requestProblems 구현
+
+//                    Student subStudent = (Student) studentList.stream()
+//                            .filter(s -> s.getUser().getId().equals(message.getUser().getId()))
+//                            .collect()
+//
+//                    List<Problem> subProblems = subStudent.getProblemList();
+//
+//                    System.out.println(subProblems.size());
+//
+//                    if (subProblems.size() == 0) {
+//                        subStudent.setProblemList(problems);
+//                    } else {
+//
+//                    }
 
                     message.setProblems(problems);
                     send(message);

@@ -33,6 +33,9 @@ public class ProfessorCheckProblemUI extends JFrame {
     private JComboBox problemComboBox;
     private JList studentList;
     private JScrollPane StudentListScrollPane;
+    private JPanel buttonPanel;
+    private JList problemCountList;
+    private JLabel problemCountLabel;
     private List<Student> studentArrayList;
 
 
@@ -56,10 +59,15 @@ public class ProfessorCheckProblemUI extends JFrame {
                 if (e.getClickCount() == 2) {
                     DefaultComboBoxModel model = new DefaultComboBoxModel<>();
 
-                    List<Problem> problems = studentArrayList.get(studentList.getSelectedIndex()).getProblemList();
+                    List<Problem> problems = studentArrayList.get(
+                            studentList.getSelectedIndex()).getProblemList();
 
                     problems.forEach(problem -> {
-                        model.addElement(problem.getTitle());
+                        if (problem.getCheck()) {
+                            model.addElement(problem.getTitle() + "(승인완료)");
+                        } else {
+                            model.addElement(problem.getTitle());
+                        }
                     });
 
                     problemComboBox.setModel(model);
@@ -90,14 +98,28 @@ public class ProfessorCheckProblemUI extends JFrame {
         permissionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO 승인 버튼 클릭시 기능 구현
+                studentArrayList.get(studentList.getSelectedIndex())
+                        .getProblemList()
+                        .get(problemComboBox.getSelectedIndex())
+                        .setCheck(true);
+
+                Message message = new Message();
+                message.setSendStudentList(studentArrayList);
+                client.send(message);
             }
         });
 
         denialButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO 불가 버튼 클릭시 기능 구현
+                studentArrayList.get(studentList.getSelectedIndex())
+                        .getProblemList()
+                        .get(problemComboBox.getSelectedIndex())
+                        .setCheck(false);
+
+                Message message = new Message();
+                message.setSendStudentList(studentArrayList);
+                client.send(message);
            }
         });
 
@@ -107,7 +129,10 @@ public class ProfessorCheckProblemUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    Problem problem = studentArrayList.get(studentList.getSelectedIndex()).getProblemList().get(problemComboBox.getSelectedIndex());
+                    Problem problem = studentArrayList
+                            .get(studentList.getSelectedIndex())
+                            .getProblemList()
+                            .get(problemComboBox.getSelectedIndex());
                     codeTextArea.setText(problem.getCode());
                     resultTextArea.setText(problem.getRunResult());
                 } catch (Exception e2) {
@@ -122,6 +147,7 @@ public class ProfessorCheckProblemUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 settingStudentList();
+                settingProblemCountList();
             }
         });
 
@@ -155,6 +181,42 @@ public class ProfessorCheckProblemUI extends JFrame {
             studentCount.setText("학생 수 : " + studentArrayList.size());
 
             studentList.setModel(model);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void settingProblemCountList() {
+        try {
+            if (studentArrayList == null) {
+                JOptionPane.showMessageDialog(null,
+                        "학생이 없습니다.",
+                        "경고",
+                        JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            DefaultListModel model = new DefaultListModel();
+
+            studentArrayList.forEach(student -> {
+                List<Problem> problems = student.getProblemList();
+
+                int ok = 0;
+                int problemCount = 0;
+
+                if (!(problems == null || problems.size() == 0)) {
+                    problemCount = problems.size();
+
+                    ok = (int) problems.stream().filter(Problem::getCheck).count();
+                }
+
+                String element = ok + " / " + problemCount;
+
+                model.addElement(element);
+            });
+
+            problemCountList.setModel(model);
 
         } catch (Exception e) {
             e.printStackTrace();

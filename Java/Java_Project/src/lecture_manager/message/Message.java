@@ -68,6 +68,11 @@ public class Message implements Serializable {
         this.problems = problems;
     }
 
+    public void setSendStudentList(List<Student> studentList) {
+        this.type = Type.SEND_STUDENTLIST;
+        this.students = studentList;
+    }
+
     public void setRequestCheckList(List<Problem> problems) {
         this.type = Type.REQUEST_CHECKLIST;
         this.problems = problems;
