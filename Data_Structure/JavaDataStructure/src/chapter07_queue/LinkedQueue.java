@@ -7,6 +7,8 @@ public class LinkedQueue {
     private LinkedNode rear;        // rear 노드
 
     public LinkedQueue() {
+        front = null;
+        rear = null;
         currentCount = 0;
     }
 
