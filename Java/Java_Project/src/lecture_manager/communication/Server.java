@@ -13,7 +13,9 @@ import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -24,12 +26,14 @@ public class Server {
     private ExecutorService executorService;
     private ServerSocket serverSocket;
     private List<SocketInServer> connections = new ArrayList<>();
-    private Database database = new Database();
+    protected Database database = new Database();
     private List<Problem> problemsArrayList = new ArrayList<>();
     private List<Student> studentList = new ArrayList<>();
     private static Student delStudent = null;
+    protected InetSocketAddress inetSocketAddress;
+    protected static Queue<Message> waitingMessages = new LinkedList<>();
 
-    private void startServer() {
+    protected void startServer() {
 
         executorService = Executors.newFixedThreadPool(
                 Runtime.getRuntime().availableProcessors()
@@ -58,6 +62,7 @@ public class Server {
 
                     Message message = new Message();
                     message.setConnectMessage(socketCount);
+                    waitingMessages.add(message);
 
                     sendToTarget(message);
 
@@ -99,7 +104,7 @@ public class Server {
 
     }
 
-    void sendToTarget(Message message) {
+    private void sendToTarget(Message message) {
         switch (message.getType()) {
             case SEND_CODE_AND_RESULT:
                 connections.forEach(connection -> {
@@ -128,13 +133,13 @@ public class Server {
         User user;
         List<Problem> problemsForCheck = new ArrayList<>();
 
-        SocketInServer(Socket socket, int socketNumber) {
+        private SocketInServer(Socket socket, int socketNumber) {
             this.socket = socket;
             this.socketNumber = socketNumber;
             receive();
         }
 
-        void send(Message message) {
+        private void send(Message message) {
             Runnable runnable = () -> {
                 try {
                     OutputStream outputStream = socket.getOutputStream();
@@ -157,7 +162,7 @@ public class Server {
             executorService.submit(runnable);
         }
 
-        void receive() {
+        private void receive() {
             Runnable runnable = () -> {
                 try {
                     while (true) {
@@ -165,6 +170,7 @@ public class Server {
                         ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
 
                         Message message = (Message) objectInputStream.readObject();
+                        waitingMessages.add(message);
 
                         System.out.println(message.getType());
 
@@ -193,7 +199,7 @@ public class Server {
             executorService.submit(runnable);
         }
 
-        void removeProblem(List<Problem> problems) {
+        private void removeProblem(List<Problem> problems) {
             String delTitle;
             String delContext;
             boolean check = false;
@@ -223,7 +229,7 @@ public class Server {
             }
         }
 
-        void addProblem(List<Problem> problems) {
+        private void addProblem(List<Problem> problems) {
             String addTitle = null;
             String addContext = null;
             String addCode = null;
@@ -257,15 +263,11 @@ public class Server {
 
         }
 
-        void messageProcess(Message message) {
+        private void messageProcess(Message message) {
             Result result;
             switch (message.getType()) {
                 case SEND_STUDENTLIST:
                     studentList = message.getStudents();
-                    break;
-
-                case REQUEST_CHECKLIST:
-                    // TODO 체크 리스트 요청
                     break;
 
                 case REQUEST_STUDENTS:
@@ -277,13 +279,6 @@ public class Server {
                 case REQUEST_PROBLEMS:
                     List<Problem> problems = message.getProblems();
 
-                    // TODO 1
-                    problems.forEach(problem -> {
-                        System.out.println(1);
-                        System.out.println(problem.getTitle());
-                        System.out.println(problem.getCode());
-                    });
-
                     if (problems.size() > problemsArrayList.size()) {
                         removeProblem(problems);
                     } else if (problems.size() < problemsArrayList.size()) {
@@ -294,13 +289,6 @@ public class Server {
                             addProblem(problems);
                         }
                     }
-
-                    // TODO 2
-                    problems.forEach(problem -> {
-                        System.out.println(2);
-                        System.out.println(problem.getTitle());
-                        System.out.println(problem.getCode());
-                    });
 
                     Student compareStudent = null;
 
@@ -326,13 +314,6 @@ public class Server {
                             }
                         }
                     }
-
-                    // TODO 3
-                    problems.forEach(problem -> {
-                        System.out.println(3);
-                        System.out.println(problem.getTitle());
-                        System.out.println(problem.getCode());
-                    });
 
                     compareStudent.setProblemList(problems);
                     message.setProblems(problems);
@@ -390,11 +371,6 @@ public class Server {
             }
         }
 
-    }
-
-    public static void main(String[] args) {
-        Server server = new Server();
-        server.startServer();
     }
 
 }
