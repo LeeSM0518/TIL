@@ -7,6 +7,7 @@ import lecture_manager.database.User;
 import lecture_manager.message.Message;
 import lecture_manager.information.Problem;
 import lecture_manager.information.Student;
+import lecture_manager.message.Type;
 
 import java.io.*;
 import java.net.InetSocketAddress;
@@ -23,14 +24,14 @@ public class Server {
 
     private static int socketCount = 1;
 
-    private ExecutorService executorService;
+    protected ExecutorService executorService;
     private ServerSocket serverSocket;
     private List<SocketInServer> connections = new ArrayList<>();
     protected Database database = new Database();
     private List<Problem> problemsArrayList = new ArrayList<>();
     private List<Student> studentList = new ArrayList<>();
     private static Student delStudent = null;
-    protected InetSocketAddress inetSocketAddress;
+    protected InetSocketAddress inetSocketAddress = null;
     protected static Queue<Message> waitingMessages = new LinkedList<>();
 
     protected void startServer() {
@@ -41,7 +42,7 @@ public class Server {
 
         try {
             serverSocket = new ServerSocket();
-            serverSocket.bind(new InetSocketAddress("localhost", 5001));
+            serverSocket.bind(inetSocketAddress);
         } catch (IOException e) {
             if (!serverSocket.isClosed()) {
                 stopServer();
@@ -79,7 +80,7 @@ public class Server {
         executorService.submit(runnable);
     }
 
-    private void stopServer() {
+    protected void stopServer() {
         try {
             connections.forEach(client -> {
                 try {
@@ -100,6 +101,8 @@ public class Server {
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("stopServer 에러");
+            Message message = new Message(Type.STOP_SERVER);
+            waitingMessages.add(message);
         }
 
     }
@@ -171,6 +174,7 @@ public class Server {
 
                         Message message = (Message) objectInputStream.readObject();
                         waitingMessages.add(message);
+                        System.out.println(waitingMessages.size());
 
                         System.out.println(message.getType());
 

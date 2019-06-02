@@ -6,10 +6,7 @@ import lecture_manager.message.Message;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +52,13 @@ public class StudentClientUI extends JFrame {
     public StudentClientUI(Client client) {
         this.client = client;
         add(mainPanel);
+
+        this.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                client.stopClient();
+                System.exit(1);
+            }
+        });
 
         setTitle("Student Client");
         setSize(1600, 1000);

@@ -21,13 +21,18 @@ public class Client {
     private User user;
     private List<Problem> problems = new ArrayList<>();
     private List<Student> students = new ArrayList<>();
+    protected InetSocketAddress inetSocketAddress = null;
+
+    public void ipAssign(InetSocketAddress inetSocketAddress) {
+        // TODO UI에서 주소 할당하는 기능 구현, UI에서 할당을 마친 뒤 클라이언트로 전달
+        this.inetSocketAddress = inetSocketAddress;
+    }
 
     public void startClient() {
         Thread thread = new Thread(() -> {
             try {
                 socket = new Socket();
-                socket.connect(new InetSocketAddress("localhost", 5001));
-
+                socket.connect(inetSocketAddress);
                 System.out.println("[연결 완료]");
             } catch (Exception e) {
                 System.out.println("[startClient Error]");
@@ -43,7 +48,7 @@ public class Client {
         thread.start();
     }
 
-    private void stopClient() {
+    public void stopClient() {
         try {
             System.out.println("[연결 끊음]");
             if (socket != null && !socket.isClosed()) socket.close();

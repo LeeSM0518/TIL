@@ -19,6 +19,12 @@ public class Message implements Serializable {
     private List<Problem> problems;
     private List<Student> students;
 
+    public Message() {}
+
+    public Message(Type type) {
+        this.type = type;
+    }
+
     public User getUser() {
         return user;
     }

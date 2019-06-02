@@ -6,6 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class ProfessorChoiceUI extends JFrame {
     private JPanel mainPanel;
@@ -41,6 +43,13 @@ public class ProfessorChoiceUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 professorCheckProblemUI.visible();
+            }
+        });
+
+        this.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                client.stopClient();
+                System.exit(1);
             }
         });
     }

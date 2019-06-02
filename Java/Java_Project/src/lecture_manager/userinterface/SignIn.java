@@ -9,6 +9,7 @@ import lecture_manager.message.Message;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.InetSocketAddress;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 

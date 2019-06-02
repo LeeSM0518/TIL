@@ -1,44 +1,66 @@
 package lecture_manager.userinterface;
 
 import lecture_manager.communication.Server;
+import lecture_manager.message.Message;
+import lecture_manager.message.Type;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.UnknownHostException;
 
 public class ServerUI extends Server {
     private JPanel mainPanel;
     private JPanel inPanel;
-    private JPanel profilePanel;
-    private JLabel profileLabel;
     private JPanel serverStatePanel;
-    private JPanel profileButtonPanel;
-    private JPanel profileInformationPanel;
-    private JList ProfileList;
-    private JScrollPane profileScrollPane;
-    private JButton addProfileButton;
-    private JButton removeProfileButton;
     private JLabel serverStateLabel;
     private JPanel serverStateInformationPanel;
     private JPanel serverStateButtonPanel;
-    private JList ServerStateList;
+    private JList serverStateList;
     private JScrollPane serverStateScrollPane;
     private JButton serverIpAssignButton;
     private JButton serverStartButton;
+
+    private static DefaultListModel serverStateListModel;
 
     public ServerUI() {
         JFrame mainFrame = new JFrame("서버");
         mainFrame.add(mainPanel);
 
-        serverIpAssignButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
+        mainFrame.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) {
+                executorService.shutdownNow();
+                stopServer();
+                System.exit(1);
             }
         });
 
-        mainFrame.setSize(1600, 800);
+        serverStateListModel = new DefaultListModel<java.io.Serializable>();
+
+        serverStateList.setModel(serverStateListModel);
+
+        serverIpAssignButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                serverIpAssign();
+                serverStateListModel.addElement("Server IP : " + inetSocketAddress.getAddress());
+                serverStateListModel.addElement("Server Port : " + inetSocketAddress.getPort());
+            }
+        });
+
+        serverStartButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                startServerInUI();
+            }
+        });
+
+        mainFrame.setSize(800, 800);
 
         Dimension frameSize = mainFrame.getSize();
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -48,7 +70,35 @@ public class ServerUI extends Server {
     }
 
     private void serverIpAssign() {
-        // TODO 현재 사용 중인 PC로 서버 IP 지정 기능 구현
+        try {
+            InetAddress local = InetAddress.getLocalHost();
+            inetSocketAddress = new InetSocketAddress(local.getHostAddress(), 5001);
+            JOptionPane.showMessageDialog(null,
+                    "IP 할당을 완료했습니다.",
+                    "완료",
+                    JOptionPane.INFORMATION_MESSAGE);
+        } catch (UnknownHostException e) {
+            JOptionPane.showMessageDialog(null,
+                    "IP 할당을 실패했습니다.",
+                    "실패",
+                    JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
+    private void startServerInUI() {
+        if (inetSocketAddress != null) {
+            startServer();
+            JOptionPane.showMessageDialog(null,
+                    "서버가 실행되었습니다.",
+                    "성공",
+                    JOptionPane.INFORMATION_MESSAGE);
+            pollWaitingMessage();
+        } else {
+            JOptionPane.showMessageDialog(null,
+                    "서버 실행을 실패했습니다.",
+                    "실패",
+                    JOptionPane.WARNING_MESSAGE);
+        }
     }
 
     private void loadingUserInf() {
@@ -69,13 +119,31 @@ public class ServerUI extends Server {
     }
 
     private void pollWaitingMessage() {
-        // TODO 큐에서 기다리고 있는 메시지 꺼내서 serverStateList 에 추가 기능 구현 (스레드로 구현)
+        Runnable runnable = () -> {
+            while (true) {
+                try {
+                    Thread.sleep(1);
+                    if (waitingMessages.size() != 0) {
+                        System.out.println(waitingMessages.size());
+                        Message message = waitingMessages.poll();
+                        serverStateListModel.addElement(message.getType());
+                        if (message.getType() == Type.STOP_SERVER) {
+                            JOptionPane.showMessageDialog(null,
+                                    "서버가 종료되었습니다.",
+                                    "서버 종료",
+                                    JOptionPane.WARNING_MESSAGE);
+                            break;
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        executorService.submit(runnable);
     }
 
-
-
-    public static void main(String[] args) {
+    public static void main(String[] args){
         new ServerUI();
     }
-
 }

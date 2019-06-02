@@ -4,9 +4,9 @@ import lecture_manager.communication.Client;
 
 public class SubUI {
     static Client client = new Client();
-    static SignIn signIn = new SignIn(client);
+    static IpAssignUI ipAssignUI = new IpAssignUI(client);
 
     public static void main(String[] args) {
-        signIn.visibleSignIn();
+        ipAssignUI.visibleUI();
     }
 }
