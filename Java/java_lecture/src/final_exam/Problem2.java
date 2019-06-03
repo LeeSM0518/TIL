@@ -24,6 +24,43 @@ public class Problem2 {
         mainFrame.setSize(800, 600);
         mainFrame.add(mainPanel);
 
+        mainFrame.addWindowListener(new WindowListener() {
+            @Override
+            public void windowOpened(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+                System.exit(0);
+            }
+
+            @Override
+            public void windowIconified(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowActivated(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+
+            }
+        });
+
         underPanel.add(calButton, BorderLayout.WEST);
         underPanel.add(countLabel, BorderLayout.CENTER);
 
@@ -80,6 +117,7 @@ public class Problem2 {
 
                 while (true) {
                     try {
+                        wordScanner.next();
                         wordCount++;
                     } catch (Exception e2) {
                         break;
