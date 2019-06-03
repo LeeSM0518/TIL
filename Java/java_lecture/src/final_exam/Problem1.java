@@ -1,8 +1,6 @@
 package final_exam;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -25,7 +23,10 @@ public class Problem1 {
     JLabel laLabel = new JLabel();
     JLabel newYorkLabel = new JLabel();
 
-    public String currentTime;
+    public String currentSeoulTime;
+    public String currentChitTime;
+    public String currentLATime;
+    public String currentNKTIme;
     public String[] currentTimeSplits;
 
     public void currentTimeUpdate() {
@@ -33,39 +34,20 @@ public class Problem1 {
         SimpleDateFormat dayTime = new SimpleDateFormat(
                 "yyyy년 MM월 dd일 HH시 mm분 ss초"
         );
-        currentTime = dayTime.format(new Date(time));
-        seoulTimeLabel.setText(currentTime);
+        Date currentSeoulDate = new Date(time);
+        Date currentChitDate = new Date(time - 10800000);
+        Date currentLADate = new Date(time - 57600000);
+        Date currentNKDate = new Date(time - 46800000);
 
-        currentTimeSplits = currentTime.split(" ");
-        int seoulHour = Integer.parseInt(currentTimeSplits[3].split("시")[0]);
+        currentSeoulTime = dayTime.format(currentSeoulDate);
+        currentChitTime = dayTime.format(currentChitDate);
+        currentLATime = dayTime.format(currentLADate);
+        currentNKTIme = dayTime.format(currentNKDate);
 
-        int chittagongHour = seoulHour - 3;
-        currentTimeSplits[3] = chittagongHour + "시";
-        String chittagongTime = "";
-
-        for (String split : currentTimeSplits) {
-            chittagongTime += split + " ";
-        }
-        chittagongTimeLabel.setText(chittagongTime);
-
-        int laHour = seoulHour - 16;
-        currentTimeSplits[3] = laHour + "시";
-        String laTime = "";
-
-        for (String split : currentTimeSplits) {
-            laTime += split + " ";
-        }
-        laLabel.setText(laTime);
-
-        int newYorkHour = seoulHour - 13;
-
-        currentTimeSplits[3] = newYorkHour + "시";
-        String newYorkTime = "";
-
-        for (String split : currentTimeSplits) {
-            newYorkTime += split + " ";
-        }
-        newYorkLabel.setText(newYorkTime);
+        seoulTimeLabel.setText(currentSeoulTime);
+        chittagongTimeLabel.setText(currentChitTime);
+        laLabel.setText(currentLATime);
+        newYorkLabel.setText(currentNKTIme);
     }
 
     public Problem1() {
