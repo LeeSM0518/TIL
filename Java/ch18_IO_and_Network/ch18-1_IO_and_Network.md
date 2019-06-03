@@ -1188,6 +1188,8 @@ fr.close();
 
 * **예제) 텍스트 파일 읽기**
 
+  
+  
   ```java
   package file;
   
@@ -1209,11 +1211,11 @@ fr.close();
           }
           fr.close();
       }
-  }
+}
   ```
 
   **실행 결과**
-
+  
   ```
   package file;
   
