@@ -1,0 +1,139 @@
+package final_exam;
+
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class Problem1 {
+
+    JFrame mainFrame = new JFrame("World Clock Window");
+
+    JTabbedPane jTabbedPane = new JTabbedPane();
+
+    JPanel seoulPanel = new JPanel(new BorderLayout());
+    JPanel chittagongPanel = new JPanel(new BorderLayout());
+    JPanel laPanel = new JPanel(new BorderLayout());
+    JPanel newYorkPanel = new JPanel(new BorderLayout());
+
+    JLabel seoulTimeLabel = new JLabel();
+    JLabel chittagongTimeLabel = new JLabel();
+    JLabel laLabel = new JLabel();
+    JLabel newYorkLabel = new JLabel();
+
+    public String currentTime;
+    public String[] currentTimeSplits;
+
+    public void currentTimeUpdate() {
+        long time = System.currentTimeMillis();
+        SimpleDateFormat dayTime = new SimpleDateFormat(
+                "yyyy년 MM월 dd일 HH시 mm분 ss초"
+        );
+        currentTime = dayTime.format(new Date(time));
+        seoulTimeLabel.setText(currentTime);
+
+        currentTimeSplits = currentTime.split(" ");
+        int seoulHour = Integer.parseInt(currentTimeSplits[3].split("시")[0]);
+
+        int chittagongHour = seoulHour - 3;
+        currentTimeSplits[3] = chittagongHour + "시";
+        String chittagongTime = "";
+
+        for (String split : currentTimeSplits) {
+            chittagongTime += split + " ";
+        }
+        chittagongTimeLabel.setText(chittagongTime);
+
+        int laHour = seoulHour - 16;
+        currentTimeSplits[3] = laHour + "시";
+        String laTime = "";
+
+        for (String split : currentTimeSplits) {
+            laTime += split + " ";
+        }
+        laLabel.setText(laTime);
+
+        int newYorkHour = seoulHour - 13;
+
+        currentTimeSplits[3] = newYorkHour + "시";
+        String newYorkTime = "";
+
+        for (String split : currentTimeSplits) {
+            newYorkTime += split + " ";
+        }
+        newYorkLabel.setText(newYorkTime);
+    }
+
+    public Problem1() {
+        mainFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        mainFrame.setSize(600,200);
+
+        Font font = new Font("Helvetica", Font.BOLD, 27);
+
+        seoulTimeLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        seoulTimeLabel.setVerticalAlignment(SwingConstants.CENTER);
+        seoulTimeLabel.setFont(font);
+
+        chittagongTimeLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        chittagongTimeLabel.setVerticalAlignment(SwingConstants.CENTER);
+        chittagongTimeLabel.setFont(font);
+
+        newYorkLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        newYorkLabel.setVerticalAlignment(SwingConstants.CENTER);
+        newYorkLabel.setFont(font);
+
+        laLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        laLabel.setVerticalAlignment(SwingConstants.CENTER);
+        laLabel.setFont(font);
+
+        seoulPanel.add(seoulTimeLabel, BorderLayout.CENTER);
+        chittagongPanel.add(chittagongTimeLabel, BorderLayout.CENTER);
+        newYorkPanel.add(newYorkLabel, BorderLayout.CENTER);
+        laPanel.add(laLabel, BorderLayout.CENTER);
+
+        jTabbedPane.add("서울", seoulPanel);
+        jTabbedPane.add("치타공", chittagongPanel);
+        jTabbedPane.add("LA", laPanel);
+        jTabbedPane.add("뉴욕", newYorkPanel);
+
+        mainFrame.add(jTabbedPane);
+
+        seoulPanel.setBackground(Color.BLACK);
+        chittagongPanel.setBackground(Color.BLACK);
+        laPanel.setBackground(Color.BLACK);
+        newYorkPanel.setBackground(Color.BLACK);
+
+        mainFrame.setVisible(true);
+    }
+
+    public void changeLabelColor() throws InterruptedException {
+        Color[] colors = new Color[]{
+                Color.RED,
+                Color.GREEN,
+                Color.BLUE,
+                Color.CYAN,
+                Color.MAGENTA,
+                Color.YELLOW,
+                Color.WHITE
+        };
+        int i = 0;
+
+        while (true) {
+            currentTimeUpdate();
+            seoulTimeLabel.setForeground(colors[i % colors.length]);
+            chittagongTimeLabel.setForeground(colors[(i + 1) % colors.length]);
+            newYorkLabel.setForeground(colors[(i + 2) % colors.length]);
+            laLabel.setForeground(colors[(i + 3) % colors.length]);
+            Thread.sleep(1000);
+            i = (i + 1) % colors.length;
+        }
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        Problem1 problem1= new Problem1();
+        problem1.currentTimeUpdate();
+        problem1.changeLabelColor();
+    }
+}

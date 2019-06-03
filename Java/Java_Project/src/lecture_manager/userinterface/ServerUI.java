@@ -34,9 +34,7 @@ public class ServerUI extends Server {
 
         mainFrame.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-                executorService.shutdownNow();
-                stopServer();
-                System.exit(1);
+                System.exit(0);
             }
         });
 

@@ -25,7 +25,7 @@ public class IpAssignUI extends JFrame {
 
         this.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
-                System.exit(1);
+                System.exit(0);
             }
         });
 

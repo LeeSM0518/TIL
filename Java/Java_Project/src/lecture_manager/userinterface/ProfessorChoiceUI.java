@@ -49,7 +49,7 @@ public class ProfessorChoiceUI extends JFrame {
         this.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {
                 client.stopClient();
-                System.exit(1);
+                System.exit(0);
             }
         });
     }

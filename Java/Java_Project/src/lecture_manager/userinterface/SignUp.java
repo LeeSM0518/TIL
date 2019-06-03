@@ -94,8 +94,17 @@ public class SignUp {
         signup_bt.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (! String.valueOf(pw_fd.getPassword()).equals(String.valueOf(pw_check_fd.getPassword()))) {
+                if (!String.valueOf(pw_fd.getPassword()).equals(String.valueOf(pw_check_fd.getPassword()))) {
                     // TODO 비밀번호 재입력 실패 UI
+                    JOptionPane.showMessageDialog(null,
+                            "입력하신 비밀번호가 다릅니다.\n다시 입력해주세요.",
+                            "경고",
+                            JOptionPane.WARNING_MESSAGE);
+                } else if (signUpOption == null) {
+                    JOptionPane.showMessageDialog(null,
+                            "학생이나 교수를 선택해주세요.",
+                            "경고",
+                            JOptionPane.WARNING_MESSAGE);
                 } else {
                     User user = new User(signUpOption, name_fd.getText(), number_fd.getText(), String.valueOf(pw_fd.getPassword()));
                     Message message = new Message();
@@ -152,7 +161,9 @@ public class SignUp {
         frame.setContentPane(all_pn);
         frame.setSize(300, 200);
         frameSize = frame.getSize();
-        screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        screenSize = Toolkit.getDefaultToolkit().
+
+                getScreenSize();
         frame.setLocation((screenSize.width - frameSize.width) / 2, (screenSize.height - frameSize.height) / 2);
     }
 
