@@ -61,12 +61,17 @@ public class ProfessorSubmissionUI extends JFrame {
         submissionButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (!(problemTitleTextField.getText().equals("") || problemContextTextArea.getText().equals(""))) {
-                    Problem problem = new Problem(problemTitleTextField.getText(), problemContextTextArea.getText());
+                if (!(problemTitleTextField.getText().equals("") ||
+                        problemContextTextArea.getText().equals(""))) {
+
+                    Problem problem = new Problem(problemTitleTextField.getText(),
+                            problemContextTextArea.getText());
+
                     problemArrayList.add(problem);
                     model.addElement(problemTitleTextField.getText());
                     problemTitleTextField.setText("");
                     problemContextTextArea.setText("");
+
                     sendProblems();
 
                     JOptionPane.showMessageDialog(null,
