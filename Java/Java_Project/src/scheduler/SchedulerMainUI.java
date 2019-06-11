@@ -5,6 +5,10 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class SchedulerMainUI extends Scheduler {
     private Dimension dimension = new Dimension(600, 600);
@@ -12,7 +16,7 @@ public class SchedulerMainUI extends Scheduler {
     private String header[] = getDays();
     private String contents[][] = new String[24][8];
     private String times[] = getTimes();
-    private JLabel currentTime = new JLabel("현재 시간 : ");
+    private static JLabel currentTime = new JLabel("현재 시간 : ");
     private JButton addBtn = new JButton(getAddSchedule());
     private JButton adjustBtn = new JButton(getAdjustSchedule());
     private JButton deleteBtn = new JButton(getDeleteSchedule());
@@ -28,7 +32,21 @@ public class SchedulerMainUI extends Scheduler {
     JScrollPane scrollPane;
 
     public SchedulerMainUI() {
+        SimpleDateFormat dayTime = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    long time = System.currentTimeMillis();
+                    String str = dayTime.format(new Date(time));
+                    currentTime.setText("현재 시간 : " + str);
+                }
+            }
+        });
+        thread.start();
     }
+
+
 
     public void modelUpdate() {
         for (int i=0; i < times.length; i++) {
@@ -63,6 +81,42 @@ public class SchedulerMainUI extends Scheduler {
         panel1.add(exitBtn);
         panel.add(panel1, BorderLayout.SOUTH);
 
+        frame.addWindowListener(new WindowListener() {
+            @Override
+            public void windowOpened(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowClosing(WindowEvent e) {
+                System.exit(0);
+            }
+
+            @Override
+            public void windowClosed(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowIconified(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowDeiconified(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowActivated(WindowEvent e) {
+
+            }
+
+            @Override
+            public void windowDeactivated(WindowEvent e) {
+
+            }
+        });
         frame.add(panel, BorderLayout.CENTER);
         frame.pack();
         frame.setVisible(true);
@@ -153,7 +207,7 @@ public class SchedulerMainUI extends Scheduler {
 
     @Override
     public void exitScheduler() {
-        System.exit(1);
+        System.exit(0);
     }
 
     @Override
