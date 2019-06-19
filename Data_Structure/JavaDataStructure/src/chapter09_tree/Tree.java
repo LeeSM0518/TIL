@@ -2,15 +2,22 @@ package chapter09_tree;
 
 public class Tree {
 
-    private TreeNode rootNode;      // 루트 노드
+    private TreeNode rootNode;           // 루트 노드
+    private int nodeCount;
+    private int leftOrRight;
+
+    private final int LEFT = 0;
+    private final int RIGHT = 1;
 
     // 생성자, 루트 노드 생성
     public <T> Tree(T data) {
-        rootNode = new TreeNode<>(data);
+        rootNode = new TreeNode<>(data, 0);
+        nodeCount = 0;
+        leftOrRight = LEFT;
     }
 
     // 부모의 왼쪽 자식 노드 추가시
-    public <T> void addLeftChildNode(TreeNode parentNode, TreeNode newData) {
+    public void addLeftChildNode(TreeNode parentNode, TreeNode newData) {
         if (parentNode != null && parentNode.leftChild == null) {
             parentNode.leftChild = newData;
         } else {
@@ -19,11 +26,27 @@ public class Tree {
     }
 
     // 부모의 오른쪽 자식 노드 추가시
-    public <T> void addRightChildNode(TreeNode parentNode, TreeNode newData) {
+    public void addRightChildNode(TreeNode parentNode, TreeNode newData) {
         if (parentNode != null && parentNode.rightChild == null) {
             parentNode.rightChild = newData;
         } else {
             System.out.println("에러, 이미 노드가 존재합니다. addLeftChildNode()");
+        }
+    }
+
+    public <T> void sequentialAddNode(TreeNode node, T data) {
+        if (node != null) {
+            if (node.number == nodeCount / 2) {
+                if (leftOrRight == LEFT) {
+                    node.leftChild = new TreeNode<>(data, nodeCount + 1);
+                    leftOrRight = RIGHT;
+                } else {
+                    node.rightChild = new TreeNode<>(data, nodeCount + 1);
+                    leftOrRight = LEFT;
+                }
+            }
+            sequentialAddNode(node.leftChild, data);       // L
+            sequentialAddNode(node.rightChild, data);      // R
         }
     }
 
@@ -75,24 +98,29 @@ public class Tree {
 
     public static void main(String[] args) {
         Tree tree = new Tree('A');
-        TreeNode[] treeNodes = new TreeNode[]{
-                new TreeNode<>('B'),
-                new TreeNode<>('C'),
-                new TreeNode<>('D'),
-                new TreeNode<>('E'),
-                new TreeNode<>('F'),
-                new TreeNode<>('G')
-        };
+//        TreeNode[] treeNodes = new TreeNode[]{
+//                new TreeNode<>('B'),
+//                new TreeNode<>('C'),
+//                new TreeNode<>('D'),
+//                new TreeNode<>('E'),
+//                new TreeNode<>('F'),
+//                new TreeNode<>('G')
+//        };
+//        tree.addLeftChildNode(tree.getRootNode(), treeNodes[0]);
+//        tree.addRightChildNode(tree.getRootNode(), treeNodes[1]);
+//
+//        tree.addLeftChildNode(treeNodes[0], treeNodes[2]);
+//        tree.addRightChildNode(treeNodes[0], treeNodes[3]);
+//
+//        tree.addLeftChildNode(treeNodes[1], treeNodes[4]);
+//        tree.addRightChildNode(treeNodes[1], treeNodes[5]);
 
-        tree.addLeftChildNode(tree.getRootNode(), treeNodes[0]);
-        tree.addRightChildNode(tree.getRootNode(), treeNodes[1]);
+        char[] chars = new char[]{'B', 'C', 'D', 'E', 'F', 'G'};
 
-        tree.addLeftChildNode(treeNodes[0], treeNodes[2]);
-        tree.addRightChildNode(treeNodes[0], treeNodes[3]);
-
-        tree.addLeftChildNode(treeNodes[1], treeNodes[4]);
-        tree.addRightChildNode(treeNodes[1], treeNodes[5]);
-
+        for (char node : chars) {
+            tree.sequentialAddNode(tree.getRootNode(), node);
+            tree.nodeCount++;
+        }
 
         tree.preorderTraversalRecursiveTree();
         tree.inorderTraversalRecursiveTree();
