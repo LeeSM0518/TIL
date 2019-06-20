@@ -49,11 +49,10 @@ public class Tree {
             if (node.number == nodeCount / 2) {
                 if (leftOrRight == LEFT) {
                     node.leftChild = new TreeNode<>(data, nodeCount + 1);
-                    leftOrRight = RIGHT;
                 } else {
                     node.rightChild = new TreeNode<>(data, nodeCount + 1);
-                    leftOrRight = LEFT;
                 }
+                leftOrRight = (leftOrRight == LEFT) ? RIGHT : LEFT;
                 searchSuccess = true;
                 return;
             }
