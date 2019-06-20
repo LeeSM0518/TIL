@@ -48,9 +48,10 @@ public class CircularQueue extends ArrayQueue {
     @Override
     public void displayQueue() {
         if (!isEmpty()) {
-            for (int i = front + 1; i <= front + currentCount; i++) {
-                int position = i % maxCount;
-                System.out.println("[ " + position + " ] - [ " + nodes[position].data + " ]" );
+            int index = front + 1;
+            while (index != rear) {
+                System.out.println("[ " + index + " ] - [ " + nodes[index].data + " ]" );
+                index = (index + 1) % maxCount;
             }
         } else {
             System.out.println("큐가 비어 있습니다.");
