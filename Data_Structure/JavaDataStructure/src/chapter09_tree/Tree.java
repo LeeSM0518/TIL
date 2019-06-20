@@ -5,6 +5,7 @@ public class Tree {
     private TreeNode rootNode;           // 루트 노드
     private int nodeCount;
     private int leftOrRight;
+    private boolean searchSuccess;
 
     private final int LEFT = 0;
     private final int RIGHT = 1;
@@ -14,6 +15,7 @@ public class Tree {
         rootNode = new TreeNode<>(data, 0);
         nodeCount = 0;
         leftOrRight = LEFT;
+        searchSuccess = false;
     }
 
     // 부모의 왼쪽 자식 노드 추가시
@@ -34,7 +36,15 @@ public class Tree {
         }
     }
 
-    public <T> void sequentialAddNode(TreeNode node, T data) {
+    public <T> void sequentialAdd(T data) {
+        searchSuccess = false;
+        sequentialAddNode(this.getRootNode(), data);
+        this.nodeCount++;
+    }
+
+    private <T> void sequentialAddNode(TreeNode node, T data) {
+        if (searchSuccess) return;
+
         if (node != null) {
             if (node.number == nodeCount / 2) {
                 if (leftOrRight == LEFT) {
@@ -44,6 +54,8 @@ public class Tree {
                     node.rightChild = new TreeNode<>(data, nodeCount + 1);
                     leftOrRight = LEFT;
                 }
+                searchSuccess = true;
+                return;
             }
             sequentialAddNode(node.leftChild, data);       // L
             sequentialAddNode(node.rightChild, data);      // R
@@ -118,8 +130,7 @@ public class Tree {
         char[] chars = new char[]{'B', 'C', 'D', 'E', 'F', 'G'};
 
         for (char node : chars) {
-            tree.sequentialAddNode(tree.getRootNode(), node);
-            tree.nodeCount++;
+            tree.sequentialAdd(node);
         }
 
         tree.preorderTraversalRecursiveTree();
