@@ -8,33 +8,98 @@ public class Heap {
 
   public Heap(final int maxCount) {
     this.MAX_COUNT = maxCount;
-    nodes = new int[maxCount +1];
+    nodes = new int[maxCount + 1];
   }
 
   public void insertMaxHeap(final int value) {
-    if (currentCount == MAX_COUNT) {
-      System.out.println("히프가 가득 찼습니다.");
-      return;
+    if (heapFull()) return;
+
+    int i = ++currentCount;
+
+    while (i != 1 && value > nodes[i / 2]) {
+      nodes[i] = nodes[i / 2];
+      i /= 2;
     }
 
-      int i = ++currentCount;
+    nodes[i] = value;
+  }
 
-      while (i != 1 && value > nodes[i/2]) {
-        nodes[i] = nodes[i/2];
-        i /= 2;
-      }
+  public void insertMinHeap(final int value) {
+    if (heapFull()) return;
 
-      nodes[i] = value;
+    int i = ++currentCount;
+
+    while (i != 1 && value < nodes[i / 2]) {
+      nodes[i] = nodes[i / 2];
+      i /= 2;
+    }
+
+    nodes[i] = value;
   }
 
   public int removeMaxHeap() {
-    if (currentCount == 0) {
-      System.out.println("히프가 비어있습니다.");
-      return 0;
-    }
+    if (heapEmpty()) return 0;
 
     int parent = 1, child = 2;
     int returnNode = nodes[parent];
+    int lastNodeIndex = currentCount--;
+
+    while (child <= currentCount) {
+      if (child < currentCount && nodes[child] < nodes[child + 1]) child++;
+
+      if (nodes[lastNodeIndex] >= nodes[child]) break;
+
+      nodes[parent] = nodes[child];
+      parent = child;
+      child *= 2;
+    }
+
+    nodes[parent] = nodes[lastNodeIndex];
+    nodes[lastNodeIndex] = 0;
+
+    return returnNode;
+  }
+
+  public int removeMinHeap() {
+    if (heapEmpty()) return 0;
+
+    int parent = 1, child = 2;
+    int returnNode = nodes[parent];
+    int lastNodeIndex = currentCount--;
+
+    while (child <= currentCount) {
+      if (child < currentCount && nodes[child] > nodes[child + 1]) child++;
+
+      if (nodes[lastNodeIndex] <= nodes[child]) break;
+
+      nodes[parent] = nodes[child];
+      parent = child;
+      child *= 2;
+    }
+
+    nodes[parent] = nodes[lastNodeIndex];
+    nodes[lastNodeIndex] = 0;
+
+    return returnNode;
+  }
+
+  public void displayHeap() {
+    if (heapEmpty()) {
+      System.out.println("히프가 비어있습니다.");
+    } else {
+      for (int i = 1; i <= currentCount; i++) {
+        System.out.println("[" + i + "], " + nodes[i]);
+      }
+    }
+    System.out.println();
+  }
+
+  private boolean heapFull() {
+    return this.currentCount == MAX_COUNT;
+  }
+
+  private boolean heapEmpty() {
+    return this.currentCount == 0;
   }
 
   public int[] getNodes() {
@@ -44,13 +109,16 @@ public class Heap {
   public static void main(String[] args) {
     Heap heap = new Heap(5);
 
-    heap.insertMaxHeap(3);
-    heap.insertMaxHeap(1);
-    heap.insertMaxHeap(2);
+    heap.insertMinHeap(3);
+    heap.insertMinHeap(2);
+    heap.insertMinHeap(1);
 
-    for (int value : heap.getNodes()) {
-      System.out.println(value);
-    }
+    heap.displayHeap();
+
+    System.out.println(heap.removeMinHeap());
+    System.out.println();
+
+    heap.displayHeap();
   }
 
 }
