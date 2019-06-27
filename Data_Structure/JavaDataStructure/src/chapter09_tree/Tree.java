@@ -109,23 +109,6 @@ public class Tree {
 
     public static void main(String[] args) {
         Tree tree = new Tree('A');
-//        TreeNode[] treeNodes = new TreeNode[]{
-//                new TreeNode<>('B'),
-//                new TreeNode<>('C'),
-//                new TreeNode<>('D'),
-//                new TreeNode<>('E'),
-//                new TreeNode<>('F'),
-//                new TreeNode<>('G')
-//        };
-//        tree.addLeftChildNode(tree.getRootNode(), treeNodes[0]);
-//        tree.addRightChildNode(tree.getRootNode(), treeNodes[1]);
-//
-//        tree.addLeftChildNode(treeNodes[0], treeNodes[2]);
-//        tree.addRightChildNode(treeNodes[0], treeNodes[3]);
-//
-//        tree.addLeftChildNode(treeNodes[1], treeNodes[4]);
-//        tree.addRightChildNode(treeNodes[1], treeNodes[5]);
-
         char[] chars = new char[]{'B', 'C', 'D', 'E', 'F', 'G'};
 
         for (char node : chars) {
