@@ -53,7 +53,7 @@ public class BinarySearchTree {
     Node parentNode = getParentNode(key);
     Node deleteNode = search(key);
 
-    if (rootNode != null && parentNode == null) {
+    if (deleteNode != null && rootNode != null && parentNode != null) {
     } else if (deleteNode.leftChild == null && deleteNode.rightChild == null) {
       deleteNodeNoChild(parentNode, deleteNode);
     } else if (deleteNode.leftChild != null && deleteNode.rightChild != null) {
@@ -137,7 +137,27 @@ public class BinarySearchTree {
   }
 
   public static void main(String[] args) {
-    
+    BinarySearchTree binarySearchTree = new BinarySearchTree();
+
+    binarySearchTree.insert(70, 'A');
+    binarySearchTree.insert(40, 'B');
+    binarySearchTree.insert(90, 'C');
+    binarySearchTree.insert(20, 'D');
+    binarySearchTree.insert(60, 'E');
+    binarySearchTree.insert(80, 'F');
+    binarySearchTree.insert(100, 'G');
+    binarySearchTree.insert(10, 'H');
+    binarySearchTree.insert(30, 'I');
+    binarySearchTree.insert(50, 'J');
+
+    binarySearchTree.display();
+
+    System.out.println("키 30 검색 : " + binarySearchTree.search(30).key + ", " + binarySearchTree.search(30).value);
+    System.out.println("키 70 검색 : " + binarySearchTree.search(70).key + ", " + binarySearchTree.search(70).value);
+
+    binarySearchTree.remove(70);
+
+    binarySearchTree.display();
   }
 
 }
