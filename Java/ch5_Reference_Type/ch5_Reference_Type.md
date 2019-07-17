@@ -1,14 +1,12 @@
 # Chapter 5.  참조 타입
 
-
-
 ## 5.1 데이터 타입 분류
 
 * **데이터 타입** : 기본타입( 원시 타입 : primitive type)과 참조 타입 (reference type)
   * **기본 타입** : byte, char, short, int, long, float, double, boolean을 이용해서 선언된 변수이며 **실제 값을 변수 안에 저장**
 * **참조 타입** : 객체(Object)의 번지를 참조하는 타입으로 배열, 열거, 클래스, 인터페이스 타입을 말한다. 위와 같은 타입을 이용해서 선언된 변수는 **메모리의 번지**를 값으로 갖는다.
 
-
+<img src="../capture/그림1.png" width=600>
 
 * **기본 타입과 참조 타입 예시**
 
@@ -27,13 +25,11 @@
 
 
 
-
-
 ## 5.2  메모리 사용 영역
 
 * **JVM** : 운영체제에서 할당받은 메모리 영역을 다음과 같이 세부 영역으로 구분해서 사용한다.
 
-  ![1543712119969](C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\1543712119969.png)
+  <img src="../capture/JVM.png">
 
 : **메소드(Method)영역  ,  힙(Heap) 영역  ,  스택(Stack) 영역**
 
@@ -99,9 +95,11 @@
 * **예시**
 
   ```java
-  // refVar1 --> 객체1
-  // refVar2 --> 객체2
-  // refVar3 --> 객체2
+  String refVar1 = "혼자"
+  String refVar2 = "공부하는"
+  String refVar3 = "자바"
+  // 셋다 다른 주소 값을 가지고 있다.
+  
   refVar1 == refVar2	// false
   refVar1 != refVar2	// true, 서로 다른 객체를 참조
       
@@ -118,10 +116,10 @@
 * **예시**
 
   ```java
-  // refVar1 --> 객체1
-  // refVar2 = null
+  String refVar1 = "자바"
+  String refVar2 = null
   refVar1 == null		// false
-  refVar2 != null		// true
+  refVar2 == null		// true
       
   refVar2 == null		// true
   refVar2 != null		// false
@@ -131,9 +129,9 @@
 
 * **예외(Exception)** : 프로그램 실행 도중에 발생하는 오류
 
-  * **NullPointerException** : 참조 타입 변수를 잘못 사용하였을 때 발생
+  * **NullPointerException** : 참조 타입 변수를 잘못 사용하였을 때 발생하는 예외
 
-    **예시**
+    **예시1)**
 
     ```java
     int[] intArray = null;
@@ -141,9 +139,9 @@
     ```
 
     > intArray 변수가 참조하는 배열 객체가 없기 때문에 예외 발생
-
-
-
+    
+    **예시2)**
+    
     ```java
     String str = null;
     System.out.println("총 문자수: " + str.length());// NullPointerException
@@ -162,20 +160,16 @@
   name = "신용권";		  // 변수 = "문자열";
   String hobby = "자바";   // String 변수 = "문자열";
   ```
-
-
-
----
-
-
+  
+* **예제**
 
   ```java
   String name1 = "신용권";
   String name2 = "신용권";
+  System.out.println(name1 == name2);		// true
   ```
 
   > name1과 name2 가  "신용권" 이라는 동일한 객체를 참조하게 된다.
-
 
 * **new 연산자** : 힙 영역에 새로운 객체를 만들 때 사용하는 연산자
 
@@ -193,8 +187,9 @@
 
   ```java
   boolean result = str1.equals(str2);
-                   원본			비교
   ```
+  
+  > str1 과 str2의 주소가 아닌 문자열을 비교한다.
 
 
 
@@ -261,9 +256,18 @@
 : 같은 타입의 데이터를 연속된 공간에 나열시키고, 각 데이터에 인덱스(index)를 부여해 놓은 자료구조이다.
 
 * **데이터 타입** : 이미 정해져 있는 데이터 타입이 아닌 만약 다른 타입의 값을 저장하려고 하면 타입 불일치(Type mismatch) 컴파일 오류가 발생한다.
+
+  ```java
+  int[] intArr = { 3.4, 3.5 };		// 에러
+  ```
+
 * **배열 길이** : 길이를 선언과 동시에 수정할 수 없다.
 
+  ```java
+  int[] intArr = new int[3];
+  ```
 
+  
 
 ### 5.6.2 )  배열 선언
 
@@ -271,9 +275,9 @@
 
 * **null**
 
-  : 배열 변수는 참조 변수에 속하므로 참조할 배열 객체가 없다면 배열 변수는 null 값으로 초기화될 수 있다.     **ex)**  타입[ ]  변수  = null
+  : 배열 변수는 참조 변수에 속하므로 참조할 배열 객체가 없다면 배열 변수는 **null 값으로 초기화될 수 있다.**     **ex)**  타입[ ]  변수  = null
 
-  : 배열이 null인 상태로 변수[인덱스]로 값을 읽거나 저장하게 되면 NullPointerException이 발생한다.
+  : 배열이 null인 상태로 변수[인덱스]로 값을 읽거나 저장하게 되면 **NullPointerException** 이 발생한다.
 
 
 
@@ -537,7 +541,7 @@ int[] intArray = new int[5];
 
 
 
-  **실행할 때 매개값을 주고 실행**
+**실행할 때 매개값을 주고 실행**
 
   ![1543724549829](C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\1543724549829.png)
 
@@ -574,13 +578,13 @@ int[] intArray = new int[5];
 
 
   ```java
-  int[][] scores = new int[2][];
-  scores[0] = new int[2];
-  scores[1] = new int[3];
-  
-  scores.length		// 2(배열 A의 길이)
-  scores[0].length	// 2(배열 B의 길이)
-  scores[1].length	// 3(배열 C의 길이)
+int[][] scores = new int[2][];
+scores[0] = new int[2];
+scores[1] = new int[3];
+
+scores.length			// 2(배열 A의 길이)
+scores[0].length	// 2(배열 B의 길이)
+scores[1].length	// 3(배열 C의 길이)
   ```
 
 
@@ -593,7 +597,7 @@ int[] intArray = new int[5];
 
 
 
-* **배열 속의 배열 예제**
+* 배열 속의 배열 예제**
 
   ```java
   public class ArrayInArrayExample {
@@ -806,6 +810,8 @@ int[] intArray = new int[5];
   점수 총합 = 430
   점수 평균 = 86.0
   ```
+
+
 
 
 ## 5.7 )  열거 타입(enumeration type)
