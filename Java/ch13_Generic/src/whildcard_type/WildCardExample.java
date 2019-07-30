@@ -3,6 +3,11 @@ package whildcard_type;
 import java.util.Arrays;
 
 public class WildCardExample {
+    public static <T extends Course> void register(T t) {
+        System.out.println(t.getName() + " 수강생: " +
+            Arrays.toString(t.getStudents()));
+    }
+
     public static void registerCourse(Course<?> course) {
         System.out.println(course.getName() + " 수강생: " +
                 Arrays.toString(course.getStudents()));
