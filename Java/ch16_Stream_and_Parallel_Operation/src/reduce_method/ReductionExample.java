@@ -22,7 +22,7 @@ public class ReductionExample {
 
         int sum3 = studentList.stream()
                 .map(Student::getScore)
-                .reduce(0, (a,b) ->a+b);
+                .reduce(1, (a,b) ->a+b);
 
         System.out.println("sum1: " + sum1);
         System.out.println("sum2: " + sum2);

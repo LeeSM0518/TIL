@@ -17,7 +17,7 @@ public class MaleStudentExample {
         );
 
         // 전체 학생 List 에서 Stream 을 얻는다.
-        MaleStudent maleStudent = totalList.stream()
+        MaleStudent maleStudent = totalList.stream().parallel()
                 // 남학생만 필터링해서 Stream 을 얻는다.
                 .filter(s -> s.getSex() == Student.Sex.MALE)
                 // 1. MaleStudent 를 공급하는 Supplier 를 얻는다.

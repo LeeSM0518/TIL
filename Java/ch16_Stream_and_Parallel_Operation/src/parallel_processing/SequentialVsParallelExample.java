@@ -5,10 +5,7 @@ import java.util.List;
 
 public class SequentialVsParallelExample {
     public static void work(int value) {
-        try {
-            // 값이 작을수록 순차 처리가 빠름
-            Thread.sleep(100);
-        } catch (InterruptedException e) { }
+
     }
 
     public static long testSequential(List<Integer> list) {
@@ -28,7 +25,7 @@ public class SequentialVsParallelExample {
     }
 
     public static void main(String[] args) {
-        List<Integer> list = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
+        List<Integer> list = Arrays.asList(0, 2);
 
         long timeSequential = testSequential(list);
 
@@ -36,8 +33,12 @@ public class SequentialVsParallelExample {
 
         if(timeSequential < timeParallel) {
             System.out.println("성능 테스트 결과: 순차 처리가 더 빠름");
+            System.out.println(timeSequential);
+            System.out.println(timeParallel);
         } else {
             System.out.println("성능 테스트 결과: 병렬 처리가 더 빠름");
+            System.out.println(timeSequential);
+            System.out.println(timeParallel);
         }
     }
 }

@@ -17,9 +17,9 @@ public class ArrayListVsLinkedListExample {
     }
 
     public static void main(String[] args) {
-        List<Integer> arrayList = new ArrayList<Integer>();
+        List<Integer> arrayList = new ArrayList<Integer>(1000);
         List<Integer> linkedList = new LinkedList<Integer>();
-        for(int i=0; i<1000000; i++) {
+        for(int i=0; i<100000; i++) {
             arrayList.add(i);
             linkedList.add(i);
         }
@@ -35,5 +35,7 @@ public class ArrayListVsLinkedListExample {
         } else {
             System.out.println("성능 테스트 결과: LinkedList 처리가 더 빠름");
         }
+        System.out.println(arrayListListParallel);
+        System.out.println(linkedListParallel);
     }
 }

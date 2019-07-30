@@ -17,8 +17,8 @@ public class SortingExample {
         // 객체 요소일 경우
         List<Student> studentsList = Arrays.asList(
                 new Student("홍길동", 30),
-                new Student("신용권", 10),
-                new Student("유미선", 20)
+                new Student("신용권", 50),
+                new Student("유미선", 40)
         );
 
         studentsList.stream()
@@ -27,7 +27,7 @@ public class SortingExample {
         System.out.println();
 
         studentsList.stream()   // 정수를 기준으로 내림차순으로 Student 정렬
-                .sorted(Comparator.reverseOrder())
-                .forEach(s -> System.out.print(s.getScore() + ","));
+                .sorted(Comparator.comparing(Student::getName))
+                .forEach(s -> System.out.print(s.getName() + ","));
     }
 }
