@@ -13,39 +13,39 @@ public class LinkedListExample {
         long endTime;
 
         startTime = System.nanoTime();
-        for(int i=0; i<10000; i++) {
+        for(int i=0; i<10; i++) {
             list1.add(0, String.valueOf(i));
         }
         endTime = System.nanoTime();
 
-        System.out.println("ArrayList 걸린시간: " +
+        System.out.println("ArrayList 걸린시간: \t" +
                 (endTime-startTime) + " ns");
 
         startTime = System.nanoTime();
-        for(int i=0; i<10000; i++) {
+        for(int i=0; i<10; i++) {
             list2.add(0, String.valueOf(i));
         }
         endTime = System.nanoTime();
 
-        System.out.println("LinkedList 걸린시간: " +
+        System.out.println("LinkedList 걸린시간: \t" +
                 (endTime-startTime) + " ns");
 
         startTime = System.nanoTime();
-        for(int i=0; i<10000; i++) {
+        for(int i=0; i<10; i++) {
             list1.add(String.valueOf(i));
         }
         endTime = System.nanoTime();
 
-        System.out.println("ArrayList 걸린시간: " +
+        System.out.println("ArrayList 걸린시간: \t" +
                 (endTime-startTime) + " ns");
 
         startTime = System.nanoTime();
-        for(int i=0; i<10000; i++) {
+        for(int i=0; i<10; i++) {
             list2.add(String.valueOf(i));
         }
         endTime = System.nanoTime();
 
-        System.out.println("LinkedList 걸린시간: " +
+        System.out.println("LinkedList 걸린시간: \t" +
                 (endTime-startTime) + " ns");
     }
 }

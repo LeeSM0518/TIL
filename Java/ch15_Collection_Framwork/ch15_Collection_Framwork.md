@@ -22,8 +22,6 @@
 
 * **컬렉션 프레임워크(Collection Framework)** : 객체들을 효율적으로 추가, 삭제, 검색할 수 있도록 java.util 패키지에 컬렉션과 관련된 인터페이스와 클래스들을 포함시켜 놓았다.
 
-  ![1550061731282](C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\1550061731282.png)
-
 * **컬렉션 정리**
 
   | 인터페이스 분류 |      | 특징                                                | 구현 클래스                             |
