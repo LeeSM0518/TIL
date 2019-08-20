@@ -664,3 +664,33 @@ Comparator<Apple> c =
 
 <br/>
 
+### 메서드 참조를 만드는 방법
+
+메서드 참조 세 가지 유형
+
+1. **정적 메서드 참조** : 예를 들어 Integer의 parseInt 메서드는 Integer::parseInt로 표현할 수 있다.
+2. **다양한 형식의 인스턴스 메서드 참조** : 예를 들어 String의 length 메서드는 String::length로 표현할 수 있다.
+3. **기존 객체의 인스턴스 메서드 참조** : 예를 들어 Transaction 객체를 할당받은 expensiveTransaction 지역 변수가 있고 Transaction 객체에는 getValue 메서드가 있다면, 이를 expensiveTransaction::getValue라고 표현할 수 있다.
+
+<br/>
+
+# 3.6.2. 생성자 참조
+
+className::new 처럼 기존 생성자의 참조를 만들 수 있다. 이것은 정적 메서드의 참조를 만드는 방법과 비슷하다.
+
+- **예시**
+
+  ```java
+  Supplier<Apple> c1 = Apple::new;
+  //Supplier의 get 메서드를 호출해서 새로운 Apple 객체를 만들 수 있다.
+  Apple a1 = c1.get();
+  ```
+
+  > 위 예제는 다음 코드와 같다.
+
+  ```java
+  // 람다 표현식은 디폴트 생성자를 가진 Apple을 만든다.
+  Supplier<Apple> c1 = () -> new Apple();
+  // 새로운 Apple 객체 생성
+  Apple a1 = c1.get();
+  ```
