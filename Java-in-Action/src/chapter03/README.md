@@ -814,5 +814,154 @@ inventory.sort(new Comparator<Apple>() {
 
 ## 3.7.3. 3단계 : 람다 표현식 사용
 
-자바 8에서는 람다 표현식이라는 경량화된 문법을 이용해서 **코드를 전달**할 수 있다.
+자바 8에서는 람다 표현식이라는 경량화된 문법을 이용해서 **코드를 전달**할 수 있다. **함수형 인터페이스**를 기대하는 곳 어디에서나 람다 표현식을 사용할 수 있다.
 
+위의 코드를 다음과 같이 개선할 수 있다.
+
+```java
+inventory.sort(
+  (Apple a1, Apple a2) -> a1.getWeight().compareTo(a2.getWeight()));
+```
+
+<br/>
+
+람다의 파라미터 형식 추론을 통해 코드를 더 줄일 수 있다.
+
+```java
+inventory.sort((a1, a2) -> a1.getWeight().compareTo(a2.getWeight()));
+```
+
+<br/>
+
+Comparator는 Comparable 키를 추출해서 Comparator 객체를 만들면 더욱 가독성을 향상시킬 수 있다.
+
+```java
+Comparator<Apple> c = Comparator.comparing((Apple a) -> a.getWeight());
+```
+
+<br/>
+
+이제 코드를 다음처럼 간소화할 수 있다.
+
+```java
+import static java.util.Comparator.comparing;
+inventory.sort(comparing(apple -> apple.getWeight()));
+```
+
+<br/>
+
+## 3.7.4. 4단계 : 메서드 참조 사용
+
+메서드 참조를 이용해서 코드를 조금 더 간소화할 수 있다**(java.util.Comparator.comparing은 정적으로 임포트했다고 가정).** 
+
+```java
+inventory.sort(comparing(Apple::getWeight));
+```
+
+드디어 최적의 코드를 만들었다. 즉, 코드 자체로 **'Apple을 weight 별로 비교해서 inventory를 sort하라'는 의미를 전달할 수 있다.**
+
+<br/>
+
+# 3.8. 람다 표현식을 조합할 수 있는 유용한 메서드
+
+Comparator, Function, Predicate 같은 함수형 인터페이스는 람다 표현식을 조합할 수 있도록 유틸리티 메서드를 제공한다. 즉, 간단한 여러 개의 람다 표현식을 조합해서 복잡한 람다 표현식을 만들 수 있다.
+
+여기서 등장하는 것이 바로 **디폴트 메서드(default method)**다.
+
+<br/>
+
+## 3.8.1. Comparator 조합
+
+정적 메서드 Comparator.comparing을 이용해서 비교에 사용할 키를 추출하는 Function 기반의 Comparator를 반환할 수 있다.
+
+```java
+Comparator<Apple> c = Comparator.comparing(Apple::getWeight);
+```
+
+<br/>
+
+### 역정렬
+
+인터페이스 자체에서 주어진 비교자의 순서를 바꾸는 **reverse라는 디폴트 메서드를** 제공하기 때문에, 역정렬을 할 수 있다.
+
+```java
+inventory.sort(comparing(Apple::getWeight).reversed());		// 무게를 내림차순으로 정렬
+```
+
+<br/>
+
+### Comparator 연결
+
+thenComparing 메서드로 두 번째 비교자를 만들 수 있다. thenComparing은 함수를 메서드로 받아 첫 번째 비교자를 이용해서 두 객체가 같다고 판단되면 두 번째 비교자에 객체를 전달한다.
+
+```java
+inventory.sort(comparing(Apple::getWeight)
+               .reversed()												// 무게를 내림차순으로 정렬
+               .thenComparing(Apple::getCountry));// 두 사과의 무게가 같으면 국가별로 정렬
+```
+
+<br/>
+
+## 3.8.2. Predicate **조합**
+
+Predicate 인터페이스는 복잡한 프레디케이트를 만들 수 있도록 **negate, and, or** 세 가지 메서드를 제공한다.
+
+- **negate 메서드**
+
+  ```java
+  // 기존 프레디케이트 객체 redApple의 결과를 반전시킨 객체를 만든다.
+  Predicate<Apple> notRedApple = redApple.negate();
+  ```
+
+- **and 메서드**
+
+  ```java
+  // 두 프레디케이트를 연결해서 새로운 프레디케이트 객체를 만든다.
+  Predicate<Apple> redAndHeavyApple = 
+    redApple.and(apple -> apple.getWeight() > 150);
+  ```
+
+- **or 메서드**
+
+  ```java
+  // 프레디케이트 메서드를 연결해서 더 복잡한 프레디케이트 객체를 만든다.
+  Predicate<Apple> redAndHeavyAppleOrGreen =
+    redApple.and(apple -> apple.getWeight() > 150)
+    				.or(apple -> GREEN.equals(apple.getColor()));
+  ```
+
+<br/>
+
+## 3.8.3. Function 조합
+
+Function 인터페이스는 Function 인스턴스를 반환하는 **andThen, compose** 두 가지 디폴트 메서드를 제공한다.
+
+- **andThen 메서드**
+
+  ```java
+  Function<Integer, Integer> f = x -> x + 1;
+  Function<Integer, Integer> g = x -> x * 2;
+  Function<Integer, Integer> h = f.andThen(g);
+  int result = h.apply(1);	// 4를 반환, g(f(x)) 와 같다.
+  ```
+
+- **compose 메서드**
+
+  ```java
+  Function<Integer, Integer> f = x -> x + 1;
+  Function<Integer, Integer> g = x -> x * 2;
+  Function<Integer, Integer> h = f.compose(g);
+  int result = h.apply(1);	// 3을 반환, f(g(x)) 와 같다.
+  ```
+
+<br/>
+
+# 3.9. 마치며
+
+- **람다 표현식**은 익명 함수의 일종이다. 이름은 없지만, 파라미터 리스트, 바디, 반환 형식을 가지며 예외를 던질 수 있다.
+- **함수형 인터페이스**는 하나의 추상 메서드만을 정의하는 인터페이스다.
+- 람다 표현식을 이용해서 함수형 인터페이스의 추상 메서드를 즉석으로 제공할 수 있으며 **람다 표현식 전체가 함수형 인터페이스의 인스턴스로 취급된다.**
+- Java.util.function 패키지는 **Predicate\<T>, Function\<T, R>, Supplier\<T>, Consumer\<T>, BinaryOperator\<T>** 등을 포함해서 자주 사용하는 다양한 함수형 인터페이스를 제공한다.
+- 자바 8은 **기본형 특화 인터페이스도 제공한다.**
+- **실행 어라운드 패턴**을 람다와 활용하면 유연성과 재사용성을 추가로 얻을 수 있다.
+- Comparator, Predicate, Function 같은 함수형 인터페이스는 람다 표현식을 조합할 수 있는 **다양한 디폴트 메서드를 제공한다.**
