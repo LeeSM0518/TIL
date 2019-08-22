@@ -678,7 +678,7 @@ Comparator<Apple> c =
 
 className::new 처럼 기존 생성자의 참조를 만들 수 있다. 이것은 정적 메서드의 참조를 만드는 방법과 비슷하다.
 
-- **예시**
+- **예시) Supplier 함수형 인터페이스 사용**
 
   ```java
   Supplier<Apple> c1 = Apple::new;
@@ -694,3 +694,125 @@ className::new 처럼 기존 생성자의 참조를 만들 수 있다. 이것은
   // 새로운 Apple 객체 생성
   Apple a1 = c1.get();
   ```
+
+- **예시) Function 함수형 인터페이스 사용**
+
+  Apple(Integer weight)라는 시그니처를 갖는 생성자는 Function 인터페이스의 시그니처와 같다.
+
+  ```java
+  // Apple(Integer weight)의 생성자 참조
+  Function<Integr, Apple> c2 = Apple::new;
+  // Function의 
+  Apple a2 = c2.apply(110);
+  ```
+
+  > 위의 코드는 아래 코드와 같다.
+
+  ```java
+  Function<Integer, Apple> a2 = (weight) -> new Apple(weight);
+  Apple a2 = c2.apply(110);
+  ```
+
+* **예시) 다양한 무게를 포함하는 사과 리스트**
+
+  ```java
+  public List<Apple> map(List<Integer> list, Function<Integer, Apple> f) {
+    List<Apple> result = new ArrayList<>();
+    for (Integer i : list){
+      result.add(f.apply(i));
+    }
+    return result;
+  }
+  
+  List<Integer> weights = Arrays.asList(7, 3, 4, 10);
+  List<Apple> apples = map(weights, Apple::new);	// map 메서드로 생성자 참조 전달
+  ```
+
+- **예시) BiFunction 함수형 인터페이스**
+
+  Apple (Color color, Integer weight) 처럼 두 인수를 갖는 생성자는 BiFunction 인터페이스와 같은 시그니처를 가지므로 다음처럼 사용할 수 있다.
+
+  ```java
+  // Apple(Color color, Integer, weight) 생성자 참조
+  BiFunctio<Color, Integer, Apple> c3 = Apple::new;
+  // BiFunction의 apply 메서드에 색과 무게를 인수로 제공
+  Apple a3 = c3.apply(GREEN, 110);
+  ```
+
+  > 위의 코드는 다음과 같다.
+
+  ```java
+  // 특정 색과 무게를 가진 사과를 만드는 람다 표현식
+  BiFunction<Color, Integer, Apple> c3 =
+    (color, weight) -> new Apple(color, weight);
+  // BiFunction의 apply 메서드에 색과 무게를 인수로 제공
+  Apple a3 = c3.apply(GREEN, 110);
+  ```
+
+<br/>
+
+인스턴스화하지 않고도 생성자에 접근할 수 있는 기능을 다양한 상황에 응용할 수 있다.
+
+- **예시) Map으로 생성자와 문자열값을 관련시키다.**
+
+  ```java
+  static Map<String, Function<Integer, Fruit>> map = new HashMap<>();
+  static {
+    map.put("apple", Apple::new);
+    map.put("orange", Orange::new);
+    // 등등
+  }
+  
+  public static Fruit giveMeFruit(String fruit, Integer weight) {
+    return map.get(fruit.toLowerCase())		// map에서 Function<Integer, Fruit> 을 얻는다.
+      .apply(weight);		// Function의 apply 메서드에 정수 무게 파라미터를 제공해서 Fruit를 만들 수 있다.
+  }
+  ```
+
+<br/>
+
+# 3.7. 람다, 메서드 참조 활용하기
+
+## 3.7.1. 1단계 : 코드 전달
+
+어떻게 sort 메서드에 정렬 전략을 전달할 수 있을까?
+
+- **sort 메소드 시그니처**
+
+  ```java
+  void sort(Comparator<? super E> c)
+  ```
+
+  > 이 코드는 Comparator 객체를 인수로 받아 두 사과를 비교한다.
+
+- **sort에 전달된 정렬 전략에 따라 sort의 동작이 달라진다.**
+
+  ```java
+  public class AppleComparator implements Comparator<Apple> {
+    public int compare(Apple a1, Apple a2) {
+      return a1.getWeight().compareTo(a2.getWeight());
+    }
+  }
+  inventory.sort(new AppleComparator());
+  ```
+
+<br/>
+
+## 3.7.2. 2단계 : 익명 클래스 사용
+
+한 번만 사용할 Comparator를 위 코드처럼 구현하는 것보다는 **익명 클래스**를 이용하는 것이 좋다.
+
+```java
+inventory.sort(new Comparator<Apple>() {
+  public int compare(Apple a1, Apple a2) {
+    return a1.getWeight().compareTo(a2.getWeight());
+  }
+})
+```
+
+<br/>
+
+## 3.7.3. 3단계 : 람다 표현식 사용
+
+자바 8에서는 람다 표현식이라는 경량화된 문법을 이용해서 **코드를 전달**할 수 있다.
+
