@@ -85,7 +85,7 @@ TIL ( Today I Learned )
 
 ## Java Web Development
 
-* [웹 애플리케이션의 이해](https://github.com/LeeSM0518/MVC/tree/master/src/understandingweapplications)
+* [웹 애플리케이션의 이해](https://github.com/LeeSM0518/MVC/tree/master/understandingwebapplications)
 
 * [웹 프로그래밍 기초 다지기](https://github.com/LeeSM0518/MVC/tree/master/webprogrammingbasic)
 
