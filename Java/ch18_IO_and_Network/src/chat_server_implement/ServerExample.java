@@ -1,7 +1,5 @@
 package chat_server_implement;
 
-import com.sun.security.ntlm.Client;
-import sun.lwawt.PlatformEventNotifier;
 
 import javax.swing.*;
 import java.awt.*;

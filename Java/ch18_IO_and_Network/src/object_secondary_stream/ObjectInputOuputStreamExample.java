@@ -4,7 +4,7 @@ import java.io.*;
 
 public class ObjectInputOuputStreamExample {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
-        String current = new java.io.File(".").getCanonicalPath();
+        String current = new File(".").getCanonicalPath();
         FileOutputStream fos = new FileOutputStream(current + "/Object.dat");
 
         // 객체 출력 스트림
