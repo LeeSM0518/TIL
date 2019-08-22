@@ -12,6 +12,18 @@ TIL ( Today I Learned )
 
 # 분류
 
+[Java Basic](https://github.com/LeeSM0518/TIL#java-basic)
+
+[Java 8, 9, 10, 11](https://github.com/LeeSM0518/TIL#java-8-9-10-11)
+
+[Java Web Development](https://github.com/LeeSM0518/TIL#java-web-development)
+
+[Object-oriented design pattern](https://github.com/LeeSM0518/TIL#object-oriented-design-pattern)
+
+[PostgreSQL](https://github.com/LeeSM0518/TIL#postgresql)
+
+<br/>
+
 ## Java Basic
 
 * [자바 시작하기](https://github.com/LeeSM0518/TIL/blob/master/Java/ch1_Java_Start/Chapter1_Java_Start.md)
@@ -37,9 +49,9 @@ TIL ( Today I Learned )
 ## Java 8, 9, 10, 11
 
 - **PART 01. 기초**
-  - [CHAPTER 01. 자바 8, 9, 10, 11: 무슨 일이 일어나고 있는가?](https://github.com/LeeSM0518/TIL/tree/master/Java-in-Action/src/chapter01)
-  - [CHAPTER 02. 동작 파라미터화 코드 전달하기](https://github.com/LeeSM0518/TIL/tree/master/Java-in-Action/src/chapter02)
-  - CHAPTER 03. 람다 표현식
+  - [CHAPTER 01. 자바 8, 9, 10, 11: 무슨 일이 일어나고 있는가?](https://github.com/LeeSM0518/modern-java/tree/master/src/chapter01)
+  - [CHAPTER 02. 동작 파라미터화 코드 전달하기](https://github.com/LeeSM0518/modern-java/tree/master/src/chapter02)
+  - [CHAPTER 03. 람다 표현식](https://github.com/LeeSM0518/modern-java/tree/master/src/chapter03)
 - **PART 02. 함수형 데이터 처리** 
   - CHAPTER 04. 스트림 소개
   - CHAPTER 05. 스트림 활용
@@ -73,7 +85,7 @@ TIL ( Today I Learned )
 
 ## Java Web Development
 
-* [웹 애플리케이션의 이해](https://github.com/LeeSM0518/MVC/tree/master/src/understanding_web_applications)
+* [웹 애플리케이션의 이해](https://github.com/LeeSM0518/MVC/tree/master/src/understandingweapplications)
 
 * [웹 프로그래밍 기초 다지기](https://github.com/LeeSM0518/MVC/tree/master/webprogrammingbasic)
 
