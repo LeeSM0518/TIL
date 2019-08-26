@@ -36,7 +36,7 @@
 
 : 객체를 일렬로 늘어놓은 구조를 가지고 있다. 인덱스로 객체를 검색, 삭제할 수 있는 기능을 제공한다. 그리고 객체 자체를 저장하는 것이 아니라 객체의 번지를 참조한다.
 
-![1550061739111](C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\1550061739111.png)
+<img src="../capture/list.png">
 
 
 
@@ -337,7 +337,9 @@ List<E> list = new Vector<E>();
 
 : 저장 순서가 유지되지 않는다. 또한 객체를 중복해서 저장할 수 없고, 하나의 null만 저장할 수 있다.
 
-![1550065831027](C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\1550065831027.png)
+<img src="../capture/set.png">
+
+
 
 * **Set 인터페이스의 메소드들**
 
@@ -413,7 +415,9 @@ List<E> list = new Vector<E>();
   Set<String> set = new HashSet<String>();
   ```
 
-  ![1550067087186](C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\1550067087186.png)
+  <img src="../capture/hashset.png">
+
+  
 
 * **예제(String 객체를 중복 없이 저장하는 HashSet)**
 
@@ -607,7 +611,9 @@ List<E> list = new Vector<E>();
 
 : HashMap은 Map 인터페이스를 구현한 대표적인 Map 컬렉션이다. 동등객체, 즉 동일한 키가 될 조건은 hashCode()의 리턴값이 같아야하고, equals() 메소드가 true를 리턴해야 한다.
 
-![1550124745834](C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\1550124745834.png)
+<img src="../capture/hashmap.png">
+
+
 
 * **HashMap 생성자 호출**
 
@@ -927,13 +933,13 @@ List<E> list = new Vector<E>();
 
 : 여러 개의 노드(node)가 트리 형태로 연결된 구조. 각 노드에 최대 2개의 노드를 연결할 수 있는 구조를 가지고 있다.
 
-![1550132214213](C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\1550132214213.png)
+<img src="../capture/tree1.png">
 
 
 
 * **값들이 정렬되어 있어 그룹핑이 쉽다**
 
-  ![1550132235387](C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\1550132235387.png)
+  <img src="../capture/tree2.png">
 
 
 
@@ -941,7 +947,7 @@ List<E> list = new Vector<E>();
 
 : TreeSet은 이진 트리를 기반으로한 Set 컬렉션이다. 
 
-![1550132374901](C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\1550132374901.png)
+<img src="../capture/treeset.png">
 
 > 부모값과 비교해서 낮은 것은 왼쪽, 높은 것은 오른쪽
 
@@ -1527,11 +1533,11 @@ List<E> list = new Vector<E>();
 - **LIFO(Last In First Out)** : 후입선출, 나중에 넣은 객체가 먼저 빠져나가는 자료구조
 - **FIFO(First In First Out** : 선입선출, 먼저 넣은 객체가 먼저 빠져나가는 자료구조
 
-![1550233358153](C:\Users\lenovo\AppData\Roaming\Typora\typora-user-images\1550233358153.png)
-
 
 
 ### 15.6.1 Stack
+
+<img src="../capture/stack.png">
 
 - **Stack 클래스의 주요 메소드들**
 
@@ -1604,6 +1610,8 @@ List<E> list = new Vector<E>();
 
 
 ### 15.6.2 Queue
+
+<img src="../capture/queue.png">
 
 - **Queue 인터페이스의 메소드들**
 
