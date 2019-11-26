@@ -9,10 +9,10 @@ public class HashSetExample1 {
         Set<String> set = new HashSet<String>();
 
         // "Java"는 한 번만 저장됨
-        set.add("Java");
+        set.add(new String("Java"));
         set.add("JDBC");
         set.add("Servlet/JSP");
-        set.add("Java");
+        set.add(new String("Java"));
         set.add("iBATIS");
 
         // 저장된 객체 수 얻기
