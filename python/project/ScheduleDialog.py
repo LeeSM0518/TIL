@@ -1,12 +1,12 @@
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QDialog, QLabel, QLineEdit, QPushButton, QGridLayout
+from PyQt5.QtWidgets import QDialog, QLabel, QLineEdit, QPushButton, QGridLayout, QDesktopWidget
 
 
 class ScheduleDialog(QDialog):
     def __init__(self):
         super().__init__()
-        self.setupUI()
         self.work = None
+        self.setupUI()
 
     def setupUI(self):
         self.setGeometry(1000, 200, 300, 100)
@@ -28,6 +28,7 @@ class ScheduleDialog(QDialog):
         layout.addWidget(self.okButton, 1, 0)
         layout.addWidget(self.cancelButton, 1, 1)
 
+        self.center()
         self.setLayout(layout)
 
     def okButtonClicked(self):
@@ -35,4 +36,11 @@ class ScheduleDialog(QDialog):
         self.close()
 
     def cancelButtonClicked(self):
+        self.work = 'cancel'
         self.close()
+
+    def center(self):
+        qr = self.frameGeometry()
+        cp = QDesktopWidget().availableGeometry().center()
+        qr.moveCenter(cp)
+        self.move(qr.topLeft())
