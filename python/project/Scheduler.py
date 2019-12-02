@@ -510,7 +510,8 @@ class AlarmManager:
 
     def createThread(self, schedule):
         cycle = schedule.getCycle()
-        delayTime = int(cycle.getHour()) * 60 * 60 + int(cycle.getMinute()) * 60
+        #delayTime = int(cycle.getHour()) * 60 * 60 + int(cycle.getMinute()) * 60
+        delayTime = int(cycle.getMinute())
         thread = TimeThread(delayTime, schedule.getWork(), self.queue)
         return thread
 
