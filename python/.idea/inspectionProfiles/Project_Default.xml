@@ -22,6 +22,7 @@
       <option name="ignoredIdentifiers">
         <list>
           <option value="PyQt5.QtWidgets.triggered.connect" />
+          <option value="PyQt5.QtWidgets.clicked.connect" />
         </list>
       </option>
     </inspection_tool>
