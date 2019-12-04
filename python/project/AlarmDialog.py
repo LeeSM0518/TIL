@@ -21,7 +21,7 @@ class AlarmDialog(QDialog):
     def setupUI(self):
         self.setGeometry(1000, 200, 300, 100)
         self.setWindowTitle('알림 설정')
-        self.setWindowIcon(QIcon('image/alarm.png'))
+        self.setWindowIcon(QIcon('image/alarm.gif'))
 
         alarmLabel = QLabel('알림주기 : ')
         self.hourBox = QComboBox(self)
