@@ -22,6 +22,7 @@ class Cycle:
     def getMinute(self):
         return self.minute
 
+
 class AlarmDialog(QDialog):
     hourList = [str(i) for i in range(25)]
     minuteList = [str(i) for i in range(61)]
@@ -301,6 +302,16 @@ class App(QWidget):
         self.height = 480
         self.workCount = 0
         self.initUI()
+        try:
+            inputFile = open('schedule.txt', 'r')
+            data = inputFile.readlines()
+            for i in data:
+                if i != '\n' and i != '':
+                    self.createScheduleLayout(i)
+            inputFile.close()
+        except:
+            writeFile = open('schedule.txt', 'w')
+            writeFile.close()
 
     def initUI(self):
         self.setWindowTitle(self.title)
@@ -509,7 +520,7 @@ class AlarmManager:
 
     def createThread(self, schedule):
         cycle = schedule.getCycle()
-        #delayTime = int(cycle.getHour()) * 60 * 60 + int(cycle.getMinute()) * 60
+        # delayTime = int(cycle.getHour()) * 60 * 60 + int(cycle.getMinute()) * 60
         delayTime = int(cycle.getMinute())
         thread = TimeThread(delayTime, schedule.getWork(), self.queue)
         return thread
@@ -518,4 +529,8 @@ class AlarmManager:
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     ex = App()
-    sys.exit(app.exec_())
+    app.exec_()
+    output = open('schedule.txt', 'w')
+    for schedule in ex.scheduler.scheduleList:
+        output.writelines(schedule.work + '\n')
+    output.close()
