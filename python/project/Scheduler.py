@@ -42,7 +42,7 @@ class AlarmDialog(QDialog):
     def setupUI(self):
         self.setGeometry(1000, 200, 300, 100)
         self.setWindowTitle('알림 설정')
-        self.setWindowIcon(QIcon('image/alarm.png'))
+        self.setWindowIcon(QIcon('image/alarm.gif'))
 
         alarmLabel = QLabel('알림주기 : ')
         self.hourBox = QComboBox(self)
@@ -177,7 +177,7 @@ class PushAlarm(QDialog):
     def setupUI(self):
         self.setGeometry(1000, 200, 300, 100)
         self.setWindowTitle('알림 메시지')
-        self.setWindowIcon(QIcon('image/alarm.png'))
+        self.setWindowIcon(QIcon('image/alarm.gif'))
 
         messageLabel = QLabel(self.work)
         self.okButton = QPushButton('확인')
@@ -217,7 +217,7 @@ class startAlarmDialog(QDialog):
     def setupUI(self):
         self.setGeometry(1000, 200, 300, 100)
         self.setWindowTitle('알림 시작')
-        self.setWindowIcon(QIcon('image/alarm.png'))
+        self.setWindowIcon(QIcon('image/alarm.gif'))
 
         messageLabel = QLabel('알림시작합니다.')
         self.okButton = QPushButton('확인')
@@ -249,7 +249,7 @@ class stopAlarmDialog(QDialog):
     def setupUI(self):
         self.setGeometry(1000, 200, 300, 100)
         self.setWindowTitle('알림 종료')
-        self.setWindowIcon(QIcon('image/alarm.png'))
+        self.setWindowIcon(QIcon('image/alarm.gif'))
 
         messageLabel = QLabel('알림종료합니다.')
         self.okButton = QPushButton('확인')
