@@ -3,11 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="99daa27a-526c-4128-a5a2-7234a779865a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java/java_lecture/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Java/java_lecture/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java/java_lecture/out/production/java_lecture/META-INF/java_lecture.kotlin_module" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Java/java_lecture/out/production/java_lecture/midterm_exam/out.ppm" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/AlarmDialog.py" beforeDir="false" afterPath="$PROJECT_DIR$/project/AlarmDialog.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/PushAlarm.py" beforeDir="false" afterPath="$PROJECT_DIR$/project/PushAlarm.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/Scheduler.py" beforeDir="false" afterPath="$PROJECT_DIR$/project/Scheduler.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/data2.txt" beforeDir="false" afterPath="$PROJECT_DIR$/project/data2.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project/schedule.txt" beforeDir="false" afterPath="$PROJECT_DIR$/project/schedule.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -67,16 +66,17 @@
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/exam" />
-      <recent name="$PROJECT_DIR$/project/test" />
-      <recent name="$PROJECT_DIR$/tkinter/images" />
-      <recent name="$PROJECT_DIR$/tkinter" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/exam" />
       <recent name="$PROJECT_DIR$/lecture" />
       <recent name="$PROJECT_DIR$/project/image" />
+      <recent name="$PROJECT_DIR$/tkinter" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/outsourcing_project" />
+      <recent name="$PROJECT_DIR$/exam" />
+      <recent name="$PROJECT_DIR$/project/test" />
+      <recent name="$PROJECT_DIR$/tkinter/images" />
       <recent name="$PROJECT_DIR$/tkinter" />
     </key>
   </component>
@@ -103,7 +103,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="menuOpenClose" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="outsourcing" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="python" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -111,12 +111,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/exam" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/exam/menuOpenClose.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/outsourcing_project/outsourcing.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -125,7 +125,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="test01" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="sample_eight" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="python" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -133,12 +133,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/realexam" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/outsourcing_project" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/realexam/test01.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/outsourcing_project/sample_eight.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -147,7 +147,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="test02" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="python" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -155,12 +155,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/realexam" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/harang" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/realexam/test02.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/harang/test.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -169,7 +169,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="test03" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="tinker" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="python" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -177,12 +177,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/realexam" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/lecture" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/realexam/test03.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/lecture/tinker.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -192,19 +192,19 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.menuOpenClose" />
-      <item itemvalue="Python.test01" />
-      <item itemvalue="Python.test02" />
-      <item itemvalue="Python.test03" />
       <item itemvalue="Python.Scheduler" />
+      <item itemvalue="Python.outsourcing" />
+      <item itemvalue="Python.sample_eight" />
+      <item itemvalue="Python.test" />
+      <item itemvalue="Python.tinker" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.Scheduler" />
-        <item itemvalue="Python.test02" />
-        <item itemvalue="Python.test01" />
-        <item itemvalue="Python.test03" />
-        <item itemvalue="Python.menuOpenClose" />
+        <item itemvalue="Python.tinker" />
+        <item itemvalue="Python.test" />
+        <item itemvalue="Python.sample_eight" />
+        <item itemvalue="Python.outsourcing" />
       </list>
     </recent_temporary>
   </component>
@@ -265,6 +265,10 @@
       <workItem from="1576389075491" duration="3597000" />
       <workItem from="1576418660420" duration="5125000" />
       <workItem from="1576541036823" duration="3113000" />
+      <workItem from="1579602763562" duration="715000" />
+      <workItem from="1579749562932" duration="1279000" />
+      <workItem from="1580362690663" duration="3011000" />
+      <workItem from="1580702745979" duration="1590000" />
     </task>
     <servers />
   </component>
@@ -290,40 +294,40 @@
     </state>
     <state x="1384" y="393" key="#com.intellij.execution.impl.EditConfigurationsDialog/-1680.251.1680.1027/0.23.2560.1417@0.23.2560.1417" timestamp="1576420190098" />
     <state x="849" y="330" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1920.1177@0.23.1920.1177" timestamp="1576542888484" />
-    <state width="1878" height="223" key="GridCell.Tab.0.bottom" timestamp="1576558554429">
-      <screen x="0" y="23" width="1920" height="1177" />
+    <state width="1238" height="278" key="GridCell.Tab.0.bottom" timestamp="1580731494234">
+      <screen x="0" y="23" width="2560" height="1417" />
     </state>
     <state width="1638" height="189" key="GridCell.Tab.0.bottom/-1680.251.1680.1027/0.23.2560.1417@-1680.251.1680.1027" timestamp="1576393351695" />
-    <state width="1238" height="279" key="GridCell.Tab.0.bottom/-1680.251.1680.1027/0.23.2560.1417@0.23.2560.1417" timestamp="1576480695499" />
-    <state width="1878" height="223" key="GridCell.Tab.0.bottom/0.23.1920.1177@0.23.1920.1177" timestamp="1576558554429" />
-    <state width="1878" height="223" key="GridCell.Tab.0.center" timestamp="1576558554429">
-      <screen x="0" y="23" width="1920" height="1177" />
+    <state width="1238" height="278" key="GridCell.Tab.0.bottom/-1680.251.1680.1027/0.23.2560.1417@0.23.2560.1417" timestamp="1580731494234" />
+    <state width="918" height="278" key="GridCell.Tab.0.bottom/0.23.1920.1177@0.23.1920.1177" timestamp="1580371163965" />
+    <state width="1238" height="278" key="GridCell.Tab.0.center" timestamp="1580731494233">
+      <screen x="0" y="23" width="2560" height="1417" />
     </state>
     <state width="1638" height="189" key="GridCell.Tab.0.center/-1680.251.1680.1027/0.23.2560.1417@-1680.251.1680.1027" timestamp="1576393351694" />
-    <state width="1238" height="279" key="GridCell.Tab.0.center/-1680.251.1680.1027/0.23.2560.1417@0.23.2560.1417" timestamp="1576480695499" />
-    <state width="1878" height="223" key="GridCell.Tab.0.center/0.23.1920.1177@0.23.1920.1177" timestamp="1576558554429" />
-    <state width="1878" height="223" key="GridCell.Tab.0.left" timestamp="1576558554428">
-      <screen x="0" y="23" width="1920" height="1177" />
+    <state width="1238" height="278" key="GridCell.Tab.0.center/-1680.251.1680.1027/0.23.2560.1417@0.23.2560.1417" timestamp="1580731494233" />
+    <state width="918" height="278" key="GridCell.Tab.0.center/0.23.1920.1177@0.23.1920.1177" timestamp="1580371163965" />
+    <state width="1238" height="278" key="GridCell.Tab.0.left" timestamp="1580731494232">
+      <screen x="0" y="23" width="2560" height="1417" />
     </state>
     <state width="1638" height="189" key="GridCell.Tab.0.left/-1680.251.1680.1027/0.23.2560.1417@-1680.251.1680.1027" timestamp="1576393351693" />
-    <state width="1238" height="279" key="GridCell.Tab.0.left/-1680.251.1680.1027/0.23.2560.1417@0.23.2560.1417" timestamp="1576480695499" />
-    <state width="1878" height="223" key="GridCell.Tab.0.left/0.23.1920.1177@0.23.1920.1177" timestamp="1576558554428" />
-    <state width="1878" height="223" key="GridCell.Tab.0.right" timestamp="1576558554429">
-      <screen x="0" y="23" width="1920" height="1177" />
+    <state width="1238" height="278" key="GridCell.Tab.0.left/-1680.251.1680.1027/0.23.2560.1417@0.23.2560.1417" timestamp="1580731494232" />
+    <state width="918" height="278" key="GridCell.Tab.0.left/0.23.1920.1177@0.23.1920.1177" timestamp="1580371163965" />
+    <state width="1238" height="278" key="GridCell.Tab.0.right" timestamp="1580731494233">
+      <screen x="0" y="23" width="2560" height="1417" />
     </state>
     <state width="1638" height="189" key="GridCell.Tab.0.right/-1680.251.1680.1027/0.23.2560.1417@-1680.251.1680.1027" timestamp="1576393351694" />
-    <state width="1238" height="279" key="GridCell.Tab.0.right/-1680.251.1680.1027/0.23.2560.1417@0.23.2560.1417" timestamp="1576480695499" />
-    <state width="1878" height="223" key="GridCell.Tab.0.right/0.23.1920.1177@0.23.1920.1177" timestamp="1576558554429" />
+    <state width="1238" height="278" key="GridCell.Tab.0.right/-1680.251.1680.1027/0.23.2560.1417@0.23.2560.1417" timestamp="1580731494233" />
+    <state width="918" height="278" key="GridCell.Tab.0.right/0.23.1920.1177@0.23.1920.1177" timestamp="1580371163965" />
     <state x="520" y="233" key="SettingsEditor" timestamp="1576420241428">
       <screen x="0" y="23" width="2560" height="1417" />
     </state>
     <state x="-1339" y="403" key="SettingsEditor/-1680.251.1680.1027/0.23.2560.1417@-1680.251.1680.1027" timestamp="1576390696343" />
     <state x="520" y="233" key="SettingsEditor/-1680.251.1680.1027/0.23.2560.1417@0.23.2560.1417" timestamp="1576420241428" />
-    <state x="730" y="471" key="com.intellij.ide.util.TipDialog" timestamp="1576541037547">
-      <screen x="0" y="23" width="1920" height="1177" />
+    <state x="973" y="563" key="com.intellij.ide.util.TipDialog" timestamp="1580362690499">
+      <screen x="0" y="23" width="2560" height="1417" />
     </state>
     <state x="-1041" y="642" key="com.intellij.ide.util.TipDialog/-1680.251.1680.1027/0.23.2560.1417@-1680.251.1680.1027" timestamp="1576418661615" />
-    <state x="973" y="563" key="com.intellij.ide.util.TipDialog/-1680.251.1680.1027/0.23.2560.1417@0.23.2560.1417" timestamp="1576389074529" />
+    <state x="973" y="563" key="com.intellij.ide.util.TipDialog/-1680.251.1680.1027/0.23.2560.1417@0.23.2560.1417" timestamp="1580362690499" />
     <state x="730" y="471" key="com.intellij.ide.util.TipDialog/0.23.1920.1177@0.23.1920.1177" timestamp="1576541037547" />
     <state x="-716" y="302" width="499" height="790" key="dock-window-1" timestamp="1576389723474">
       <screen x="-1680" y="251" width="1680" height="1027" />
@@ -339,8 +343,8 @@
     <state x="541" y="341" width="837" height="540" key="find.popup/0.23.1920.1177@0.23.1920.1177" timestamp="1576541278555" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/python$test.coverage" NAME="test Coverage Results" MODIFIED="1575546479051" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/lecture" />
     <SUITE FILE_PATH="coverage/python$test01.coverage" NAME="test01 Coverage Results" MODIFIED="1576543203198" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/realexam" />
+    <SUITE FILE_PATH="coverage/python$test.coverage" NAME="test Coverage Results" MODIFIED="1580364730511" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/harang" />
     <SUITE FILE_PATH="coverage/python$09_24_assignment.coverage" NAME="09_24_assignment Coverage Results" MODIFIED="1569287304852" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/lecture" />
     <SUITE FILE_PATH="coverage/python$Test2.coverage" NAME="Test2 Coverage Results" MODIFIED="1573546733326" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/project" />
     <SUITE FILE_PATH="coverage/python$widthFill.coverage" NAME="widthFill Coverage Results" MODIFIED="1576421592247" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/exam" />
@@ -349,10 +353,11 @@
     <SUITE FILE_PATH="coverage/python$DialogExample.coverage" NAME="DialogExample Coverage Results" MODIFIED="1575093717752" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/project" />
     <SUITE FILE_PATH="coverage/python$button.coverage" NAME="button Coverage Results" MODIFIED="1573519196343" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tkinter" />
     <SUITE FILE_PATH="coverage/python$App.coverage" NAME="App Coverage Results" MODIFIED="1569897769722" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/project" />
+    <SUITE FILE_PATH="coverage/python$outsourcing.coverage" NAME="outsourcing Coverage Results" MODIFIED="1579749622609" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/python$scores.coverage" NAME="scores Coverage Results" MODIFIED="1571106871760" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/lecture" />
     <SUITE FILE_PATH="coverage/python$button2.coverage" NAME="button2 Coverage Results" MODIFIED="1573519450194" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tkinter" />
     <SUITE FILE_PATH="coverage/python$file2.coverage" NAME="file2 Coverage Results" MODIFIED="1576389518226" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/project" />
-    <SUITE FILE_PATH="coverage/python$Scheduler.coverage" NAME="Scheduler Coverage Results" MODIFIED="1576543857485" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/project" />
+    <SUITE FILE_PATH="coverage/python$Scheduler.coverage" NAME="Scheduler Coverage Results" MODIFIED="1580702750717" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/project" />
     <SUITE FILE_PATH="coverage/python$horisort.coverage" NAME="horisort Coverage Results" MODIFIED="1576421297005" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/exam" />
     <SUITE FILE_PATH="coverage/python$PhotoImage.coverage" NAME="PhotoImage Coverage Results" MODIFIED="1573533995382" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tkinter" />
     <SUITE FILE_PATH="coverage/python$buttonclick.coverage" NAME="buttonclick Coverage Results" MODIFIED="1576420664771" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/exam" />
@@ -363,6 +368,7 @@
     <SUITE FILE_PATH="coverage/python$ui.coverage" NAME="ui Coverage Results" MODIFIED="1576392992375" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/project" />
     <SUITE FILE_PATH="coverage/python$09_24_turtle.coverage" NAME="09_24_turtle Coverage Results" MODIFIED="1569287307537" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/lecture" />
     <SUITE FILE_PATH="coverage/python$EntryExample1.coverage" NAME="EntryExample1 Coverage Results" MODIFIED="1573520594637" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tkinter" />
+    <SUITE FILE_PATH="coverage/python$sample_eight.coverage" NAME="sample_eight Coverage Results" MODIFIED="1579749730994" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/outsourcing_project" />
     <SUITE FILE_PATH="coverage/python$buttonTextAdjust.coverage" NAME="buttonTextAdjust Coverage Results" MODIFIED="1573519590491" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tkinter" />
     <SUITE FILE_PATH="coverage/python$ToFCamera.coverage" NAME="ToFCamera Coverage Results" MODIFIED="1569089327826" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tof_camera" />
     <SUITE FILE_PATH="coverage/python$fileinputoutput.coverage" NAME="fileinputoutput Coverage Results" MODIFIED="1575942486873" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/project" />
@@ -385,8 +391,8 @@
     <SUITE FILE_PATH="coverage/python$CalendarWidget.coverage" NAME="CalendarWidget Coverage Results" MODIFIED="1569290642807" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/project" />
     <SUITE FILE_PATH="coverage/python$Test__1_.coverage" NAME="Test (1) Coverage Results" MODIFIED="1575125398272" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/project" />
     <SUITE FILE_PATH="coverage/python$basicwinodw.coverage" NAME="basicwinodw Coverage Results" MODIFIED="1576419466361" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/exam" />
-    <SUITE FILE_PATH="coverage/python$tinker.coverage" NAME="tinker Coverage Results" MODIFIED="1575341094506" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/lecture" />
     <SUITE FILE_PATH="coverage/python$forandside.coverage" NAME="forandside Coverage Results" MODIFIED="1576421445573" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/exam" />
+    <SUITE FILE_PATH="coverage/python$tinker.coverage" NAME="tinker Coverage Results" MODIFIED="1580364795221" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/lecture" />
     <SUITE FILE_PATH="coverage/python$keyboardEvent.coverage" NAME="keyboardEvent Coverage Results" MODIFIED="1576426719068" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/exam" />
     <SUITE FILE_PATH="coverage/python$setup.coverage" NAME="setup Coverage Results" MODIFIED="1575132092040" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/project" />
     <SUITE FILE_PATH="coverage/python$EcoRing.coverage" NAME="EcoRing Coverage Results" MODIFIED="1575715796958" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/smarthumanlife" />
