@@ -36,6 +36,23 @@ TIL ( Today I Learned )
 </details>
 
 <details>
+  <summary>Data structure</summary>
+  <ul>
+    <li><a href="https://github.com/LeeSM0518/TIL/tree/master/Data_Structure/JavaDataStructure/src/chapter02_array_list">배열 리스트</a></li>
+    <li><a href="https://github.com/LeeSM0518/TIL/tree/master/Data_Structure/JavaDataStructure/src/chapter03_linked_list">연결 리스트</a></li>
+    <li><a href="https://github.com/LeeSM0518/TIL/tree/master/Data_Structure/JavaDataStructure/src/chapter04_expansion_of_linked_list">연결 리스트 확장</a></li>
+    <li><a href="https://github.com/LeeSM0518/TIL/tree/master/Data_Structure/JavaDataStructure/src/chapter05_stack">스택</a></li>
+    <li><a href="https://github.com/LeeSM0518/TIL/tree/master/Data_Structure/JavaDataStructure/src/chapter07_queue">큐</a></li>
+    <li><a href="https://github.com/LeeSM0518/TIL/tree/master/Data_Structure/JavaDataStructure/src/chapter08_recursive_calls">재귀 호출</a></li>
+    <li><a href="https://github.com/LeeSM0518/TIL/tree/master/Data_Structure/JavaDataStructure/src/chapter09_tree">트리</a></li>
+    <li><a href="https://github.com/LeeSM0518/TIL/tree/master/Data_Structure/JavaDataStructure/src/chapter10_heap">힙</a></li>
+    <li><a href="https://github.com/LeeSM0518/TIL/tree/master/Data_Structure/JavaDataStructure/src/chapter11_graph">그래프</a></li>
+    <li><a href="https://github.com/LeeSM0518/TIL/tree/master/Data_Structure/JavaDataStructure/src/chapter12_search">검색</a></li>
+    <li><a href="https://github.com/LeeSM0518/TIL/tree/master/Data_Structure/JavaDataStructure/src/chapter13_hashing">해싱</a></li>
+    <li><a href="https://github.com/LeeSM0518/TIL/tree/master/Data_Structure/JavaDataStructure/src/chapter14_sorting">정렬</a></li>
+  </ul></details>
+
+<details>
   <summary>Java in action</summary>
   <ul>
     <li><strong>PART 01. 기초</strong>
@@ -138,6 +155,7 @@ TIL ( Today I Learned )
     <li><a href="https://github.com/LeeSM0518/database/blob/master/SetTheory.md">집합 (Set)</a></li>
   </ol>
 </details>
+
 <details>
   <summary>Spring</summary>
   <ul>
