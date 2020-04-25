@@ -167,14 +167,14 @@ TIL ( Today I Learned )
     <li><a href="https://github.com/LeeSM0518/spring-tutorial/tree/master/bean-lifecycle-and-scope">Chapter6. 빈 라이프사이클과 범위 (bean-lifecycle-and-scope)</a></li>
     <li><a href="https://github.com/LeeSM0518/spring-tutorial/tree/master/aop-programming">Chapter7. AOP 프로그래밍 (aop-programming)</a></li>
     <li><a href="https://github.com/LeeSM0518/spring-tutorial/tree/master/db-peristalsis">Chapter8. DB 연동 (db-peristalsis)</a></li>
-    <li>Chapter9. 스프링 MVC 시작하기 (start-spring-mvc)</li>
-    <li>Chapter10. 스프링 MVC 프레임워크 동작 방식 (spring-mvc-behavior)</li>
-    <li>Chapter11. MVC 1: 요청 매핑, 커맨드 객체, 리다이렉트, 폼 태그, 모델 (mvc1)</li>
-    <li>Chapter12. MVC2: 메시지, 커맨드 객체 검증 (mvc2)</li>
-    <li>Chapter13. MVC3: 세션, 인터셉터, 쿠키 (mvc3)</li>
-    <li>Chapter14. MVC4: 날짜 값 변환, @PathVariable, 익셉션 처리 (mvc4)</li>
-    <li>Chapter15. 간단한 웹 어플리케이션 구조 (simple-web-application-structure)</li>
-    <li>Chapter16. JSON 응답과 요청 처리 (json-response-and-request)</li>
+    <li><a href="https://github.com/LeeSM0518/spring-tutorial/tree/master/start-spring-mvc">Chapter9. 스프링 MVC 시작하기 (start-spring-mvc</a></li>
+    <li><a href="https://github.com/LeeSM0518/spring-tutorial/tree/master/spring-mvc-behavior">Chapter10. 스프링 MVC 프레임워크 동작 방식 (spring-mvc-behavior)</a></li>
+    <li><a href="https://github.com/LeeSM0518/spring-tutorial/tree/master/mvc1">Chapter11. MVC 1: 요청 매핑, 커맨드 객체, 리다이렉트, 폼 태그, 모델 (mvc1)</a></li>
+    <li><a href="https://github.com/LeeSM0518/spring-tutorial/tree/master/mvc2">Chapter12. MVC2: 메시지, 커맨드 객체 검증 (mvc2)</a></li>
+    <li><a href="https://github.com/LeeSM0518/spring-tutorial/tree/master/mvc3">Chapter13. MVC3: 세션, 인터셉터, 쿠키 (mvc3)</a></li>
+    <li><a href="https://github.com/LeeSM0518/spring-tutorial/tree/master/mvc4"> Chapter14. MVC4: 날짜 값 변환, @PathVariable, 익셉션 처리 (mvc4)</a></li>
+    <li><a href="https://github.com/LeeSM0518/spring-tutorial/tree/master/simple-web-application-structure">Chapter15. 간단한 웹 어플리케이션 구조 (simple-web-application-structure)</a></li>
+    <li><a href="https://github.com/LeeSM0518/spring-tutorial/tree/master/json-response-and-request">Chapter16. JSON 응답과 요청 처리 (json-response-and-request)</a></li>
     <li>Chapter17. 프로필과 프로퍼티 파일 (profile-and-property-files)</li>
     <li>Chapter18. 마치며 (finishing)</li>
   </ul>
@@ -236,7 +236,6 @@ TIL ( Today I Learned )
     <li><a href="https://github.com/LeeSM0518/vue-tutorial/tree/master/real-vue-js">Vue.js 고급 개발자 되기</a></li>
   </ol>
 </details>
-
 <br/>
 
 # 프로젝트 분류
