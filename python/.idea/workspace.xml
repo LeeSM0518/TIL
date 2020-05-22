@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="99daa27a-526c-4128-a5a2-7234a779865a" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Java/java_lecture/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../Java/java_lecture/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Java/java_lecture/out/production/java_lecture/META-INF/java_lecture.kotlin_module" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Java/java_lecture/out/production/java_lecture/midterm_exam/out.ppm" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/project/schedule.txt" beforeDir="false" afterPath="$PROJECT_DIR$/project/schedule.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -269,6 +264,8 @@
       <workItem from="1579749562932" duration="1279000" />
       <workItem from="1580362690663" duration="3011000" />
       <workItem from="1580702745979" duration="1590000" />
+      <workItem from="1584881118813" duration="6000" />
+      <workItem from="1587808053731" duration="240000" />
     </task>
     <servers />
   </component>
@@ -289,58 +286,31 @@
     </option>
   </component>
   <component name="WindowStateProjectService">
-    <state x="849" y="330" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1576542888484">
+    <state width="1238" height="278" key="GridCell.Tab.0.bottom" timestamp="1587810135059">
       <screen x="0" y="23" width="1920" height="1177" />
     </state>
-    <state x="1384" y="393" key="#com.intellij.execution.impl.EditConfigurationsDialog/-1680.251.1680.1027/0.23.2560.1417@0.23.2560.1417" timestamp="1576420190098" />
-    <state x="849" y="330" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1920.1177@0.23.1920.1177" timestamp="1576542888484" />
-    <state width="1238" height="278" key="GridCell.Tab.0.bottom" timestamp="1580731494234">
-      <screen x="0" y="23" width="2560" height="1417" />
-    </state>
-    <state width="1638" height="189" key="GridCell.Tab.0.bottom/-1680.251.1680.1027/0.23.2560.1417@-1680.251.1680.1027" timestamp="1576393351695" />
     <state width="1238" height="278" key="GridCell.Tab.0.bottom/-1680.251.1680.1027/0.23.2560.1417@0.23.2560.1417" timestamp="1580731494234" />
-    <state width="918" height="278" key="GridCell.Tab.0.bottom/0.23.1920.1177@0.23.1920.1177" timestamp="1580371163965" />
-    <state width="1238" height="278" key="GridCell.Tab.0.center" timestamp="1580731494233">
-      <screen x="0" y="23" width="2560" height="1417" />
-    </state>
-    <state width="1638" height="189" key="GridCell.Tab.0.center/-1680.251.1680.1027/0.23.2560.1417@-1680.251.1680.1027" timestamp="1576393351694" />
-    <state width="1238" height="278" key="GridCell.Tab.0.center/-1680.251.1680.1027/0.23.2560.1417@0.23.2560.1417" timestamp="1580731494233" />
-    <state width="918" height="278" key="GridCell.Tab.0.center/0.23.1920.1177@0.23.1920.1177" timestamp="1580371163965" />
-    <state width="1238" height="278" key="GridCell.Tab.0.left" timestamp="1580731494232">
-      <screen x="0" y="23" width="2560" height="1417" />
-    </state>
-    <state width="1638" height="189" key="GridCell.Tab.0.left/-1680.251.1680.1027/0.23.2560.1417@-1680.251.1680.1027" timestamp="1576393351693" />
-    <state width="1238" height="278" key="GridCell.Tab.0.left/-1680.251.1680.1027/0.23.2560.1417@0.23.2560.1417" timestamp="1580731494232" />
-    <state width="918" height="278" key="GridCell.Tab.0.left/0.23.1920.1177@0.23.1920.1177" timestamp="1580371163965" />
-    <state width="1238" height="278" key="GridCell.Tab.0.right" timestamp="1580731494233">
-      <screen x="0" y="23" width="2560" height="1417" />
-    </state>
-    <state width="1638" height="189" key="GridCell.Tab.0.right/-1680.251.1680.1027/0.23.2560.1417@-1680.251.1680.1027" timestamp="1576393351694" />
-    <state width="1238" height="278" key="GridCell.Tab.0.right/-1680.251.1680.1027/0.23.2560.1417@0.23.2560.1417" timestamp="1580731494233" />
-    <state width="918" height="278" key="GridCell.Tab.0.right/0.23.1920.1177@0.23.1920.1177" timestamp="1580371163965" />
-    <state x="520" y="233" key="SettingsEditor" timestamp="1576420241428">
-      <screen x="0" y="23" width="2560" height="1417" />
-    </state>
-    <state x="-1339" y="403" key="SettingsEditor/-1680.251.1680.1027/0.23.2560.1417@-1680.251.1680.1027" timestamp="1576390696343" />
-    <state x="520" y="233" key="SettingsEditor/-1680.251.1680.1027/0.23.2560.1417@0.23.2560.1417" timestamp="1576420241428" />
-    <state x="973" y="563" key="com.intellij.ide.util.TipDialog" timestamp="1580362690499">
-      <screen x="0" y="23" width="2560" height="1417" />
-    </state>
-    <state x="-1041" y="642" key="com.intellij.ide.util.TipDialog/-1680.251.1680.1027/0.23.2560.1417@-1680.251.1680.1027" timestamp="1576418661615" />
-    <state x="973" y="563" key="com.intellij.ide.util.TipDialog/-1680.251.1680.1027/0.23.2560.1417@0.23.2560.1417" timestamp="1580362690499" />
-    <state x="730" y="471" key="com.intellij.ide.util.TipDialog/0.23.1920.1177@0.23.1920.1177" timestamp="1576541037547" />
-    <state x="-716" y="302" width="499" height="790" key="dock-window-1" timestamp="1576389723474">
-      <screen x="-1680" y="251" width="1680" height="1027" />
-    </state>
-    <state x="-716" y="302" width="499" height="790" key="dock-window-1/-1680.251.1680.1027/0.23.2560.1417@-1680.251.1680.1027" timestamp="1576389723474" />
-    <state x="-1045" y="251" width="499" height="790" key="dock-window-2" timestamp="1576389723474">
-      <screen x="-1680" y="251" width="1680" height="1027" />
-    </state>
-    <state x="-1045" y="251" width="499" height="790" key="dock-window-2/-1680.251.1680.1027/0.23.2560.1417@-1680.251.1680.1027" timestamp="1576389723474" />
-    <state x="541" y="341" width="837" height="540" key="find.popup" timestamp="1576541278555">
+    <state width="1238" height="278" key="GridCell.Tab.0.bottom/0.23.1920.1177@0.23.1920.1177" timestamp="1587810135059" />
+    <state width="1238" height="278" key="GridCell.Tab.0.center" timestamp="1587810135058">
       <screen x="0" y="23" width="1920" height="1177" />
     </state>
-    <state x="541" y="341" width="837" height="540" key="find.popup/0.23.1920.1177@0.23.1920.1177" timestamp="1576541278555" />
+    <state width="1238" height="278" key="GridCell.Tab.0.center/-1680.251.1680.1027/0.23.2560.1417@0.23.2560.1417" timestamp="1580731494233" />
+    <state width="1238" height="278" key="GridCell.Tab.0.center/0.23.1920.1177@0.23.1920.1177" timestamp="1587810135058" />
+    <state width="1238" height="278" key="GridCell.Tab.0.left" timestamp="1587810135058">
+      <screen x="0" y="23" width="1920" height="1177" />
+    </state>
+    <state width="1238" height="278" key="GridCell.Tab.0.left/-1680.251.1680.1027/0.23.2560.1417@0.23.2560.1417" timestamp="1580731494232" />
+    <state width="1238" height="278" key="GridCell.Tab.0.left/0.23.1920.1177@0.23.1920.1177" timestamp="1587810135058" />
+    <state width="1238" height="278" key="GridCell.Tab.0.right" timestamp="1587810135059">
+      <screen x="0" y="23" width="1920" height="1177" />
+    </state>
+    <state width="1238" height="278" key="GridCell.Tab.0.right/-1680.251.1680.1027/0.23.2560.1417@0.23.2560.1417" timestamp="1580731494233" />
+    <state width="1238" height="278" key="GridCell.Tab.0.right/0.23.1920.1177@0.23.1920.1177" timestamp="1587810135059" />
+    <state x="730" y="471" key="com.intellij.ide.util.TipDialog" timestamp="1587808054481">
+      <screen x="0" y="23" width="1920" height="1177" />
+    </state>
+    <state x="973" y="563" key="com.intellij.ide.util.TipDialog/-1680.251.1680.1027/0.23.2560.1417@0.23.2560.1417" timestamp="1580362690499" />
+    <state x="730" y="471" key="com.intellij.ide.util.TipDialog/0.23.1920.1177@0.23.1920.1177" timestamp="1587808054481" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/python$test01.coverage" NAME="test01 Coverage Results" MODIFIED="1576543203198" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/realexam" />
@@ -357,7 +327,7 @@
     <SUITE FILE_PATH="coverage/python$scores.coverage" NAME="scores Coverage Results" MODIFIED="1571106871760" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/lecture" />
     <SUITE FILE_PATH="coverage/python$button2.coverage" NAME="button2 Coverage Results" MODIFIED="1573519450194" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tkinter" />
     <SUITE FILE_PATH="coverage/python$file2.coverage" NAME="file2 Coverage Results" MODIFIED="1576389518226" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/project" />
-    <SUITE FILE_PATH="coverage/python$Scheduler.coverage" NAME="Scheduler Coverage Results" MODIFIED="1580702750717" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/project" />
+    <SUITE FILE_PATH="coverage/python$Scheduler.coverage" NAME="Scheduler Coverage Results" MODIFIED="1587808072754" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/project" />
     <SUITE FILE_PATH="coverage/python$horisort.coverage" NAME="horisort Coverage Results" MODIFIED="1576421297005" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/exam" />
     <SUITE FILE_PATH="coverage/python$PhotoImage.coverage" NAME="PhotoImage Coverage Results" MODIFIED="1573533995382" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tkinter" />
     <SUITE FILE_PATH="coverage/python$buttonclick.coverage" NAME="buttonclick Coverage Results" MODIFIED="1576420664771" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/exam" />
