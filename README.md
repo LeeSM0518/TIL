@@ -50,7 +50,8 @@ TIL ( Today I Learned )
     <li><a href="https://github.com/LeeSM0518/TIL/tree/master/Data_Structure/JavaDataStructure/src/chapter12_search">검색</a></li>
     <li><a href="https://github.com/LeeSM0518/TIL/tree/master/Data_Structure/JavaDataStructure/src/chapter13_hashing">해싱</a></li>
     <li><a href="https://github.com/LeeSM0518/TIL/tree/master/Data_Structure/JavaDataStructure/src/chapter14_sorting">정렬</a></li>
-  </ul></details>
+  </ul>
+</details>
 
 <details>
   <summary>Java in action</summary>
@@ -73,39 +74,6 @@ TIL ( Today I Learned )
     <li><strong>PART 03. 스트림과 람다를 이용한 효과적 프로그래밍</strong>
       <ul>
         <li><a href="https://github.com/LeeSM0518/modern-java/tree/master/src/main/java/chapter08">CHAPTER 08. 컬렉션 API 개선</a></li>
-        <li>CHAPTER 09. 리팩터링, 테스팅, 디버깅</li>
-        <li>CHAPTER 10. 람다를 이용한 도메인 전용 언어</li>
-      </ul>
-    </li>
-    <li><strong>PART 04. 매일 자바와 함께</strong>
-      <ul>
-        <li>CHAPTER 11. null 대신 Optional 클래스</li>
-        <li>CHAPTER 12. 새로운 날짜와 시간 API</li>
-        <li>CHAPTER 13. 디폴트 메서드</li>
-        <li>CHAPTER 14. 자바 모듈 시스템</li>
-      </ul>
-    </li>
-    <li><strong>PART 05. 개선된 자바 동시성</strong>
-      <ul>
-        <li>CHAPTER 15. CompletableFuture와 리액티브 프로그래밍 컨셉의 기초</li>
-        <li>CHAPTER 16. CompletableFuture: 안정적 비동기 프로그래밍</li>
-        <li>CHAPTER 17. 리액티브 프로그래밍</li>
-      </ul>
-    </li>
-    <li><strong>PART 06. 함수형 프로그래밍과 자바 진화의 미래</strong>
-      <ul>
-        <li>CHAPTER 18. 함수형 관점으로 생각하기</li>
-        <li>CHAPTER 19. 함수형 프로그래밍 기법</li>
-        <li>CHAPTER 20. OOP와 FP의 조화: 자바와 스칼라 비교</li>
-        <li>CHAPTER 21. 결론 그리고 자바의 미래</li>
-      </ul>
-    </li>
-    <li><strong>부록</strong>
-      <ul>
-        <li>APPENDIX <strong>A</strong> : 기타 언어 업데이트</li>
-        <li>APPENDIX <strong>B</strong> : 기타 라이브러리 업데이트</li>
-        <li>APPENDIX <strong>C</strong> : 스트림에 여러 연산 병렬로 실행하기</li>
-        <li>APPENDIX <strong>D</strong> : 람다와 JVM 바이트코드</li>
       </ul>
     </li>
   </ul>
@@ -157,30 +125,6 @@ TIL ( Today I Learned )
 </details>
 
 <details>
-  <summary>Spring</summary>
-  <ul>
-    <li><a href="https://github.com/LeeSM0518/spring-tutorial/tree/master/what-is-spring">Chapter1. 들어가며 (what-is-spring)</a></li>
-    <li><a href="https://github.com/LeeSM0518/spring-tutorial/tree/master/start-spring">Chapter2. 스프링 시작하기 (start-spring)</a></li>
-    <li><a href="https://github.com/LeeSM0518/spring-tutorial/tree/master/spring-di">Chapter3. 스프링 DI (spring-di)</a></li>
-    <li><a href="https://github.com/LeeSM0518/spring-tutorial/tree/master/dependence-auto-injection">Chapter4. 의존 자동 주입 (dependence-auto-injection)</a></li>
-    <li><a href="https://github.com/LeeSM0518/spring-tutorial/tree/master/component-scan">Chapter5. 컴포넌트 스캔 (component-scan)</a></li>
-    <li><a href="https://github.com/LeeSM0518/spring-tutorial/tree/master/bean-lifecycle-and-scope">Chapter6. 빈 라이프사이클과 범위 (bean-lifecycle-and-scope)</a></li>
-    <li><a href="https://github.com/LeeSM0518/spring-tutorial/tree/master/aop-programming">Chapter7. AOP 프로그래밍 (aop-programming)</a></li>
-    <li><a href="https://github.com/LeeSM0518/spring-tutorial/tree/master/db-peristalsis">Chapter8. DB 연동 (db-peristalsis)</a></li>
-    <li><a href="https://github.com/LeeSM0518/spring-tutorial/tree/master/start-spring-mvc">Chapter9. 스프링 MVC 시작하기 (start-spring-mvc</a></li>
-    <li><a href="https://github.com/LeeSM0518/spring-tutorial/tree/master/spring-mvc-behavior">Chapter10. 스프링 MVC 프레임워크 동작 방식 (spring-mvc-behavior)</a></li>
-    <li><a href="https://github.com/LeeSM0518/spring-tutorial/tree/master/mvc1">Chapter11. MVC 1: 요청 매핑, 커맨드 객체, 리다이렉트, 폼 태그, 모델 (mvc1)</a></li>
-    <li><a href="https://github.com/LeeSM0518/spring-tutorial/tree/master/mvc2">Chapter12. MVC2: 메시지, 커맨드 객체 검증 (mvc2)</a></li>
-    <li><a href="https://github.com/LeeSM0518/spring-tutorial/tree/master/mvc3">Chapter13. MVC3: 세션, 인터셉터, 쿠키 (mvc3)</a></li>
-    <li><a href="https://github.com/LeeSM0518/spring-tutorial/tree/master/mvc4"> Chapter14. MVC4: 날짜 값 변환, @PathVariable, 익셉션 처리 (mvc4)</a></li>
-    <li><a href="https://github.com/LeeSM0518/spring-tutorial/tree/master/simple-web-application-structure">Chapter15. 간단한 웹 어플리케이션 구조 (simple-web-application-structure)</a></li>
-    <li><a href="https://github.com/LeeSM0518/spring-tutorial/tree/master/json-response-and-request">Chapter16. JSON 응답과 요청 처리 (json-response-and-request)</a></li>
-    <li>Chapter17. 프로필과 프로퍼티 파일 (profile-and-property-files)</li>
-    <li>Chapter18. 마치며 (finishing)</li>
-  </ul>
-</details>
-
-<details>
   <summary>Coding test tutorial</summary>
   <ol>
     <li><a href="https://github.com/LeeSM0518/Coding_Test/tree/master/src/correct_parenthesis">올바른 괄호</a></li>
@@ -226,6 +170,7 @@ TIL ( Today I Learned )
 
 <details>
   <summary>Vue.js</summary>
+  <b>Do it! Vue.js 입문 교재 학습</b>
   <ol>
     <li><a href="https://github.com/LeeSM0518/vue-tutorial/tree/master/vue-js-introduce">Vue.js 소개</a></li>
     <li><a href="https://github.com/LeeSM0518/vue-tutorial/tree/master/development-environment-and-first-project">개발 환경 설정 및 첫 번째 프로젝트</a></li>
@@ -235,7 +180,116 @@ TIL ( Today I Learned )
     <li><a href="https://github.com/LeeSM0518/vue-tutorial/tree/master/create-application">실전 애플리케이션 만들기</a></li>
     <li><a href="https://github.com/LeeSM0518/vue-tutorial/tree/master/real-vue-js">Vue.js 고급 개발자 되기</a></li>
   </ol>
+  <b>인프런 - Vue.js 끝장내기 인강 학습</b>
+  <ol>
+    <li><a href="https://github.com/LeeSM0518/vue-tutorial/tree/master/inflearn-vuejs/orientation">강의 오리엔테이션</a></li>
+    <li><a href="https://github.com/LeeSM0518/vue-tutorial/tree/master/inflearn-vuejs/development-environment">개발환경 구성</a></li>
+    <li><a href="https://github.com/LeeSM0518/vue-tutorial/tree/master/inflearn-vuejs/router-and-components">라우터 & 컴포넌트 설계</a></li>
+    <li><a href="https://github.com/LeeSM0518/vue-tutorial/tree/master/inflearn-vuejs/signup-page">회원 가입 페이지 개발</a></li>
+    <li><a href="https://github.com/LeeSM0518/vue-tutorial/tree/master/inflearn-vuejs/working-environment-setting">실무 환경을 위한 프로젝트 설정</a></li>
+    <li><a href="https://github.com/LeeSM0518/vue-tutorial/tree/master/inflearn-vuejs/login-page">로그인 페이지 개발</a></li>
+    <li><a href="https://github.com/LeeSM0518/vue-tutorial/tree/master/inflearn-vuejs/login-state-management">로그인 상태 관리와 스토어</a></li>
+    <li><a href="https://github.com/LeeSM0518/vue-tutorial/tree/master/inflearn-vuejs/using-token">토큰을 이용한 API 인증 처리</a></li>
+    <li><a href="https://github.com/LeeSM0518/vue-tutorial/tree/master/inflearn-vuejs/fetch-posts">학습 노트 데이터 조회</a></li>
+    <li><a href="https://github.com/LeeSM0518/vue-tutorial/tree/master/inflearn-vuejs/browser-storage">브라우저 저장소를 이용한 인증 값 관리</a></li>
+    <li><a href="https://github.com/LeeSM0518/vue-tutorial/tree/master/inflearn-vuejs/add-posts">학습 노트 데이터 생성</a></li>
+    <li><a href="https://github.com/LeeSM0518/vue-tutorial/tree/master/inflearn-vuejs/api-function-module">API 함수 모듈화</a></li>
+    <li><a href="https://github.com/LeeSM0518/vue-tutorial/tree/master/inflearn-vuejs/delete-posts">학습 노트 데이터 삭제</a></li>
+    <li><a href="https://github.com/LeeSM0518/vue-tutorial/tree/master/inflearn-vuejs/update-posts">학습 노트 데이터 수정</a></li>
+    <li><a href="https://github.com/LeeSM0518/vue-tutorial/tree/master/inflearn-vuejs/data-formatting">데이터 포맷팅</a></li>
+    <li><a href="https://github.com/LeeSM0518/vue-tutorial/tree/master/inflearn-vuejs/router-deepening">라우터 심화</a></li>
+    <li><a href="https://github.com/LeeSM0518/vue-tutorial/tree/master/inflearn-vuejs/front-end-testing">프런트엔드 테스팅 소개</a></li>
+  </ol>
 </details>
+
+<details>
+  <summary>Spring</summary>
+  <ul>
+    <li><a href="https://github.com/LeeSM0518/spring-tutorial/tree/master/what-is-spring">Chapter1. 들어가며 (what-is-spring)</a></li>
+    <li><a href="https://github.com/LeeSM0518/spring-tutorial/tree/master/start-spring">Chapter2. 스프링 시작하기 (start-spring)</a></li>
+    <li><a href="https://github.com/LeeSM0518/spring-tutorial/tree/master/spring-di">Chapter3. 스프링 DI (spring-di)</a></li>
+    <li><a href="https://github.com/LeeSM0518/spring-tutorial/tree/master/dependence-auto-injection">Chapter4. 의존 자동 주입 (dependence-auto-injection)</a></li>
+    <li><a href="https://github.com/LeeSM0518/spring-tutorial/tree/master/component-scan">Chapter5. 컴포넌트 스캔 (component-scan)</a></li>
+    <li><a href="https://github.com/LeeSM0518/spring-tutorial/tree/master/bean-lifecycle-and-scope">Chapter6. 빈 라이프사이클과 범위 (bean-lifecycle-and-scope)</a></li>
+    <li><a href="https://github.com/LeeSM0518/spring-tutorial/tree/master/aop-programming">Chapter7. AOP 프로그래밍 (aop-programming)</a></li>
+    <li><a href="https://github.com/LeeSM0518/spring-tutorial/tree/master/db-peristalsis">Chapter8. DB 연동 (db-peristalsis)</a></li>
+    <li><a href="https://github.com/LeeSM0518/spring-tutorial/tree/master/start-spring-mvc">Chapter9. 스프링 MVC 시작하기 (start-spring-mvc</a></li>
+    <li><a href="https://github.com/LeeSM0518/spring-tutorial/tree/master/spring-mvc-behavior">Chapter10. 스프링 MVC 프레임워크 동작 방식 (spring-mvc-behavior)</a></li>
+    <li><a href="https://github.com/LeeSM0518/spring-tutorial/tree/master/mvc1">Chapter11. MVC 1: 요청 매핑, 커맨드 객체, 리다이렉트, 폼 태그, 모델 (mvc1)</a></li>
+    <li><a href="https://github.com/LeeSM0518/spring-tutorial/tree/master/mvc2">Chapter12. MVC2: 메시지, 커맨드 객체 검증 (mvc2)</a></li>
+    <li><a href="https://github.com/LeeSM0518/spring-tutorial/tree/master/mvc3">Chapter13. MVC3: 세션, 인터셉터, 쿠키 (mvc3)</a></li>
+    <li><a href="https://github.com/LeeSM0518/spring-tutorial/tree/master/mvc4"> Chapter14. MVC4: 날짜 값 변환, @PathVariable, 익셉션 처리 (mvc4)</a></li>
+    <li><a href="https://github.com/LeeSM0518/spring-tutorial/tree/master/simple-web-application-structure">Chapter15. 간단한 웹 어플리케이션 구조 (simple-web-application-structure)</a></li>
+    <li><a href="https://github.com/LeeSM0518/spring-tutorial/tree/master/json-response-and-request">Chapter16. JSON 응답과 요청 처리 (json-response-and-request)</a></li>
+  </ul>
+</details>
+
+<details>
+    <summary>Keras</summary>
+    <ul>
+      <li>
+          <strong>PART 01. 케라스 시작하기</strong>
+          <ul>
+            <li><a href="https://github.com/LeeSM0518/keras-tutorial/tree/master/part01/chapter01">CHAPTER 1. 케라스 이야기</a></li>
+            <li><a href="https://github.com/LeeSM0518/keras-tutorial/tree/master/part01/chapter02">CHAPTER 2. 맥에서 케라스 설치하기</a></li>
+            <li><a href="https://github.com/LeeSM0518/keras-tutorial/tree/master/part01/chapter03">CHAPTER 3. 윈도우에서 케라스 설치하기</a></li>
+          </ul>
+      </li>
+      <li>
+        <strong>PART 02. 딥러닝 개념잡기</strong>
+        <ul>
+            <li><a href="https://github.com/LeeSM0518/keras-tutorial/tree/master/part02/chapter01">CHAPTER 1. 데이터셋 이야기</a></li>
+            <li><a href="https://github.com/LeeSM0518/keras-tutorial/tree/master/part02/chapter02">CHAPTER 2. 학습과정 이야기</a></li>
+            <li><a href="https://github.com/LeeSM0518/keras-tutorial/tree/master/part02/chapter03">CHAPTER 3. 학습과정 살펴보기</a></li>
+            <li><a href="https://github.com/LeeSM0518/keras-tutorial/tree/master/part02/chapter04">CHAPTER 4. 학습 조기종료 시키기</a></li>
+            <li><a href="https://github.com/LeeSM0518/keras-tutorial/tree/master/part02/chapter05">CHAPTER 5. 평가 이야기</a></li>
+            <li><a href="https://github.com/LeeSM0518/keras-tutorial/tree/master/part02/chapter06">CHAPTER 6. 학습 모델 보기/저장하기/불러오기</a></li>
+        </ul>
+      </li>
+      <li>
+        <strong>PART 03. 레이어 개념잡기</strong>
+        <ul>
+            <li><a href="https://github.com/LeeSM0518/keras-tutorial/tree/master/part03/chapter01">CHAPTER 1. 다층 퍼셉트론 레이어 이야기</a></li>
+            <li><a href="https://github.com/LeeSM0518/keras-tutorial/tree/master/part03/chapter02">CHAPTER 2. 다층 퍼셉트론 신경망 모델 만들어보기</a></li>
+            <li><a href="https://github.com/LeeSM0518/keras-tutorial/tree/master/part03/chapter03">CHAPTER 3. 컨볼루션 신경망 레이어 이야기</a></li>
+            <li><a href="https://github.com/LeeSM0518/keras-tutorial/tree/master/part03/chapter04">CHAPTER 4. 컨볼루션 신경망 모델 만들어보기</a></li>
+            <li><a href="https://github.com/LeeSM0518/keras-tutorial/tree/master/part03/chapter05">CHAPTER 5. 컨볼루션 신경망 모델을 위한 데이터 부풀리기</a></li>
+            <li><a href="https://github.com/LeeSM0518/keras-tutorial/tree/master/part03/chapter06">CHAPTER 6. 순환 신경망 레이어 이야기</a></li>
+            <li><a href="https://github.com/LeeSM0518/keras-tutorial/tree/master/part03/chapter07">CHAPTER 7. 순환 신경망 모델 만들어보기</a></li>
+        </ul>
+      </li>
+      <li>
+        <strong>PART 04. 레시피 따라해보기</strong>
+        <ul>
+            <li><a href="https://github.com/LeeSM0518/keras-tutorial/tree/master/part04/chapter01">CHAPTER 1. 수치입력 수치 예측 모델 레시피</a></li>
+            <li><a href="https://github.com/LeeSM0518/keras-tutorial/tree/master/part04/chapter02">CHAPTER 2. 수치입력 이진분류모델 레시피</a></li>
+            <li><a href="https://github.com/LeeSM0518/keras-tutorial/tree/master/part04/chapter03">CHAPTER 3. 수치입력 다중클래스분류모델 레시피</a></li>
+            <li><a href="https://github.com/LeeSM0518/keras-tutorial/tree/master/part04/chapter04">CHAPTER 4. 영상입력 수치 예측 모델 레시피</a></li>
+            <li><a href="https://github.com/LeeSM0518/keras-tutorial/tree/master/part04/chapter05">CHAPTER 5. 영상입력 이진분류모델 레시피</a></li>
+            <li><a href="https://github.com/LeeSM0518/keras-tutorial/tree/master/part04/chapter06">CHAPTER 6. 영상입력 다중클래스분류모델 레시피</a></li>
+            <li><a href="https://github.com/LeeSM0518/keras-tutorial/tree/master/part04/chapter07">CHAPTER 7. 시계열수치입력 수치 예측 모델 레시피</a></li>
+            <li><a href="https://github.com/LeeSM0518/keras-tutorial/tree/master/part04/chapter08">CHAPTER 8. 문장(시계열수치)입력 이진분류모델 레시피</a></li>
+            <li><a href="https://github.com/LeeSM0518/keras-tutorial/tree/master/part04/chapter09">CHAPTER 9. 문장(시계열수치)입력 다중클래스분류모델 레시피</a></li>
+        </ul>
+      </li>
+    </ul>
+</details>
+
+<details>
+    <summary>Android</summary>
+    <ol>
+        <li><a href="https://github.com/LeeSM0518/Android/blob/master/Chapter2/layout_basic.md">안드로이드 스튜디오와 기본 레이아웃 익히기</a></li>
+        <li><a href="https://github.com/LeeSM0518/Android/blob/master/Chapter2/layout_and_widget.md">레이아웃과 기본 위젯 사용하기</a></li>
+        <li><a href="https://github.com/LeeSM0518/Android/blob/master/Chapter2/03_application_configuration/Application_Configuration.md">애플리케이션 구성하기</a></li>
+        <li><a href="https://github.com/LeeSM0518/Android/blob/master/Chapter2/widget_and_event/widget_and_event.md">다양한 위젯과 이벤트 활용하기</a></li>
+        <li><a href="https://github.com/LeeSM0518/Android/blob/master/Chapter2/Select_Widget_and_Custom_View/Select_Widget_and_Custom_View.md">선택 위젯의 사용과 커스텀뷰 만들기</a></li>
+        <li><a href="https://github.com/LeeSM0518/Android/blob/master/Chapter2/Threads_and_animations/Thread_and_animation.md">스레드와 애니메이션</a></li>
+        <li><a href="https://github.com/LeeSM0518/Android/blob/master/Chapter2/Networking/Networking.md">네트워킹</a></li>
+        <li><a href="https://github.com/LeeSM0518/Android/tree/master/Chapter2/database">데이터베이스</a></li>
+        <li><a href="https://github.com/LeeSM0518/Android/tree/master/Chapter2/multimedia">멀티미디어</a></li>
+    </ol>
+</details>
+
 <br/>
 
 # 프로젝트 분류
@@ -247,4 +301,4 @@ TIL ( Today I Learned )
 
 # Contributors
 - 이름 : 이상민 
-- 이메일 : [nalsm98@naver.com](nalsm98@naver.com)
+- 이메일 : [nalsm0518@gmail.com](nalsm98@naver.com)
