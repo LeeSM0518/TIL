@@ -1,8 +1,5 @@
 TIL ( Today I Learned )
 ================
-<img src="https://dev-res.thumbr.io/libraries/39/81/03/lib/1447941708819_1.jpg?size=854x493s&ext=jpg" width="100%">
-
-<br/>
 
 # What is the Project? 
 
